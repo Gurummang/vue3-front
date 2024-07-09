@@ -27,7 +27,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18.18.0'   ##  개발자 환경 입력
+        node-version: '18.17.1'   ##  개발자 환경 입력
 
     - name: Install dependencies
       run: npm install
