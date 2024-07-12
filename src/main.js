@@ -4,13 +4,10 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-
-import SideNav from './components/SideNav.vue'
+import vuetify from './plugins/vuetify'
 
 const app = createApp(App)
 
 app.use(router)
-
-app.component("SideNav", SideNav);
-
+app.use(vuetify)
 app.mount('#app')
