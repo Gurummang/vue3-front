@@ -10,11 +10,9 @@
     <!-- Navigation Items -->
     <div class="py-4">
       <div v-for="(item, index) in navItems" :key="index">
-        <a
-          :class="['flex items-center justify-between px-7 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
+        <a :class="['flex items-center justify-between px-7 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
                    item.active ? 'bg-orange-500 text-white' : '']"
-          @click="toggleItem(index)"
-        >
+          @click="toggleItem(index, item.link)">
           <div class="flex items-center">
             <component :is="item.icon" class="w-8 h-8 mr-3" />
             {{ item.title }}
@@ -34,24 +32,21 @@
               :key="`child-${index}-${childIndex}`"
               :class="['flex items-center px-14 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
                         child.active ? 'bg-orange-500 text-white' : '']"
-              @click="activateChild(index, childIndex)"
+              @click="activateChild(index, childIndex, child.link)"
             >
               <component :is="child.icon" class="w-8 h-8 mr-3" />
               {{ child.title }}
             </a>
           </div>
         </transition>
-        <!-- Children items -->
       </div>
-      <!-- Item -->
     </div>
-    <!-- Navigation Items -->
   </nav>
-
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { 
   HomeIcon, 
   WindowIcon,
@@ -90,13 +85,16 @@ export default defineComponent({
       { 
         title: '메인', 
         icon: HomeIcon, 
-        active: false 
+        active: false,
+        link: '/',
       },
-      { title: '등록', 
-        icon: WindowIcon, active: false, 
+      { 
+        title: '등록', 
+        icon: WindowIcon, 
+        active: false, 
         children: [
-          { title: 'SaaS', icon: CloudIcon, active: false },
-          { title: '이메일 알림', icon: ChatBubbleLeftIcon, active: false },
+          { title: 'SaaS', icon: CloudIcon, active: false, link: '/register/saas', },
+          { title: '이메일 알림', icon: ChatBubbleLeftIcon, active: false, link: '/register/email', },
         ] 
       },
       { 
@@ -105,8 +103,8 @@ export default defineComponent({
         expanded: false, 
         active: false, 
         children: [
-          { title: 'Jira', icon: CloudArrowUpIcon, active: false },
-          { title: 'Slack', icon: CloudArrowUpIcon, active: false }
+          { title: 'Jira', icon: CloudArrowUpIcon, active: false, link: '/saas/jira', },
+          { title: 'Slack', icon: CloudArrowUpIcon, active: false, link: '/saas/slack', }
         ] 
       },
       { 
@@ -115,28 +113,36 @@ export default defineComponent({
         expanded: false, 
         active: false, 
         children: [
-          { title: 'DashBoard', icon: ChartPieIcon, active: false },
-          { title: '파일 히스토리', icon: ListBulletIcon, active: false },
-          { title: '파일 검사', icon: DocumentCheckIcon, active: false }
+          { title: 'DashBoard', icon: ChartPieIcon, active: false, link: '/file/dashboard', },
+          { title: '파일 히스토리', icon: ListBulletIcon, active: false, link: '/file/history', },
+          { title: '파일 검사', icon: DocumentCheckIcon, active: false, link: '/file/scan', }
         ]
       },
       { 
         title: '사용자', 
         icon: UsersIcon, 
-        active: false 
+        active: false,
+        link: '/users',
       },
       { 
         title: 'DLP 설정', 
         icon: ShieldCheckIcon, 
-        active: false 
+        active: false ,
+        link: '/dlp',
       },
     ]);
 
-    const toggleItem = (index) => {
+    const router = useRouter();
+    const route = useRoute();
+
+    const toggleItem = (index, link) => {
       navItems.value.forEach((item, idx) => {
         if (idx === index) {
-          item.active = !item.active; // Toggle active state of clicked item
-          item.expanded = item.active; // Expand the item if it's active
+          item.active = true; // Set the clicked item as active
+          item.expanded = !item.expanded; // Toggle the expanded state
+          if (!item.expanded) {
+            item.active = false; // Deactivate the item if it is collapsed
+          }
         } else {
           item.active = false; // Deactivate other items
           if (item.children) {
@@ -147,12 +153,17 @@ export default defineComponent({
           }
         }
       });
+
+      // If the clicked item has a link and no children, navigate to the link
+      if (!navItems.value[index].children) {
+        router.push(link);
+      }
     };
 
-    const activateChild = (parentIndex, childIndex) => {
+    const activateChild = (parentIndex, childIndex, link) => {
       const parentItem = navItems.value[parentIndex];
       const childItem = parentItem.children[childIndex];
-      
+
       // Deactivate other children and activate the clicked child
       parentItem.children.forEach((child) => {
         child.active = false;
@@ -162,7 +173,29 @@ export default defineComponent({
       // Activate and expand the parent item
       parentItem.active = true;
       parentItem.expanded = true;
+
+      // Navigate to the child's link
+      router.push(link);
     };
+
+    const setActiveNavItem = () => {
+      navItems.value.forEach((item) => {
+        item.active = item.link === route.path;
+        if (item.children) {
+          item.children.forEach((child) => {
+            child.active = child.link === route.path;
+          });
+          item.expanded = item.children.some(child => child.active);
+          if (item.expanded) {
+            item.active = true;
+          } else {
+            item.active = false;
+          }
+        }
+      });
+    };
+
+    watch(route, setActiveNavItem, { immediate: true });
 
     const beforeEnter = (el) => {
       el.style.height = '0';
