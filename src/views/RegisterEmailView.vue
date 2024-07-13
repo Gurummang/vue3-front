@@ -1,11 +1,11 @@
 <script setup>
 import SideNav from '../components/SideNav.vue'
-import TheHeader from '../components/TheHeader.vue'
+import HeaderBreadcrumb from '../components/HeaderBreadcrumb.vue'
 </script>
 
 <template>
   <!-- <main> -->
-  <the-header></the-header>
+  <header-breadcrumb></header-breadcrumb>
   <side-nav></side-nav>
   <!-- </main> -->
 </template>
