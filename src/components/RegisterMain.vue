@@ -93,10 +93,15 @@
 
     </div>
   </div>
+
+  <!-- <axios-test></axios-test> -->
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+import axios from 'axios'
+// import AxiosTest from '@/components/AxiosTest.vue'
+
 
 const saasData = ref([
   { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-00' },
