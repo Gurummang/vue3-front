@@ -1,5 +1,5 @@
 <template>
-  <header class="w-5/6 float-right">
+  <header>
     <div class="flex items-center justify-between px-4 py-4 bg-white shadow-sm m-6 rounded-lg">
       <div class="flex items-center space-x-4">
         <h1 class="text-2xl font-semibold text-gray-700 px-3 content-center">
