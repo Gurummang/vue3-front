@@ -24,7 +24,7 @@
       <!-- SaaS 연동 섹션 -->
       <div class="mb-6">
         <h2 class="text-3xl font-bold text-gray-800 mb-4">SaaS 연동</h2>
-        <div class="space-x-2">
+        <div class="space-x-4">
           <button 
           class="inline-block rounded border border-orange-500 px-6 py-3 align-text-bottom text-xl font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
           >
@@ -60,7 +60,7 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="(saas, index) in saasData" :key="index">
               <td class="px-6 py-4 whitespace-nowrap">
-                <input type="radio" :checked="index === 4" class="form-radio h-4 w-4" />
+                <input type="radio" name="saas" :checked="index === 4" class="form-radio h-4 w-4" />
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span v-if="saas.status === 'connect'">
