@@ -4,19 +4,19 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">지원하는 SaaS</h3>
-        <p class="text-3xl font-bold">5</p>
+        <p class="text-3xl font-bold">{{ saasData.length }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">연동 SaaS</h3>
-        <p class="text-3xl font-bold">2</p>
+        <p class="text-3xl font-bold">{{ connectedCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">미연동 SaaS</h3>
-        <p class="text-3xl font-bold">3</p>
+        <p class="text-3xl font-bold">{{ unconnectCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">연동 못한 SaaS</h3>
-        <p class="text-3xl font-bold">0</p>
+        <p class="text-3xl font-bold">{{ failConnectCount }}</p>
       </div>
     </div>
 
@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const saasData = ref([
   { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-00' },
@@ -105,6 +105,10 @@ const saasData = ref([
   { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-00' },
   { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-' },
 ]);
+
+const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
+const unconnectCount = computed(() => saasData.value.filter(saas => saas.status === 'unconnect').length);
+const failConnectCount = computed(() => saasData.value.length - connectedCount.value - unconnectCount.value);
 
 const getSaasLogo = (name) => {
   // 이름을 소문자로 변환하고 공백을 제거합니다.
