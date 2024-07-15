@@ -28,7 +28,7 @@
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'AppHeader',
+  name: 'HeaderBreadcrumb',
   setup() {
     const route = useRoute()
 
