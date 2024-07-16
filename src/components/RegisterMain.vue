@@ -27,6 +27,7 @@
         <div class="space-x-4">
           <button 
           class="inline-block rounded border border-orange-500 px-6 py-3 align-text-bottom text-xl font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
+          @click="openModal"
           >
             <v-icon :size="30">mdi-cloud-upload</v-icon> SaaS 연동
           </button>
@@ -90,27 +91,45 @@
           </tbody>
         </table>
       </div>
-
+      <!-- SaaS 테이블 -->
     </div>
   </div>
 
+  <saas-integration-modal :isOpen="isModalOpen" @close="closeModal"></saas-integration-modal>
   <!-- <axios-test></axios-test> -->
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios'
+import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
 // import AxiosTest from '@/components/AxiosTest.vue'
+
+const isModalOpen = ref(false);
+
+const openModal = () => {
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+}
+
+const handleSubmit = (data) => {
+  console.log('SaaS 연동 데이터:', data);
+  // 여기서 연동 로직을 처리합니다.
+};
 
 
 const saasData = ref([
-  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-00' },
-  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-00' },
+  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-00', webbool: true},
+  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-00', webbool: false },
   { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-00' },
   { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-00' },
   { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-' },
 ]);
 
+// 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
 const unconnectCount = computed(() => saasData.value.filter(saas => saas.status === 'unconnect').length);
 const failConnectCount = computed(() => saasData.value.length - connectedCount.value - unconnectCount.value);

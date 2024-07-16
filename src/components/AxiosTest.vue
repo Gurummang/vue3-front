@@ -11,6 +11,12 @@
     </ul>
     <div v-else-if="error">Error: {{ error }}</div>
   </div>
+
+  <div>
+    <h1>내부 axios 테스트</h1>
+    <button @click="internalFetch">Fetch Posts</button>
+  <div>{{ posts }}</div>
+  </div>
 </template>
 
 <script setup>
@@ -34,6 +40,22 @@ const fetchPosts = async () => {
     loading.value = false
   }
 }
+
+
+const internalFetch = async () => {
+  loading.value = true
+  error.value = null
+  try {
+    const response = await axios.post('https://a107-211-212-221-147.ngrok-free.app/api/v1/file/slack/total')
+    posts.value = response.data
+  } catch (err) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+
 
 </script>
 
