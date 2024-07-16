@@ -18,6 +18,7 @@
           <!-- <label for="saas" class="block mb-1">SaaS</label>
           <input type="text" id="saas" v-model="saas" class="w-full p-2 border rounded" readonly /> -->
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
+          <p>{{ selectedSaaSData }}</p>
           <input
             type="text"
             id="saasType"
@@ -113,13 +114,13 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, watch } from 'vue';
+import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
 let isModalOpen = ref(false);
 // 임의의 값 넣기
-let saasType = ref('SSS');
+let saasType = ref(null);
 let registrationDate = ref(getTodayDate());
 let saasAlias = ref('');
 let saasEmail = ref('');
@@ -130,18 +131,18 @@ const agreeToTerms = ref(false);
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true
-  }
+  },
+  selectedSaaSData: Object,
 });
 
-defineEmits(['close'])
+console.log(props.isOpen);
+console.log(props.selectedSaaSData);
 
-// const closeModal = () => {
-//   isModalOpen.value = false;
-// };
+defineEmits(['close'])
 
 const syncSaaS = () => {
   if(!saasType.value) {
@@ -179,7 +180,7 @@ const syncSaaS = () => {
   }
   // Perform the sync action here
   console.log('Syncing SaaS:', {
-    saas: saasType.value,
+    saas: selectedSaaSData.name,
     registrationDate: registrationDate.value,
     saasAlias: saasAlias.value,
     saasEmail: saasEmail.value,

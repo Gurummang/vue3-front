@@ -61,7 +61,14 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="(saas, index) in saasData" :key="index">
               <td class="px-6 py-4 whitespace-nowrap">
-                <input type="radio" name="saas" :checked="index === 4" class="form-radio h-4 w-4" />
+                <input 
+                  type="radio" 
+                  name="saas"
+                  class="form-radio h-4 w-4"
+                  :value="saas"
+                  v-model="selectedSaaS"
+                  @change="handleSelection"
+                />
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span v-if="saas.status === 'connect'">
@@ -95,7 +102,11 @@
     </div>
   </div>
 
-  <saas-integration-modal :isOpen="isModalOpen" @close="closeModal"></saas-integration-modal>
+  <saas-integration-modal 
+    :isOpen="isModalOpen" 
+    :selectedSaaSData="selectedSaaSData"
+    @close="closeModal"
+  ></saas-integration-modal>
   <!-- <axios-test></axios-test> -->
 </template>
 
@@ -106,13 +117,23 @@ import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
 const isModalOpen = ref(false);
+const selectedSaaS = ref(null);
+const selectedSaaSData = ref(null);
 
 const openModal = () => {
-  isModalOpen.value = true;
+  if (selectedSaaS.value) {
+    // 선택된 SaaS의 전체 데이터를 찾아서 저장
+    selectedSaaSData.value = saasData.value.find(saas => saas.name === selectedSaaS.value.name);
+    // alert(selectedSaaSData);
+    isModalOpen.value = true;
+  } else {
+    alert('SaaS를 선택해주세요.');
+  }
 };
 
 const closeModal = () => {
   isModalOpen.value = false;
+  selectedSaaSData.value = null; // 모달을 닫을 때 선택된 데이터 초기화
 }
 
 const handleSubmit = (data) => {
@@ -120,13 +141,17 @@ const handleSubmit = (data) => {
   // 여기서 연동 로직을 처리합니다.
 };
 
+const handleSelection = () => {
+  console.log(selectedSaaS.value);
+};
+
 
 const saasData = ref([
-  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-00', webbool: true},
-  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-00', webbool: false },
-  { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-00' },
-  { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-00' },
-  { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-' },
+  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', whProvide: true},
+  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', whProvide: false},
+  { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', whProvide: false},
+  { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', whProvide: false},
+  { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', whProvide: false},
 ]);
 
 // 통계 수치
