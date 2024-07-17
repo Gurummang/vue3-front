@@ -101,9 +101,9 @@
     </div>
   </div>
 
+  <!-- :selectedSaaS="selectedSaaS" -->
   <saas-integration-modal 
     :isOpen="isModalOpen"
-    :selectedSaaS="selectedSaaS"
     @close="closeModal"
   ></saas-integration-modal>
   <!-- <axios-test></axios-test> -->
@@ -119,11 +119,11 @@ const isModalOpen = ref(false);
 const selectedSaaS = ref(null);
 
 const openModal = () => {
-  if (selectedSaaS.value) {
-    isModalOpen.value = true;
-  } else {
-    alert('SaaS를 선택해주세요.');
-  }
+isModalOpen.value = true;
+  // if (selectedSaaS.value) {
+  // } else {
+  //   alert('SaaS를 선택해주세요.');
+  // }
 };
 
 const closeModal = () => {
