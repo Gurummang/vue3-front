@@ -27,12 +27,13 @@
         <div class="space-x-4">
           <button 
           class="inline-block rounded border border-orange-500 px-6 py-3 align-text-bottom text-xl font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
-          @click="openModal"
+          @click="openIntegrationModal"
           >
             <v-icon :size="30">mdi-cloud-upload</v-icon> SaaS 연동
           </button>
           <button
             class="inline-block rounded border border-indigo-900 px-6 py-3 align-text-bottom text-xl font-bold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
+            @click="openModificationModal"
           >
             <v-icon :size="30">mdi-cloud</v-icon> SaaS 편집
           </button>
@@ -66,7 +67,7 @@
                   name="saas"
                   class="form-radio h-4 w-4"
                   :value="saas"
-                  v-model="selectedSaaS"
+                  v-model="selectedSaas"
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -101,11 +102,16 @@
     </div>
   </div>
 
-  <!-- :selectedSaaS="selectedSaaS" -->
   <saas-integration-modal 
-    :isOpen="isModalOpen"
-    @close="closeModal"
+    :isOpen="isIntegrationModalOpen"
+    @close="closeIntegrationModal"
   ></saas-integration-modal>
+
+  <saas-modification-modal
+    :isOpen="isModificationModalOpen"
+    :selectedSaas="selectedSaas"
+    @close="closeModificationModal"
+  ></saas-modification-modal>
   <!-- <axios-test></axios-test> -->
 </template>
 
@@ -113,21 +119,31 @@
 import { ref, computed } from 'vue';
 import axios from 'axios'
 import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
+import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
-const isModalOpen = ref(false);
-const selectedSaaS = ref(null);
+const isIntegrationModalOpen = ref(false);
+const isModificationModalOpen = ref(false);
+const selectedSaas = ref(null);
 
-const openModal = () => {
-isModalOpen.value = true;
-  // if (selectedSaaS.value) {
-  // } else {
-  //   alert('SaaS를 선택해주세요.');
-  // }
+const openIntegrationModal = () => {
+  isIntegrationModalOpen.value = true;
 };
 
-const closeModal = () => {
-  isModalOpen.value = false;
+const closeIntegrationModal = () => {
+  isIntegrationModalOpen.value = false;
+}
+
+const openModificationModal = () => {
+  if(selectedSaas.value) {
+    isModificationModalOpen.value = true;
+  } else {
+    alert('SaaS를 선택해주세요.');
+  }
+}
+
+const closeModificationModal = () => {
+  isModificationModalOpen.value = false;
   selectedSaaS.value = null;
 }
 

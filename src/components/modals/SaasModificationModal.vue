@@ -18,36 +18,15 @@
           <!-- <label for="saas" class="block mb-1">SaaS</label>
           <input type="text" id="saas" v-model="saas" class="w-full p-2 border rounded" readonly /> -->
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
-          <!-- <input
-            type="text"
-            id="saasType"
-            placeholder="SaaS"
-            :value="props.selectedSaaS.name"
-            class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            readonly
-          /> -->
-          <select name="SaasType"
-            id="SaasType" 
-            size="1" 
-            class="mt-1 p-2.5 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            v-model="saasType"
-          >
-            <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="Jira">Jira</option>
-            <option value="Slack">Slack</option>
-            <option value="O365">O365</option>
-          </select>
-        </div>
-        <!-- <div class="mb-4">
-          <label for="TodayDate" class="block text-lg font-semibold text-gray-700"> 등록 날짜 </label>
           <input
-            type="date"
-            id="TodayDate"
+            type="text"
+            id="SaasType"
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            :value="registrationDate"
+            v-model="saasType"
             readonly
           />
-        </div> -->
+        <!-- v-model="webhookUrl" -->
+        </div>
         <div class="mb-4">
           <!-- <label for="connectionDetails" class="block mb-1">연동 벌칭</label>
           <input type="text" id="connectionDetails" v-model="connectionDetails" class="w-full p-2 border rounded" /> -->
@@ -119,7 +98,7 @@
         </div>
       </div>
       <div class="flex justify-end p-4">
-        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-lg font-semibold">SaaS 연동하기</button>
+        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-lg font-semibold">SaaS 수정하기</button>
       </div>
     </div>
   </div>
@@ -128,11 +107,28 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
-import { getTodayDate } from '@/utils/utils.js'
 
-// 임의의 값 넣기
-const saasType = ref('None');
-const registrationDate = ref(getTodayDate());
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true
+  },
+  selectedSaas: {
+    type: Object,
+    // required: true
+  }
+});
+
+// const saasType = ref(props.selectedSaas.name);
+// const registrationDate = ref(props.selectedSaas.registrationDate);
+// const saasAlias = ref(props.selectedSaas.saasAlias);
+// const saasEmail = ref(props.selectedSaas.saasEmail);
+// const apiKey = ref(props.selectedSaas.apiKey);
+// const webhookUrl = ref(props.selectedSaas.webhookUrl);
+// const agreeToTerms = ref(false);
+
+const saasType = ref('');
+const registrationDate = ref('');
 const saasAlias = ref('');
 const saasEmail = ref('');
 const apiKey = ref('');
@@ -141,18 +137,8 @@ const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
-const selectedSaaS = ref(null);
 
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    required: true
-  },
-  // selectedSaaS: {
-  //   type: Object,
-  //   required: true
-  // }
-});
+// console.log(props.selectedSaas);
 
 defineEmits(['close']);
 
@@ -161,10 +147,6 @@ const syncSaaS = () => {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
   }
-  // if(!TodayDate.value) {
-  //   alert('날짜가 정의되지 않았습니다.');
-  //   return;
-  // }
   if(!SaasAlias.value) {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
@@ -189,8 +171,7 @@ const syncSaaS = () => {
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
-    saasType: saasType.value,
-    // registrationDate: registrationDate.value,
+    saas: saasType.value,
     saasAlias: saasAlias.value,
     saasEmail: saasEmail.value,
     apiKey: apiKey.value,
