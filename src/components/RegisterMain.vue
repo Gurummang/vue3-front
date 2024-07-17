@@ -67,7 +67,6 @@
                   class="form-radio h-4 w-4"
                   :value="saas"
                   v-model="selectedSaaS"
-                  @change="handleSelection"
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -103,8 +102,8 @@
   </div>
 
   <saas-integration-modal 
-    :isOpen="isModalOpen" 
-    :selectedSaaSData="selectedSaaSData"
+    :isOpen="isModalOpen"
+    :selectedSaaS="selectedSaaS"
     @close="closeModal"
   ></saas-integration-modal>
   <!-- <axios-test></axios-test> -->
@@ -118,13 +117,9 @@ import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
 
 const isModalOpen = ref(false);
 const selectedSaaS = ref(null);
-const selectedSaaSData = ref(null);
 
 const openModal = () => {
   if (selectedSaaS.value) {
-    // 선택된 SaaS의 전체 데이터를 찾아서 저장
-    selectedSaaSData.value = saasData.value.find(saas => saas.name === selectedSaaS.value.name);
-    // alert(selectedSaaSData);
     isModalOpen.value = true;
   } else {
     alert('SaaS를 선택해주세요.');
@@ -133,7 +128,7 @@ const openModal = () => {
 
 const closeModal = () => {
   isModalOpen.value = false;
-  selectedSaaSData.value = null; // 모달을 닫을 때 선택된 데이터 초기화
+  selectedSaaS.value = null;
 }
 
 const handleSubmit = (data) => {

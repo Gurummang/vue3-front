@@ -18,12 +18,11 @@
           <!-- <label for="saas" class="block mb-1">SaaS</label>
           <input type="text" id="saas" v-model="saas" class="w-full p-2 border rounded" readonly /> -->
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
-          <p>{{ selectedSaaSData }}</p>
           <input
             type="text"
             id="saasType"
             placeholder="SaaS"
-            :value="saasType"
+            :value="props.selectedSaaS.name"
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
             readonly
           />
@@ -118,9 +117,9 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
-let isModalOpen = ref(false);
+// let isModalOpen = ref(fals
 // 임의의 값 넣기
-let saasType = ref(null);
+let saasType = ref('ssss');
 let registrationDate = ref(getTodayDate());
 let saasAlias = ref('');
 let saasEmail = ref('');
@@ -130,17 +129,21 @@ const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
+const selectedSaaS = ref(null);
 
 const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true
   },
-  selectedSaaSData: Object,
+  selectedSaaS: {
+    type: Object,
+    required: true
+  }
 });
 
 console.log(props.isOpen);
-console.log(props.selectedSaaSData);
+console.log(props.selectedSaaS);
 
 defineEmits(['close'])
 
@@ -178,13 +181,14 @@ const syncSaaS = () => {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
-  // Perform the sync action here
+  // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
-    saas: selectedSaaSData.name,
+    saas: props.selectedSaaS.name,
     registrationDate: registrationDate.value,
     saasAlias: saasAlias.value,
     saasEmail: saasEmail.value,
     apiKey: apiKey.value,
+    whProvide: props.selectedSaaS.whProvide,
     webhookUrl: webhookUrl.value,
   });
 };
@@ -193,7 +197,6 @@ const validateAdminEmail = () => {
   isValidEmail.value = validateEmail(saasEmail.value);
 };
 
-// 이메일 입력 필드가 변경될 때마다 유효성 검사 실행
 watch(saasEmail, validateAdminEmail);
 
 const togglePasswordVisibility = () => {
