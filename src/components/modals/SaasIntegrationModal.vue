@@ -18,14 +18,25 @@
           <!-- <label for="saas" class="block mb-1">SaaS</label>
           <input type="text" id="saas" v-model="saas" class="w-full p-2 border rounded" readonly /> -->
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
-          <input
+          <!-- <input
             type="text"
             id="saasType"
             placeholder="SaaS"
             :value="props.selectedSaaS.name"
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
             readonly
-          />
+          /> -->
+          <select name="SaasType"
+            id="SaasType" 
+            size="1" 
+            class="mt-1 p-2.5 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
+            v-model="saasType"
+          >
+            <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
+            <option value="Jira">Jira</option>
+            <option value="Slack">Slack</option>
+            <option value="O365">O365</option>
+          </select>
         </div>
         <div class="mb-4">
           <!-- <label for="registrationDate" class="block mb-1">등록날짜</label>
@@ -95,8 +106,10 @@
             placeholder="위 SaaS는 Webhook URL을 지원하지 않습니다."
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
             v-model="webhookUrl"
+            
             readonly
           />
+        <!-- v-model="webhookUrl" -->
         </div>
         <div class="mb-4">
           <label class="inline-flex items-center">
@@ -117,14 +130,13 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
-// let isModalOpen = ref(fals
 // 임의의 값 넣기
-let saasType = ref('ssss');
-let registrationDate = ref(getTodayDate());
-let saasAlias = ref('');
-let saasEmail = ref('');
-let apiKey = ref('');
-let webhookUrl = ref('');
+const saasType = ref('None');
+const registrationDate = ref(getTodayDate());
+const saasAlias = ref('');
+const saasEmail = ref('');
+const apiKey = ref('');
+const webhookUrl = ref('');
 const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
@@ -136,30 +148,24 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  selectedSaaS: {
-    type: Object,
-    required: true
-  }
+  // selectedSaaS: {
+  //   type: Object,
+  //   required: true
+  // }
 });
 
-console.log(props.isOpen);
-console.log(props.selectedSaaS);
-
-defineEmits(['close'])
+defineEmits(['close']);
 
 const syncSaaS = () => {
-  if(!saasType.value) {
-    console.log(saasType.value);
+  if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
   }
   if(!TodayDate.value) {
-    console.log(TodayDate.value);
     alert('날짜가 정의되지 않았습니다.');
     return;
   }
   if(!SaasAlias.value) {
-    console.log(SaasAlias.value);
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
@@ -173,7 +179,6 @@ const syncSaaS = () => {
     return;
   }
   if(!ApiKey.value) {
-    console.log(ApiKey.value);
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
@@ -181,14 +186,14 @@ const syncSaaS = () => {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
+
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
-    saas: props.selectedSaaS.name,
+    saas: saasType.value,
     registrationDate: registrationDate.value,
     saasAlias: saasAlias.value,
     saasEmail: saasEmail.value,
     apiKey: apiKey.value,
-    whProvide: props.selectedSaaS.whProvide,
     webhookUrl: webhookUrl.value,
   });
 };
@@ -197,10 +202,27 @@ const validateAdminEmail = () => {
   isValidEmail.value = validateEmail(saasEmail.value);
 };
 
-watch(saasEmail, validateAdminEmail);
-
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
+
+const validateWebhook = () => {
+  switch(saasType.value) {
+    case 'Jira':
+      webhookUrl.value = 'Jira-uuid';
+      break;
+
+    case 'Slack':
+      webhookUrl.value = 'Slack-uuid';
+      break;
+
+    default:
+      webhookUrl.value = '';
+      break;
+  }
+}
+
+watch(saasEmail, validateAdminEmail);
+watch(saasType, validateWebhook);
 
 </script>
