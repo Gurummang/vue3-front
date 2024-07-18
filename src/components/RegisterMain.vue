@@ -3,16 +3,16 @@
     <!-- SaaS 통계 -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">지원하는 SaaS</h3>
+        <h3 class="text-2xl font-semibold text-gray-700">총 연동 SaaS</h3>
         <p class="text-3xl font-bold">{{ saasData.length }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">연동 SaaS</h3>
+        <h3 class="text-2xl font-semibold text-gray-700">연동된 SaaS</h3>
         <p class="text-3xl font-bold">{{ connectedCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">미연동 SaaS</h3>
-        <p class="text-3xl font-bold">{{ unconnectCount }}</p>
+        <h3 class="text-2xl font-semibold text-gray-700">연동 중인 SaaS</h3>
+        <p class="text-3xl font-bold">{{ connectingCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">연동 못한 SaaS</h3>
@@ -152,23 +152,18 @@ const handleSubmit = (data) => {
   // 여기서 연동 로직을 처리합니다.
 };
 
-const handleSelection = () => {
-  console.log(selectedSaaS.value);
-};
-
-
 const saasData = ref([
   { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', apiKey: '1234'},
   { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', apiKey: '2345'},
   { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', apiKey: '9876'},
-  { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
-  { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
+  { name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
+  { name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
 ]);
 
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
-const unconnectCount = computed(() => saasData.value.filter(saas => saas.status === 'unconnect').length);
-const failConnectCount = computed(() => saasData.value.length - connectedCount.value - unconnectCount.value);
+const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
 
 const getSaasLogo = (name) => {
   // 이름을 소문자로 변환하고 공백을 제거합니다.
