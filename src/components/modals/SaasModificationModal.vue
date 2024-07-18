@@ -1,8 +1,5 @@
 <template>
-  <div 
-    v-if="isOpen" 
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-  >
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-lg">
       <div class="flex justify-end p-3">
         <button @click="$emit('close')" class="text-gray-400 hover:text-black">
@@ -109,36 +106,31 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
 
 const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    required: true
-  },
   selectedSaas: {
     type: Object,
     // required: true
   }
 });
 
-// const saasType = ref(props.selectedSaas.name);
-// const registrationDate = ref(props.selectedSaas.registrationDate);
-// const saasAlias = ref(props.selectedSaas.saasAlias);
-// const saasEmail = ref(props.selectedSaas.saasEmail);
-// const apiKey = ref(props.selectedSaas.apiKey);
-// const webhookUrl = ref(props.selectedSaas.webhookUrl);
-// const agreeToTerms = ref(false);
-
-const saasType = ref('');
-const registrationDate = ref('');
-const saasAlias = ref('');
-const saasEmail = ref('');
-const apiKey = ref('');
-const webhookUrl = ref('');
+const saasType = ref(props.selectedSaas.name);
+const registrationDate = ref(props.selectedSaas.registrationDate);
+const saasAlias = ref(props.selectedSaas.saasAlias);
+const saasEmail = ref(props.selectedSaas.saasEmail);
+const apiKey = ref(props.selectedSaas.apiKey);
+const webhookUrl = ref(props.selectedSaas.webhookUrl);
 const agreeToTerms = ref(false);
+
+// const saasType = ref(props.selectedSaas.name);
+// const registrationDate = ref('');
+// const saasAlias = ref('');
+// const saasEmail = ref('');
+// const apiKey = ref('');
+// const webhookUrl = ref('');
+// const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 
-// console.log(props.selectedSaas);
 
 defineEmits(['close']);
 
@@ -168,6 +160,7 @@ const syncSaaS = () => {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
+  console.log(props.selectedSaas);
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {

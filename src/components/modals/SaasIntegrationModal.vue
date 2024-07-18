@@ -1,8 +1,5 @@
 <template>
-  <div 
-    v-if="isOpen" 
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-  >
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-lg">
       <div class="flex justify-end p-3">
         <button @click="$emit('close')" class="text-gray-400 hover:text-black">
@@ -142,17 +139,6 @@ const agreeToTerms = ref(false);
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 const selectedSaaS = ref(null);
-
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    required: true
-  },
-  // selectedSaaS: {
-  //   type: Object,
-  //   required: true
-  // }
-});
 
 defineEmits(['close']);
 

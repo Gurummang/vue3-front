@@ -103,12 +103,12 @@
   </div>
 
   <saas-integration-modal 
-    :isOpen="isIntegrationModalOpen"
+    v-if="isIntegrationModalOpen"
     @close="closeIntegrationModal"
   ></saas-integration-modal>
 
   <saas-modification-modal
-    :isOpen="isModificationModalOpen"
+    v-if="isModificationModalOpen"
     :selectedSaas="selectedSaas"
     @close="closeModificationModal"
   ></saas-modification-modal>
@@ -144,7 +144,7 @@ const openModificationModal = () => {
 
 const closeModificationModal = () => {
   isModificationModalOpen.value = false;
-  selectedSaaS.value = null;
+  selectedSaas.value = null;
 }
 
 const handleSubmit = (data) => {
