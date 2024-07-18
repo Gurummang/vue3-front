@@ -90,7 +90,7 @@
         <div class="mb-4">
           <label class="inline-flex items-center">
             <input type="checkbox" v-model="agreeToTerms" class="form-checkbox w-5 h-5" />
-            <span class="ml-2 text-base">위 SaaS 연동을 동의하겠습니다.</span>
+            <span class="ml-2 text-base">위 수정한 값으로 SaaS 연동을 동의하겠습니다.</span>
           </label>
         </div>
       </div>
@@ -108,25 +108,19 @@ import { validateEmail } from '@/utils/validation.js'
 const props = defineProps({
   selectedSaas: {
     type: Object,
-    // required: true
+    required: true
   }
 });
+
+console.log(props.selectedSaas);
 
 const saasType = ref(props.selectedSaas.name);
 const registrationDate = ref(props.selectedSaas.registrationDate);
 const saasAlias = ref(props.selectedSaas.saasAlias);
-const saasEmail = ref(props.selectedSaas.saasEmail);
+const saasEmail = ref(props.selectedSaas.adminAccount);
 const apiKey = ref(props.selectedSaas.apiKey);
 const webhookUrl = ref(props.selectedSaas.webhookUrl);
 const agreeToTerms = ref(false);
-
-// const saasType = ref(props.selectedSaas.name);
-// const registrationDate = ref('');
-// const saasAlias = ref('');
-// const saasEmail = ref('');
-// const apiKey = ref('');
-// const webhookUrl = ref('');
-// const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
