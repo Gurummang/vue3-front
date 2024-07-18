@@ -3,16 +3,16 @@
     <!-- SaaS 통계 -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">지원하는 SaaS</h3>
+        <h3 class="text-2xl font-semibold text-gray-700">총 연동 SaaS</h3>
         <p class="text-3xl font-bold">{{ saasData.length }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">연동 SaaS</h3>
+        <h3 class="text-2xl font-semibold text-gray-700">연동된 SaaS</h3>
         <p class="text-3xl font-bold">{{ connectedCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-2xl font-semibold text-gray-700">미연동 SaaS</h3>
-        <p class="text-3xl font-bold">{{ unconnectCount }}</p>
+        <h3 class="text-2xl font-semibold text-gray-700">연동 중인 SaaS</h3>
+        <p class="text-3xl font-bold">{{ connectingCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
         <h3 class="text-2xl font-semibold text-gray-700">연동 못한 SaaS</h3>
@@ -27,12 +27,13 @@
         <div class="space-x-4">
           <button 
           class="inline-block rounded border border-orange-500 px-6 py-3 align-text-bottom text-xl font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
-          @click="openModal"
+          @click="openIntegrationModal"
           >
             <v-icon :size="30">mdi-cloud-upload</v-icon> SaaS 연동
           </button>
           <button
             class="inline-block rounded border border-indigo-900 px-6 py-3 align-text-bottom text-xl font-bold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
+            @click="openModificationModal"
           >
             <v-icon :size="30">mdi-cloud</v-icon> SaaS 편집
           </button>
@@ -66,7 +67,7 @@
                   name="saas"
                   class="form-radio h-4 w-4"
                   :value="saas"
-                  v-model="selectedSaaS"
+                  v-model="selectedSaas"
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -85,7 +86,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="h-8 w-8 rounded-full mr-2" :src="getSaasLogo(saas.name)" :alt="saas.name" />
+                  <img class="h-8 w-8 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
                   <span class="text-lg font-bold"> {{ saas.name }}</span>
                 </div>
               </td>
@@ -101,11 +102,16 @@
     </div>
   </div>
 
-  <!-- :selectedSaaS="selectedSaaS" -->
   <saas-integration-modal 
-    :isOpen="isModalOpen"
-    @close="closeModal"
+    v-if="isIntegrationModalOpen"
+    @close="closeIntegrationModal"
   ></saas-integration-modal>
+
+  <saas-modification-modal
+    v-if="isModificationModalOpen"
+    :selectedSaas="selectedSaas"
+    @close="closeModificationModal"
+  ></saas-modification-modal>
   <!-- <axios-test></axios-test> -->
 </template>
 
@@ -113,22 +119,33 @@
 import { ref, computed } from 'vue';
 import axios from 'axios'
 import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
+import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
+import { getSaasImg } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
-const isModalOpen = ref(false);
-const selectedSaaS = ref(null);
+const isIntegrationModalOpen = ref(false);
+const isModificationModalOpen = ref(false);
+const selectedSaas = ref(null);
 
-const openModal = () => {
-isModalOpen.value = true;
-  // if (selectedSaaS.value) {
-  // } else {
-  //   alert('SaaS를 선택해주세요.');
-  // }
+const openIntegrationModal = () => {
+  isIntegrationModalOpen.value = true;
 };
 
-const closeModal = () => {
-  isModalOpen.value = false;
-  selectedSaaS.value = null;
+const closeIntegrationModal = () => {
+  isIntegrationModalOpen.value = false;
+}
+
+const openModificationModal = () => {
+  if(selectedSaas.value) {
+    isModificationModalOpen.value = true;
+  } else {
+    alert('SaaS를 선택해주세요.');
+  }
+}
+
+const closeModificationModal = () => {
+  isModificationModalOpen.value = false;
+  selectedSaas.value = null;
 }
 
 const handleSubmit = (data) => {
@@ -136,28 +153,17 @@ const handleSubmit = (data) => {
   // 여기서 연동 로직을 처리합니다.
 };
 
-const handleSelection = () => {
-  console.log(selectedSaaS.value);
-};
-
-
 const saasData = ref([
-  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', whProvide: true},
-  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', whProvide: false},
-  { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', whProvide: false},
-  { name: 'Jira', status: 'unconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', whProvide: false},
-  { name: 'Jira', status: 'error', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', whProvide: false},
+  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', apiKey: '1234'},
+  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', apiKey: '2345'},
+  { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', apiKey: '9876'},
+  { name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
+  { name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
 ]);
 
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
-const unconnectCount = computed(() => saasData.value.filter(saas => saas.status === 'unconnect').length);
-const failConnectCount = computed(() => saasData.value.length - connectedCount.value - unconnectCount.value);
+const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
 
-const getSaasLogo = (name) => {
-  // 이름을 소문자로 변환하고 공백을 제거합니다.
-  const formattedName = name.toLowerCase().replace(/\s+/g, '');
-  // 동적으로 이미지 경로를 생성합니다.
-  return `./src/assets/${formattedName}.png`;
-};
 </script>

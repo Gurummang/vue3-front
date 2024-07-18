@@ -12,25 +12,13 @@
       <div class="p-4">
         <div class="mb-4">
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
-          <!-- <input
+          <input
             type="text"
-            id="saasType"
-            placeholder="SaaS"
-            :value="props.selectedSaaS.name"
+            id="SaasType"
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            readonly
-          /> -->
-          <select name="SaasType"
-            id="SaasType" 
-            size="1" 
-            class="mt-1 p-2.5 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
             v-model="saasType"
-          >
-            <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="Jira">Jira</option>
-            <option value="Slack">Slack</option>
-            <option value="O365">O365</option>
-          </select>
+            readonly
+          />
         </div>
         <div class="mb-4">
           <label for="SaasAlias" class="block text-lg font-semibold text-gray-700"> 연동 별칭 </label>
@@ -84,18 +72,19 @@
             placeholder="위 SaaS는 Webhook URL을 지원하지 않습니다."
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
             v-model="webhookUrl"
+            
             readonly
           />
         </div>
         <div class="mb-4">
           <label class="inline-flex items-center">
             <input type="checkbox" v-model="agreeToTerms" class="form-checkbox w-5 h-5" />
-            <span class="ml-2 text-base">위 SaaS 연동을 동의하겠습니다.</span>
+            <span class="ml-2 text-base">위 수정한 값으로 SaaS 연동을 동의하겠습니다.</span>
           </label>
         </div>
       </div>
       <div class="flex justify-end p-4">
-        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-lg font-semibold">SaaS 연동하기</button>
+        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-lg font-semibold">SaaS 수정하기</button>
       </div>
     </div>
   </div>
@@ -104,18 +93,24 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
-import { getTodayDate } from '@/utils/utils.js'
 
-// 임의의 값 넣기
-const saasType = ref('None');
-const saasAlias = ref('');
-const saasEmail = ref('');
-const webhookUrl = ref('');
+const props = defineProps({
+  selectedSaas: {
+    type: Object,
+    required: true
+  }
+});
+
+const saasType = ref(props.selectedSaas.name);
+const saasAlias = ref(props.selectedSaas.saasAlias);
+const saasEmail = ref(props.selectedSaas.adminAccount);
+const apiKey = ref(props.selectedSaas.apiKey);
+const webhookUrl = ref(props.selectedSaas.webhookUrl);
 const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
-const selectedSaaS = ref(null);
+
 
 defineEmits(['close']);
 
@@ -137,7 +132,7 @@ const syncSaaS = () => {
     alert('이메일 형식이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
-  if(!v.value) {
+  if(!ApiKey.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
@@ -148,7 +143,7 @@ const syncSaaS = () => {
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
-    saasType: saasType.value,
+    saas: saasType.value,
     saasAlias: saasAlias.value,
     saasEmail: saasEmail.value,
     apiKey: apiKey.value,
