@@ -86,7 +86,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="h-8 w-8 rounded-full mr-2" :src="getSaasLogo(saas.name)" :alt="saas.name" />
+                  <img class="h-8 w-8 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
                   <span class="text-lg font-bold"> {{ saas.name }}</span>
                 </div>
               </td>
@@ -120,6 +120,7 @@ import { ref, computed } from 'vue';
 import axios from 'axios'
 import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
+import { getSaasImg } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
 const isIntegrationModalOpen = ref(false);
@@ -165,10 +166,4 @@ const connectedCount = computed(() => saasData.value.filter(saas => saas.status 
 const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
 const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
 
-const getSaasLogo = (name) => {
-  // 이름을 소문자로 변환하고 공백을 제거합니다.
-  const formattedName = name.toLowerCase().replace(/\s+/g, '');
-  // 동적으로 이미지 경로를 생성합니다.
-  return `./src/assets/${formattedName}.png`;
-};
 </script>

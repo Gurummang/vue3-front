@@ -7,13 +7,10 @@
         </button>
       </div>
       <div class="flex justify-center p-4">
-        <!-- <div class="w-24 h-24 bg-gray-200"></div> -->
         <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="w-1/4 h-1/4 object-cover rounded-full">
       </div>
       <div class="p-4">
         <div class="mb-4">
-          <!-- <label for="saas" class="block mb-1">SaaS</label>
-          <input type="text" id="saas" v-model="saas" class="w-full p-2 border rounded" readonly /> -->
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
           <input
             type="text"
@@ -22,11 +19,8 @@
             v-model="saasType"
             readonly
           />
-        <!-- v-model="webhookUrl" -->
         </div>
         <div class="mb-4">
-          <!-- <label for="connectionDetails" class="block mb-1">연동 벌칭</label>
-          <input type="text" id="connectionDetails" v-model="connectionDetails" class="w-full p-2 border rounded" /> -->
           <label for="SaasAlias" class="block text-lg font-semibold text-gray-700"> 연동 별칭 </label>
           <input
             type="text"
@@ -37,8 +31,6 @@
           />
         </div>
         <div class="mb-4">
-          <!-- <label for="adminEmail" class="block mb-1">SaaS 관리자 이메일</label>
-          <input type="email" id="adminEmail" v-model="adminEmail" class="w-full p-2 border rounded" /> -->
           <label for="SaaSEmail" class="block text-lg font-semibold text-gray-700"> SaaS 관리자 이메일 </label>
           <input
             type="email"
@@ -73,8 +65,6 @@
           </div>
         </div>  
         <div class="mb-4">
-          <!-- <label for="webhookUrl" class="block mb-1">Webhook URL</label>
-          <input type="url" id="webhookUrl" v-model="webhookUrl" class="w-full p-2 border rounded" /> -->
           <label for="WebhookUrl" class="block text-lg font-semibold text-gray-700"> Webhhook URL </label>
           <input
             type="text"
@@ -85,7 +75,6 @@
             
             readonly
           />
-        <!-- v-model="webhookUrl" -->
         </div>
         <div class="mb-4">
           <label class="inline-flex items-center">
@@ -112,10 +101,7 @@ const props = defineProps({
   }
 });
 
-console.log(props.selectedSaas);
-
 const saasType = ref(props.selectedSaas.name);
-const registrationDate = ref(props.selectedSaas.registrationDate);
 const saasAlias = ref(props.selectedSaas.saasAlias);
 const saasEmail = ref(props.selectedSaas.adminAccount);
 const apiKey = ref(props.selectedSaas.apiKey);
@@ -154,7 +140,6 @@ const syncSaaS = () => {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
-  console.log(props.selectedSaas);
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
