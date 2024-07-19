@@ -27,7 +27,7 @@
         <div class="space-x-4">
           <button 
           class="inline-block rounded border border-orange-500 px-6 py-3 align-text-bottom text-xl font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
-          @click="openIntegrationModal"
+          @click="openconnectModal"
           >
             <v-icon :size="30">mdi-cloud-upload</v-icon> SaaS 연동
           </button>
@@ -94,7 +94,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.adminAccount }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.webhookUrl }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.saasAlias }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.integrationDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.connectDate }}</td>
             </tr>
           </tbody>
         </table>
@@ -103,10 +103,10 @@
     </div>
   </div>
 
-  <saas-integration-modal 
-    v-if="isIntegrationModalOpen"
-    @close="closeIntegrationModal"
-  ></saas-integration-modal>
+  <saas-connect-modal 
+    v-if="isconnectModalOpen"
+    @close="closeconnectModal"
+  ></saas-connect-modal>
 
   <saas-modification-modal
     v-if="isModificationModalOpen"
@@ -125,23 +125,23 @@
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios'
-import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
+import SaasConnectModal from '@/components/modals/SaasconnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
 import { getSaasImg } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
-const isIntegrationModalOpen = ref(false);
+const isconnectModalOpen = ref(false);
 const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
-const openIntegrationModal = () => {
-  isIntegrationModalOpen.value = true;
+const openconnectModal = () => {
+  isconnectModalOpen.value = true;
 };
 
-const closeIntegrationModal = () => {
-  isIntegrationModalOpen.value = false;
+const closeconnectModal = () => {
+  isconnectModalOpen.value = false;
 }
 
 const openModificationModal = () => {
@@ -176,11 +176,11 @@ const handleSubmit = (data) => {
 };
 
 const saasData = ref([
-  { id: 1, name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', apiKey: '1234'},
-  { id: 2, name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', apiKey: '2345'},
-  { id: 3, name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', apiKey: '9876'},
-  { id: 4, name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
-  { id: 5, name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
+  { id: 1, name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', connectDate: '2024-00-01', apiKey: '1234'},
+  { id: 2, name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', connectDate: '2024-00-02', apiKey: '2345'},
+  { id: 3, name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', connectDate: '2024-00-03', apiKey: '9876'},
+  { id: 4, name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', connectDate: '2024-00-04', apiKey: ''},
+  { id: 5, name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', connectDate: '-', apiKey: ''},
 ]);
 
 // 통계 수치
