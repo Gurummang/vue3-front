@@ -11,7 +11,7 @@
           <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="w-1/4 h-1/4 object-cover rounded-full">
         </div>
 
-        <p class="text-xl text-red-700 font-bold text-center mb-4">SaaS 연동 중에 에러가 발생했습니다.</p>
+        <p class="text-xl text-red-700 font-bold text-center mb-4">SaaS {{ errorType }} 중에 에러가 발생했습니다.</p>
         <p class="text-lg text-black text-center mb-4">Error Code : {{ errorCode }}</p>
 
         <div class="flex justify-end pt-4">
@@ -31,10 +31,14 @@ import { ref } from 'vue'
 import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
+  errorType: {
+    type: String,
+    required: true
+  },
   errorCode: {
     type: Number,
     required: true
-  }
+  },
 });
 
 const emit = defineEmits(['close'])

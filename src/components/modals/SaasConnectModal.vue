@@ -92,16 +92,17 @@
     </div>
   </div>
 
-  <saas-connect-error-modal
-    v-if="isConnectErrorModalOpen"
+  <saas-error-modal
+    v-if="isErrorModalOpen"
     :errorCode="errorCode"
-    @close="closeConnectErrorModal"
-  ></saas-connect-error-modal>
+    :errorType="'연동'"
+    @close="closeErrorModal"
+  ></saas-error-modal>
 </template>
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
-import saasConnectErrorModal from '@/components/modals/SaasConnectErrorModal.vue'
+import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
@@ -118,15 +119,15 @@ const agreeToTerms = ref(false);
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 const selectedSaaS = ref(null);
-const isConnectErrorModalOpen = ref(false);
+const isErrorModalOpen = ref(false);
 const errorCode = ref(null);
 
-const openConnectErrorModal = async() => {
-  isConnectErrorModalOpen.value = true;
+const openErrorModal = () => {
+  isErrorModalOpen.value = true;
 };
 
-const closeConnectErrorModal = () => {
-  isConnectErrorModalOpen.value = false;
+const closeErrorModal = () => {
+  isErrorModalOpen.value = false;
 }
 
 const syncSaaS = () => {
@@ -168,8 +169,8 @@ const syncSaaS = () => {
   const check = true;
   if(check) {
     errorCode.value = 501;
-    openConnectErrorModal();
-    watch(isConnectErrorModalOpen, (afterValue, beforeValue) => {
+    openErrorModal();
+    watch(isErrorModalOpen, (afterValue, beforeValue) => {
       if (afterValue === false) {
         emit('close');
       }

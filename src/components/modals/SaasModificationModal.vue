@@ -88,10 +88,19 @@
       </div>
     </div>
   </div>
+
+  <saas-error-modal
+    v-if="isErrorModalOpen"
+    :errorCode="errorCode"
+    :errorType="'편집'"
+    @close="closeErrorModal"
+  ></saas-error-modal>
+
 </template>
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
+import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 
 const props = defineProps({
@@ -112,7 +121,16 @@ const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
+const isErrorModalOpen = ref(false);
+const errorCode = ref(null);
 
+const openErrorModal = () => {
+  isErrorModalOpen.value = true;
+};
+
+const closeErrorModal = () => {
+  isErrorModalOpen.value = false;
+}
 
 const syncSaaS = () => {
   if(!saasType.value || saasType.value === 'None') {
@@ -150,7 +168,20 @@ const syncSaaS = () => {
     webhookUrl: webhookUrl.value,
   });
 
-  emit('close');
+  // 테스트 에러 강제 출력 
+  const check = true;
+  if(check) {
+    errorCode.value = 601;
+    openErrorModal();
+    watch(isErrorModalOpen, (afterValue, beforeValue) => {
+      if (afterValue === false) {
+        emit('close');
+      }
+    });
+  }
+  else {
+    emit('close');
+  }
 };
 
 const validateAdminEmail = () => {
