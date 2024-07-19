@@ -39,6 +39,7 @@
           </button>
           <button
             class="inline-block rounded border border-rose-600 px-6 py-3 align-text-bottom text-xl font-bold text-rose-600 hover:bg-rose-600 hover:text-white active:bg-rose-600"
+            @click="openUnconnectModal"
           >
             <v-icon :size="30">mdi-cloud-off</v-icon> SaaS 해제
           </button>
@@ -112,6 +113,12 @@
     :selectedSaas="selectedSaas"
     @close="closeModificationModal"
   ></saas-modification-modal>
+
+  <saas-unconnect-modal
+    v-if="isUnconnectModalOpen"
+    :selectedSaas="selectedSaas"
+    @close="closeUnconnectModal"
+  ></saas-unconnect-modal>
   <!-- <axios-test></axios-test> -->
 </template>
 
@@ -120,11 +127,13 @@ import { ref, computed } from 'vue';
 import axios from 'axios'
 import SaasIntegrationModal from '@/components/modals/SaasIntegrationModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
+import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
 import { getSaasImg } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
 const isIntegrationModalOpen = ref(false);
 const isModificationModalOpen = ref(false);
+const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
 const openIntegrationModal = () => {
@@ -148,17 +157,30 @@ const closeModificationModal = () => {
   selectedSaas.value = null;
 }
 
+const openUnconnectModal = () => {
+  if(selectedSaas.value) {
+    isUnconnectModalOpen.value = true;
+  } else {
+    alert('해제할 SaaS를 선택해주세요.');
+  }
+};
+
+const closeUnconnectModal = () => {
+  isUnconnectModalOpen.value = false;
+  selectedSaas.value = null;
+}
+
 const handleSubmit = (data) => {
   console.log('SaaS 연동 데이터:', data);
   // 여기서 연동 로직을 처리합니다.
 };
 
 const saasData = ref([
-  { name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', apiKey: '1234'},
-  { name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', apiKey: '2345'},
-  { name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', apiKey: '9876'},
-  { name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
-  { name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
+  { id: 1, name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', integrationDate: '2024-00-01', apiKey: '1234'},
+  { id: 2, name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', integrationDate: '2024-00-02', apiKey: '2345'},
+  { id: 3, name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', integrationDate: '2024-00-03', apiKey: '9876'},
+  { id: 4, name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', integrationDate: '2024-00-04', apiKey: ''},
+  { id: 5, name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', integrationDate: '-', apiKey: ''},
 ]);
 
 // 통계 수치
