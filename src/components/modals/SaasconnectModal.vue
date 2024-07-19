@@ -121,7 +121,7 @@ const selectedSaaS = ref(null);
 const isConnectErrorModalOpen = ref(false);
 const errorCode = ref(null);
 
-const openConnectErrorModal = () => {
+const openConnectErrorModal = async() => {
   isConnectErrorModalOpen.value = true;
 };
 
@@ -164,10 +164,16 @@ const syncSaaS = () => {
     webhookUrl: webhookUrl.value,
   });
 
-  if(true) {
+  // 테스트 에러 강제 출력 
+  const check = true;
+  if(check) {
     errorCode.value = 501;
     openConnectErrorModal();
-    // emit('close');
+    watch(isConnectErrorModalOpen, (afterValue, beforeValue) => {
+      if (afterValue === false) {
+        emit('close');
+      }
+    });
   }
   else {
     emit('close');
