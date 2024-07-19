@@ -27,8 +27,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   errorType: {
@@ -42,8 +41,4 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close'])
-
-// emit('close');
-
-const confirmed = ref(false)
 </script>
