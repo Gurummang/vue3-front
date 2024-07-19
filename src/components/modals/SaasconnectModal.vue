@@ -92,16 +92,17 @@
     </div>
   </div>
 
-  <saas-connect-error-modal
+  <saas-error-modal
     v-if="isConnectErrorModalOpen"
     :errorCode="errorCode"
+    :errorType="'연동'"
     @close="closeConnectErrorModal"
-  ></saas-connect-error-modal>
+  ></saas-error-modal>
 </template>
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
-import saasConnectErrorModal from '@/components/modals/SaasConnectErrorModal.vue'
+import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
