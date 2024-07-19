@@ -101,6 +101,8 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['close']);
+
 const saasType = ref(props.selectedSaas.name);
 const saasAlias = ref(props.selectedSaas.saasAlias);
 const saasEmail = ref(props.selectedSaas.adminAccount);
@@ -111,8 +113,6 @@ const agreeToTerms = ref(false);
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 
-
-defineEmits(['close']);
 
 const syncSaaS = () => {
   if(!saasType.value || saasType.value === 'None') {
@@ -149,6 +149,8 @@ const syncSaaS = () => {
     apiKey: apiKey.value,
     webhookUrl: webhookUrl.value,
   });
+
+  emit('close');
 };
 
 const validateAdminEmail = () => {

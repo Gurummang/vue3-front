@@ -106,18 +106,19 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
+const emit = defineEmits(['close']);
+
 // 임의의 값 넣기
 const saasType = ref('None');
 const saasAlias = ref('');
 const saasEmail = ref('');
 const webhookUrl = ref('');
+const apiKey = ref('');
 const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 const selectedSaaS = ref(null);
-
-defineEmits(['close']);
 
 const syncSaaS = () => {
   if(!saasType.value || saasType.value === 'None') {
@@ -137,7 +138,7 @@ const syncSaaS = () => {
     alert('이메일 형식이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
-  if(!v.value) {
+  if(!apiKey.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
@@ -154,6 +155,8 @@ const syncSaaS = () => {
     apiKey: apiKey.value,
     webhookUrl: webhookUrl.value,
   });
+
+  emit('close');
 };
 
 const validateAdminEmail = () => {
