@@ -91,10 +91,10 @@
                   <span class="text-lg font-bold"> {{ saas.name }}</span>
                 </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.adminAccount }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.adminEmail }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.webhookUrl }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.saasAlias }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.connectDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.alias }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-lg">{{ saas.registerDate }}</td>
             </tr>
           </tbody>
         </table>
@@ -176,11 +176,11 @@ const handleSubmit = (data) => {
 };
 
 const saasData = ref([
-  { id: 1, name: 'Jira', status: 'connect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Jira연결', connectDate: '2024-00-01', apiKey: '1234'},
-  { id: 2, name: 'Slack', status: 'connecting', adminAccount: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: 'Slack 연결', connectDate: '2024-00-02', apiKey: '2345'},
-  { id: 3, name: 'Slack', status: 'connect', adminAccount: 'aaabbccc@구름.com', webhookUrl: '-', saasAlias: '', connectDate: '2024-00-03', apiKey: '9876'},
-  { id: 4, name: 'Jira', status: 'failconnect', adminAccount: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', saasAlias: '', connectDate: '2024-00-04', apiKey: ''},
-  { id: 5, name: 'Jira', status: 'failconnect', adminAccount: '-', webhookUrl: '-', saasAlias: '', connectDate: '-', apiKey: ''},
+  { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},
+  { id: 2, name: 'Slack', status: 'connecting', adminEmail: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Slack 연결', registerDate: '2024-00-02', apiToken: '2345'},
+  { id: 3, name: 'Slack', status: 'connect', adminEmail: 'aaabbccc@구름.com', webhookUrl: '-', alias: '', registerDate: '2024-00-03', apiToken: '9876'},
+  { id: 4, name: 'Jira', status: 'failconnect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: '', registerDate: '2024-00-04', apiToken: ''},
+  { id: 5, name: 'Jira', status: 'failconnect', adminEmail: '-', webhookUrl: '-', alias: '', registerDate: '-', apiToken: ''},
 ]);
 
 // 통계 수치

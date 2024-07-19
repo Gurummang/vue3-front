@@ -27,7 +27,7 @@
             id="SaasAlias"
             placeholder="연동할 SaaS의 별칭을 입력해주세요."
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            v-model="saasAlias"
+            v-model="alias"
           />
         </div>
         <div class="mb-4">
@@ -49,7 +49,7 @@
               <input
                 :type="showPassword ? 'password' : 'text'"
                 id="ApiKey"
-                v-model="apiKey"
+                v-model="apiToken"
                 placeholder="SaaS의 API Key를 입력해주세요."
                 class="mt-1 p-2 w-full pr-10 rounded-md shadow-sm sm:text-base border-2 border-gray-300"
                 autocomplete="on"
@@ -104,9 +104,9 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const saasType = ref(props.selectedSaas.name);
-const saasAlias = ref(props.selectedSaas.saasAlias);
-const saasEmail = ref(props.selectedSaas.adminAccount);
-const apiKey = ref(props.selectedSaas.apiKey);
+const alias = ref(props.selectedSaas.alias);
+const saasEmail = ref(props.selectedSaas.adminEmail);
+const apiToken = ref(props.selectedSaas.apiToken);
 const webhookUrl = ref(props.selectedSaas.webhookUrl);
 const agreeToTerms = ref(false);
 
@@ -144,9 +144,9 @@ const syncSaaS = () => {
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
     saas: saasType.value,
-    saasAlias: saasAlias.value,
+    alias: alias.value,
     saasEmail: saasEmail.value,
-    apiKey: apiKey.value,
+    apiToken: apiToken.value,
     webhookUrl: webhookUrl.value,
   });
 

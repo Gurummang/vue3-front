@@ -15,7 +15,7 @@
           <h1 class="text-2xl font-bold mb-4">{{ props.selectedSaas.name }}</h1>
         </div>
 
-        <p class="text-xl font-bold text-center mb-4">별칭 : {{ props.selectedSaas.saasAlias }}</p>
+        <p class="text-xl font-bold text-center mb-4">별칭 : {{ props.selectedSaas.alias }}</p>
         <p class="text-xl font-bold text-center mb-4">위 SaaS의 연동 해제하시겠습니까?</p>
         <p class="text-base text-black text-center mb-4">
           위 SaaS의 연동 해제하면은<br> 앞으로 CASB에서 관리될 수 없습니다.<br>
@@ -70,7 +70,7 @@ const saasId = ref(props.selectedSaas.id);
 const UnconnectSaas = (saasId) => {
   console.log(saasId);
   // 해제 API 요청하기
-  
+
   emit('close');
 }
 

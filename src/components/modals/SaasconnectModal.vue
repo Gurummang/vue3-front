@@ -39,7 +39,7 @@
             id="SaasAlias"
             placeholder="연동할 SaaS의 별칭을 입력해주세요."
             class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            v-model="saasAlias"
+            v-model="alias"
           />
         </div>
         <div class="mb-4">
@@ -61,7 +61,7 @@
               <input
                 :type="showPassword ? 'password' : 'text'"
                 id="ApiKey"
-                v-model="apiKey"
+                v-model="apiToken"
                 placeholder="SaaS의 API Key를 입력해주세요."
                 class="mt-1 p-2 w-full pr-10 rounded-md shadow-sm sm:text-base border-2 border-gray-300"
                 autocomplete="on"
@@ -110,10 +110,10 @@ const emit = defineEmits(['close']);
 
 // 임의의 값 넣기
 const saasType = ref('None');
-const saasAlias = ref('');
+const alias = ref('');
 const saasEmail = ref('');
 const webhookUrl = ref('');
-const apiKey = ref('');
+const apiToken = ref('');
 const agreeToTerms = ref(false);
 
 const showPassword = ref(true);
@@ -138,7 +138,7 @@ const syncSaaS = () => {
     alert('이메일 형식이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
-  if(!apiKey.value) {
+  if(!apiToken.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
@@ -150,9 +150,9 @@ const syncSaaS = () => {
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
     saasType: saasType.value,
-    saasAlias: saasAlias.value,
+    alias: alias.value,
     saasEmail: saasEmail.value,
-    apiKey: apiKey.value,
+    apiToken: apiToken.value,
     webhookUrl: webhookUrl.value,
   });
 
