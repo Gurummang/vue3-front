@@ -11,7 +11,7 @@
     <div class="py-4">
       <div v-for="(item, index) in navItems" :key="index">
         <a :class="['flex items-center justify-between px-7 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
-                   item.active ? 'bg-orange-500 text-white' : '']"
+                  item.active ? 'bg-orange-500 text-white' : '']"
           @click="toggleItem(index, item.link)">
           <div class="flex items-center">
             <component :is="item.icon" class="w-8 h-8 mr-3" />
