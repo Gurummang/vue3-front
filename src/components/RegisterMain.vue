@@ -125,7 +125,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios'
-import SaasConnectModal from '@/components/modals/SaasconnectModal.vue'
+import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
 import { getSaasImg } from '@/utils/utils.js'

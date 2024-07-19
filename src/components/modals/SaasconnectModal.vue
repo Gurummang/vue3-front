@@ -12,14 +12,6 @@
       <div class="p-4">
         <div class="mb-4">
           <label for="saasType" class="block text-lg font-semibold text-gray-700"> SaaS 종류 </label>
-          <!-- <input
-            type="text"
-            id="saasType"
-            placeholder="SaaS"
-            :value="props.selectedSaaS.name"
-            class="mt-1 p-2 w-full rounded-md shadow-sm sm:text-base border-2 border-gray-300"
-            readonly
-          /> -->
           <select name="SaasType"
             id="SaasType" 
             size="1" 
@@ -99,10 +91,17 @@
       </div>
     </div>
   </div>
+
+  <saas-connect-error-modal
+    v-if="isConnectErrorModalOpen"
+    :errorCode="errorCode"
+    @close="closeConnectErrorModal"
+  ></saas-connect-error-modal>
 </template>
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
+import saasConnectErrorModal from '@/components/modals/SaasConnectErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 
@@ -119,6 +118,16 @@ const agreeToTerms = ref(false);
 const showPassword = ref(true);
 const isValidEmail = ref(true);
 const selectedSaaS = ref(null);
+const isConnectErrorModalOpen = ref(false);
+const errorCode = ref(null);
+
+const openConnectErrorModal = () => {
+  isConnectErrorModalOpen.value = true;
+};
+
+const closeConnectErrorModal = () => {
+  isConnectErrorModalOpen.value = false;
+}
 
 const syncSaaS = () => {
   if(!saasType.value || saasType.value === 'None') {
@@ -129,7 +138,6 @@ const syncSaaS = () => {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
-
   if(!SaaSEmail.value) {
     alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
     return;
@@ -156,7 +164,14 @@ const syncSaaS = () => {
     webhookUrl: webhookUrl.value,
   });
 
-  emit('close');
+  if(true) {
+    errorCode.value = 501;
+    openConnectErrorModal();
+    // emit('close');
+  }
+  else {
+    emit('close');
+  }
 };
 
 const validateAdminEmail = () => {
