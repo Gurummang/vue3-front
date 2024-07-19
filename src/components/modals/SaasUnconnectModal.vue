@@ -49,11 +49,18 @@
       </div>
     </div>
   </div>
+
+  <saas-error-modal
+    v-if="isErrorModalOpen"
+    :errorCode="errorCode"
+    :errorType="'해제'"
+    @close="closeErrorModal"
+  ></saas-error-modal>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits, watch } from 'vue'
+import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { getSaasImg } from '@/utils/utils.js'
 
 const props = defineProps({
@@ -66,13 +73,36 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const saasId = ref(props.selectedSaas.id);
+const confirmed = ref(false);
+const isErrorModalOpen = ref(false);
+const errorCode = ref(null);
+
+const openErrorModal = () => {
+  isErrorModalOpen.value = true;
+};
+
+const closeErrorModal = () => {
+  isErrorModalOpen.value = false;
+}
 
 const UnconnectSaas = (saasId) => {
   console.log(saasId);
   // 해제 API 요청하기
 
-  emit('close');
+  // 테스트 에러 강제 출력 
+  const check = true;
+  if(check) {
+    errorCode.value = 701;
+    openErrorModal();
+    watch(isErrorModalOpen, (afterValue, beforeValue) => {
+      if (afterValue === false) {
+        emit('close');
+      }
+    });
+  }
+  else {
+    emit('close');
+  }
 }
 
-const confirmed = ref(false)
 </script>

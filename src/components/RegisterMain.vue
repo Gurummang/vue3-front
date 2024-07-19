@@ -35,7 +35,7 @@
             class="inline-block rounded border border-indigo-900 px-6 py-3 align-text-bottom text-xl font-bold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
             @click="openModificationModal"
           >
-            <v-icon :size="30">mdi-cloud</v-icon> SaaS 편집
+            <v-icon :size="30">mdi-cloud</v-icon> SaaS 수정
           </button>
           <button
             class="inline-block rounded border border-rose-600 px-6 py-3 align-text-bottom text-xl font-bold text-rose-600 hover:bg-rose-600 hover:text-white active:bg-rose-600"
