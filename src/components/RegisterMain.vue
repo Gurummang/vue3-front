@@ -123,7 +123,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, defineProps ,computed } from 'vue';
 import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
@@ -131,10 +131,21 @@ import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
 import { getSaasImg } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
+const props = defineProps({
+  responseData: {
+    type: Object,
+    required: true
+  }
+});
+
 const isconnectModalOpen = ref(false);
 const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
+
+const saasData = ref(props.responseData);
+
+console.log(saasData);
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
@@ -174,14 +185,6 @@ const handleSubmit = (data) => {
   console.log('SaaS 연동 데이터:', data);
   // 여기서 연동 로직을 처리합니다.
 };
-
-const saasData = ref([
-  { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},
-  { id: 2, name: 'Slack', status: 'connecting', adminEmail: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Slack 연결', registerDate: '2024-00-02', apiToken: '2345'},
-  { id: 3, name: 'Slack', status: 'connect', adminEmail: 'aaabbccc@구름.com', webhookUrl: '-', alias: '', registerDate: '2024-00-03', apiToken: '9876'},
-  { id: 4, name: 'Jira', status: 'failconnect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: '', registerDate: '2024-00-04', apiToken: ''},
-  { id: 5, name: 'Jira', status: 'failconnect', adminEmail: '-', webhookUrl: '-', alias: '', registerDate: '-', apiToken: ''},
-]);
 
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
