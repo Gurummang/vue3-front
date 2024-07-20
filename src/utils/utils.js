@@ -5,7 +5,8 @@ const getTodayDate = () => {
 
 const getSaasImg = (name) => {
   const imgName = name.toLowerCase().replace(/\s+/g, '');
-  return `@/assets/${imgName}.png`;
+  // return `../../public/assets/${imgName}.png`;
+  return `../../assets/${imgName}.png`;
 };
 
 export { getTodayDate, getSaasImg };
