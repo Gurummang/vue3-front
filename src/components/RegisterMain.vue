@@ -87,7 +87,7 @@
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="h-4 w-4 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
+                  <img class="size-6 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
                   <span class="text-base font-bold"> {{ saas.name }}</span>
                 </div>
               </td>
