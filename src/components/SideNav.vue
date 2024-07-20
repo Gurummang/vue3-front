@@ -2,24 +2,24 @@
   <!-- Left Navigation Bar -->
   <nav class="h-screen bg-white shadow-lg">
     <!-- Logo and Title -->
-    <div class="flex items-center justify-center p-4 border-b border-gray-200">
-      <img src="../../public/gurummang_logo.png" alt="Logo" class="w-16 h-16 mr-4">
-      <h1 class="text-4xl font-bold text-indigo-950">구름망 CASB</h1>
+    <div class="flex items-center justify-center p-2.5 border-b border-gray-200">
+      <img src="../../public/gurummang_logo.png" alt="Logo" class="w-12 h-12 mr-4">
+      <h1 class="text-2xl font-bold text-indigo-950">구름망 CASB</h1>
     </div>
     
     <!-- Navigation Items -->
     <div class="py-4">
       <div v-for="(item, index) in navItems" :key="index">
-        <a :class="['flex items-center justify-between px-7 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
+        <a :class="['flex items-center justify-between px-7 py-4 text-lg font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
                   item.active ? 'bg-orange-500 text-white' : '']"
           @click="toggleItem(index, item.link)">
           <div class="flex items-center">
-            <component :is="item.icon" class="w-8 h-8 mr-3" />
+            <component :is="item.icon" class="w-6 h-6 mr-3" />
             {{ item.title }}
           </div>
           <component 
             :is="item.expanded ? 'ChevronUpIcon' : 'ChevronDownIcon'" 
-            class="w-8 h-8 mr-3"
+            class="w-6 h-6 mr-3"
             v-if="item.children"
           />
         </a>
@@ -30,11 +30,11 @@
             <a
               v-for="(child, childIndex) in item.children"
               :key="`child-${index}-${childIndex}`"
-              :class="['flex items-center px-14 py-4 text-xl font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
+              :class="['flex items-center px-11 py-4 text-lg font-semibold text-gray-700 hover:bg-orange-200 hover:text-white',
                         child.active ? 'bg-orange-500 text-white' : '']"
               @click="activateChild(index, childIndex, child.link)"
             >
-              <component :is="child.icon" class="w-8 h-8 mr-3" />
+              <component :is="child.icon" class="w-6 h-6 mr-3" />
               {{ child.title }}
             </a>
           </div>
