@@ -1,47 +1,47 @@
 <template>
-  <div class="px-6">
+  <div class="px-5">
     <!-- SaaS 통계 -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-700">총 연동 SaaS</h3>
-        <p class="text-2xl font-bold">{{ saasData.length }}</p>
+        <h3 class="font-semibold text-gray-700">총 연동 SaaS</h3>
+        <p class="text-3xl font-semibold">{{ saasData.length }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-700">연동된 SaaS</h3>
-        <p class="text-2xl font-bold">{{ connectedCount }}</p>
+        <h3 class="font-semibold text-gray-700">연동된 SaaS</h3>
+        <p class="text-3xl font-semibold">{{ connectedCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-700">연동 중인 SaaS</h3>
-        <p class="text-2xl font-bold">{{ connectingCount }}</p>
+        <h3 class="font-semibold text-gray-700">연동 중인 SaaS</h3>
+        <p class="text-3xl font-semibold">{{ connectingCount }}</p>
       </div>
       <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-700">연동 못한 SaaS</h3>
-        <p class="text-2xl font-bold">{{ failConnectCount }}</p>
+        <h3 class="font-semibold text-gray-700">연동 못한 SaaS</h3>
+        <p class="text-3xl font-semibold">{{ failConnectCount }}</p>
       </div>
     </div>
 
     <div class="bg-white shadow rounded-lg p-4">
       <!-- SaaS 연동 섹션 -->
       <div class="mb-2">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">SaaS 연동</h2>
-        <div class="space-x-4">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">SaaS 연동</h2>
+        <div class="space-x-2">
           <button 
-          class="inline-block rounded border border-orange-500 px-4 py-2 align-text-bottom text-base font-bold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
+          class="inline-block rounded border border-orange-500 px-3 py-2 align-text-bottom text-sm font-semibold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
           @click="openconnectModal"
           >
-            <v-icon :size="25">mdi-cloud-upload</v-icon> SaaS 연동
+            <v-icon :size="20">mdi-cloud-upload</v-icon> SaaS 연동
           </button>
           <button
-            class="inline-block rounded border border-indigo-900 px-4 py-2 align-text-bottom text-base font-bold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
+            class="inline-block rounded border border-indigo-900 px-3 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
             @click="openModificationModal"
           >
-            <v-icon :size="25">mdi-cloud</v-icon> SaaS 수정
+            <v-icon :size="20">mdi-cloud</v-icon> SaaS 수정
           </button>
           <button
-            class="inline-block rounded border border-rose-600 px-4 py-2 align-text-bottom text-base font-bold text-rose-600 hover:bg-rose-600 hover:text-white active:bg-rose-600"
+            class="inline-block rounded border border-rose-600 px-3 py-2 align-text-bottom text-sm font-semibold text-rose-600 hover:bg-rose-600 hover:text-white active:bg-rose-600"
             @click="openUnconnectModal"
           >
-            <v-icon :size="25">mdi-cloud-off</v-icon> SaaS 해제
+            <v-icon :size="20">mdi-cloud-off</v-icon> SaaS 해제
           </button>
         </div>
       </div>
@@ -51,50 +51,50 @@
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
             <tr>
-              <th class="pl-6 pr-2 py-3 text-left text-base font-bold font-medium text-white tracking-wider">선택</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">연동</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">SaaS</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">관리자 계정</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">Webhook URL</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">별칭</th>
-              <th class="px-6 py-3 text-left text-base font-bold font-medium text-white tracking-wider">연동날짜</th>
+              <th class="pl-6 pr-2 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">선택</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">연동</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">관리자 계정</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">Webhook URL</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">별칭</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">연동날짜</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="(saas, index) in saasData" :key="index">
-              <td class="pl-6 pr-2 py-2 whitespace-nowrap">
+              <td class="pl-6 pr-1 py-2 whitespace-nowrap">
                 <input 
                   type="radio" 
                   name="saas"
-                  class="form-radio h-4 w-4"
+                  class="form-radio size-3"
                   :value="saas"
                   v-model="selectedSaas"
                 />
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <span v-if="saas.status === 'connect'">
-                  <v-icon :size="28" class="text-orange-500">mdi-eye</v-icon>
+                  <v-icon :size="24" class="text-orange-500">mdi-eye</v-icon>
                   </span>
                 <span v-else-if="saas.status === 'connecting'">
-                  <v-icon :size="28" class="text-yellow-300">mdi-eye</v-icon>
+                  <v-icon :size="24" class="text-yellow-300">mdi-eye</v-icon>
                 </span>
                 <span v-else-if="saas.status === 'unconnect'">
-                  <v-icon :size="28" class="text-gray-200">mdi-eye-off</v-icon>
+                  <v-icon :size="24" class="text-gray-200">mdi-eye-off</v-icon>
                 </span>
                 <span v-else>
-                  <v-icon :size="28" class="text-rose-600">mdi-eye-off</v-icon>
+                  <v-icon :size="24" class="text-rose-600">mdi-eye-off</v-icon>
                 </span>
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="size-6 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
-                  <span class="text-base font-bold"> {{ saas.name }}</span>
+                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
+                  <span class="text-sm"> {{ saas.name }}</span>
                 </div>
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-base">{{ saas.adminEmail }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-base">{{ saas.webhookUrl }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-base">{{ saas.alias }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-base">{{ saas.registerDate }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.webhookUrl }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.alias }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.registerDate }}</td>
             </tr>
           </tbody>
         </table>

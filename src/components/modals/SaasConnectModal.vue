@@ -6,16 +6,16 @@
           <v-icon>mdi-close</v-icon>
         </button>
       </div>
-      <div class="flex justify-center p-4">
-        <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-1/4 object-cover rounded-full">
+      <div class="flex justify-center p-3">
+        <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-1/3 object-cover rounded-full">
       </div>
       <div class="px-4">
         <div class="mb-2">
-          <label for="saasType" class="block text-base font-semibold text-gray-700"> SaaS 종류 </label>
+          <label for="saasType" class="block text-sm font-semibold text-gray-700"> SaaS 종류 </label>
           <select name="SaasType"
             id="SaasType" 
             size="1" 
-            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-sm border-2 border-gray-300"
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
@@ -25,29 +25,29 @@
           </select>
         </div>
         <div class="mb-2">
-          <label for="SaasAlias" class="block text-base font-semibold text-gray-700"> 연동 별칭 </label>
+          <label for="SaasAlias" class="block text-sm font-semibold text-gray-700"> 연동 별칭 </label>
           <input
             type="text"
             id="SaasAlias"
             placeholder="연동할 SaaS의 별칭을 입력해주세요."
-            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-sm border-2 border-gray-300"
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
             v-model="alias"
           />
         </div>
         <div class="mb-2">
-          <label for="SaaSEmail" class="block text-base font-semibold text-gray-700"> SaaS 관리자 이메일 </label>
+          <label for="SaaSEmail" class="block text-sm font-semibold text-gray-700"> SaaS 관리자 이메일 </label>
           <input
             type="email"
             required
             id="SaaSEmail"
             placeholder="SaaS의 관리자 계정 이메일을 입력해주세요."
-            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-sm border-2 border-gray-300"
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
             v-model="saasEmail"
           />
           <p v-if="!isValidEmail" class="text-rose-500">이메일 형식을 맞춰서 작성해주세요.</p>
         </div>
         <div class="mb-2 relative">
-          <label for="ApiKey" class="block text-base font-semibold text-gray-700">API Key</label>
+          <label for="ApiKey" class="block text-sm font-semibold text-gray-700">API Key</label>
           <div class="relative">
             <form>
               <input
@@ -55,26 +55,26 @@
                 id="ApiKey"
                 v-model="apiToken"
                 placeholder="SaaS의 API Key를 입력해주세요."
-                class="mt-1 p-1.5 w-full pr-10 rounded-md shadow-sm text-sm border-2 border-gray-300"
+                class="mt-1 p-1.5 w-full pr-10 rounded-md shadow-sm text-xs border-2 border-gray-300"
                 autocomplete="on"
               />
             </form>
             <button 
               @click="togglePasswordVisibility" 
               type="button"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              class="absolute inset-y-5 right-0 pr-2 flex items-center"
             >
               <v-icon>{{ showPassword ? 'mdi-eye-closed' : 'mdi-eye' }}</v-icon>
             </button>
           </div>
         </div>  
         <div class="mb-2">
-          <label for="WebhookUrl" class="block text-base font-semibold text-gray-700"> Webhhook URL </label>
+          <label for="WebhookUrl" class="block text-sm font-semibold text-gray-700"> Webhhook URL </label>
           <input
             type="text"
             id="WebhookUrl"
             placeholder="위 SaaS는 Webhook URL을 지원하지 않습니다."
-            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-sm border-2 border-gray-300"
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
             v-model="webhookUrl"
             readonly
           />
@@ -87,7 +87,7 @@
         </div>
       </div>
       <div class="flex justify-end p-3">
-        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-base hover:bg-orange-700">SaaS 연동하기</button>
+        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
       </div>
     </div>
   </div>
