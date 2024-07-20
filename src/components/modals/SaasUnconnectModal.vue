@@ -8,16 +8,16 @@
           </button>
         </div>
         <div class="flex justify-center p-4">
-          <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-1/4 object-cover rounded-full">
+          <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-1/3 object-cover rounded-full">
         </div>
         <div class="flex justify-center">
-          <img class="size-6 float-left rounded-full mr-2" :src="getSaasImg(props.selectedSaas.name)" :alt="props.selectedSaas.name"/>
-          <h1 class="text-xl font-bold mb-2">{{ props.selectedSaas.name }}</h1>
+          <img class="size-7 float-left rounded-full mr-2" :src="getSaasImg(props.selectedSaas.name)" :alt="props.selectedSaas.name"/>
+          <h1 class="text-2xl font-bold mb-2">{{ props.selectedSaas.name }}</h1>
         </div>
 
-        <p class="text-lg font-bold text-center mb-4">별칭 : {{ props.selectedSaas.alias }}</p>
-        <p class="text-lg text-red-700 font-bold text-center mb-2">위 SaaS의 연동 해제하시겠습니까?</p>
-        <p class="text-sm text-black text-center mb-2">
+        <p class="text-sm font-bold text-center mb-4">별칭 : {{ props.selectedSaas.alias }}</p>
+        <p class="text-sm text-red-700 font-bold text-center mb-2">위 SaaS의 연동 해제하시겠습니까?</p>
+        <p class="text-xs text-black text-center mb-2">
           위 SaaS의 연동 해제하면은<br> 앞으로 CASB에서 관리될 수 없습니다.<br>
           정말 Jira의 연동을 해제하시겠습니까?
         </p>
@@ -32,14 +32,14 @@
             <!-- class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50" -->
         <div class="grid grid-cols-2 gap-4">
           <button 
-            class="inline-block rounded border border-indigo-900 px-6 py-3 align-text-bottom text-sm font-bold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
+            class="inline-block rounded border border-indigo-900 px-4 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
             @click="$emit('close')"
           >
             아니요
           </button>
             <!-- :class="['inline-block rounded px-6 py-3 align-text-bottom text-base font-bold text-rose-600', confirmed ? 'hover: border border-rose-600 bg-rose-600 hover:text-white active:bg-rose-600' : 'bg-gray-400 cursor-not-allowed']" -->
           <button
-            :class="['inline-block px-6 py-3 rounded align-text-bottom text-white text-sm font-bold', confirmed ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed']"
+            :class="['inline-block px-4 py-2 rounded align-text-bottom text-white text-sm font-semibold', confirmed ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed']"
             :disabled="!confirmed"
             @click="UnconnectSaas(saasId)"
           >
