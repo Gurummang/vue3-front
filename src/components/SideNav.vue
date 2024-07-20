@@ -3,7 +3,7 @@
   <nav class="h-screen bg-white shadow-lg">
     <!-- Logo and Title -->
     <div class="flex items-center justify-center p-2.5 border-b border-gray-200">
-      <img src="../../gurummang_logo.png" alt="Logo" class="w-12 h-12 mr-4">
+      <img src="../../public/gurummang_logo.png" alt="Logo" class="w-12 h-12 mr-4">
       <h1 class="text-2xl font-bold text-indigo-950">구름망 CASB</h1>
     </div>
     
