@@ -42,7 +42,7 @@ const fetchPosts = async () => {
   }
 };
 
-responseData = fetchPosts();
+responseData.value = fetchPosts();
 
 // 주의: 이 시점에서 콘솔에 responseData를 출력하면 아직 undefined일 수 있습니다.
 console.log('RegisterSaasView responseData:', responseData);

@@ -102,6 +102,7 @@
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
+import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
@@ -190,20 +191,35 @@ const togglePasswordVisibility = () => {
 };
 
 const validateWebhook = () => {
+  let saasId = null;
   switch(saasType.value) {
-    case 'Jira':
-      webhookUrl.value = 'Jira-uuid';
-      break;
-
     case 'Slack':
-      webhookUrl.value = 'Slack-uuid';
+      saasId = 1;
       break;
-
+    case 'Jira':
+      saasId = 2;
+      break;
     default:
       webhookUrl.value = '';
       break;
   }
+  const getWebhook = async (saasId) => {
+    try {
+      const response = await axios.get('/api/v1/org-saas/'+saasId+'/mkUrl');
+      if(response.status == '200') {
+        webhookUrl.value = response.data.webhookUrl;
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+    }
+  };
+  if(saasId != null) {
+    getWebhook(saasId);
+  }
 }
+
+
 
 watch(saasEmail, validateAdminEmail);
 watch(saasType, validateWebhook);
