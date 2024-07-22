@@ -106,6 +106,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
+import { getWebhookApi } from '@/apis/register.js'
 
 const emit = defineEmits(['close']);
 
@@ -166,6 +167,8 @@ const syncSaaS = () => {
     webhookUrl: webhookUrl.value,
   });
 
+
+
   // 테스트 에러 강제 출력 
   const check = true;
   if(check) {
@@ -203,19 +206,10 @@ const validateWebhook = () => {
       webhookUrl.value = '';
       break;
   }
-  const getWebhook = async (saasId) => {
-    try {
-      const response = await axios.get('/api/v1/org-saas/'+saasId+'/mkUrl');
-      if(response.status == '200') {
-        webhookUrl.value = response.data.webhookUrl;
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
-    }
-  };
   if(saasId != null) {
-    getWebhook(saasId);
+    getWebhookApi(saasId).then((response) => {
+      webhookUrl.value = response;
+    });
   }
 }
 
