@@ -72,13 +72,13 @@
                 />
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
-                <span v-if="saas.status === 'connect'">
+                <span v-if="saas.status === 1">
                   <v-icon :size="24" class="text-orange-500">mdi-eye</v-icon>
                   </span>
-                <span v-else-if="saas.status === 'connecting'">
+                <span v-else-if="saas.status === 0">
                   <v-icon :size="24" class="text-yellow-300">mdi-eye</v-icon>
                 </span>
-                <span v-else-if="saas.status === 'unconnect'">
+                <span v-else-if="saas.status === -1">
                   <v-icon :size="24" class="text-gray-200">mdi-eye-off</v-icon>
                 </span>
                 <span v-else>
@@ -87,8 +87,8 @@
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
-                  <span class="text-sm"> {{ saas.name }}</span>
+                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.saasName)" :alt="saas.saasName" />
+                  <span class="text-sm"> {{ saas.saasName }}</span>
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
@@ -143,9 +143,15 @@ const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
-const saasData = ref(props.responseData);
+const saasData = ref(await props.responseData);
 
-console.log(saasData);
+console.log('RegisterMain: ',await props.responseData);
+
+// console.log(saasData, typeof saasData);
+
+// const saasData = ref([]);
+// saasData.value = Array.isArray(props.responseData) ? props.responseData : [];
+// console.log(saasData);
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
@@ -187,8 +193,11 @@ const handleSubmit = (data) => {
 };
 
 // 통계 수치
-const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
-const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
-const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
+// const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
+// const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
+// const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
+const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);
+const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 0).length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === -1).length);
 
 </script>
