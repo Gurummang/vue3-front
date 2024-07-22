@@ -87,8 +87,8 @@
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.saasName)" :alt="saas.saasName" />
-                  <span class="text-sm"> {{ saas.saasName }}</span>
+                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
+                  <span class="text-sm"> {{ saas.name }}</span>
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
@@ -145,7 +145,8 @@ const selectedSaas = ref(null);
 
 const saasData = ref(await props.responseData);
 
-// console.log('RegisterMain: ',JSON.parse(await props.responseData));
+// const saasData_test = JSON.stringify(await props.responseData);
+// console.log('RegisterMain: ',saasData_test, typeof saasData_test);
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
