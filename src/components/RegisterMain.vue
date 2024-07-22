@@ -94,7 +94,7 @@
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.webhookUrl }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.alias }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.registerDate }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ getDate(saas.registerDate) }}</td>
             </tr>
           </tbody>
         </table>
@@ -128,7 +128,7 @@ import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
-import { getSaasImg } from '@/utils/utils.js'
+import { getSaasImg, getDate } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
 const props = defineProps({
@@ -145,13 +145,7 @@ const selectedSaas = ref(null);
 
 const saasData = ref(await props.responseData);
 
-console.log('RegisterMain: ',await props.responseData);
-
-// console.log(saasData, typeof saasData);
-
-// const saasData = ref([]);
-// saasData.value = Array.isArray(props.responseData) ? props.responseData : [];
-// console.log(saasData);
+// console.log('RegisterMain: ',JSON.parse(await props.responseData));
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;

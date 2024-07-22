@@ -15,7 +15,6 @@
   <!-- <footer>
     <the-footer></the-footer>
   </footer> -->
-  {{ responseData }}
 </template>
 
 <script setup>
@@ -33,9 +32,8 @@ let error = ref(null);
 const fetchPosts = async () => {
   try {
     const response = await axios.get('/api/v1/org-saas/1');
-    console.log('response 전체 : ', response);
+    // console.log('response 전체 : ', response);
     if(response.status == '200') {
-      console.log('Success');
       return await response.data;
     }
   } catch (err) {
@@ -44,9 +42,7 @@ const fetchPosts = async () => {
   }
 };
 
-// main 함수 실행
-// 방법 2: then을 사용한 방식
-responseData = fetchPosts()
+responseData = fetchPosts();
 
 // 주의: 이 시점에서 콘솔에 responseData를 출력하면 아직 undefined일 수 있습니다.
 console.log('RegisterSaasView responseData:', responseData);
