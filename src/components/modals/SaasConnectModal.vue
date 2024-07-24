@@ -106,7 +106,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
-import { getWebhookApi, registerSaasApi } from '@/apis/register.js'
+import { getWebhookApi, connectSaasApi } from '@/apis/register.js'
 
 const emit = defineEmits(['close']);
 
@@ -178,7 +178,7 @@ const syncSaaS = () => {
   // 테스트 에러 강제 출력 
   // const check = registerSaasApi(registerInfo);
 
-  registerSaasApi(registerInfo).then((response) => {
+  connectSaasApi(registerInfo).then((response) => {
     console.log(response);
     errorCode.value = response.errorCode;
     if(errorCode != 200) {

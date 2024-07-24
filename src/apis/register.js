@@ -23,11 +23,11 @@ const getWebhookApi = async (saasId) => {
 //     "apiToken": "hihi. It's init test",
 //     "webhookUrl": "https://gurm.com/Slack-67b65f6d-d0c6-4925-92df-bd3d3324141f"
 
-const registerSaasApi = async (info) => {
+const connectSaasApi = async (info) => {
   try {
     const response = await axios.post('/api/v1/org-saas/register', info);
     if(response.status == '200') {
-      console.log('registerSaasApi : ' + response + response.data);
+      console.log('registerSaasApi : ' + response);
       return response.data;
     }
   } catch (err) {
@@ -47,4 +47,4 @@ const registerSaasApi = async (info) => {
   //     "configId": int
   // }
 
-export { getWebhookApi, registerSaasApi };
+export { getWebhookApi, connectSaasApi };
