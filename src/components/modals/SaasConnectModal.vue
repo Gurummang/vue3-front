@@ -19,9 +19,9 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="Jira">Jira</option>
-            <option value="Slack">Slack</option>
-            <option value="O365">O365</option>
+            <option value="2">Jira</option>
+            <option value="1">Slack</option>
+            <option value="3">O365</option>
           </select>
         </div>
         <div class="mb-2">
@@ -106,7 +106,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
-import { getWebhookApi } from '@/apis/register.js'
+import { getWebhookApi, connectSaasApi } from '@/apis/register.js'
 
 const emit = defineEmits(['close']);
 
@@ -159,30 +159,40 @@ const syncSaaS = () => {
   }
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
-  console.log('Syncing SaaS:', {
-    saasType: saasType.value,
-    alias: alias.value,
-    saasEmail: saasEmail.value,
-    apiToken: apiToken.value,
-    webhookUrl: webhookUrl.value,
-  });
-
-
+  let registerInfo = {
+    "orgId": 1,     // samsung
+    "saasId": saasType.value,    // slack
+    "alias": alias.value,
+    "adminEmail": saasEmail.value,
+    "apiToken": alias.value,
+    "webhookUrl": webhookUrl.value
+  };
+  // console.log('Syncing SaaS:', {
+  //   saasType: saasType.value,
+  //   alias: alias.value,
+  //   saasEmail: saasEmail.value,
+  //   apiToken: apiToken.value,
+  //   webhookUrl: webhookUrl.value,
+  // });
 
   // 테스트 에러 강제 출력 
-  const check = true;
-  if(check) {
-    errorCode.value = 501;
-    openErrorModal();
-    watch(isErrorModalOpen, (afterValue, beforeValue) => {
-      if (afterValue === false) {
-        emit('close');
-      }
-    });
-  }
-  else {
-    emit('close');
-  }
+  // const check = registerSaasApi(registerInfo);
+
+  connectSaasApi(registerInfo).then((response) => {
+    console.log(response);
+    errorCode.value = response.errorCode;
+    if(errorCode != 200) {
+      openErrorModal();
+      watch(isErrorModalOpen, (afterValue, beforeValue) => {
+        if (afterValue === false) {
+          emit('close');
+        }
+      });
+    }
+    else {
+      emit('close');
+    }
+  });
 };
 
 const validateAdminEmail = () => {
@@ -194,26 +204,12 @@ const togglePasswordVisibility = () => {
 };
 
 const validateWebhook = () => {
-  let saasId = null;
-  switch(saasType.value) {
-    case 'Slack':
-      saasId = 1;
-      break;
-    case 'Jira':
-      saasId = 2;
-      break;
-    default:
-      webhookUrl.value = '';
-      break;
-  }
-  if(saasId != null) {
-    getWebhookApi(saasId).then((response) => {
+  if(saasType.value != 'None') {
+    getWebhookApi(saasType.value).then((response) => {
       webhookUrl.value = response;
     });
   }
 }
-
-
 
 watch(saasEmail, validateAdminEmail);
 watch(saasType, validateWebhook);
