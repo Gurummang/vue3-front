@@ -19,9 +19,9 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="Jira">Jira</option>
-            <option value="Slack">Slack</option>
-            <option value="O365">O365</option>
+            <option value="2">Jira</option>
+            <option value="1">Slack</option>
+            <option value="3">O365</option>
           </select>
         </div>
         <div class="mb-2">
@@ -106,7 +106,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
-import { getWebhookApi } from '@/apis/register.js'
+import { getWebhookApi, registerSaasApi } from '@/apis/register.js'
 
 const emit = defineEmits(['close']);
 
@@ -158,6 +158,15 @@ const syncSaaS = () => {
     return;
   }
 
+  let registerInfo = {
+    "orgId": 1,     // samsung
+    "saasId": 1,    // slack
+    "alias": "Server POST test",
+    "adminEmail": "emailemail",
+    "apiToken": "1111122222",
+    "webhookUrl": "https://gurm.com/Slack-67b65f6d-d0c6-4925-92df-bd3d3324141f"
+  };
+  registerSaasApi(registerInfo);
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   console.log('Syncing SaaS:', {
     saasType: saasType.value,
@@ -194,26 +203,12 @@ const togglePasswordVisibility = () => {
 };
 
 const validateWebhook = () => {
-  let saasId = null;
-  switch(saasType.value) {
-    case 'Slack':
-      saasId = 1;
-      break;
-    case 'Jira':
-      saasId = 2;
-      break;
-    default:
-      webhookUrl.value = '';
-      break;
-  }
-  if(saasId != null) {
-    getWebhookApi(saasId).then((response) => {
+  if(saasType.value != 'None') {
+    getWebhookApi(saasType.value).then((response) => {
       webhookUrl.value = response;
     });
   }
 }
-
-
 
 watch(saasEmail, validateAdminEmail);
 watch(saasType, validateWebhook);
