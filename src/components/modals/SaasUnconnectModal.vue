@@ -62,6 +62,7 @@
 import { ref, defineProps, defineEmits, watch } from 'vue'
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { getSaasImg } from '@/utils/utils.js'
+import { unconnectSaasApi } from '@/apis/register.js'
 
 const props = defineProps({
   selectedSaas: {
@@ -89,20 +90,38 @@ const UnconnectSaas = (saasId) => {
   console.log(saasId);
   // 해제 API 요청하기
 
+  let deleteInfo = {
+    "id": saasId
+  }
+  unconnectSaasApi(deleteInfo).then((response) => {
+    errorCode.value = response.errorCode;
+    console.log(response);
+    if(errorCode.value != 200) {
+      openErrorModal();
+      watch(isErrorModalOpen, (afterValue, beforeValue) => {
+        if (afterValue === false) {
+          emit('close');
+        }
+      });
+    }
+    else {
+      emit('close');
+    }
+  });
   // 테스트 에러 강제 출력 
-  const check = true;
-  if(check) {
-    errorCode.value = 701;
-    openErrorModal();
-    watch(isErrorModalOpen, (afterValue, beforeValue) => {
-      if (afterValue === false) {
-        emit('close');
-      }
-    });
-  }
-  else {
-    emit('close');
-  }
+  // const check = true;
+  // if(check) {
+  //   errorCode.value = 701;
+  //   openErrorModal();
+  //   watch(isErrorModalOpen, (afterValue, beforeValue) => {
+  //     if (afterValue === false) {
+  //       emit('close');
+  //     }
+  //   });
+  // }
+  // else {
+  //   emit('close');
+  // }
 }
 
 </script>
