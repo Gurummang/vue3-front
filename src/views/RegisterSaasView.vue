@@ -29,10 +29,15 @@ import ContentError from '@/components/ContentError.vue'
 let responseData = ref(null);
 let error = ref(null);
 
+const axiosUrl = axios.create({
+  baseURL: import.meta.env.VUE_APP_API_URL,
+})
+
 const fetchPosts = async () => {
   try {
-    const response = await axios.get('/api/v1/org-saas/1');
+    const response = await axiosUrl.get('/api/v1/org-saas/1');
     // console.log('response 전체 : ', response);
+    console.log('/api/v1/org-saas/1');
     if(response.status == '200') {
       return await response.data;
     }
