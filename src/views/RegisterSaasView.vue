@@ -29,15 +29,16 @@ import ContentError from '@/components/ContentError.vue'
 let responseData = ref(null);
 let error = ref(null);
 
-const axiosUrl = axios.create({
-  baseURL: import.meta.env.VUE_APP_API_URL,
-})
+// const axiosUrl = axios.create({
+//   baseURL: import.meta.env.VUE_APP_API_URL,
+// })
 
 const fetchPosts = async () => {
   try {
-    const response = await axiosUrl.get('/api/v1/org-saas/1');
-    // console.log('response 전체 : ', response);
-    console.log('/api/v1/org-saas/1');
+    const response = await axios.get('https://back.grummang.com/api/v1/org-saas/1');
+    let url = import.meta.env.VUE_APP_API_URL;
+    console.log(url + '/api/v1/org-saas/1');
+    console.log(response);
     if(response.status == '200') {
       return await response.data;
     }
