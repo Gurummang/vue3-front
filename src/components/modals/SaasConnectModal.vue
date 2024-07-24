@@ -158,40 +158,41 @@ const syncSaaS = () => {
     return;
   }
 
+  // 다음 스텝 -> 해당 값들을 POST로 보내기
   let registerInfo = {
     "orgId": 1,     // samsung
-    "saasId": 1,    // slack
-    "alias": "Server POST test",
-    "adminEmail": "emailemail",
-    "apiToken": "1111122222",
-    "webhookUrl": "https://gurm.com/Slack-67b65f6d-d0c6-4925-92df-bd3d3324141f"
+    "saasId": saasType.value,    // slack
+    "alias": alias.value,
+    "adminEmail": saasEmail.value,
+    "apiToken": alias.value,
+    "webhookUrl": webhookUrl.value
   };
-  registerSaasApi(registerInfo);
-  // 다음 스텝 -> 해당 값들을 POST로 보내기
-  console.log('Syncing SaaS:', {
-    saasType: saasType.value,
-    alias: alias.value,
-    saasEmail: saasEmail.value,
-    apiToken: apiToken.value,
-    webhookUrl: webhookUrl.value,
-  });
-
-
+  // console.log('Syncing SaaS:', {
+  //   saasType: saasType.value,
+  //   alias: alias.value,
+  //   saasEmail: saasEmail.value,
+  //   apiToken: apiToken.value,
+  //   webhookUrl: webhookUrl.value,
+  // });
 
   // 테스트 에러 강제 출력 
-  const check = true;
-  if(check) {
-    errorCode.value = 501;
-    openErrorModal();
-    watch(isErrorModalOpen, (afterValue, beforeValue) => {
-      if (afterValue === false) {
-        emit('close');
-      }
-    });
-  }
-  else {
-    emit('close');
-  }
+  // const check = registerSaasApi(registerInfo);
+
+  registerSaasApi(registerInfo).then((response) => {
+    console.log(response);
+    errorCode.value = response.errorCode;
+    if(errorCode != 200) {
+      openErrorModal();
+      watch(isErrorModalOpen, (afterValue, beforeValue) => {
+        if (afterValue === false) {
+          emit('close');
+        }
+      });
+    }
+    else {
+      emit('close');
+    }
+  });
 };
 
 const validateAdminEmail = () => {

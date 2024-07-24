@@ -33,13 +33,8 @@ axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
 const fetchPosts = async () => {
   try {
-    // const response = await axiosUrl.get('https://back.grummang.com/apis/v1/org-saas/1');
     const response = await axios.get('/api/v1/org-saas/1');
-    // let url = import.meta.env.VITE_APP_API_URL;
-    // console.log(url + '/api/v1/org-saas/1');
-    console.log('!!!!', response);
     if(response.status == '200') {
-      console.log('정상응답');
       return await response.data;
     }
   } catch (err) {
@@ -49,9 +44,6 @@ const fetchPosts = async () => {
 };
 
 responseData.value = fetchPosts();
-
-// 주의: 이 시점에서 콘솔에 responseData를 출력하면 아직 undefined일 수 있습니다.
-console.log('RegisterSaasView responseData:', responseData);
 
 // responseData = [
 //   { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},
