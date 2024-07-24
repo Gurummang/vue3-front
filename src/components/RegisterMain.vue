@@ -72,13 +72,13 @@
                 />
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
-                <span v-if="saas.status === 'connect'">
+                <span v-if="saas.status === 1">
                   <v-icon :size="24" class="text-orange-500">mdi-eye</v-icon>
                   </span>
-                <span v-else-if="saas.status === 'connecting'">
+                <span v-else-if="saas.status === 0">
                   <v-icon :size="24" class="text-yellow-300">mdi-eye</v-icon>
                 </span>
-                <span v-else-if="saas.status === 'unconnect'">
+                <span v-else-if="saas.status === -1">
                   <v-icon :size="24" class="text-gray-200">mdi-eye-off</v-icon>
                 </span>
                 <span v-else>
@@ -94,7 +94,7 @@
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.webhookUrl }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.alias }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.registerDate }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ getDate(saas.registerDate) }}</td>
             </tr>
           </tbody>
         </table>
@@ -128,7 +128,7 @@ import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
-import { getSaasImg } from '@/utils/utils.js'
+import { getSaasImg, getDate } from '@/utils/utils.js'
 // import AxiosTest from '@/components/AxiosTest.vue'
 
 const props = defineProps({
@@ -143,9 +143,10 @@ const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
-const saasData = ref(props.responseData);
+const saasData = ref(await props.responseData);
 
-console.log(saasData);
+// const saasData_test = JSON.stringify(await props.responseData);
+// console.log('RegisterMain: ',saasData_test, typeof saasData_test);
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
@@ -187,8 +188,11 @@ const handleSubmit = (data) => {
 };
 
 // 통계 수치
-const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
-const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
-const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
+// const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
+// const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
+// const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
+const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);
+const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 0).length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === -1).length);
 
 </script>

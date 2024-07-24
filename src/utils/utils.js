@@ -3,10 +3,14 @@ const getTodayDate = () => {
   return today.toISOString().substring(0,10);
 };
 
+const getDate = (date) => {
+  return date.substring(0,10);
+}
+
 const getSaasImg = (name) => {
   const imgName = name.toLowerCase().replace(/\s+/g, '');
   // return `../../public/assets/${imgName}.png`;
   return `../../assets/${imgName}.png`;
 };
 
-export { getTodayDate, getSaasImg };
+export { getTodayDate, getSaasImg, getDate };

@@ -102,9 +102,11 @@
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
+import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
+import { getWebhookApi } from '@/apis/register.js'
 
 const emit = defineEmits(['close']);
 
@@ -165,6 +167,8 @@ const syncSaaS = () => {
     webhookUrl: webhookUrl.value,
   });
 
+
+
   // 테스트 에러 강제 출력 
   const check = true;
   if(check) {
@@ -190,20 +194,26 @@ const togglePasswordVisibility = () => {
 };
 
 const validateWebhook = () => {
+  let saasId = null;
   switch(saasType.value) {
-    case 'Jira':
-      webhookUrl.value = 'Jira-uuid';
-      break;
-
     case 'Slack':
-      webhookUrl.value = 'Slack-uuid';
+      saasId = 1;
       break;
-
+    case 'Jira':
+      saasId = 2;
+      break;
     default:
       webhookUrl.value = '';
       break;
   }
+  if(saasId != null) {
+    getWebhookApi(saasId).then((response) => {
+      webhookUrl.value = response;
+    });
+  }
 }
+
+
 
 watch(saasEmail, validateAdminEmail);
 watch(saasType, validateWebhook);
