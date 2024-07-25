@@ -2,7 +2,20 @@ import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
-const getWebhookApi = async (saasId) => {
+let getSaasListApi = async (orgId) => {
+  try {
+    const response = await axios.get('/api/v1/org-saas/' + orgId);
+    console.log(await response);
+    if(response.status == '200') {
+      return await response;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+};
+
+let getWebhookApi = async (saasId) => {
   try {
     const response = await axios.get('/api/v1/org-saas/'+saasId+'/mkUrl');
     if(response.status == '200') {
@@ -15,7 +28,7 @@ const getWebhookApi = async (saasId) => {
   }
 };
 
-const connectSaasApi = async (data) => {
+let connectSaasApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/org-saas/register', data);
     if(response.status == '200') {
@@ -28,7 +41,7 @@ const connectSaasApi = async (data) => {
   }
 }
 
-const modifySaasApi = async (data) => {
+let modifySaasApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/org-saas/modify', data);
     if(response.status == '200') {
@@ -41,7 +54,7 @@ const modifySaasApi = async (data) => {
   }
 }
 
-const unconnectSaasApi = async (id) => {
+let unconnectSaasApi = async (id) => {
   try {
     const response = await axios.post('/api/v1/org-saas/delete', id);
     if(response.status == '200') {
@@ -54,4 +67,4 @@ const unconnectSaasApi = async (id) => {
   }
 }
 
-export { getWebhookApi, connectSaasApi, modifySaasApi, unconnectSaasApi };
+export { getSaasListApi, getWebhookApi, connectSaasApi, modifySaasApi, unconnectSaasApi };

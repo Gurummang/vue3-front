@@ -25,25 +25,21 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import RegisterMain from '@/components/RegisterMain.vue'
 import ContentError from '@/components/ContentError.vue'
+import { getSaasListApi } from '@/apis/register.js'
 
 let responseData = ref(null);
 let error = ref(null);
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
-const fetchPosts = async () => {
-  try {
-    const response = await axios.get('/api/v1/org-saas/1');
-    if(response.status == '200') {
-      return await response.data;
-    }
-  } catch (err) {
-    console.error('Error:', err);
-    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+let orgId = 1;
+getSaasListApi(orgId).then((response) => {
+  console.log("saasList : " + response);
+  if(response.status == '200') {
+    responseData.value = response.data;
   }
-};
-
-responseData.value = fetchPosts();
+}).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+// responseData.value = getSaasListApi();
 
 // responseData = [
 //   { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},

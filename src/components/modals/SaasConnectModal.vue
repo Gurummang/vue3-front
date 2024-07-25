@@ -108,21 +108,21 @@ import { validateEmail } from '@/utils/validation.js'
 import { getTodayDate } from '@/utils/utils.js'
 import { getWebhookApi, connectSaasApi } from '@/apis/register.js'
 
-const emit = defineEmits(['close']);
+let emit = defineEmits(['close']);
 
 // 임의의 값 넣기
-const saasType = ref('None');
-const alias = ref('');
-const saasEmail = ref('');
-const webhookUrl = ref('');
-const apiToken = ref('');
-const agreeToTerms = ref(false);
+let saasType = ref('None');
+let alias = ref('');
+let saasEmail = ref('');
+let webhookUrl = ref('');
+let apiToken = ref('');
+let agreeToTerms = ref(false);
 
-const showPassword = ref(true);
-const isValidEmail = ref(true);
-const selectedSaaS = ref(null);
-const isErrorModalOpen = ref(false);
-const errorCode = ref(null);
+let showPassword = ref(true);
+let isValidEmail = ref(true);
+let selectedSaaS = ref(null);
+let isErrorModalOpen = ref(false);
+let errorCode = ref(null);
 
 const openErrorModal = () => {
   isErrorModalOpen.value = true;
@@ -167,20 +167,10 @@ const syncSaaS = () => {
     "apiToken": apiToken.value,
     "webhookUrl": webhookUrl.value
   };
-  // console.log('Syncing SaaS:', {
-  //   saasType: saasType.value,
-  //   alias: alias.value,
-  //   saasEmail: saasEmail.value,
-  //   apiToken: apiToken.value,
-  //   webhookUrl: webhookUrl.value,
-  // });
-
-  // 테스트 에러 강제 출력 
-  // const check = registerSaasApi(registerInfo);
 
   connectSaasApi(connectData).then((response) => {
     console.log(response);
-    errorCode.value = response.errorCode;
+    errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
       watch(isErrorModalOpen, (afterValue, beforeValue) => {
