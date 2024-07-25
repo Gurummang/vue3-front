@@ -28,6 +28,25 @@ let getWebhookApi = async (saasId) => {
   }
 };
 
+let TokenValidationApi = async (data, saasId) => {
+  try {
+    // const response = await axios.post('/api/v1/org-saas/slackValid', {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // });
+    const response = await axios.post('/api/v1/org-saas/slackValid', data);
+    if(response.status == 200) {
+      console.log('검증되었습니다.' + response.data.validation);
+      return response.data.validation;
+    }
+    else return false;
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+  }
+}
+
 let connectSaasApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/org-saas/register', data);
@@ -67,4 +86,4 @@ let unconnectSaasApi = async (id) => {
   }
 }
 
-export { getSaasListApi, getWebhookApi, connectSaasApi, modifySaasApi, unconnectSaasApi };
+export { getSaasListApi, getWebhookApi, TokenValidationApi, connectSaasApi, modifySaasApi, unconnectSaasApi };

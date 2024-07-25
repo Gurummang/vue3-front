@@ -29,11 +29,9 @@ import { getSaasListApi } from '@/apis/register.js'
 
 let responseData = ref(null);
 let error = ref(null);
-
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
-
 let orgId = 1;
-getSaasListApi(orgId).then((response) => {
+
+let test = getSaasListApi(orgId).then((response) => {
   console.log("saasList : " + response);
   if(response.status == '200') {
     responseData.value = response.data;
@@ -41,6 +39,7 @@ getSaasListApi(orgId).then((response) => {
 }).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 // responseData.value = getSaasListApi();
 
+// setInterval(console.log('test-1'), 1000);
 // responseData = [
 //   { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},
 //   { id: 2, name: 'Slack', status: 'connecting', adminEmail: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Slack 연결', registerDate: '2024-00-02', apiToken: '2345'},
