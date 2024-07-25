@@ -187,6 +187,6 @@ const handleSubmit = (data) => {
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);
 const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 0).length);
-const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === -1).length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 99).length);
 
 </script>
