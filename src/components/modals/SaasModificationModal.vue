@@ -54,16 +54,17 @@
                 class="mt-1 p-1.5 w-full pr-10 rounded-md shadow-sm text-xs border-2 border-gray-300"
                 autocomplete="on"
               />
+              <button 
+                @click="togglePasswordVisibility" 
+                type="button"
+                :class="['absolute right-0 pr-2 flex items-center', isValidApiToken ? 'top-5 bottom-5' : '-top-5 -bottom-0']"
+              >
+                <v-icon>{{ showPassword ? 'mdi-eye-closed' : 'mdi-eye' }}</v-icon>
+              </button>
             </form>
-            <button 
-              @click="togglePasswordVisibility" 
-              type="button"
-              class="absolute inset-y-5 right-0 pr-2 flex items-center"
-            >
-              <v-icon>{{ showPassword ? 'mdi-eye-closed' : 'mdi-eye' }}</v-icon>
-            </button>
+            <p v-if="!isValidApiToken" class="text-rose-500">해당 API Token이 올바르지 않습니다.</p>
           </div>
-        </div>  
+        </div> 
         <div class="mb-2">
           <label for="WebhookUrl" class="block text-sm font-semibold text-gray-700"> Webhhook URL </label>
           <input
@@ -102,6 +103,7 @@
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
+import { TokenValidationApi, modifySaasApi } from '@/apis/register.js'
 
 const props = defineProps({
   selectedSaas: {
@@ -110,19 +112,21 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['close']);
+let emit = defineEmits(['close']);
 
-const saasType = ref(props.selectedSaas.name);
-const alias = ref(props.selectedSaas.alias);
-const saasEmail = ref(props.selectedSaas.adminEmail);
-const apiToken = ref(props.selectedSaas.apiToken);
-const webhookUrl = ref(props.selectedSaas.webhookUrl);
-const agreeToTerms = ref(false);
+let saasId = ref(props.selectedSaas.id);
+let saasType = ref(props.selectedSaas.name);
+let alias = ref(props.selectedSaas.alias);
+let saasEmail = ref(props.selectedSaas.adminEmail);
+let apiToken = ref(props.selectedSaas.apiToken);
+let webhookUrl = ref(props.selectedSaas.webhookUrl);
+let agreeToTerms = ref(false);
 
-const showPassword = ref(true);
-const isValidEmail = ref(true);
-const isErrorModalOpen = ref(false);
-const errorCode = ref(null);
+let showPassword = ref(true);
+let isValidEmail = ref(true);
+let isValidApiToken = ref(true);
+let isErrorModalOpen = ref(false);
+let errorCode = ref(null);
 
 const openErrorModal = () => {
   isErrorModalOpen.value = true;
@@ -137,12 +141,12 @@ const syncSaaS = () => {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
   }
-  if(!SaasAlias.value) {
+  if(!alias.value) {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
 
-  if(!SaaSEmail.value) {
+  if(!saasEmail.value) {
     alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
     return;
   }
@@ -150,8 +154,12 @@ const syncSaaS = () => {
     alert('이메일 형식이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
-  if(!ApiKey.value) {
+  if(!apiToken.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
+    return;
+  }
+  else if(!isValidApiToken.value) {
+    alert('해당 API Token이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
   if (!agreeToTerms.value) {
@@ -160,28 +168,38 @@ const syncSaaS = () => {
   }
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
-  console.log('Syncing SaaS:', {
-    saas: saasType.value,
-    alias: alias.value,
-    saasEmail: saasEmail.value,
-    apiToken: apiToken.value,
-    webhookUrl: webhookUrl.value,
-  });
+  // console.log('Syncing SaaS:', {
+  //   saas: saasType.value,
+  //   alias: alias.value,
+  //   saasEmail: saasEmail.value,
+  //   apiToken: apiToken.value,
+  //   webhookUrl: webhookUrl.value,
+  // });
 
-  // 테스트 에러 강제 출력 
-  const check = true;
-  if(check) {
-    errorCode.value = 601;
-    openErrorModal();
-    watch(isErrorModalOpen, (afterValue, beforeValue) => {
-      if (afterValue === false) {
-        emit('close');
-      }
-    });
-  }
-  else {
-    emit('close');
-  }
+  let modifyData = {
+    "id": saasId.value,
+    "alias": alias.value,
+    "adminEmail": saasEmail.value,
+    "apiToken": apiToken.value,
+    "webhookUrl": webhookUrl.value
+  };
+
+  modifySaasApi(modifyData).then((response) => {
+    console.log('ModifyModal: ' + response);
+    errorCode = response.errorCode;
+    if(errorCode != 200) {
+      openErrorModal();
+      watch(isErrorModalOpen, (afterValue, beforeValue) => {
+        if (afterValue === false) {
+          emit('close');
+        }
+      });
+    }
+    else {
+      emit('close');
+    }
+  }).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+
 };
 
 const validateAdminEmail = () => {
@@ -208,7 +226,18 @@ const validateWebhook = () => {
   }
 }
 
-watch(saasEmail, validateAdminEmail);
+const validateApiToken = () => {
+  let data = {
+    "apiToken": apiToken.value
+  }
+  TokenValidationApi(data, 1).then((response) => {
+    isValidApiToken.value = response;
+  });
+  console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
+}
+
 watch(saasType, validateWebhook);
+watch(saasEmail, validateAdminEmail);
+watch(apiToken, validateApiToken);
 
 </script>

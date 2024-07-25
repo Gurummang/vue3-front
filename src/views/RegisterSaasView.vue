@@ -18,33 +18,29 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import RegisterMain from '@/components/RegisterMain.vue'
 import ContentError from '@/components/ContentError.vue'
+import { getSaasListApi } from '@/apis/register.js'
 
 let responseData = ref(null);
 let error = ref(null);
+let orgId = 1;
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
-const fetchPosts = async () => {
-  try {
-    const response = await axios.get('/api/v1/org-saas/1');
-    if(response.status == '200') {
-      return await response.data;
-    }
-  } catch (err) {
-    console.error('Error:', err);
-    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+getSaasListApi(orgId).then((response) => {
+  console.log("saasList : " + response);
+  if(response.status == '200') {
+    responseData.value = response.data;
   }
-};
+}).catch(err => alert(err + "\n문제가 발생했어요."));
 
-responseData.value = fetchPosts();
 
+// setInterval(console.log('test-1'), 1000);
 // responseData = [
 //   { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},
 //   { id: 2, name: 'Slack', status: 'connecting', adminEmail: 'aaabbccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Slack 연결', registerDate: '2024-00-02', apiToken: '2345'},

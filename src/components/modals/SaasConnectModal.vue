@@ -58,14 +58,15 @@
                 class="mt-1 p-1.5 w-full pr-10 rounded-md shadow-sm text-xs border-2 border-gray-300"
                 autocomplete="on"
               />
+              <button 
+                @click="togglePasswordVisibility" 
+                type="button"
+                :class="['absolute right-0 pr-2 flex items-center', isValidApiToken ? 'top-5 bottom-5' : '-top-5 -bottom-0']"
+              >
+                <v-icon>{{ showPassword ? 'mdi-eye-closed' : 'mdi-eye' }}</v-icon>
+              </button>
             </form>
-            <button 
-              @click="togglePasswordVisibility" 
-              type="button"
-              class="absolute inset-y-5 right-0 pr-2 flex items-center"
-            >
-              <v-icon>{{ showPassword ? 'mdi-eye-closed' : 'mdi-eye' }}</v-icon>
-            </button>
+            <p v-if="!isValidApiToken" class="text-rose-500">해당 API Token이 올바르지 않습니다.</p>
           </div>
         </div>  
         <div class="mb-2">
@@ -105,24 +106,24 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
-import { getTodayDate } from '@/utils/utils.js'
-import { getWebhookApi, connectSaasApi } from '@/apis/register.js'
+import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
 
-const emit = defineEmits(['close']);
+let emit = defineEmits(['close']);
 
 // 임의의 값 넣기
-const saasType = ref('None');
-const alias = ref('');
-const saasEmail = ref('');
-const webhookUrl = ref('');
-const apiToken = ref('');
-const agreeToTerms = ref(false);
+let saasType = ref('None');
+let alias = ref('');
+let saasEmail = ref('');
+let webhookUrl = ref('');
+let apiToken = ref('');
+let agreeToTerms = ref(false);
 
-const showPassword = ref(true);
-const isValidEmail = ref(true);
-const selectedSaaS = ref(null);
-const isErrorModalOpen = ref(false);
-const errorCode = ref(null);
+let showPassword = ref(true);
+let isValidEmail = ref(true);
+let isValidApiToken = ref(true);
+let selectedSaaS = ref(null);
+let isErrorModalOpen = ref(false);
+let errorCode = ref(null);
 
 const openErrorModal = () => {
   isErrorModalOpen.value = true;
@@ -153,34 +154,28 @@ const syncSaaS = () => {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
   }
+  else if(!isValidApiToken.value) {
+    alert('해당 API Token이 올바르지 않습니다.\n다시 작성해주세요.');
+    return;
+  }
   if (!agreeToTerms.value) {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
-  let registerInfo = {
+  let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
     "alias": alias.value,
     "adminEmail": saasEmail.value,
-    "apiToken": alias.value,
+    "apiToken": apiToken.value,
     "webhookUrl": webhookUrl.value
   };
-  // console.log('Syncing SaaS:', {
-  //   saasType: saasType.value,
-  //   alias: alias.value,
-  //   saasEmail: saasEmail.value,
-  //   apiToken: apiToken.value,
-  //   webhookUrl: webhookUrl.value,
-  // });
 
-  // 테스트 에러 강제 출력 
-  // const check = registerSaasApi(registerInfo);
-
-  connectSaasApi(registerInfo).then((response) => {
+  connectSaasApi(connectData).then((response) => {
     console.log(response);
-    errorCode.value = response.errorCode;
+    errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
       watch(isErrorModalOpen, (afterValue, beforeValue) => {
@@ -192,15 +187,17 @@ const syncSaaS = () => {
     else {
       emit('close');
     }
-  });
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+};
+
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
 };
 
 const validateAdminEmail = () => {
   isValidEmail.value = validateEmail(saasEmail.value);
-};
-
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value;
 };
 
 const validateWebhook = () => {
@@ -211,7 +208,18 @@ const validateWebhook = () => {
   }
 }
 
+const validateApiToken = () => {
+  let data = {
+    "apiToken": apiToken.value
+  }
+  TokenValidationApi(data, 1).then((response) => {
+    isValidApiToken.value = response;
+  });
+  console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
+}
+
 watch(saasEmail, validateAdminEmail);
+watch(apiToken, validateApiToken);
 watch(saasType, validateWebhook);
 
 </script>

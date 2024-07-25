@@ -123,13 +123,13 @@
 </template>
 
 <script setup>
-import { ref, defineProps ,computed } from 'vue';
+import { ref, defineProps, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
-// import AxiosTest from '@/components/AxiosTest.vue'
 
 const props = defineProps({
   responseData: {
@@ -143,10 +143,10 @@ const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
-const saasData = ref(await props.responseData);
+const saasData = ref(props.responseData);
+// console.log('saasData' + saasData);
 
-// const saasData_test = JSON.stringify(await props.responseData);
-// console.log('RegisterMain: ',saasData_test, typeof saasData_test);
+const router = useRouter();
 
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
@@ -154,6 +154,7 @@ const openconnectModal = () => {
 
 const closeconnectModal = () => {
   isconnectModalOpen.value = false;
+  router.go();
 }
 
 const openModificationModal = () => {
@@ -167,6 +168,7 @@ const openModificationModal = () => {
 const closeModificationModal = () => {
   isModificationModalOpen.value = false;
   selectedSaas.value = null;
+  router.go();
 }
 
 const openUnconnectModal = () => {
@@ -180,6 +182,7 @@ const openUnconnectModal = () => {
 const closeUnconnectModal = () => {
   isUnconnectModalOpen.value = false;
   selectedSaas.value = null;
+  router.go();
 }
 
 const handleSubmit = (data) => {
@@ -188,11 +191,8 @@ const handleSubmit = (data) => {
 };
 
 // 통계 수치
-// const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 'connect').length);
-// const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 'connecting').length);
-// const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 'failconnect').length);
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);
 const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 0).length);
-const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === -1).length);
+const failConnectCount = computed(() => saasData.value.filter(saas => saas.status === 99).length);
 
 </script>
