@@ -123,7 +123,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps ,computed } from 'vue';
+import { ref, defineProps, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
@@ -145,12 +146,15 @@ const selectedSaas = ref(null);
 const saasData = ref(props.responseData);
 // console.log('saasData' + saasData);
 
+const router = useRouter();
+
 const openconnectModal = () => {
   isconnectModalOpen.value = true;
 };
 
 const closeconnectModal = () => {
   isconnectModalOpen.value = false;
+  router.go();
 }
 
 const openModificationModal = () => {
@@ -164,6 +168,7 @@ const openModificationModal = () => {
 const closeModificationModal = () => {
   isModificationModalOpen.value = false;
   selectedSaas.value = null;
+  router.go();
 }
 
 const openUnconnectModal = () => {
@@ -177,6 +182,7 @@ const openUnconnectModal = () => {
 const closeUnconnectModal = () => {
   isUnconnectModalOpen.value = false;
   selectedSaas.value = null;
+  router.go();
 }
 
 const handleSubmit = (data) => {

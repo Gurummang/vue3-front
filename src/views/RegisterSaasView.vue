@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
@@ -31,13 +31,14 @@ let responseData = ref(null);
 let error = ref(null);
 let orgId = 1;
 
-let test = getSaasListApi(orgId).then((response) => {
+
+getSaasListApi(orgId).then((response) => {
   console.log("saasList : " + response);
   if(response.status == '200') {
     responseData.value = response.data;
   }
-}).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
-// responseData.value = getSaasListApi();
+}).catch(err => alert(err + "\n문제가 발생했어요."));
+
 
 // setInterval(console.log('test-1'), 1000);
 // responseData = [
