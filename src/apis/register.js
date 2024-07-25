@@ -15,9 +15,9 @@ const getWebhookApi = async (saasId) => {
   }
 };
 
-const connectSaasApi = async (info) => {
+const connectSaasApi = async (data) => {
   try {
-    const response = await axios.post('/api/v1/org-saas/register', info);
+    const response = await axios.post('/api/v1/org-saas/register', data);
     if(response.status == '200') {
       console.log('connectSaasApi : ' + response);
       return response.data;
@@ -28,13 +28,18 @@ const connectSaasApi = async (info) => {
   }
 }
 
-   // modify
-  //     "configId": 4,
-  //     "alias": "클라이언트 마음대로"
-  //     "adminEmail": "바꾸고싶은대로",
-  //     "apiToken": "틀리면 error 201",
-  //     "webhookUrl": "https://gurm.com/Slack-67b65f6d-d0c6-4925-92df-bd3d3324141f"
-  // }
+const modifySaasApi = async (data) => {
+  try {
+    const response = await axios.post('/api/v1/org-saas/modify', data);
+    if(response.status == '200') {
+      console.log('modifySaasApi : ' + response);
+      return response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+  }
+}
 
 const unconnectSaasApi = async (id) => {
   try {
@@ -48,8 +53,5 @@ const unconnectSaasApi = async (id) => {
     throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
   }
 }
-  // {    // delete
-  //     "configId": int
-  // }
 
-export { getWebhookApi, connectSaasApi, unconnectSaasApi };
+export { getWebhookApi, connectSaasApi, modifySaasApi, unconnectSaasApi };

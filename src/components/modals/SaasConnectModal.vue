@@ -159,12 +159,12 @@ const syncSaaS = () => {
   }
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
-  let registerInfo = {
+  let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
     "alias": alias.value,
     "adminEmail": saasEmail.value,
-    "apiToken": alias.value,
+    "apiToken": apiToken.value,
     "webhookUrl": webhookUrl.value
   };
   // console.log('Syncing SaaS:', {
@@ -178,7 +178,7 @@ const syncSaaS = () => {
   // 테스트 에러 강제 출력 
   // const check = registerSaasApi(registerInfo);
 
-  connectSaasApi(registerInfo).then((response) => {
+  connectSaasApi(connectData).then((response) => {
     console.log(response);
     errorCode.value = response.errorCode;
     if(errorCode != 200) {
@@ -192,7 +192,8 @@ const syncSaaS = () => {
     else {
       emit('close');
     }
-  });
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 };
 
 const validateAdminEmail = () => {
