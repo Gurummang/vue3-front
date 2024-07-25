@@ -71,12 +71,12 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['close'])
+let emit = defineEmits(['close'])
 
-const saasId = ref(props.selectedSaas.id);
-const confirmed = ref(false);
-const isErrorModalOpen = ref(false);
-const errorCode = ref(null);
+let saasId = ref(props.selectedSaas.id);
+let confirmed = ref(false);
+let isErrorModalOpen = ref(false);
+let errorCode = ref(null);
 
 const openErrorModal = () => {
   isErrorModalOpen.value = true;
@@ -88,7 +88,6 @@ const closeErrorModal = () => {
 
 const UnconnectSaas = (saasId) => {
   console.log(saasId);
-  // 해제 API 요청하기
 
   let deleteInfo = {
     "id": saasId
@@ -107,21 +106,7 @@ const UnconnectSaas = (saasId) => {
     else {
       emit('close');
     }
-  });
-  // 테스트 에러 강제 출력 
-  // const check = true;
-  // if(check) {
-  //   errorCode.value = 701;
-  //   openErrorModal();
-  //   watch(isErrorModalOpen, (afterValue, beforeValue) => {
-  //     if (afterValue === false) {
-  //       emit('close');
-  //     }
-  //   });
-  // }
-  // else {
-  //   emit('close');
-  // }
+  }).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 }
 
 </script>
