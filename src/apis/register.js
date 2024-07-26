@@ -5,9 +5,9 @@ axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 let getSaasListApi = async (orgId) => {
   try {
     const response = await axios.get('/api/v1/org-saas/' + orgId);
-    console.log(await response);
+    // console.log(await response.data);
     if(response.status == '200') {
-      return await response;
+      return response.data;
     }
   } catch (err) {
     console.error('Error:', err);
