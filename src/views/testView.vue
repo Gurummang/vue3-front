@@ -10,6 +10,7 @@
       <content-error v-else></content-error>
       </Suspense>
     </main>
+    <cycle-loading></cycle-loading>
   </div>
 
   <!-- <footer>
@@ -24,6 +25,8 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import RegisterMain from '@/components/RegisterMain.vue'
 import ContentError from '@/components/ContentError.vue'
+
+import CycleLoading from '@/components/CycleLoading.vue'
 
 let responseData = ref(null);
 
