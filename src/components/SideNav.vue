@@ -1,6 +1,6 @@
 <template>
   <!-- Left Navigation Bar -->
-  <nav class="h-screen bg-white shadow-lg">
+  <nav class="h-screen bg-white shadow-sm rounded-r-lg">
     <!-- Logo and Title -->
     <div class="flex items-center justify-center p-2.5 border-b border-gray-200">
       <img src="../../public/gurummang_logo.png" alt="Logo" class="size-10 mr-4">
