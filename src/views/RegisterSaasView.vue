@@ -11,6 +11,7 @@
       </Suspense>
     </main>
   </div>
+
   <!-- <footer>
     <the-footer></the-footer>
   </footer> -->
@@ -30,12 +31,39 @@ let responseData = ref(null);
 let error = ref(null);
 let orgId = 1;
 
-getSaasListApi(orgId).then((response) => {
-  responseData.value = response;
-}).catch(err => console.log(err));
+// getSaasListApi(orgId).then((response) => {
+//   console.log("saasList : " + response);
+//   if(response.status == '200') {
+//     responseData.value = response;
+//   }
+// }).catch(err => alert(err + "\n문제가 발생했어요."));
 
-// responseData.value = getSaasListApi(orgId);
-// console.log('+++++', responseData.value);
+responseData.value = getSaasListApi(orgId);
+
+axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
+
+const fetchPosts = async (orgId) => {
+  try {
+    const response = await axios.get('/api/v1/org-saas/1');
+    // console.log(await response.data);
+    if(response.status == '200') {
+      return await response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+};
+
+// responseData.value = fetchPosts();
+// console.log('!!!!', responseData);
+
+// console.log(tt);
+
+// Promise.all([getSaasListApi(orgId)]).then((values) => {
+//   console.log('Promise.all : ',values);
+//   responseData.value = values[0];
+// })
 
 // responseData = [
 //   { id: 1, name: 'Jira', status: 'connect', adminEmail: 'aabbcccc@구름.com', webhookUrl: 'webhook@구름.com', alias: 'Jira연결', registerDate: '2024-00-01', apiToken: '1234'},

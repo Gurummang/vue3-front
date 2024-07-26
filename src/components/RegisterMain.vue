@@ -123,7 +123,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, computed, reactive } from 'vue';
+import { ref, defineProps, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
@@ -143,7 +143,7 @@ const isModificationModalOpen = ref(false);
 const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
-const saasData = ref(props.responseData);
+const saasData = ref(await props.responseData);
 console.log('saasData' + saasData);
 
 const router = useRouter();
