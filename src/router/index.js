@@ -50,11 +50,16 @@ const routes = [
     path: '/dlp',
     name: 'DLP 설정',
     component: () => import('../views/DlpView.vue')
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../views/testView.vue')
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 
