@@ -19,12 +19,12 @@ const routes = [
   {
     path: '/saas/jira',
     name: 'SaaS - Jira',
-    component: () => import('../views/SaasView.vue')
+    component: () => import('../views/SaasJiraView.vue')
   },
   {
     path: '/saas/slack',
     name: 'SaaS - Slack',
-    component: () => import('../views/SaasView.vue')
+    component: () => import('../views/SaasSlackView.vue')
   },
   {
     path: '/file/dashboard',
