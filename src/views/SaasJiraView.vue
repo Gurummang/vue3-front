@@ -1,6 +1,6 @@
 <template>
   <side-nav class="w-1/6 float-left"></side-nav>
-  <div class="w-5/6 float-right">
+  <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
     <main>
       <content-error></content-error>

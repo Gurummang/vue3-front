@@ -1,5 +1,5 @@
 <template>
-<div class="h-[50vh] place-content-center bg-white m-5 p-4 rounded-lg shadow-sm">
+<div class="h-[50vh] place-content-center bg-white p-4 rounded-lg shadow-sm">
   <div class="text-center">
     
     <v-icon size="140" color="#FF9A00">mdi-cloud-alert-outline</v-icon>
