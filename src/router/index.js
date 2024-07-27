@@ -19,12 +19,12 @@ const routes = [
   {
     path: '/saas/jira',
     name: 'SaaS - Jira',
-    component: () => import('../views/SaasView.vue')
+    component: () => import('../views/SaasJiraView.vue')
   },
   {
     path: '/saas/slack',
     name: 'SaaS - Slack',
-    component: () => import('../views/SaasView.vue')
+    component: () => import('../views/SaasSlackView.vue')
   },
   {
     path: '/file/dashboard',
@@ -50,11 +50,16 @@ const routes = [
     path: '/dlp',
     name: 'DLP 설정',
     component: () => import('../views/DlpView.vue')
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../views/testView.vue')
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 
