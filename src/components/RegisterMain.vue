@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 pb-5">
+  <div class="pb-5">
     <!-- SaaS 통계 -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
       <div class="bg-white shadow rounded-lg p-4">
