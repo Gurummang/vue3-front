@@ -2,13 +2,14 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <main>
+    <main class="scroll-h scroll overflow-auto">
       <saas-score></saas-score>
       <saas-statistics></saas-statistics>
       <div class="grid grid-cols-2 gap-5 mb-5">
         <recent-upload-list></recent-upload-list>
         <recent-upload-list></recent-upload-list>
       </div>
+      <users-top-5></users-top-5>
       <!-- <content-error></content-error> -->
     </main>
   </div>
@@ -27,6 +28,7 @@ import ContentError from '@/components/ContentError.vue'
 import SaasScore from '@/components/saas/SaasScore.vue'
 import SaasStatistics from '@/components/saas/SaasStatistics.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
+import UsersTop5 from '@/components/saas/UsersTop5.vue'
 
 
 let responseData = ref(null);
