@@ -5,22 +5,22 @@
       <table class="w-full table-fixed bg-white">
         <thead class="bg-indigo-900">
           <tr>
-            <th class="w-2/5 px-3 py-3 text-left text-sm font-bold text-white tracking-wider">파일명</th>
-            <th class="w-1/5 px-2 py-3 text-left text-sm font-bold text-white tracking-wider">사용자</th>
-            <th class="w-1/5 px-2 py-3 text-center text-sm font-bold text-white tracking-wider">파일 유형</th>
-            <th class="w-1/5 px-2 py-3 text-center text-sm font-bold text-white tracking-wider">생성 시각</th>
+            <th class="w-3/6 px-3 py-3 text-left text-sm font-bold text-white tracking-wider">파일명</th>
+            <th class="w-1/6 px-2 py-3 text-left text-sm font-bold text-white tracking-wider">사용자</th>
+            <th class="w-1/12 px-2 py-3 text-center text-sm font-bold text-white tracking-wider">유형</th>
+            <th class="w-1/6 px-2 py-3 text-center text-sm font-bold text-white tracking-wider">생성 시각</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="(file, index) in files" :key="index">
-            <td class="px-3 py-1 truncate">
-              <div class="w-full truncate text-xs">{{ file.name }}</div>
+            <td class="px-3 py-1">
+              <div class="w-full text-xs">{{ file.name }}</div>
             </td>
             <td class="px-2 py-1">
-              <div class="w-full truncate text-xs">{{ file.user }}</div>
+              <div class="w-full text-xs truncate">{{ file.user }}</div>
             </td>
             <td class="px-2 py-1">
-              <div class="w-full text-center truncate text-xs">{{ file.type }}</div>
+              <div class="w-full text-center text-xs">{{ file.type }}</div>
             </td>
             <td class="px-2 py-1">
               <div class="w-full text-center text-xs leading-3">{{ file.date }}</div>
@@ -38,11 +38,11 @@ import '@mdi/font/css/materialdesignicons.css'; // Ensure you have the MDI icons
 
 const files = ref([
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
-  { name: 'aaaaa.txt', user: '구름망!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', type: 'txt', date: '2024-00-00 00:00:00' },
+  { name: 'aaaaa.txt', user: 'aabb12312@gmail.com', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: '2024-07-29일 txt파일을 테스트해볼려고 일부러 글자를 길게 합니다.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
-  { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
+  { name: 'aaaaa.txt', user: 'adsaaaaafaeawfdk@naver.com', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
   { name: 'aaaaa.txt', user: '구름망', type: 'txt', date: '2024-00-00 00:00:00' },
