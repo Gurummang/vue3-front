@@ -5,6 +5,10 @@
     <main>
       <saas-score></saas-score>
       <saas-statistics></saas-statistics>
+      <div class="grid grid-cols-2 gap-5 mb-5">
+        <recent-upload-list></recent-upload-list>
+        <recent-upload-list></recent-upload-list>
+      </div>
       <!-- <content-error></content-error> -->
     </main>
   </div>
@@ -22,6 +26,7 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import SaasScore from '@/components/saas/SaasScore.vue'
 import SaasStatistics from '@/components/saas/SaasStatistics.vue'
+import RecentUploadList from '@/components/saas/RecentUploadList.vue'
 
 
 let responseData = ref(null);
