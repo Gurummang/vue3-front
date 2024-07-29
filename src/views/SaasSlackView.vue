@@ -4,6 +4,7 @@
     <header-breadcrumb></header-breadcrumb>
     <main>
       <saas-score></saas-score>
+      <saas-statistics></saas-statistics>
       <!-- <content-error></content-error> -->
     </main>
   </div>
@@ -20,6 +21,7 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import SaasScore from '@/components/saas/SaasScore.vue'
+import SaasStatistics from '@/components/saas/SaasStatistics.vue'
 
 
 let responseData = ref(null);
