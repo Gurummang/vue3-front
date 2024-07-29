@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white border rounded-lg">
+  <div class="p-4 bg-white border rounded-lg shadow-sm">
     <h2 class="text-xl font-bold mb-4">최근 업로드 파일</h2>
     <div class="overflow-x-auto">
       <table class="w-full table-fixed bg-white">
