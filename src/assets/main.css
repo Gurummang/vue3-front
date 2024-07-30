@@ -9,6 +9,7 @@
   display:none;
 }
 
+/* 4.8rem */
 .scroll-h {
-  height: calc(100vh - 4.8rem);
+  height: calc(100vh - 5.8rem);
 }

@@ -2,7 +2,7 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <main class="scroll-h scroll overflow-auto">
+    <main class="scroll-h scroll overflow-auto rounded-lg">
       <saas-score></saas-score>
       <saas-statistics></saas-statistics>
       <div class="grid grid-cols-2 gap-5 mb-5">
