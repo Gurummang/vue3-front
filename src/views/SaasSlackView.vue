@@ -6,7 +6,7 @@
       <saas-score></saas-score>
       <saas-statistics></saas-statistics>
       <div class="grid grid-cols-2 gap-5 mb-5">
-        <recent-upload-list></recent-upload-list>
+        <file-ratio-chart></file-ratio-chart>
         <recent-upload-list></recent-upload-list>
       </div>
       <users-top-5></users-top-5>
@@ -27,6 +27,7 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import SaasScore from '@/components/saas/SaasScore.vue'
 import SaasStatistics from '@/components/saas/SaasStatistics.vue'
+import FileRatioChart from '@/components/saas/FileRatioChart.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
 import UsersTop5 from '@/components/saas/UsersTop5.vue'
 
