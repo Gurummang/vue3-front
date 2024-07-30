@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white border rounded-lg shadow-sm mb-5">
+  <div class="p-4 bg-white border rounded-lg shadow-sm mb-1">
     <h2 class="text-xl font-bold mb-4">위험 사용자 TOP5</h2>
     <div class="overflow-x-auto">
       <table class="w-full table-fixed bg-white">
