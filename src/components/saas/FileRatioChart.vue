@@ -11,17 +11,17 @@
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-amber-400 mr-2"></span>
             <span class="flex-1 text-sm">민감 파일 비율</span>
-            <span class="bg-amber-300 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">14%</span>
+            <span class="bg-amber-300 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ dlpRatio }}%</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-red-600 mr-2"></span>
             <span class="flex-1 text-sm">악성 파일 비율</span>
-            <span class="bg-red-600 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">10%</span>
+            <span class="bg-red-600 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ malwareRatio }}%</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-gray-200 mr-2"></span>
             <span class="flex-1 text-sm">전체 파일 크기</span>
-            <span class="bg-gray-200 text-slate-900 text-sm text-center w-14 py-0.5 px-2 rounded-xl">0.7GB</span>
+            <span class="bg-gray-200 text-slate-900 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ fileVolume }}GB</span>
           </li>
         </ul>
       </div>
@@ -41,6 +41,7 @@ export default {
     const myChart = ref(null);
     const dlpRatio = ref(14);
     const malwareRatio = ref(10);
+    const fileVolume = ref(0.7);
 
     const data = {
       datasets: [
@@ -72,7 +73,8 @@ export default {
     return {
       myChart,
       dlpRatio,
-      malwareRatio
+      malwareRatio,
+      fileVolume
     };
   }
 };
