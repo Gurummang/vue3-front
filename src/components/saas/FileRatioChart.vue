@@ -11,17 +11,17 @@
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-amber-400 mr-2"></span>
             <span class="flex-1 text-sm">민감 파일 비율</span>
-            <span class="bg-amber-300 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ dlpRatio }}%</span>
+            <span class="bg-amber-300 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dlpRatio }}%</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-red-600 mr-2"></span>
             <span class="flex-1 text-sm">악성 파일 비율</span>
-            <span class="bg-red-600 text-slate-50 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ malwareRatio }}%</span>
+            <span class="bg-red-600 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ malwareRatio }}%</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-gray-200 mr-2"></span>
             <span class="flex-1 text-sm">전체 파일 크기</span>
-            <span class="bg-gray-200 text-slate-900 text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ fileVolume }}GB</span>
+            <span class="bg-gray-200 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ fileVolume }}GB</span>
           </li>
         </ul>
       </div>
@@ -29,55 +29,52 @@
   </div>
 </template>
 
-<script>
-import { onMounted, ref } from 'vue';
+<script setup>
+import { ref, onMounted, watch } from 'vue';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
-export default {
-  name: 'DonutChart',
-  setup() {
-    const myChart = ref(null);
-    const dlpRatio = ref(14);
-    const malwareRatio = ref(10);
-    const fileVolume = ref(0.7);
+const props = defineProps({
+  fileSize: Number,
+});
 
-    const data = {
-      datasets: [
-        {
-          label: 'DLP',
-          data: [dlpRatio.value, 100 - dlpRatio.value],
-          backgroundColor: ['#fbbf24', '#e5e7eb'],
-          hoverOffset: 4
-        },
-        {
-          label: 'Malware',
-          data: [malwareRatio.value, 100 - malwareRatio.value],
-          backgroundColor: ['#dc2626', '#e5e7eb'],
-          hoverOffset: 4
-        }
-      ]
-    };
+const myChart = ref(null);
+const dlpRatio = ref(Math.round((props.fileSize.sensitiveSize / props.fileSize.totalSize) * 100));
+const malwareRatio = ref(Math.round((props.fileSize.maliciousSize / props.fileSize.totalSize) * 100));
+const fileVolume = ref((props.fileSize.totalSize).toFixed(2));
 
-    const config = {
-      type: 'doughnut',
-      data: data,
-    };
+// watch(() => props.fileSize, (newSize) => {
+//   fileVolume.value = newSize;
+// });
 
-    onMounted(() => {
-      const ctx = myChart.value.getContext('2d');
-      new Chart(ctx, config);
-    });
-
-    return {
-      myChart,
-      dlpRatio,
-      malwareRatio,
-      fileVolume
-    };
-  }
+const data = {
+  datasets: [
+    {
+      label: 'DLP',
+      data: [dlpRatio.value, 100 - dlpRatio.value],
+      backgroundColor: ['#fbbf24', '#e5e7eb'],
+      hoverOffset: 4
+    },
+    {
+      label: 'Malware',
+      data: [malwareRatio.value, 100 - malwareRatio.value],
+      backgroundColor: ['#dc2626', '#e5e7eb'],
+      hoverOffset: 4
+    }
+  ]
 };
+
+const config = {
+  type: 'doughnut',
+  data: data,
+};
+
+onMounted(() => {
+  const ctx = myChart.value.getContext('2d');
+  new Chart(ctx, config);
+});
+
 </script>
 
 <style scoped>
