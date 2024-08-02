@@ -3,24 +3,25 @@
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
     <cycle-loading
-      v-if="loading"></cycle-loading>
+      v-if="loading && !isApiOk"></cycle-loading>
     <main 
       class="scroll-h scroll overflow-auto rounded-lg"
-      v-else>
+      v-else-if="!loading && isApiOk">
       <div>
         <saas-score></saas-score>
         <saas-statistics
           :fileStatistics="fileStatistics"></saas-statistics>
         <div class="grid grid-cols-2 gap-5 mb-5">
           <file-ratio-chart
-          :fileSize="fileSize"
+            :fileSize="fileSize"
           ></file-ratio-chart>
           <recent-upload-list></recent-upload-list>
         </div>
         <users-top-5></users-top-5>
       </div>
-      <!-- <content-error></content-error> -->
     </main>
+    <content-error
+      v-else></content-error>
   </div>
   <!-- <footer>
     <the-footer></the-footer>
@@ -29,7 +30,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { getFileStatistics, getFileSize } from '@/apis/saas.js'
+import { getFileStatisticsApi, getFileSizeApi } from '@/apis/saas.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -48,25 +49,25 @@ let connectedAccounts = ref(0);
 let fileSize = ref(null);
 let fileStatistics = ref(null);
 let loading = ref(true);
+let isApiOk = ref(false);
 
 const data = {
   "email": "hsp003636@gmail.com"
 }
 
 Promise.all([
-  getFileStatistics('slack', data),
-  getFileSize('slack', data)])
+  getFileStatisticsApi('slack', data),
+  getFileSizeApi('slack', data)])
   .then((values) => {
   fileStatistics.value = values[0];
-  // totalFiles.value = values[0]['totalFiles'];
-  // sensitiveFiles.value = values[0]['sensitiveFiles'];
-  // maliciousFiles.value = values[0]['maliciousFiles'];
-  // connectedAccounts.value = values[0]['connectedAccounts'];
   fileSize.value = values[1];
 
   console.log(values[0], values[1]);  
+  isApiOk.value = true;
+}).catch((err) => {
+  console.log(err);
+}).finally(() => {
   loading.value = false;
-  // console.log(totalFiles, sensitiveFiles, maliciousFiles, connectedAccounts);
 });
 
 // console.log(fileStatistics);
