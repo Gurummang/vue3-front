@@ -1,4 +1,5 @@
 <template>
+<div class="h-[50vh] place-content-center bg-white p-4 rounded-lg shadow-sm">
   <div class="text-center h-20vh">
     <div role="status">
       <svg aria-hidden="true" class="inline w-12 h-12 text-gray-200 animate-spin text-gray-300 fill-orange" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8,6 +9,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>
