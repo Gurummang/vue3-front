@@ -15,17 +15,17 @@ let getFileStatistics = async (saas, data) => {
   }
 };
 
-let connectSaasApi = async (data) => {
+let getFileSize = async (saas, data) => {
   try {
-    const response = await axios.post('/api/v1/org-saas/register', data);
+    const response = await axios.post('/api/v1/board/' + saas +'/files/size', data);
+    // console.log(response.data);
     if(response.status == '200') {
-      console.log('connectSaasApi : ' + response);
       return response.data;
     }
   } catch (err) {
     console.error('Error:', err);
-    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+    throw err;  
   }
 }
 
-export { getFileStatistics };
+export { getFileStatistics, getFileSize };
