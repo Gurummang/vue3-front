@@ -8,7 +8,8 @@
       class="scroll-h scroll overflow-auto rounded-lg"
       v-else-if="!loading && isApiOk">
       <div>
-        
+        <detection-count
+          :detectionFileCount="detectionFileCount"></detection-count>
       </div>
     </main>
     <content-error
@@ -27,15 +28,17 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
+import DetectionCount from '@/components/file/DetectionCount.vue'
 
 let loading = ref(true);
 let isApiOk = ref(false);
 
+let detectionFileCount = ref(null);
 
 Promise.all([
   
   ]).then((values) => {
-  
+    detectionFileCount.value = [2222, 13, 21];
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
