@@ -25,9 +25,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 
-const score = ref(65);
+const props = defineProps({
+  saasScore: {
+    type: Number,
+    required: true
+  }
+});
+
+const score = ref(props.saasScore);
 
 
 </script>
