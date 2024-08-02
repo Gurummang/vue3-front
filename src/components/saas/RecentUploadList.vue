@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 import '@mdi/font/css/materialdesignicons.css'; // Ensure you have the MDI icons installed
 
 const props = defineProps({

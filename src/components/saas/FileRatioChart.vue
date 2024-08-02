@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col p-4 bg-white border rounded-lg shadow-sm">
     <h2 class="text-xl font-bold mb-4">DLP 및 악성 파일 비율</h2>
-    
     <div class="my-auto">
       <div class="my-0 mx-auto size-64">
         <canvas ref="myChart"></canvas>
@@ -32,6 +31,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
+import { removeZeroDivision } from '@/utils/utils.js';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -40,9 +40,10 @@ const props = defineProps({
 });
 
 const myChart = ref(null);
+props.fileSize.totalSize = removeZeroDivision(props.fileSize.totalSize);
+const fileVolume = ref(Math.round(props.fileSize.totalSize * 100) / 100);
 const dlpRatio = ref(Math.round((props.fileSize.sensitiveSize / props.fileSize.totalSize) * 100));
 const malwareRatio = ref(Math.round((props.fileSize.maliciousSize / props.fileSize.totalSize) * 100));
-const fileVolume = ref((props.fileSize.totalSize).toFixed(2));
 
 // watch(() => props.fileSize, (newSize) => {
 //   fileVolume.value = newSize;

@@ -3,12 +3,13 @@
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
     <cycle-loading
-      v-if="loading && !isApiOk"></cycle-loading>
+      v-if="loading"></cycle-loading>
     <main 
       class="scroll-h scroll overflow-auto rounded-lg"
       v-else-if="!loading && isApiOk">
       <div>
-        <saas-score></saas-score>
+        <saas-score
+          :saasScore="saasScore"></saas-score>
         <saas-statistics
           :fileStatistics="fileStatistics"></saas-statistics>
         <div class="grid grid-cols-2 gap-5 mb-5">
@@ -18,7 +19,8 @@
           <recent-upload-list
             :fileRecent="fileRecent"></recent-upload-list>
         </div>
-        <users-top-5></users-top-5>
+        <users-top-5
+          :usersTop5="usersTop5"></users-top-5>
       </div>
     </main>
     <content-error
@@ -31,7 +33,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { getFileStatisticsApi, getFileSizeApi, getFileRecentApi } from '@/apis/saas.js'
+import { saasScoreApi, fileStatisticsApi, fileSizeApi, fileRecentApi, usersTop5Api } from '@/apis/saas.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -46,22 +48,28 @@ import UsersTop5 from '@/components/saas/UsersTop5.vue'
 let loading = ref(true);
 let isApiOk = ref(false);
 
+let saasScore = ref(0);
 let fileSize = ref(null);
 let fileStatistics = ref(null);
 let fileRecent = ref(null);
+let usersTop5 = ref(null);
 
 const data = {
   "email": "hsp003636@gmail.com"
 }
 
 Promise.all([
-  getFileStatisticsApi('slack', data),
-  getFileSizeApi('slack', data),
-  getFileRecentApi('slack', data),
+  saasScoreApi('slack', data),
+  fileStatisticsApi('slack', data),
+  fileSizeApi('slack', data),
+  fileRecentApi('slack', data),
+  usersTop5Api('slack', data),
   ]).then((values) => {
-  fileStatistics.value = values[0];
-  fileSize.value = values[1];
-  fileRecent.value = values[2];
+  saasScore.value = values[0];
+  fileStatistics.value = values[1];
+  fileSize.value = values[2];
+  fileRecent.value = values[3];
+  usersTop5.value = values[4];
 
   console.log(values[0], values[1], values[2]);  
   isApiOk.value = true;
