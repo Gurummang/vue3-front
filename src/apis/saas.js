@@ -5,7 +5,6 @@ axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 let getFileStatisticsApi = async (saas, data) => {
   try {
     const response = await axios.post('/api/v1/board/' + saas +'/files/count', data);
-    // console.log(response.data);
     if(response.status == '200') {
       return response.data;
     }
@@ -18,7 +17,6 @@ let getFileStatisticsApi = async (saas, data) => {
 let getFileSizeApi = async (saas, data) => {
   try {
     const response = await axios.post('/api/v1/board/' + saas +'/files/size', data);
-    // console.log(response.data);
     if(response.status == '200') {
       return response.data;
     }
@@ -28,4 +26,16 @@ let getFileSizeApi = async (saas, data) => {
   }
 }
 
-export { getFileStatisticsApi, getFileSizeApi };
+let getFileRecentApi = async (saas, data) => {
+  try {
+    const response = await axios.post('/api/v1/board/' + saas +'/files/recent', data);
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+}
+
+export { getFileStatisticsApi, getFileSizeApi, getFileRecentApi };

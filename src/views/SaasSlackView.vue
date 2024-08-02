@@ -15,7 +15,8 @@
           <file-ratio-chart
             :fileSize="fileSize"
           ></file-ratio-chart>
-          <recent-upload-list></recent-upload-list>
+          <recent-upload-list
+            :fileRecent="fileRecent"></recent-upload-list>
         </div>
         <users-top-5></users-top-5>
       </div>
@@ -30,7 +31,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { getFileStatisticsApi, getFileSizeApi } from '@/apis/saas.js'
+import { getFileStatisticsApi, getFileSizeApi, getFileRecentApi } from '@/apis/saas.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -42,14 +43,12 @@ import FileRatioChart from '@/components/saas/FileRatioChart.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
 import UsersTop5 from '@/components/saas/UsersTop5.vue'
 
-let totalFiles = ref(0);
-let sensitiveFiles = ref(0);
-let maliciousFiles = ref(0);
-let connectedAccounts = ref(0);
-let fileSize = ref(null);
-let fileStatistics = ref(null);
 let loading = ref(true);
 let isApiOk = ref(false);
+
+let fileSize = ref(null);
+let fileStatistics = ref(null);
+let fileRecent = ref(null);
 
 const data = {
   "email": "hsp003636@gmail.com"
@@ -57,12 +56,14 @@ const data = {
 
 Promise.all([
   getFileStatisticsApi('slack', data),
-  getFileSizeApi('slack', data)])
-  .then((values) => {
+  getFileSizeApi('slack', data),
+  getFileRecentApi('slack', data),
+  ]).then((values) => {
   fileStatistics.value = values[0];
   fileSize.value = values[1];
+  fileRecent.value = values[2];
 
-  console.log(values[0], values[1]);  
+  console.log(values[0], values[1], values[2]);  
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
