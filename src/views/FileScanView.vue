@@ -10,6 +10,8 @@
       <div>
         <detection-count
           :detectionFileCount="detectionFileCount"></detection-count>
+        <file-details></file-details>
+        <file-test></file-test>
       </div>
     </main>
     <content-error
@@ -29,6 +31,8 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 import DetectionCount from '@/components/file/DetectionCount.vue'
+import FileDetails from '@/components/file/FileDetails.vue'
+import FileTest from '@/components/file/FileTest.vue'
 
 let loading = ref(true);
 let isApiOk = ref(false);
