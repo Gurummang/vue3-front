@@ -43,7 +43,7 @@
           <template v-for="(details, index) in fileDetails" :key="index" >
             <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <input type="checkbox" class="size-3.5 rounded border-gray-300" :id="['Option' + index]" />
+                <input type="checkbox" class="size-3.5 rounded border-gray-300" :id="['Option' + index]" onclick="event.cancelBubble = true;"/>
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
                 <span v-if="details.dlp === 0">
@@ -92,12 +92,7 @@
             
             <!-- Accordion row -->
             <tr v-if="isAccordionOpen(index)" class="">
-              <td colspan="9" class="">
-                <!-- <div class="text-sm text-gray-700">
-                  <strong>Additional Information:</strong>
-                  <p>{{ details.name }} - Additional details about the file, its type, user, and other relevant information can go here.</p>
-                </div> -->
-                
+              <td colspan="9" class="">           
                 <div class="flex-col pl-[5%] bg-gray-100">
                   <div class="">
                     <!-- cause divide-y to add empty span-->
@@ -268,8 +263,6 @@ const fileDetails = ref([
   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
 ]);
-
-const color = 'dc2626';
 
 const accordionStatus = ref({});
 const dlpReportStatus = ref({});
