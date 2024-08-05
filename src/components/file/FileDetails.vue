@@ -170,7 +170,9 @@
                         </div>
                         <div class="border-t border-gray-200">
                           <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">VirusTotal Report</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                          <button class="ml-2 px-3 font-medium tracking-wide text-white bg-blue-600 hover:bg-blue-500">
+                              바로가기
+                          </button>
                         </div>
                       </div>
 
