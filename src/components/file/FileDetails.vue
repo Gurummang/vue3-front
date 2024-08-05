@@ -155,8 +155,8 @@
                   <div v-if="isVirusTotalReportOpen(index) && details.virustoal" class="bg-white">
                     <!-- VirusTotal Report content -->
                     <div class="flex">
-                      <div class="grow border-t border-gray-200">
-                        <div>
+                      <div class="w-1/2 border-t border-gray-200">
+                        <div class="">
                           <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">SHA-256</span>
                           <span class="inline-block w-2/3 p-2 bg-white">20</span>
                         </div>
@@ -174,16 +174,26 @@
                         </div>
                       </div>
 
-                      <div class="grow border-t border-gray-200">
-                        <span class="inline-block w-1/2 h-full p-2 bg-white border-x border-gray-200">접근 가능 사용자 수</span>
-                        <span class="inline-block w-1/2 h-full p-2 bg-white">20</span>
+                      <div class="w-1/2 border-t">
+                        <!-- <span class="inline-block w-1/2 h-full p-2 bg-white border-x border-gray-200">접근 가능 사용자 수</span> -->
+                        <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
+                          <virustotal-chart :name="'엔진탐색'" :score=40 :color="'#dc2626'"></virustotal-chart>
+                        </div>
+                        <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
+                          <virustotal-chart :name="'Score'" :score=20 :color="'#FF8A00'"></virustotal-chart>
+                        </div>
+                        <!-- <span class="inline-block w-1/2 p-2 bg-white border-l border-gray-200">
+                          <virustotal-chart :score=40 :color='dc2626'></virustotal-chart>
+                        </span> -->
+                    
+                      
                       </div>
 
                     </div>
 
                     <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center"> 주요 탐지 엔진 </div>
                     <div class="flex">
-                      <div class="grow border-t border-gray-200">
+                      <div class="w-1/2 border-t border-gray-200">
                         <div>
                           <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">V3</span>
                           <span class="inline-block w-2/3 p-2 bg-white">20</span>
@@ -197,7 +207,7 @@
                           <span class="inline-block w-2/3 p-2 bg-white">20</span>
                         </div>
                       </div>
-                      <div class="grow border-t border-gray-200">
+                      <div class="w-1/2 border-t border-gray-200">
                         <div>
                           <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">ALYac</span>
                           <span class="inline-block w-2/3 p-2 bg-white">20</span>
@@ -232,6 +242,7 @@
 <script setup>
 import { ref } from 'vue'
 import DlpChart from '@/components/file/DlpChart.vue'
+import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
 
 const fileDetails = ref([
@@ -255,6 +266,8 @@ const fileDetails = ref([
   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
 ]);
+
+const color = 'dc2626';
 
 const accordionStatus = ref({});
 const dlpReportStatus = ref({});
