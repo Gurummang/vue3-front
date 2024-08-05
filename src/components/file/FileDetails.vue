@@ -117,7 +117,7 @@
                     <span class="inline-block w-[37.5%] p-2 bg-white">~~~~~~~~~~~~~~</span>
                   </div>
 
-                  <div class="p-2 border-t border-gray-200 border-l cursor-pointer" @click="toggleDLPReport(index)">
+                  <div class="p-2 border-t border-gray-200 border-l bg-gray-200 cursor-pointer" @click="toggleDLPReport(index)">
                     <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>DLP Report
                   </div>
@@ -137,27 +137,74 @@
                     </div>
                   </div>
 
-                  <div class="p-2 border-t border-gray-200 border-l cursor-pointer" @click="toggleVirusTotalReport(index)">
+                  <div class="p-2 border-t border-gray-200 border-l bg-gray-200 cursor-pointer" @click="toggleVirusTotalReport(index)">
                     <v-icon v-if="!virusTotalReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
                   </div>
-                  <div v-if="isVirusTotalReportOpen(index) && details.virustoal" class="pl-4 bg-white border-l border-gray-200">
+                  <div v-if="isVirusTotalReportOpen(index) && details.virustoal" class="bg-white border-gray-200">
                     <!-- VirusTotal Report content -->
-                      <div class="p-2 border-t border-gray-200">
-                        <span class="inline-block w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center">접근 가능 사용자 수</span>
-                        <span class="inline-block w-1/4 p-2 bg-white">20</span>
-                        <span class="inline-block w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-center">파일 경로</span>
-                        <span class="inline-block w-[37.5%] p-2 bg-white">grummang / dddd / aaasd.pdf</span>
+                    <div class="flex">
+                      <div class="grow border-t border-gray-200">
+                        <div>
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">SHA-256</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">File Type</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Threat Label</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">VirusTotal Report</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
                       </div>
-                      <div class="p-2 border-t border-gray-200">
-                        <span class="inline-block w-1/4 p-2 border-x border-gray-200 text-center">확장자 시그니쳐 일치 여부</span>
-                        <span class="inline-block w-1/4 p-2 bg-white">~~~~~~~</span>
-                        <span class="inline-block w-[12.5%] p-2 border-x border-gray-200 text-center">심층분석</span>
-                        <span class="inline-block w-[37.5%] p-2 bg-white">~~~~~~~~~~~~~~</span>
+
+                      <div class="grow border-t border-gray-200">
+                        <span class="inline-block w-1/2 h-full p-2 bg-white border-x border-gray-200">접근 가능 사용자 수</span>
+                        <span class="inline-block w-1/2 h-full p-2 bg-white">20</span>
                       </div>
-                  <!-- VT Report -->
+
+                    </div>
+
+                    <div class="p-2 border-t border-gray-200 border-l bg-gray-200 text-center"> 주요 탐지 엔진 </div>
+                    <div class="flex">
+                      <div class="grow border-t border-gray-200">
+                        <div>
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">V3</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Kaspersky</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Avast</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                      </div>
+                      <div class="grow border-t border-gray-200">
+                        <div>
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">ALYac</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Falcon</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                        <div class="border-t border-gray-200">
+                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Santinal One</span>
+                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        </div>
+                      </div>
+
+                    </div>
+
                   </div>
-    
+                  <!-- VT Report -->
 
 
                 </div>
