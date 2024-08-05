@@ -124,23 +124,24 @@
                   <div v-if="isDLPReportOpen(index) && details.dlp" class="bg-white">
                     <!-- DLP Report content -->
                     <div class="flex">
-                      <div class="grow border-t border-gray-200">
+                      <div class="w-1/2 border-t border-gray-200">
                         <div>
-                          <span class="inline-block w-1/3 p-2 h-16 leading-[3rem] bg-gray-100 border-x border-gray-200 text-center">탐지 정책 수</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">탐지 정책 수</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
                         </div>
                         <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 h-16 leading-[3rem] bg-gray-100 border-x border-gray-200 text-center">탐지 개수</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">탐지 개수</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
                         </div>
                         <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 h-16 leading-[3rem] bg-gray-100 border-x border-gray-200 text-center">권장 조치사항</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">권장 조치사항</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
                         </div>
                       </div>
 
-                      <div class="grow border-t border-gray-200">
-                        <span class="inline-block w-full h-full p-2 bg-white border-l border-gray-200">접근 가능 사용자 수</span>
+                      <div class="w-1/2 border-t border-l border-gray-200">
+                        <!-- <span class="inline-block w-full h-full p-2 bg-white border-l border-gray-200">접근 가능 사용자 수</span> -->
+                        <dlp-chart></dlp-chart>
                       </div>
 
                     </div>
@@ -230,6 +231,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import DlpChart from '@/components/file/DlpChart.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
 
 const fileDetails = ref([
