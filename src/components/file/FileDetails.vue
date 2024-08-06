@@ -12,7 +12,7 @@
           </button>
           <button
             class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
-            @click="openModificationModal"
+            @click="openFileDeleteModal"
           >
             <v-icon :size="20">mdi-delete-outline</v-icon> 파일삭제
           </button>
@@ -261,6 +261,10 @@
   v-if="isVirustotalModalOpen"
   @close="closeVirustotalModal"
 ></virustotal-modal>
+<file-delete-modal
+  v-if="isFileDeleteModalOpen"
+  @close="closeFileDeleteModal"
+></file-delete-modal>
 
 </template>
 
@@ -269,6 +273,7 @@ import { ref } from 'vue'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
+import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
 
 const fileDetails = ref([
@@ -298,7 +303,9 @@ const dlpReportStatus = ref({});
 const virusTotalReportStatus = ref({});
 
 const isVirustotalModalOpen = ref(false);
+const isFileDeleteModalOpen = ref(false);
 
+// Accordion Function
 const toggleAccordion = (index) => {
   accordionStatus.value[index] = !accordionStatus.value[index];
 }
@@ -323,6 +330,7 @@ const isVirusTotalReportOpen = (index) => {
   return virusTotalReportStatus.value[index] || false;
 }
 
+// Modal Function
 const openVirustotalModal = () => {
   isVirustotalModalOpen.value = true;
 }
@@ -331,13 +339,14 @@ const closeVirustotalModal = () => {
   isVirustotalModalOpen.value = false;
 }
 
-const openModificationModal = () => {
-  // Handle the SaaS modification modal logic here
+const openFileDeleteModal = () => {
+  isFileDeleteModalOpen.value = true;
 }
 
-const openUnconnectModal = () => {
-  // Handle the SaaS unconnect modal logic here
+const closeFileDeleteModal = () => {
+  isFileDeleteModalOpen.value = false;
 }
+
 </script>
 
 <style scoped>
