@@ -7,7 +7,7 @@
         </button>
       </div> -->
       <div class="flex justify-center p-3">
-        <img src="../../../assets/virustotal.png" alt="구름망 캐릭터" class="size-1/2">
+        <img src="../../../public/assets/virustotal.png" alt="VirusTotal 이미지" class="size-1/2">
       </div>
       <div class="px-4">
         <div class="mb-2 space-y-2 text-center">
