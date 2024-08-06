@@ -123,22 +123,24 @@
             <tr v-if="isAccordionOpen(index)" class="">
               <td colspan="9" class="">           
                 <div class="flex-col pl-[5%] bg-gray-100">
-                  <div class="">
+                  <div class="flex">
                     <!-- cause divide-y to add empty span-->
-                    <span class="inline-block w-1/4 p-2 border-x border-gray-200 text-center">파일명</span>
-                    <span class="inline-block w-3/4 p-2 bg-white">{{ details.name }}</span>
+                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일명</span>
+                    <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.name }}</span>
+                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일크기</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">200</span>
                   </div>
-                  <div class="border-t border-gray-200">
-                    <span class="inline-block w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center">접근 가능 사용자 수</span>
-                    <span class="inline-block w-1/4 p-2 bg-white">20</span>
-                    <span class="inline-block w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-center">파일 경로</span>
-                    <span class="inline-block w-[37.5%] p-2 bg-white">grummang / dddd / aaasd.pdf</span>
+                  <div class="flex border-t border-gray-200">
+                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
+                    <span class="inline-block w-3/6 p-2 bg-white text-xs">grummang / dddd / aaasd.pdf</span>
+                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">20</span>
                   </div>
-                  <div class="border-t border-gray-200">
-                    <span class="inline-block w-1/4 p-2 border-x border-gray-200 text-center">확장자 시그니쳐 일치 여부</span>
-                    <span class="inline-block w-1/4 p-2 bg-white">~~~~~~~</span>
-                    <span class="inline-block w-[12.5%] p-2 border-x border-gray-200 text-center">심층분석</span>
-                    <span class="inline-block w-[37.5%] p-2 bg-white">~~~~~~~~~~~~~~</span>
+                  <div class="flex border-t border-gray-200">
+                    <span class="inline-block w-1/4 p-2 border-x border-gray-200 text-sm text-center">확장자 시그니쳐 일치 여부</span>
+                    <span class="inline-block w-1/4 p-2 bg-white text-xs">~~~~~~~</span>
+                    <span class="inline-block w-[12.5%] p-2 border-x border-gray-200 text-sm text-center">심층분석</span>
+                    <span class="inline-block w-[37.5%] p-2 bg-white text-xs">~~~~~~~~~~~~~~</span>
                   </div>
 
                   <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
@@ -150,16 +152,16 @@
                     <div class="flex">
                       <div class="w-1/2 border-t border-gray-200">
                         <div>
-                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">탐지 정책 수</span>
-                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 정책 수</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
                         </div>
                         <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">탐지 개수</span>
-                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 개수</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
                         </div>
                         <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-center">권장 조치사항</span>
-                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white">20</span>
+                          <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">권장 조치사항</span>
+                          <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
                         </div>
                       </div>
 
@@ -178,69 +180,70 @@
                   </div>
                   <div v-if="isVirusTotalReportOpen(index) && details.virustoal" class="bg-white">
                     <!-- VirusTotal Report content -->
-                    <div class="flex">
-                      <div class="w-1/2 border-t border-gray-200">
-                        <div class="">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">SHA-256</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                    <div class="flex h-full">
+                      <div class="flex flex-col w-1/2 border-t border-gray-200">
+                        <div class="flex flex-1 items-center border-b border-gray-200">
+                          <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">SHA-256</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
                         </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">File Type</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        <div class="flex flex-1 items-center border-b border-gray-200">
+                          <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">File Type</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
                         </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Threat Label</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        <div class="flex flex-1 items-center border-b border-gray-200">
+                          <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">Threat Label</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
                         </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">VirusTotal Report</span>
-                          <button class="ml-2 px-3 font-medium tracking-wide text-white bg-blue-600 hover:bg-blue-500">
+                        <div class="flex flex-1 items-center">
+                          <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">VirusTotal Report</span>
+                          <div class="w-2/3 h-full flex items-center p-2">
+                            <button class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-blue-600 hover:bg-blue-500">
                               바로가기
-                          </button>
+                            </button>
+                          </div>
                         </div>
                       </div>
 
-                      <div class="w-1/2 border-t">
-                        <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
+                      <div class="flex w-1/2 border-t border-l border-gray-200">
+                        <div class="flex-1 p-2">
                           <virustotal-chart :name="'엔진탐색'" :score=40 :color="'#dc2626'"></virustotal-chart>
                         </div>
-                        <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
+                        <div class="flex-1 border-l border-gray-200 p-2">
                           <virustotal-chart :name="'Score'" :score=20 :color="'#FF8A00'"></virustotal-chart>
                         </div>
                       </div>
                     </div>
 
                     <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center"> 주요 탐지 엔진 </div>
-                    <div class="flex">
-                      <div class="w-1/2 border-t border-gray-200">
-                        <div>
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">V3</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                    <div class="flex h-full">
+                      <div class="flex flex-col w-1/2 border-t border-gray-200">
+                        <div class="flex flex-1 border-b border-gray-200">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">V3</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
                         </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Kaspersky</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        <div class="flex flex-1 border-b border-gray-200">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Kaspersky</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
                         </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Avast</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
-                        </div>
-                      </div>
-                      <div class="w-1/2 border-t border-gray-200">
-                        <div>
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">ALYac</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
-                        </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Falcon</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
-                        </div>
-                        <div class="border-t border-gray-200">
-                          <span class="inline-block w-1/3 p-2 bg-gray-100 border-x border-gray-200 text-center">Santinal One</span>
-                          <span class="inline-block w-2/3 p-2 bg-white">20</span>
+                        <div class="flex flex-1">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Avast</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
                         </div>
                       </div>
-
+                      <div class="flex flex-col w-1/2 border-t border-gray-200">
+                        <div class="flex flex-1 border-b border-gray-200">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">ALYac</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                        </div>
+                        <div class="flex flex-1 border-b border-gray-200">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Falcon</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                        </div>
+                        <div class="flex flex-1">
+                          <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Santinal One</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                        </div>
+                      </div>
                     </div>
 
                   </div>
