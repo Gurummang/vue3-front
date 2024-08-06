@@ -71,7 +71,7 @@ Promise.all([
   fileRecent.value = values[3];
   usersTop5.value = values[4];
 
-  console.log(values[0], values[1], values[2]);  
+  // console.log(values[0], values[1], values[2]);  
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
