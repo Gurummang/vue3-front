@@ -6,7 +6,7 @@
         <div class="space-x-2">
           <button
             class="inline-block border border-blue-600 px-3 py-2 align-text-bottom text-sm font-semibold text-blue-600 hover:bg-blue-600 hover:text-white active:bg-blue-600"
-            @click="openModificationModal"
+            @click="openVirustotalModal"
           >
             <v-icon :size="20">mdi-shield-bug-outline</v-icon> VirusTotal 검사
           </button>
@@ -257,12 +257,18 @@
     </div>
   </div>
 
+<virustotal-modal
+  v-if="isVirustotalModalOpen"
+  @close="closeVirustotalModal"
+></virustotal-modal>
+
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
+import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
 
 const fileDetails = ref([
@@ -291,6 +297,8 @@ const accordionStatus = ref({});
 const dlpReportStatus = ref({});
 const virusTotalReportStatus = ref({});
 
+const isVirustotalModalOpen = ref(false);
+
 const toggleAccordion = (index) => {
   accordionStatus.value[index] = !accordionStatus.value[index];
 }
@@ -315,8 +323,12 @@ const isVirusTotalReportOpen = (index) => {
   return virusTotalReportStatus.value[index] || false;
 }
 
-const openconnectModal = () => {
-  // Handle the SaaS connect modal logic here
+const openVirustotalModal = () => {
+  isVirustotalModalOpen.value = true;
+}
+
+const closeVirustotalModal = () => {
+  isVirustotalModalOpen.value = false;
 }
 
 const openModificationModal = () => {
