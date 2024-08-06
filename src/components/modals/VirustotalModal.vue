@@ -49,7 +49,7 @@ let emit = defineEmits(['close']);
 
 let fileCount = ref(Object.keys(props.checkedIndex).length);;
 // 리스트 값
-console.log(Object.values(props.checkedIndex));
+// console.log(Object.values(props.checkedIndex));
 
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);

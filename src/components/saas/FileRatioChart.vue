@@ -36,7 +36,7 @@ import { removeZeroDivision } from '@/utils/utils.js';
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 const props = defineProps({
-  fileSize: Number,
+  fileSize: Object,
 });
 
 const myChart = ref(null);
