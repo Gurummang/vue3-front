@@ -72,7 +72,13 @@
           <template v-for="(details, index) in fileDetails" :key="index" >
             <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <input type="checkbox" class="size-3.5 rounded border-gray-300" :id="['Option' + index]" onclick="event.cancelBubble = true;"/>
+                <input 
+                  type="checkbox" 
+                  class="size-3.5 rounded border-gray-300" 
+                  :value="index"
+                  v-model="checkedIndex" 
+                  onclick="event.cancelBubble = true;"
+                />
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
                 <span v-if="details.dlp === 0">
@@ -128,7 +134,7 @@
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일명</span>
                     <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.name }}</span>
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일크기</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">200</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">200 Byte</span>
                   </div>
                   <div class="flex border-t border-gray-200">
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
@@ -262,10 +268,12 @@
 
 <virustotal-modal
   v-if="isVirustotalModalOpen"
+  :checkedIndex="checkedIndex"
   @close="closeVirustotalModal"
 ></virustotal-modal>
 <file-delete-modal
   v-if="isFileDeleteModalOpen"
+  :checkedIndex="checkedIndex"
   @close="closeFileDeleteModal"
 ></file-delete-modal>
 
@@ -301,6 +309,12 @@ const fileDetails = ref([
   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
 ]);
 
+let checkedIndex = ref([]);
+
+const clearCheckedIndex = () => {
+  checkedIndex.value = [];
+}
+
 const accordionStatus = ref({});
 const dlpReportStatus = ref({});
 const virusTotalReportStatus = ref({});
@@ -335,19 +349,29 @@ const isVirusTotalReportOpen = (index) => {
 
 // Modal Function
 const openVirustotalModal = () => {
-  isVirustotalModalOpen.value = true;
+  if(checkedIndex.value.length) {
+    isVirustotalModalOpen.value = true;
+  } else {
+    alert('검사할 파일을 선택해주세요.');
+  }
 }
 
 const closeVirustotalModal = () => {
   isVirustotalModalOpen.value = false;
+  clearCheckedIndex();
 }
 
 const openFileDeleteModal = () => {
-  isFileDeleteModalOpen.value = true;
+  if(checkedIndex.value.length) {
+    isFileDeleteModalOpen.value = true;
+  } else {
+    alert('삭제할 파일을 선택해주세요.');
+  }
 }
 
 const closeFileDeleteModal = () => {
   isFileDeleteModalOpen.value = false;
+  clearCheckedIndex();
 }
 
 </script>

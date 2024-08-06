@@ -12,7 +12,7 @@
       <div class="px-4">
         <div class="mb-2 space-y-2 text-center">
           <label for="saasType" class="block pb-2 text-2xl font-semibold text-gray-700"> VirusTotal 파일 검사 </label>
-          <p class="text-base pb-3">선택한 <strong>n</strong>개의 파일을 VirusTotal 로<br/>파일 검사를 진행하겠습니까?</p>
+          <p class="text-base pb-3">선택한 <strong>{{ fileCount }}</strong>개의 파일을 VirusTotal 로<br/>파일 검사를 진행하겠습니까?</p>
           <p class="text-xs text-red-600 font-semibold">VirusTotal로 검사할 시에, 파일이 외부로 유출될 수 있습니다.</p>
         </div>
       </div>
@@ -38,20 +38,19 @@ import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
 
+const props = defineProps({
+  checkedIndex: {
+    type: Object,
+    required: true
+  }
+});
+
 let emit = defineEmits(['close']);
 
-// 임의의 값 넣기
-let saasType = ref('None');
-let alias = ref('');
-let saasEmail = ref('');
-let webhookUrl = ref('');
-let apiToken = ref('');
-let agreeToTerms = ref(false);
+let fileCount = ref(Object.keys(props.checkedIndex).length);;
+// 리스트 값
+console.log(Object.values(props.checkedIndex));
 
-let showPassword = ref(true);
-let isValidEmail = ref(true);
-let isValidApiToken = ref(true);
-let selectedSaaS = ref(null);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
 
@@ -64,34 +63,7 @@ const closeErrorModal = () => {
 }
 
 const syncSaaS = () => {
-  if(!saasType.value || saasType.value === 'None') {
-    alert('연동할 SaaS가 정의되지 않았습니다.');
-    return;
-  }
-  if(!SaasAlias.value) {
-    alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
-    return;
-  }
-  if(!SaaSEmail.value) {
-    alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
-    return;
-  }
-  else if(!isValidEmail.value) {
-    alert('이메일 형식이 올바르지 않습니다.\n다시 작성해주세요.');
-    return;
-  }
-  if(!apiToken.value) {
-    alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
-    return;
-  }
-  else if(!isValidApiToken.value) {
-    alert('해당 API Token이 올바르지 않습니다.\n다시 작성해주세요.');
-    return;
-  }
-  if (!agreeToTerms.value) {
-    alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
-    return;
-  }
+  
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   let connectData = {
@@ -147,10 +119,6 @@ const validateApiToken = () => {
   });
   console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
 }
-
-watch(saasEmail, validateAdminEmail);
-watch(apiToken, validateApiToken);
-watch(saasType, validateWebhook);
 
 </script>
 
