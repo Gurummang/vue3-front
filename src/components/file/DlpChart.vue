@@ -18,7 +18,7 @@ const props = defineProps({
 const myChart = ref(null);
 
 const data = {
-  labels: ['Red', 'Blue', 'Yellow'],
+  labels: ['정책v1', '정책v2', 'Yellow'],
   datasets: [{
     data: [300, 50, 100],
     backgroundColor: [
