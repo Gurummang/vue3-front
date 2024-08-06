@@ -1,26 +1,55 @@
 <template>
-  <div class="bg-white shadow-sm rounded-lg p-4">
+  <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
     <div class="mb-2">
       <h2 class="text-xl font-bold text-gray-800 mb-4">파일 검사</h2>
-      <div class="space-x-2">
-        <button
-          class="inline-block rounded border border-orange-500 px-3 py-2 align-text-bottom text-sm font-semibold text-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-500"
-          @click="openconnectModal"
-        >
-          <v-icon :size="20">mdi-cloud-upload</v-icon> SaaS 연동
-        </button>
-        <button
-          class="inline-block rounded border border-indigo-900 px-3 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white active:bg-indigo-900"
-          @click="openModificationModal"
-        >
-          <v-icon :size="20">mdi-cloud</v-icon> SaaS 수정
-        </button>
-        <button
-          class="inline-block rounded border border-rose-600 px-3 py-2 align-text-bottom text-sm font-semibold text-rose-600 hover:bg-rose-600 hover:text-white active:bg-rose-600"
-          @click="openUnconnectModal"
-        >
-          <v-icon :size="20">mdi-cloud-off</v-icon> SaaS 해제
-        </button>
+      <div class="flex">
+        <div class="space-x-2">
+          <button
+            class="inline-block border border-blue-600 px-3 py-2 align-text-bottom text-sm font-semibold text-blue-600 hover:bg-blue-600 hover:text-white active:bg-blue-600"
+            @click="openModificationModal"
+          >
+            <v-icon :size="20">mdi-shield-bug-outline</v-icon> VirusTotal 검사
+          </button>
+          <button
+            class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
+            @click="openModificationModal"
+          >
+            <v-icon :size="20">mdi-delete-outline</v-icon> 파일삭제
+          </button>
+          <button
+            class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
+            @click="openconnectModal"
+          >
+            <v-icon :size="20">mdi-refresh</v-icon> 새로고침
+          </button>
+        </div>
+        <div class="flex ml-auto space-x-2">
+          
+          <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+            <option value="week">DLP</option>
+            <option value="month">악성 탐지</option>
+            <option value="year">VirusTotal</option>
+            <option value="year">파일명</option>
+            <option value="year">SaaS</option>
+            <option value="year">사용자</option>
+            <option value="year" selected>생성날짜</option>
+          </select>
+          <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+            <option value="week">오름차순</option>
+            <option value="month" selected>내림차순</option>
+          </select>
+
+          <div class="relative max-w-sm">
+            <input class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
+            <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
+            </svg>
+          </button>
+        </div>
+
+
+        </div>
       </div>
     </div>
 
@@ -172,20 +201,13 @@
                       </div>
 
                       <div class="w-1/2 border-t">
-                        <!-- <span class="inline-block w-1/2 h-full p-2 bg-white border-x border-gray-200">접근 가능 사용자 수</span> -->
                         <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
                           <virustotal-chart :name="'엔진탐색'" :score=40 :color="'#dc2626'"></virustotal-chart>
                         </div>
                         <div class="float-left w-1/2 h-full border-l border-gray-200 p-2">
                           <virustotal-chart :name="'Score'" :score=20 :color="'#FF8A00'"></virustotal-chart>
                         </div>
-                        <!-- <span class="inline-block w-1/2 p-2 bg-white border-l border-gray-200">
-                          <virustotal-chart :score=40 :color='dc2626'></virustotal-chart>
-                        </span> -->
-                    
-                      
                       </div>
-
                     </div>
 
                     <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center"> 주요 탐지 엔진 </div>
@@ -234,6 +256,7 @@
       </table>
     </div>
   </div>
+
 </template>
 
 <script setup>
