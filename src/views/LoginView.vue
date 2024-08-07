@@ -1,32 +1,29 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 class="text-center text-3xl font-extrabold text-gray-900">구름망 CASB</h2>
-      <!-- <p class="mt-2 text-center text-sm text-gray-600">Please log in to continue</p> -->
-    </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">구름망 CASB</h2>
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">이메일 주소</label>
+            <label for="email" class="block text-sm font-medium text-gray-700">관리자 이메일</label>
             <div class="mt-1">
               <input id="email" name="email" type="email" autocomplete="email" required
                     v-model="email"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Placeholder">
+                    placeholder="관리자 이메일">
             </div>
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
             <div class="mt-1">
-              <input id="password" name="password" type="password" autocomplete="current-password" required
+              <input id="password" name="password" type="password" required
                     v-model="password"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Placeholder">
+                    placeholder="비밀번호">
             </div>
-            <p class="mt-2 text-xs text-gray-500">최소 8글자 이상</p>
+            <!-- <p class="mt-2 text-xs text-gray-500">최소 8글자 이상</p> -->
           </div>
 
           <div class="flex items-center justify-between">

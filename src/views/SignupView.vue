@@ -1,49 +1,46 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="flex justify-center">
-        <!-- Logo placeholder -->
-      </div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
-    </div>
-
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="min-h-screen bg-gray-100 flex justify-center py-12 sm:px-6 lg:px-8">
+    <!-- <div class="h-1/2">
+      <img src="../../public/meta_logo.png" class="h-1/2 rounded-lg">
+    </div> -->
+    <div class="flex-col sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label for="company" class="block text-sm font-medium text-gray-700">회사명</label>
               <input type="text" id="company" name="company" v-model="company" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Placeholder">
+                    placeholder="회사명">
             </div>
             <div>
               <label for="adminName" class="block text-sm font-medium text-gray-700">관리자명</label>
               <input type="text" id="adminName" name="adminName" v-model="adminName" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Placeholder">
+                    placeholder="관리자명">
             </div>
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">이메일 ID</label>
+            <label for="email" class="block text-sm font-medium text-gray-700">관리자 이메일</label>
             <input type="email" id="email" name="email" v-model="email" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Placeholder">
+                  placeholder="관리자 이메일">
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
             <input type="password" id="password" name="password" v-model="password" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Placeholder">
+                  placeholder="비밀번호">
           </div>
 
           <div>
             <label for="confirmPassword" class="block text-sm font-medium text-gray-700">비밀번호 확인</label>
             <input type="password" id="confirmPassword" name="confirmPassword" v-model="confirmPassword" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Placeholder">
+                  placeholder="비밀번호 확인">
           </div>
 
           <div class="flex items-center">
