@@ -1,21 +1,23 @@
 <template>
-  <h2 class="text-lg font-semibold mb-2">파일 타입 비율</h2>
-  <div class="flex">
-    <div class="w-1/2">
-      <canvas ref="chartRef"></canvas>
-    </div>
-    <div class="w-1/2 pl-4 flex items-center">
-      <ul class="list-none p-0 w-full">
-        <li v-for="item in sortedData" :key="item.type" class="mb-2 flex items-center justify-between">
-          <div class="flex items-center flex-grow">
-            <span class="w-4 h-4 rounded-full mr-2" :style="{ backgroundColor: getColor(item.type) }"></span>
-            <span class="text-sm">{{ item.type }}</span>
-          </div>
-          <span class="bg-indigo-900 rounded-full px-3 py-1 w-14 text-xs font-base text-white text-center ml-2 whitespace-nowrap">
-            {{ calculatePercentage(item.count) }}%
-          </span>
-        </li>
-      </ul>
+  <div>
+    <h2 class="text-lg font-semibold mb-2">파일 타입 비율</h2>
+    <div class="flex">
+      <div class="w-1/2">
+        <canvas ref="chartRef"></canvas>
+      </div>
+      <div class="w-1/2 pl-4 flex items-center">
+        <ul class="list-none p-0 w-full">
+          <li v-for="item in sortedData" :key="item.type" class="mb-2 flex items-center justify-between">
+            <div class="flex items-center flex-grow">
+              <span class="w-4 h-4 rounded-full mr-2" :style="{ backgroundColor: getColor(item.type) }"></span>
+              <span class="text-sm">{{ item.type }}</span>
+            </div>
+            <span class="bg-indigo-900 rounded-full px-3 py-1 w-14 text-xs font-base text-white text-center ml-2 whitespace-nowrap">
+              {{ calculatePercentage(item.count) }}%
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -28,7 +30,7 @@ Chart.register(PolarAreaController, RadialLinearScale, ArcElement, Tooltip);
 
 const props = defineProps({
   data: {
-    type: Array,
+    type: Object,
     required: true
   }
 });

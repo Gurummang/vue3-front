@@ -56,7 +56,17 @@ onMounted(() => {
                 label += ': ';
               }
               if (context.parsed.y !== null) {
-                label += (context.parsed.y * 1024 * 1024).toFixed(0) + ' bytes';
+                let bytes = context.parsed.y * 1024 * 1024; // 원래 값을 bytes로 변환
+                const units = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+                let unitIndex = 0;
+                
+                while (bytes >= 1024 && unitIndex < units.length - 1) {
+                  bytes /= 1024;
+                  unitIndex++;
+                }
+
+                // 소수점 두 자리까지 표시하고, 불필요한 0은 제거
+                label += bytes.toFixed(2).replace(/\.?0+$/, '') + ' ' + units[unitIndex];
               }
               return label;
             }
