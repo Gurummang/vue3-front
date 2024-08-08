@@ -7,6 +7,16 @@ const routes = [
     component: () => import('../views/MainView.vue')
   },
   {
+    path: '/login',
+    name: '로그인',
+    component: () => import('../views/LoginView.vue')
+  },
+  {
+    path: '/signup',
+    name: '회원가입',
+    component: () => import('../views/SignupView.vue')
+  },
+  {
     path: '/register/saas',
     name: '등록 - SaaS',
     component: () => import('../views/RegisterSaasView.vue')
