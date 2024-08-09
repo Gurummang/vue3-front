@@ -1,89 +1,151 @@
 <template>
-  <div class="container mx-auto p-4">
-    <table class="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 text-left">파일명</th>
-          <th class="px-4 py-2 text-left">파일 유형</th>
-          <th class="px-4 py-2 text-left">SaaS</th>
-          <th class="px-4 py-2 text-left">생성자</th>
-          <th class="px-4 py-2 text-left">생성날짜</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="(item, index) in tableData" :key="index">
-          <tr 
-            @click="toggleAccordion(index)" 
-            class="cursor-pointer hover:bg-gray-100"
-            :class="{ 'bg-gray-50': expandedRows.includes(index) }"
-          >
-            <td class="px-4 py-2">{{ item.fileName }}</td>
-            <td class="px-4 py-2">{{ item.fileType }}</td>
-            <td class="px-4 py-2">{{ item.saas }}</td>
-            <td class="px-4 py-2">{{ item.creator }}</td>
-            <td class="px-4 py-2">{{ item.createdDate }}</td>
-          </tr>
-          <tr v-if="expandedRows.includes(index)">
-            <td colspan="5" class="px-4 py-2">
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <h4 class="font-bold mb-2">상세 정보</h4>
-                <p><strong>SHA256:</strong> {{ item.details.sha256 }}</p>
-                <p><strong>타입:</strong> {{ item.details.type }}</p>
-                <p><strong>위험 파일:</strong> {{ item.details.riskFile }}</p>
-                <div class="mt-4">
-                  <h5 class="font-bold mb-2">VirusTotal Summary Report</h5>
-                  <p><strong>연관 탐지:</strong> {{ item.details.virusTotal.detectionRate }}%</p>
-                  <p><strong>Score:</strong> {{ item.details.virusTotal.score }}</p>
-                </div>
-                <div class="mt-4">
-                  <h5 class="font-bold mb-2">DLP Report</h5>
-                  <p><strong>탐지 정책 수:</strong> {{ item.details.dlp.policyCount }}</p>
-                  <p><strong>탐지 개수:</strong> {{ item.details.dlp.detectionCount }}</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
+  <div class="bg-white p-4 rounded-lg shadow-sm">
+    <h2 class="text-lg font-semibold mb-2">{{ props.title }}</h2>
+    <canvas ref="chartRef" class=""></canvas>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { Chart, LineController, LineElement,PointElement, LinearScale, Title,CategoryScale,RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js';
 
-const tableData = ref([
-  {
-    fileName: 'aaabbcccc.pdf',
-    fileType: 'pdf',
-    saas: 'Slack',
-    creator: 'Jane Doe',
-    createdDate: '2024.00.00',
-    details: {
-      sha256: '000011112222233333444455555666667777888899999aaaabbbbccccddddeeeeffff',
-      type: 'pdf',
-      riskFile: '~~~~~~~~',
-      virusTotal: {
-        detectionRate: 14,
-        score: 21
+Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, RadialLinearScale, ArcElement, Tooltip, Legend);
+
+const props = defineProps({
+  historyTrends: {
+    type: Object,
+    required: true
+  }
+});
+
+const chartRef = ref(null);
+
+const chartData = props.historyTrends;
+
+console.log(chartData);
+
+onMounted(() => {
+  const ctx = chartRef.value.getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartData.map(row => row.date),
+      datasets: [{
+        label: '업로드',
+        data: chartData.map(row => row.upload),
+        fill: false,
+        borderColor: 'rgb(200, 200, 200)',
+        hoverBorderColor: 'rgb(249, 115, 22)',
+        // backgroundColor: 'rgb(249, 115, 22)',
+        tension: 0.1,
+        borderWidth: 2,
+        pointHoverRadius: 2,
+        pointHoverBorderWidth: 2
       },
-      dlp: {
-        policyCount: 3,
-        detectionCount: 6
+      {
+        label: '수정',
+        data: chartData.map(row => row.edit),
+        fill: false,
+        borderColor: 'rgb(200, 200, 200)',
+        hoverBorderColor: 'rgb(251, 191, 36)',
+        // backgroundColor: 'rgb(251, 191, 36)',
+        tension: 0.1,
+        borderWidth: 2,
+        pointHoverRadius: 2,
+        pointHoverBorderWidth: 2
+      },
+      {
+        label: '삭제',
+        data: chartData.map(row => row.delete),
+        fill: false,
+        borderColor: 'rgb(200, 200, 200)',
+        hoverBorderColor: 'rgb(148, 163, 184)',
+        // backgroundColor: 'rgb(148, 163, 184)',
+        tension: 0.1,
+        borderWidth: 2,
+        pointHoverRadius: 2,
+        pointHoverBorderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 4,
+      hover: {
+        mode: 'dataset',
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          display: true,
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            generateLabels: function(chart) {
+              const datasets = chart.data.datasets;
+              return datasets.map((dataset, i) => ({
+                text: dataset.label,
+                fillStyle: dataset.hoverBorderColor,
+                hidden: !chart.isDatasetVisible(i),
+                lineCap: dataset.borderCapStyle,
+                lineDash: dataset.borderDash,
+                lineDashOffset: dataset.borderDashOffset,
+                lineJoin: dataset.borderJoinStyle,
+                lineWidth: dataset.borderWidth,
+                strokeStyle: dataset.hoverBorderColor,
+                pointStyle: 'circle',
+                datasetIndex: i
+              }));
+            }
+          }
+        },
+        tooltip: {
+          mode: 'nearest',
+          intersect: true,
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleColor: 'white',
+          bodyColor: 'white',
+          borderColor: function(context) {
+            if (context.tooltip && context.tooltip.dataPoints && context.tooltip.dataPoints.length > 0) {
+              return context.tooltip.dataPoints[0].dataset.hoverBorderColor;
+            }
+            return 'white';
+          },
+          borderWidth: 2,
+          callbacks: {
+            labelColor: function(context) {
+              return {
+                borderColor: context.dataset.hoverBorderColor,
+                backgroundColor: context.dataset.hoverBorderColor
+              };
+            },
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: '크기'  // MB 단위 제거
+          },
+          ticks: {
+            stepSize: 10
+            // callback 함수 제거
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: '날짜'
+          },
+          ticks: {
+            font: { size: 10 },
+            maxTicksLimit: 20
+          }
+        }
       }
     }
-  },
-  // 더 많은 데이터 항목을 여기에 추가할 수 있습니다.
-]);
-
-const expandedRows = ref([]);
-
-const toggleAccordion = (index) => {
-  const currentIndex = expandedRows.value.indexOf(index);
-  if (currentIndex === -1) {
-    expandedRows.value.push(index);
-  } else {
-    expandedRows.value.splice(currentIndex, 1);
-  }
-};
+  });
+});
 </script>
