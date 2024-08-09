@@ -53,7 +53,7 @@ Promise.all([
   historyStatistics.value = values[0];
   historyTrends.value = values[1];
   historyDetails.value = values[2];
-  console.log(historyTrends.value);
+  // console.log(historyTrends.value);
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
