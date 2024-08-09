@@ -30,7 +30,7 @@ const chartRef = ref(null);
 
 const chartData = props.historyTrends;
 
-console.log(chartData);
+// console.log(chartData);
 
 onMounted(() => {
   const ctx = chartRef.value.getContext('2d');

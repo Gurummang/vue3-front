@@ -238,7 +238,7 @@ let historyDetailsApi = async (data) => {
     const response = [
       {
         "id": 1,
-        "saas": "Google Drive",
+        "saas": "google drive",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -247,7 +247,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 2,
-        "saas": "Slack",
+        "saas": "slack",
         "activityType": "edit",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -256,7 +256,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 3,
-        "saas": "Slack",
+        "saas": "slack",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -265,7 +265,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 4,
-        "saas": "Google Drive",
+        "saas": "google drive",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -274,7 +274,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 5,
-        "saas": "Slack",
+        "saas": "slack",
         "activityType": "delete",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -283,7 +283,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 6,
-        "saas": "Slack",
+        "saas": "slack",
         "activityType": "edit",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -292,7 +292,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 7,
-        "saas": "Slack",
+        "saas": "slack",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -301,7 +301,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 8,
-        "saas": "Google Drive",
+        "saas": "google drive",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -310,7 +310,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 9,
-        "saas": "Google Drive",
+        "saas": "google drive",
         "activityType": "delete",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
@@ -319,7 +319,7 @@ let historyDetailsApi = async (data) => {
       },
       {
         "id": 10,
-        "saas": "Google Drive",
+        "saas": "google drive",
         "activityType": "upload",
         "fileName": "aaabbcccc.pdf",
         "lastActionTime": "2024.00.00 / 00:00:00",
