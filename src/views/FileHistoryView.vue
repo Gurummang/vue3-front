@@ -10,7 +10,7 @@
       <div>
         <history-statistics :historyStatistics="historyStatistics"></history-statistics>
         <history-trends :historyTrends="historyTrends"></history-trends>
-        <!-- <file-test :historyTrends="historyTrends"></file-test> -->
+        <history-details :historyDetails="historyDetails"></history-details>
       </div>
     </main>
     <content-error
@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { historyStatisticsApi, historyTrendsApi, historyInfoApi } from '@/apis/file.js'
+import { historyStatisticsApi, historyTrendsApi, historyDetailsApi } from '@/apis/file.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -31,6 +31,7 @@ import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 import HistoryStatistics from '@/components/file/HistoryStatistics.vue'
 import HistoryTrends from '@/components/file/HistoryTrends.vue'
+import HistoryDetails from '@/components/file/HistoryDetails.vue'
 import FileTest from '@/components/file/FileTest.vue'
 
 let loading = ref(true);
@@ -38,11 +39,7 @@ let isApiOk = ref(false);
 
 let historyStatistics = ref([]);
 let historyTrends = ref([]);
-let dateTrends = ref([]);
-let uploadTrends = ref([]);
-let editTrends = ref([]);
-let deleteTrends = ref([]);
-let historyInfo = ref([]);
+let historyDetails = ref([]);
 
 const data = {
   "email": "hsp003636@gmail.com"
@@ -51,13 +48,11 @@ const data = {
 Promise.all([
   historyStatisticsApi(data),
   historyTrendsApi(data),
+  historyDetailsApi(data),
 ]).then((values) => {
   historyStatistics.value = values[0];
   historyTrends.value = values[1];
-  dateTrends.value = values[1].map(row => row.date);
-  uploadTrends.value = values[1].map(row => row.upload);
-  editTrends.value = values[1].map(row => row.edit);
-  deleteTrends.value = values[1].map(row => row.delete);
+  historyDetails.value = values[2];
   console.log(historyTrends.value);
   isApiOk.value = true;
 }).catch((err) => {

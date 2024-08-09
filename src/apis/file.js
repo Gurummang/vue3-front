@@ -229,16 +229,109 @@ let historyTrendsApi = async (data) => {
   }
 };
 
-let historyInfoApi = async (data) => {
+let historyDetailsApi = async (data) => {
   try {
     // const response = await axios.post('/api/v1/files/board', data);
     // if(response.status == '200') {
     //   return response.data;
     // }
+    const response = [
+      {
+        "id": 1,
+        "saas": "Google Drive",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 2,
+        "saas": "Slack",
+        "activityType": "edit",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 3,
+        "saas": "Slack",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 4,
+        "saas": "Google Drive",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 5,
+        "saas": "Slack",
+        "activityType": "delete",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 6,
+        "saas": "Slack",
+        "activityType": "edit",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 7,
+        "saas": "Slack",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 8,
+        "saas": "Google Drive",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 9,
+        "saas": "Google Drive",
+        "activityType": "delete",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      },
+      {
+        "id": 10,
+        "saas": "Google Drive",
+        "activityType": "upload",
+        "fileName": "aaabbcccc.pdf",
+        "lastActionTime": "2024.00.00 / 00:00:00",
+        "historyTime": "2024.00.00 / 00:00:00",
+        "account": "gurummang@gurummang.com"
+      }
+    ];
+    return response;
   } catch (err) {
     console.error('Error:', err);
     throw err;  
   }
 };
 
-export { totalFileInfoApi, historyStatisticsApi, historyTrendsApi, historyInfoApi };
+export { totalFileInfoApi, historyStatisticsApi, historyTrendsApi, historyDetailsApi };
