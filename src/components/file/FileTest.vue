@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 50vw; height: 50vh; background: white;">
-    <VueFlow v-model="elements" :fit-view-on-init="true" />
+  <div style="width: 100vw; height: 50vh; background: white;">
+    <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" />
   </div>
 </template>
 
@@ -71,9 +71,18 @@ const elements = computed(() => {
     {
       id: 'slack',
       type: 'input',
-      label: 'Slack',
-      position: { x: 200, y: 50 },
-      style: { background: '#4A154B', color: 'white' }
+      data: { label: 'Slack' },
+      position: { x: 0, y: 100 },
+      style: { 
+        width: 100,
+        height: 50,
+        backgroundColor: '#4A154B', 
+        color: 'white',
+        borderRadius: '5px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     }
   ]
   const edges = []
@@ -82,17 +91,27 @@ const elements = computed(() => {
     const nodeId = `file-${item.eventId}`
     nodes.push({
       id: nodeId,
-      label: item.fileName + item.saas,
-      position: { x: 200, y: (index + 1) * 100 },
-      data: item,
-      style: { width: 300 }
+      data: { 
+        label: `${item.fileName}\n${item.saas}\n${item.email}\n${new Date(item.eventTs).toLocaleString()}`
+      },
+      position: { x: (index + 1) * 250, y: 100 },
+      style: { 
+        width: 200, 
+        padding: '10px',
+        border: '1px solid #ddd',
+        borderRadius: '5px',
+        backgroundColor: 'white',
+        fontSize: '12px'
+      }
     })
+    
     if (index === 0) {
       edges.push({
         id: `e-slack-${nodeId}`,
         source: 'slack',
         target: nodeId,
-        animated: true
+        animated: true,
+        style: { stroke: '#4A154B' }
       })
     } else {
       const prevNodeId = `file-${slackData[index - 1].eventId}`
@@ -101,7 +120,7 @@ const elements = computed(() => {
         source: prevNodeId,
         target: nodeId,
         animated: true,
-        label: new Date(item.eventTs).toLocaleDateString()
+        style: { stroke: '#4A154B' }
       })
     }
   })
@@ -112,10 +131,15 @@ const elements = computed(() => {
 const { fitView } = useVueFlow()
 
 onMounted(() => {
-  fitView()
+  setTimeout(() => {
+    fitView()
+  }, 0)
 })
 </script>
 
 <style>
-
+html, body, #app {
+  margin: 0;
+  height: 100%;
+}
 </style>
