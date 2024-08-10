@@ -1,240 +1,121 @@
 <template>
-  <div class="bg-white p-4 rounded-lg shadow-sm">
-    <h2 class="text-lg font-semibold mb-2">{{ props.title }}</h2>
-    <canvas ref="chartRef" class=""></canvas>
+  <div style="width: 50vw; height: 50vh; background: white;">
+    <VueFlow v-model="elements" :fit-view-on-init="true" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Chart, LineController, LineElement,PointElement, LinearScale, Title,CategoryScale,RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js';
+import { ref, onMounted, computed } from 'vue'
+import { VueFlow, useVueFlow } from '@vue-flow/core'
 
-Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, RadialLinearScale, ArcElement, Tooltip, Legend);
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 
-const props = defineProps({
-  historyTrends: {
-    type: Object,
-    required: true
-  }
-});
+// 샘플 데이터
+const data = {
+    "status": "success",
+    "data": {
+        "slack": [
+            {
+                "eventId": 1,
+                "saas": "slack",
+                "eventType": "file_uploaded",
+                "fileName": "requirements.txt",
+                "hash256": "886b15487fa6ae32484b1bb291abb6ac8ad78d5c09ad686651676215719f598b",
+                "saasFileId": "F078MV1L5HS",
+                "eventTs": "2024-06-18T05:51:37",
+                "email": "hsp003636@gmail.com",
+                "uploadChannel": null
+            },
+            {
+                "eventId": 4,
+                "saas": "slack",
+                "eventType": "file_uploaded",
+                "fileName": "Injector.pdf",
+                "hash256": "26a4ed4d2dd44f70bd41650874c4388bf5444290a3b9c094a9ae652bfbb6fbbc",
+                "saasFileId": "F078KQN3X26",
+                "eventTs": "2024-06-18T07:13:08",
+                "email": "hsp003636@gmail.com",
+                "uploadChannel": null
+            },
+            {
+                "eventId": 7,
+                "saas": "slack",
+                "eventType": "file_uploaded",
+                "fileName": "123123123123123123fsdfgdsfg.png",
+                "hash256": "139e1cfe2293dc36ecf6d49bfea7b5f046aa073edd40485a892140973e5ffc91",
+                "saasFileId": "F07EMFUPV5Z",
+                "eventTs": "2024-07-30T05:23:37",
+                "email": "hsp003636@gmail.com",
+                "uploadChannel": "SAMSUNG/slack/psh_slacktest/소셜/hsp003636"
+            },
+            {
+                "eventId": 10,
+                "saas": "slack",
+                "eventType": "file_uploaded",
+                "fileName": "다운로드.png",
+                "hash256": "dd3453005c8846cc80540c609690266e42b9076a6bde174b6614b69a5776250a",
+                "saasFileId": "F07FBFRET2L",
+                "eventTs": "2024-07-30T09:29:26",
+                "email": "hsp003636@gmail.com",
+                "uploadChannel": "SAMSUNG/slack/psh_slacktest/소셜/hsp003636"
+            }
+        ],
+        "googleDrive": []
+    }
+}
 
-const chartRef = ref(null);
+const elements = computed(() => {
+  const slackData = data.data.slack.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs))
+  const nodes = [
+    {
+      id: 'slack',
+      type: 'input',
+      label: 'Slack',
+      position: { x: 200, y: 50 },
+      style: { background: '#4A154B', color: 'white' }
+    }
+  ]
+  const edges = []
 
-const chartData = props.historyTrends;
+  slackData.forEach((item, index) => {
+    const nodeId = `file-${item.eventId}`
+    nodes.push({
+      id: nodeId,
+      label: item.fileName + item.saas,
+      position: { x: 200, y: (index + 1) * 100 },
+      data: item,
+      style: { width: 300 }
+    })
+    if (index === 0) {
+      edges.push({
+        id: `e-slack-${nodeId}`,
+        source: 'slack',
+        target: nodeId,
+        animated: true
+      })
+    } else {
+      const prevNodeId = `file-${slackData[index - 1].eventId}`
+      edges.push({
+        id: `e-${prevNodeId}-${nodeId}`,
+        source: prevNodeId,
+        target: nodeId,
+        animated: true,
+        label: new Date(item.eventTs).toLocaleDateString()
+      })
+    }
+  })
 
-console.log(chartData);
+  return [...nodes, ...edges]
+})
+
+const { fitView } = useVueFlow()
 
 onMounted(() => {
-  const ctx = chartRef.value.getContext('2d');
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: chartData.map(row => row.date),
-      datasets: [{
-        label: '업로드',
-        data: chartData.map(row => row.upload),
-        fill: false,
-        borderColor: 'rgb(249, 115, 22)',
-        backgroundColor: 'rgb(249, 115, 22)',
-        pointRadius: 0,
-        pointHoverRadius: 2,
-        borderWidth: 1,
-        hoverBorderWidth: 2,
-        tension: 0.1,
-      },
-      {
-        label: '수정',
-        data: chartData.map(row => row.edit),
-        fill: false,
-        borderColor: 'rgb(251, 191, 36)',
-        hoverBorderColor: 'rgb(251, 191, 36)',
-        backgroundColor: 'rgb(251, 191, 36)',
-        pointRadius: 0,
-        pointHoverRadius: 2,
-        borderWidth: 1,
-        hoverBorderWidth: 2,
-        tension: 0.1,
-      },
-      {
-        label: '삭제',
-        data: chartData.map(row => row.delete),
-        fill: false,
-        borderColor: 'rgb(200, 200, 200)',
-        hoverBorderColor: 'rgb(148, 163, 184)',
-        backgroundColor: 'rgb(148, 163, 184)',
-        pointRadius: 0,
-        pointHoverRadius: 2,
-        borderWidth: 1,
-        hoverBorderWidth: 2,
-        tension: 0.1,
-      }]
-    },
-    options: {
-      responsive: true,
-      aspectRatio: 4,
-      hover: {
-        mode: 'dataset',
-        intersect: false
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-        tooltip: {
-          mode: 'nearest',
-          intersect: true,
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: '크기' 
-          },
-          ticks: {
-            stepSize: 10
-          }
-        },
-        x: {
-          title: {
-            display: true,
-            text: '날짜'
-          },
-          ticks: {
-            font: { size: 10 },
-            maxTicksLimit: 20
-          }
-        }
-      }
-    }
-  });
-});
-// onMounted(() => {
-//   const ctx = chartRef.value.getContext('2d');
-  
-//   new Chart(ctx, {
-//     type: 'line',
-//     data: {
-//       labels: chartData.map(row => row.date),
-//       datasets: [{
-//         label: '업로드',
-//         data: chartData.map(row => row.upload),
-//         fill: false,
-//         borderColor: 'rgb(200, 200, 200)',
-//         hoverBorderColor: 'rgb(249, 115, 22)',
-//         // backgroundColor: 'rgb(249, 115, 22)',
-//         tension: 0.1,
-//         borderWidth: 2,
-//         pointHoverRadius: 2,
-//         pointHoverBorderWidth: 2
-//       },
-//       {
-//         label: '수정',
-//         data: chartData.map(row => row.edit),
-//         fill: false,
-//         borderColor: 'rgb(200, 200, 200)',
-//         hoverBorderColor: 'rgb(251, 191, 36)',
-//         // backgroundColor: 'rgb(251, 191, 36)',
-//         tension: 0.1,
-//         borderWidth: 2,
-//         pointHoverRadius: 2,
-//         pointHoverBorderWidth: 2
-//       },
-//       {
-//         label: '삭제',
-//         data: chartData.map(row => row.delete),
-//         fill: false,
-//         borderColor: 'rgb(200, 200, 200)',
-//         hoverBorderColor: 'rgb(148, 163, 184)',
-//         // backgroundColor: 'rgb(148, 163, 184)',
-//         tension: 0.1,
-//         borderWidth: 2,
-//         pointHoverRadius: 2,
-//         pointHoverBorderWidth: 2
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       aspectRatio: 4,
-//       hover: {
-//         mode: 'dataset',
-//         intersect: false
-//       },
-//       plugins: {
-//         legend: {
-//           display: true,
-//           position: 'bottom',
-//           labels: {
-//             usePointStyle: false,
-//             pointStyle: '',
-//             generateLabels: function(chart) {
-//               const datasets = chart.data.datasets;
-//               return datasets.map((dataset, i) => ({
-//                 text: dataset.label,
-//                 fillStyle: dataset.hoverBorderColor,
-//                 hidden: !chart.isDatasetVisible(i),
-//                 lineCap: dataset.borderCapStyle,
-//                 lineDash: dataset.borderDash,
-//                 lineDashOffset: dataset.borderDashOffset,
-//                 lineJoin: dataset.borderJoinStyle,
-//                 lineWidth: dataset.borderWidth,
-//                 strokeStyle: dataset.hoverBorderColor,
-//                 pointStyle: 'circle',
-//                 datasetIndex: i
-//               }));
-//             }
-//           }
-//         },
-//         tooltip: {
-//           mode: 'nearest',
-//           intersect: true,
-//           backgroundColor: 'rgba(0, 0, 0, 0.7)',
-//           titleColor: 'white',
-//           bodyColor: 'white',
-//           borderColor: function(context) {
-//             if (context.tooltip && context.tooltip.dataPoints && context.tooltip.dataPoints.length > 0) {
-//               return context.tooltip.dataPoints[0].dataset.hoverBorderColor;
-//             }
-//             return 'white';
-//           },
-//           borderWidth: 2,
-//           callbacks: {
-//             labelColor: function(context) {
-//               return {
-//                 borderColor: context.dataset.hoverBorderColor,
-//                 backgroundColor: context.dataset.hoverBorderColor
-//               };
-//             },
-//           }
-//         }
-//       },
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//           title: {
-//             display: true,
-//             text: '크기'  // MB 단위 제거
-//           },
-//           ticks: {
-//             stepSize: 10
-//             // callback 함수 제거
-//           }
-//         },
-//         x: {
-//           title: {
-//             display: true,
-//             text: '날짜'
-//           },
-//           ticks: {
-//             font: { size: 10 },
-//             maxTicksLimit: 20
-//           }
-//         }
-//       }
-//     }
-//   });
-// });
+  fitView()
+})
 </script>
+
+<style>
+
+</style>
