@@ -1,7 +1,15 @@
 <template>
   <div class="bg-white p-4 rounded-lg shadow-sm">
-    <h2 class="text-lg font-semibold mb-2">{{ props.title }}</h2>
+    <h2 class="text-lg font-semibold mb-2">파일 히스토리 추이</h2>
     <canvas ref="chartRef" class=""></canvas>
+    <div class="flex justify-end items-center">
+      <span class="size-3 rounded bg-orange"></span>
+      <span class="text-xs px-1.5">업로드</span>
+      <span class="size-3 rounded bg-amber-400"></span>
+      <span class="text-xs px-1.5">수정</span>
+      <span class="size-3 rounded bg-slate-400"></span>
+      <span class="text-xs px-1.5">삭제</span>
+    </div>
   </div>
 </template>
 
@@ -22,7 +30,7 @@ const chartRef = ref(null);
 
 const chartData = props.historyTrends;
 
-console.log(chartData);
+// console.log(chartData);
 
 onMounted(() => {
   const ctx = chartRef.value.getContext('2d');
@@ -35,8 +43,10 @@ onMounted(() => {
         label: '업로드',
         data: chartData.map(row => row.upload),
         fill: false,
-        borderColor: 'rgb(249, 115, 22)',
-        backgroundColor: 'rgb(249, 115, 22)',
+        borderColor: '#FF9A00',
+        backgroundColor: '#FF9A00',
+        borderDash: [4, 3],
+        hoverBorderDash: [0, 0],
         pointRadius: 0,
         pointHoverRadius: 2,
         borderWidth: 1,
@@ -50,6 +60,8 @@ onMounted(() => {
         borderColor: 'rgb(251, 191, 36)',
         hoverBorderColor: 'rgb(251, 191, 36)',
         backgroundColor: 'rgb(251, 191, 36)',
+        borderDash: [4, 3],
+        hoverBorderDash: [0, 0],
         pointRadius: 0,
         pointHoverRadius: 2,
         borderWidth: 1,
@@ -63,6 +75,8 @@ onMounted(() => {
         borderColor: 'rgb(200, 200, 200)',
         hoverBorderColor: 'rgb(148, 163, 184)',
         backgroundColor: 'rgb(148, 163, 184)',
+        borderDash: [4, 3],
+        hoverBorderDash: [0, 0],
         pointRadius: 0,
         pointHoverRadius: 2,
         borderWidth: 1,
@@ -79,7 +93,7 @@ onMounted(() => {
       },
       plugins: {
         legend: {
-          display: true,
+          display: false,
           position: 'bottom',
         },
         tooltip: {
@@ -92,7 +106,7 @@ onMounted(() => {
           beginAtZero: true,
           title: {
             display: true,
-            text: '크기' 
+            text: '횟수' 
           },
           ticks: {
             stepSize: 10

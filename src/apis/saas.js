@@ -54,18 +54,10 @@ let fileRecentApi = async (saas, data) => {
 
 let usersTop5Api = async (saas, data) => {
   try {
-    // const response = await axios.post('/api/v1/board/' + saas +'/files/count', data);
-    // if(response.status == '200') {
-    //   return response.data;
-    // }
-    const response = [
-      { name: 'aaaaa.txt', sensitive: 5, malware: 7, lastDate: '2024-00-00 00:00:00' },
-      { name: '통신이 되는지 함수 불러오는지 확인.txt', sensitive: 4, malware: 2, lastDate: '2024-00-00 00:00:00' },
-      { name: '2024-07 일부러 글자를 길게 합니다.txt', sensitive: 3, malware: 5, lastDate: '2024-00-00 00:00:00' },
-      { name: 'aaaaa.txt', sensitive: 2, malware: 2, lastDate: '2024-00-00 00:00:00' },
-      { name: 'aaaaa.txt', sensitive: 1, malware: 2, lastDate: '2024-00-00 00:00:00' }
-    ];
-    return response;
+    const response = await axios.post('/api/v1/board/' + saas +'/user-ranking', data);
+    if(response.status == '200') {
+      return response.data;
+    }
   } catch (err) {
     console.error('Error:', err);
     throw err;  

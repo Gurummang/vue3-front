@@ -14,16 +14,16 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="(user, index) in users" :key="index">
             <td class="px-4 py-3">
-              <div class="w-full text-sm truncate">{{ user.name }}</div>
+              <div class="w-full text-sm truncate">{{ user.userName }}</div>
             </td>
             <td class="px-4 py-3">
-              <div class="w-full text-center text-sm">{{ user.sensitive }}</div>
+              <div class="w-full text-center text-sm">{{ user.sensitiveFilesCount }}</div>
             </td>
             <td class="px-4 py-3">
-              <div class="w-full text-center text-sm">{{ user.malware }}</div>
+              <div class="w-full text-center text-sm">{{ user.maliciousFilesCount }}</div>
             </td>
             <td class="px-4 py-3">
-              <div class="w-full text-center text-sm">{{ user.lastDate }}</div>
+              <div class="w-full text-center text-sm">{{ user.lastUploadedTimestamp.replace("T", " ") }}</div>
             </td>
           </tr>
         </tbody>
@@ -41,8 +41,23 @@ const props = defineProps({
     required: true
   }
 });
-
 const users = ref(props.usersTop5);
+
+// setTimeout(() => {
+//   users.value = [
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 5, maliciousFilesCount: 7, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: '통신이 되는지 함수 불러오는지 확인.txt', sensitiveFilesCount: 4, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: '2024-07 일부러 글자를 길게 합니다.txt', sensitiveFilesCount: 3, maliciousFilesCount: 5, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 2, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 1, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 5, maliciousFilesCount: 7, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: '통신이 되는지 함수 불러오는지 확인.txt', sensitiveFilesCount: 4, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: '2024-07 일부러 글자를 길게 합니다.txt', sensitiveFilesCount: 3, maliciousFilesCount: 5, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 2, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//       { userName: 'aaaaa.txt', sensitiveFilesCount: 1, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
+//     ];
+// }, 5000);
+
 </script>
 
 <style scoped>

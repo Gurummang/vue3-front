@@ -12,14 +12,14 @@
           <div class="flex items-center bg-white p-4 rounded-lg shadow-sm">
             <div>
               <h2 class="text-lg font-semibold mb-2">총 파일</h2>
-              <p class="text-3xl font-bold">{{ reponseData.total_count }} 개</p>
+              <p class="text-3xl font-bold">{{ reponseData.totalCount }} 개</p>
             </div>
             <v-icon :size="48" class="text-orange ml-auto">mdi-file-cloud-outline</v-icon>
           </div>
           <div class="flex items-center bg-white p-4 rounded-lg shadow-sm">
             <div>
               <h2 class="text-lg font-semibold mb-2">전체 파일 용량</h2>
-              <p class="text-3xl font-bold">{{ formatFileSize(reponseData.total_volume) }}</p>
+              <p class="text-3xl font-bold">{{ formatFileSize(reponseData.totalVolume) }}</p>
             </div>
             <v-icon :size="48" class="text-indigo-900 ml-auto">mdi-server</v-icon>
           </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm">
-          <type-ratio-chart :data="reponseData.total_type" class="grow"></type-ratio-chart>
+          <type-ratio-chart :data="reponseData.totalType" class="grow"></type-ratio-chart>
         </div>
       </div>
       <!-- 파일 선 그래프 -->
@@ -81,7 +81,7 @@ let malwareRatio = ref(0);
 let statistics = ref(null);
 
 const org = {
-  "org_id": 1,
+  "orgId": 1,
 };
 
 const reponseData = ref(null);
@@ -90,9 +90,9 @@ Promise.all([
   totalFileInfoApi(org),
 ]).then((values) => {
   reponseData.value = values[0].data; 
-  totalCount = values[0].data.total_count;
-  malwareRatio.value = Math.floor((values[0].data.total_malware / values[0].data.total_count) * 100);
-  dlpRatio.value = Math.floor((values[0].data.total_dlp / values[0].data.total_count) * 100);
+  totalCount = values[0].data.totalCount;
+  malwareRatio.value = Math.floor((values[0].data.totalMalware / values[0].data.totalCount) * 100);
+  dlpRatio.value = Math.floor((values[0].data.totalDlp / values[0].data.totalCount) * 100);
   statistics.value = values[0].data.statistics;
   isApiOk.value = true;
 }).catch((err) => {
