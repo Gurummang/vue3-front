@@ -1,15 +1,54 @@
 <template>
   <div style="width: 100vw; height: 50vh; background: white;">
-    <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" />
+    <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" :node-types="nodeTypes" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
+import { Handle, Position } from '@vue-flow/core'
+import { defineComponent, h } from 'vue'
 
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
+
+// 커스텀 노드 컴포넌트
+const CustomNode = defineComponent({
+  props: ['data', 'isConnectable'],
+  setup(props) {
+    return () => h(
+      'div',
+      { 
+        style: {
+          padding: '10px',
+          border: '1px solid #ddd',
+          borderRadius: '5px',
+          backgroundColor: 'white',
+          fontSize: '12px',
+          width: '200px'
+        }
+      },
+      [
+        h(Handle, {
+          type: 'target',
+          position: Position.Left,
+          isConnectable: props.isConnectable,
+        }),
+        h('div', props.data.label),
+        h(Handle, {
+          type: 'source',
+          position: Position.Right,
+          isConnectable: props.isConnectable,
+        }),
+      ]
+    )
+  }
+})
+
+const nodeTypes = {
+  custom: CustomNode,
+}
 
 // 샘플 데이터
 const data = {
@@ -91,18 +130,11 @@ const elements = computed(() => {
     const nodeId = `file-${item.eventId}`
     nodes.push({
       id: nodeId,
+      type: 'custom',
       data: { 
         label: `${item.fileName}\n${item.saas}\n${item.email}\n${new Date(item.eventTs).toLocaleString()}`
       },
       position: { x: (index + 1) * 250, y: 100 },
-      style: { 
-        width: 200, 
-        padding: '10px',
-        border: '1px solid #ddd',
-        borderRadius: '5px',
-        backgroundColor: 'white',
-        fontSize: '12px'
-      }
     })
     
     if (index === 0) {
