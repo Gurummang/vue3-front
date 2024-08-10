@@ -12,6 +12,8 @@
         <history-trends :historyTrends="historyTrends"></history-trends>
         <history-details :historyDetails="historyDetails"></history-details>
       </div>
+
+      <file-test></file-test>
     </main>
     <content-error
       v-else></content-error>
