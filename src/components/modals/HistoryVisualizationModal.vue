@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-3/5 bg-white rounded-lg mt-10">
+  <div class="w-full h-3/5 bg-white rounded-lg">
     <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" :node-types="nodeTypes" />
   </div>
 </template>

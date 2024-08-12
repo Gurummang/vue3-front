@@ -79,9 +79,4 @@ Promise.all([
   loading.value = false;
 });
 
-// console.log(fileStatistics);
-
-// console.log(fileStatistics);
-// let fileStatistics = getFileStatistics('slack', data);
-
 </script>
