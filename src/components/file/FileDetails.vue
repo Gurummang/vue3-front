@@ -117,13 +117,13 @@
               <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
               <td class="px-2 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <!-- <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" /> -->
+                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" />
                   <span class="text-sm"> {{ details.saas }}</span>
                 </div>
               </td>
               <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
               <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
-              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.date }}</td>
+              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td>
             </tr>
             
             <!-- Accordion row -->
@@ -135,7 +135,7 @@
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일명</span>
                     <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.name }}</span>
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일크기</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ details.size }} Byte</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ getfileSize(details.size) }}</span>
                   </div>
                   <div class="flex border-t border-gray-200">
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
@@ -294,7 +294,7 @@ import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
-import { getSaasImg, getDate } from '@/utils/utils.js'
+import { getSaasImg, getDate, getfileSize } from '@/utils/utils.js'
 
 
 const props = defineProps({
