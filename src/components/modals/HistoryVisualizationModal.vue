@@ -196,6 +196,12 @@ const elements = computed(() => {
         id: `e-${prevNodeId}-${nodeId}`,
         source: prevNodeId,
         target: nodeId,
+        markerEnd: {
+          type: 'arrow',
+          width: 30,
+          height: 30,
+          color: '#000',
+        },
         animated: true,
         style: { stroke: '#4A154B',
                 textColor: '#FFF',
