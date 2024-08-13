@@ -98,6 +98,9 @@
     <the-pagination></the-pagination>
 
   </div>
+
+<history-visualization-modal
+  v-if="isHistoryVisualizationModalOpen"></history-visualization-modal>
 </template>
 
 <script setup>
