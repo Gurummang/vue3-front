@@ -7,7 +7,7 @@
         <p class="font-semibold">{{ data.eventType }}</p>
       </div>
       <div class="flex items-center">
-        <v-icon :size="25" class="text-orange">mdi-file-upload-outline</v-icon>
+        <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon>
       </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
