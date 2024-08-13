@@ -14,6 +14,18 @@ let totalFileInfoApi = async (data) => {
   }
 };
 
+let fileScanApi = async (data) => {
+  try {
+    const response = await axios.get('/api/v1/files/scan', data);
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+};
+
 let historyStatisticsApi = async (data) => {
   try {
     // const response = await axios.post('/api/v1/files/board', data);
