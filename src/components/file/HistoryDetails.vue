@@ -127,7 +127,7 @@ const openHistoryVisualizationModal = () => {
   if(selectedHistory.value) {
     isHistoryVisualizationModalOpen.value = true;
   } else {
-    alert('검사할 파일을 선택해주세요.');
+    alert('시각화할 파일을 선택해주세요.');
   }
 }
 
