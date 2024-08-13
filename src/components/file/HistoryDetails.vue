@@ -98,6 +98,11 @@
     <the-pagination></the-pagination>
 
   </div>
+
+<history-visualization-modal
+  v-if="isHistoryVisualizationModalOpen"
+  @close="closeHistoryVisualizationModal"
+></history-visualization-modal>
 </template>
 
 <script setup>
