@@ -69,23 +69,5 @@ const formattedDate = computed(() => {
 </script>
 
 <style scoped>
-.custom-node {
-  /* padding: 10px; */
-  border-radius: 5px;
-  background-color: white;
-  /* border: 2px solid saddlebrown; */
-  font-size: 12px;
-  line-height: 1.5;
-  width: 300px;
-  text-align: left;
-}
 
-.tg  {border-collapse:collapse;border-spacing:0; width: 100%;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-size:10px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-size:10px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-baqh{text-align:center;vertical-align:top}
-.tg .tg-5frq{}
-.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
 </style>

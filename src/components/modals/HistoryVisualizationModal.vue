@@ -197,12 +197,13 @@ const elements = computed(() => {
         source: prevNodeId,
         target: nodeId,
         markerEnd: {
-          type: 'arrow',
+          type: index % 2 == 0 ? 'arrowclosed' : 'arrow', // arrow, arrowclosed
           width: 30,
           height: 30,
           color: '#000',
         },
-        animated: true,
+        label: 'Test',
+        animated: index % 2 == 0 ? false : true,
         style: { stroke: '#4A154B',
                 textColor: '#FFF',
         }
