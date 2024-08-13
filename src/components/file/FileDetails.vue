@@ -143,19 +143,29 @@
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
                     <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span>
                   </div>
-                  <div class="flex items-center border-t border-gray-200">
-                    <span class="text-center inline-block w-1/4 p-2 border-x border-gray-200 text-sm">확장자 시그니쳐 일치 여부</span>
-                    <span class="flex inline-block w-1/4 p-2 bg-white text-xs">
-                      일치 여부 : {{ details.gscan.step1.correct  }}<br>
-                      MimeType 값 : {{ details.gscan.step1.mimeType }}<br>
-                      Signature 값: {{ details.gscan.step1.signature }}<br>
-                      파일 확장자 : {{ details.gscan.step1.extension }}
-                    </span>
-                    <span class="inline-block w-[12.5%] p-2 border-x border-gray-200 text-sm text-center">심층분석</span>
-                    <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
-                      {{details.gscan.step2 }}
-                    </span>
+
+
+
+                  <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
+                    <v-icon v-if="!gscanStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
+                    <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>악성탐지
                   </div>
+                  <div v-if="isGscanOpen(index) && details.fileStatus.gscanStatus == 1" class="bg-white">
+                    <div class="flex items-stretch border-t border-gray-200">
+                      <span class="flex items-center justify-center w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center text-sm">확장자 시그니쳐 일치 여부</span>
+                      <span class="flex inline-block w-1/4 p-2 bg-white text-xs">
+                        일치 여부 : {{ details.gscan.step1.correct  }}<br>
+                        MimeType 값 : {{ details.gscan.step1.mimeType }}<br>
+                        Signature 값: {{ details.gscan.step1.signature }}<br>
+                        파일 확장자 : {{ details.gscan.step1.extension }}
+                      </span>
+                      <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">심층분석</span>
+                      <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
+                        {{details.gscan.step2 }}
+                      </span>
+                    </div>
+                  </div>
+
 
                   <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
                     <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
@@ -180,7 +190,6 @@
                       </div>
 
                       <div class="w-1/2 border-t border-l border-gray-200">
-                        <!-- <span class="inline-block w-full h-full p-2 bg-white border-l border-gray-200">접근 가능 사용자 수</span> -->
                         <dlp-chart></dlp-chart>
                       </div>
 
@@ -304,30 +313,6 @@ const props = defineProps({
 });
 const fileDetails = ref(props.fileDetails.data.files);
 
-// console.log(fileDetails.value[0].fileStatus);
-
-// const fileDetails = ref([
-//   { detect: 0, dlp: 0, virustoal: 0, name: '1ㅀㅇ라강라하ㅏ가하아라하가ㅘ파아아라가하f', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
-// ]);
-
 let checkedIndex = ref([]);
 
 const clearCheckedIndex = () => {
@@ -335,6 +320,7 @@ const clearCheckedIndex = () => {
 }
 
 const accordionStatus = ref({});
+const gscanStatus = ref({});
 const dlpReportStatus = ref({});
 const virusTotalReportStatus = ref({});
 
@@ -348,6 +334,14 @@ const toggleAccordion = (index) => {
 
 const isAccordionOpen = (index) => {
   return accordionStatus.value[index] || false;
+}
+
+const toggleGscanReport = (index) => {
+  gscanStatus.value[index] = !gscanStatus.value[index];
+}
+
+const isGscanOpen = (index) => {
+  return gscanStatus.value[index] || false;
 }
 
 const toggleDLPReport = (index) => {
