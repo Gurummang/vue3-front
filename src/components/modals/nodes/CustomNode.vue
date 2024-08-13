@@ -1,15 +1,30 @@
 <template>
   <Handle type="target" :position="Position.Left" />
-  <div class="custom-node">
+  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black">
+    <div class="flex justify-between items-center pl-2 pr-2 border-b-2 border-black bg-orange-100 h-10 rounded-t-lg">
+      <div class="flex items-center">
+        <v-icon :size="25" class="text-orange mr-2">mdi-file-upload-outline</v-icon>
+        <p class="font-semibold">{{ data.eventType }}</p>
+      </div>
+      <div class="flex items-center">
+        <v-icon :size="25" class="text-orange">mdi-file-upload-outline</v-icon>
+      </div>
+    </div>
+    <div class="pl-2 py-1 leading-6 ">
+      <p><strong>파일명 : </strong>{{ data.fileName }}</p>
+      <p><strong>사용자 : </strong>{{ data.email }}</p>
+      <p><strong>히스토리 시각 : </strong>{{ formattedDate }}</p>
+      <p><strong>파일 경로 : </strong>{{ data.uploadChannel }}</p>
+    </div>
     <!-- <h3>{{ data.eventType }}</h3> -->
     
     <!-- <ul>
-      <li><strong>파일명:</strong> <br>{{ data.fileName }}</li>
-      <li><strong>사용자:</strong> <br>{{ data.email }}</li>
-      <li><strong>히스토리 시각:</strong> <br>{{ formattedDate }}</li>
-      <li><strong>파일 경로:</strong> <br>{{ data.uploadChannel }}</li>
+      <li><strong>파일명:</strong> <br>{{ data.fileName }}
+      <li><strong>사용자:</strong> <br>{{ data.email }}
+      <li><strong>히스토리 시각:</strong> <br>{{ formattedDate }}
+      <li><strong>파일 경로:</strong> <br>{{ data.uploadChannel }}
     </ul> -->
-    <table class="tg">
+    <!-- <table class="tg">
       <thead>
         <tr v-if="true">
           <th class="text-center align-top bg-orange-100" colspan="4">
@@ -36,7 +51,7 @@
         <td class="tg-baqh" colspan="3">{{ data.uploadChannel }}</td>
       </tr>
     </tbody>
-    </table>
+    </table> -->
   </div>
 
   <Handle type="source" :position="Position.Right" />
@@ -58,7 +73,7 @@ const formattedDate = computed(() => {
   /* padding: 10px; */
   border-radius: 5px;
   background-color: white;
-  border: 2px solid saddlebrown;
+  /* border: 2px solid saddlebrown; */
   font-size: 12px;
   line-height: 1.5;
   width: 300px;
