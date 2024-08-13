@@ -1,6 +1,11 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="w-full h-3/5 bg-white rounded-lg mt-10">
+    <div class="w-3/4 h-5/6 bg-white rounded-lg mt-10">
+      <div class="flex justify-end p-3">
+        <button @click="$emit('close')" class="text-gray-400 hover:text-black">
+          <v-icon>mdi-close</v-icon>
+        </button>
+      </div>
       <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" :node-types="nodeTypes" />
     </div>
   </div>
@@ -11,9 +16,12 @@ import { ref, onMounted, computed } from 'vue'
 import { VueFlow, useVueFlow, getBezierPath } from '@vue-flow/core'
 import { Position } from '@vue-flow/core'
 import { defineComponent, h } from 'vue'
+import CustomNode from './nodes/CustomNode.vue'
 
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
+
+const { addNodes } = useVueFlow()
 
 // 커스텀 Slack 노드 컴포넌트
 const CustomSlackNode = defineComponent({
@@ -42,6 +50,7 @@ const CustomSlackNode = defineComponent({
 
 const nodeTypes = {
   customSlack: CustomSlackNode,
+  custom: CustomNode
 }
 
 // 샘플 데이터
@@ -63,7 +72,7 @@ const data = {
             {
                 "eventId": 4,
                 "saas": "slack",
-                "eventType": "file_uploaded",
+                "eventType": "file_edited",
                 "fileName": "Injector.pdf",
                 "hash256": "26a4ed4d2dd44f70bd41650874c4388bf5444290a3b9c094a9ae652bfbb6fbbc",
                 "saasFileId": "F078KQN3X26",
@@ -74,7 +83,7 @@ const data = {
             {
                 "eventId": 7,
                 "saas": "slack",
-                "eventType": "file_uploaded",
+                "eventType": "file_deleted",
                 "fileName": "123123123123123123fsdfgdsfg.png",
                 "hash256": "139e1cfe2293dc36ecf6d49bfea7b5f046aa073edd40485a892140973e5ffc91",
                 "saasFileId": "F07EMFUPV5Z",
@@ -166,30 +175,19 @@ const elements = computed(() => {
     const nodeId = `file-${item.eventId}`
     nodes.push({
       id: nodeId,
+      type: 'custom',
       data: { 
-        label: `활동 종류 : ${item.eventType}<br>\
-                SaaS : ${item.saas}<br>\
-                파일명 : ${item.fileName}<br>\
-                사용자 : ${item.email}<br>\
-                히스토리 시각 : ${new Date(item.eventTs).toLocaleString()}`,
-        events: `${item.eventTs}`,
-        selected: true,
+        eventType: item.eventType,
+        fileName: item.fileName,
+        email: item.email,
+        eventTs: item.eventTs,
+        uploadChannel: item.uploadChannel
       },
-      targetPosition: Position.Left,
-      sourcePosition: Position.Right,
-      position: { x: 50 + index * 350, y: 150 },
+      targetPosition: 'left',
+      sourcePosition: 'right',
+      position: { x: 50 + index * 350, y: 50 },
       parentNode: item.saas,
       extent: 'parent',
-      style: {
-        padding: '10px',
-        // border: '2px solid ' + (item.eventId % 2 === 0 ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)'),
-        borderRadius: '5px',
-        backgroundColor: 'white',
-        fontSize: '12px',
-        lineHeight: 1.5,
-        width: '300px',
-        textAlign: 'left'
-      }
     })
     
     if (index > 0) {
@@ -212,12 +210,13 @@ const elements = computed(() => {
     nodes.push({
       id: nodeId,
       data: { 
-        label: `활동 종류 : ${item.eventType}<br>\
+        label: `<v-icon>mdi-delete-outline</v-icon>
+                활동 종류 : ${item.eventType}<br>\
                 파일명 : ${item.fileName}<br>\
                 사용자 : ${item.email}<br>\
                 히스토리 시각 : ${new Date(item.eventTs).toLocaleString()}`,
         events: `${item.eventTs}`,
-        selected: true,
+        // selected: true,
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
