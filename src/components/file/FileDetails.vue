@@ -141,7 +141,7 @@
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
                     <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">20</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span>
                   </div>
                   <div class="flex items-center border-t border-gray-200">
                     <span class="text-center inline-block w-1/4 p-2 border-x border-gray-200 text-sm">확장자 시그니쳐 일치 여부</span>
@@ -150,10 +150,11 @@
                       MimeType 값 : {{ details.gscan.step1.mimeType }}<br>
                       Signature 값: {{ details.gscan.step1.signature }}<br>
                       파일 확장자 : {{ details.gscan.step1.extension }}
-
                     </span>
                     <span class="inline-block w-[12.5%] p-2 border-x border-gray-200 text-sm text-center">심층분석</span>
-                    <span class="inline-block w-[37.5%] p-2 bg-white text-xs">~~~~~~~~~~~~~~</span>
+                    <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
+                      {{details.gscan.step2 }}
+                    </span>
                   </div>
 
                   <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">

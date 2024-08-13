@@ -170,7 +170,7 @@ Promise.all([
                         "signature": "pdf",
                         "extension": "pdf"
                     },
-                    "step2": null
+                    "step2": "This is Test"
                 }
             },
             {
