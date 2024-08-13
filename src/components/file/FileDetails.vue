@@ -81,37 +81,37 @@
                 />
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <span v-if="details.fileStatus.dlpStatus === 0">
-                  <v-icon :size="22" class="text-gray-300">mdi-dots-horizontal-circle-outline</v-icon>
+                <span v-if="details.fileStatus.dlpStatus === -1">
+                  <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                </span>
+                <span v-else-if="details.fileStatus.dlpStatus === 0">
+                  <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                 </span>
                 <span v-else-if="details.fileStatus.dlpStatus === 1">
-                  <v-icon :size="22" class="text-amber-400">mdi-alert-circle-outline</v-icon>
-                </span>
-                <span v-else-if="details.fileStatus.dlpStatus === 2">
                   <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                 </span>
                 <span v-else>
-                  <v-icon :size="24" class="text-rose-600">mdi-eye-off</v-icon>
+                  <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
                 </span>
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <span v-if="details.fileStatus.gscanStatus === 0">
-                  <v-icon :size="22" class="text-gray-300">mdi-dots-horizontal-circle-outline</v-icon>
+                <span v-if="details.fileStatus.gscanStatus === -1">
+                  <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                </span>
+                <span v-else-if="details.fileStatus.gscanStatus === 0">
+                  <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                 </span>
                 <span v-else-if="details.fileStatus.gscanStatus === 1">
-                  <v-icon :size="22" class="text-red-600">mdi-alert-circle-outline</v-icon>
-                </span>
-                <span v-else-if="details.fileStatus.gscanStatus === 2">
                   <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                 </span>
                 <span v-else>
-                  <v-icon :size="24" class="text-rose-600">mdi-eye-off</v-icon>
+                  <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
                 </span>
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <span v-if="details.virustoal === 0" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
-                <span v-if="details.virustoal === 1" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">악성</span>
-                <span v-if="details.virustoal === 2" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
+                <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
+                <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
+                <span v-if="details.fileStatus.vtStatus === 1" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">완료</span>
               </td>
               <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
               <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
@@ -154,7 +154,7 @@
                     <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>DLP Report
                   </div>
-                  <div v-if="isDLPReportOpen(index) && details.dlp" class="bg-white">
+                  <div v-if="isDLPReportOpen(index) && (details.fileStatus.dlpStatus == 1)" class="bg-white">
                     <!-- DLP Report content -->
                     <div class="flex">
                       <div class="w-1/2 border-t border-gray-200">
@@ -185,70 +185,72 @@
                     <v-icon v-if="!virusTotalReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
                   </div>
-                  <div v-if="isVirusTotalReportOpen(index) && details.virustoal" class="bg-white">
+                  <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white">
                     <!-- VirusTotal Report content -->
                     <div class="flex h-full">
                       <div class="flex flex-col w-1/2 border-t border-gray-200">
                         <div class="flex flex-1 items-center border-b border-gray-200">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">SHA-256</span>
-                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs break-all">{{ details.saltedHash }}</span>
                         </div>
                         <div class="flex flex-1 items-center border-b border-gray-200">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">File Type</span>
-                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">{{ details.vtReport.type }}</span>
                         </div>
                         <div class="flex flex-1 items-center border-b border-gray-200">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">Threat Label</span>
-                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">20</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">{{ details.vtReport.threatLabel }}</span>
                         </div>
                         <div class="flex flex-1 items-center">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">VirusTotal Report</span>
                           <div class="w-2/3 h-full flex items-center p-2">
-                            <button class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-blue-600 hover:bg-blue-500">
-                              바로가기
-                            </button>
+                            <a 
+                              class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-blue-600 hover:bg-blue-500"
+                              :href="details.vtReport.reportUrl"
+                              target='_blank'
+                            >바로가기</a>
                           </div>
                         </div>
                       </div>
 
                       <div class="flex w-1/2 border-t border-l border-gray-200">
                         <div class="flex-1 p-2">
-                          <virustotal-chart :name="'엔진탐색'" :score=40 :color="'#dc2626'"></virustotal-chart>
+                          <virustotal-chart :name="'엔진탐색'" :score=(details.vtReport.detectEngine/details.vtReport.completeEngine) :color="'#dc2626'"></virustotal-chart>
                         </div>
                         <div class="flex-1 border-l border-gray-200 p-2">
-                          <virustotal-chart :name="'Score'" :score=20 :color="'#FF8A00'"></virustotal-chart>
+                          <virustotal-chart :name="'Score'" :score=(details.vtReport.score/100) :color="'#FF8A00'"></virustotal-chart>
                         </div>
                       </div>
                     </div>
 
-                    <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center"> 주요 탐지 엔진 </div>
+                    <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center">주요 탐지 엔진 </div>
                     <div class="flex h-full">
                       <div class="flex flex-col w-1/2 border-t border-gray-200">
                         <div class="flex flex-1 border-b border-gray-200">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">V3</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.v3 }}</span>
                         </div>
                         <div class="flex flex-1 border-b border-gray-200">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Kaspersky</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.kaspersky }}</span>
                         </div>
                         <div class="flex flex-1">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Avast</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.avast }}</span>
                         </div>
                       </div>
                       <div class="flex flex-col w-1/2 border-t border-gray-200">
                         <div class="flex flex-1 border-b border-gray-200">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">ALYac</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.alyac }}</span>
                         </div>
                         <div class="flex flex-1 border-b border-gray-200">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Falcon</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.falcon }}</span>
                         </div>
                         <div class="flex flex-1">
                           <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Santinal One</span>
-                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">20</span>
+                          <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.sentinelone }}</span>
                         </div>
                       </div>
                     </div>
