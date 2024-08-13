@@ -16,12 +16,9 @@ import { ref, onMounted, computed } from 'vue'
 import { VueFlow, useVueFlow, getBezierPath } from '@vue-flow/core'
 import { Position } from '@vue-flow/core'
 import { defineComponent, h } from 'vue'
-import CustomNode from './nodes/CustomNode.vue'
 
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
-
-const { addNodes } = useVueFlow()
 
 // 커스텀 Slack 노드 컴포넌트
 const CustomSlackNode = defineComponent({
@@ -50,7 +47,6 @@ const CustomSlackNode = defineComponent({
 
 const nodeTypes = {
   customSlack: CustomSlackNode,
-  custom: CustomNode
 }
 
 // 샘플 데이터
@@ -175,19 +171,31 @@ const elements = computed(() => {
     const nodeId = `file-${item.eventId}`
     nodes.push({
       id: nodeId,
-      type: 'custom',
+      type: 'default',
       data: { 
-        eventType: item.eventType,
-        fileName: item.fileName,
-        email: item.email,
-        eventTs: item.eventTs,
-        uploadChannel: item.uploadChannel
+        label: `<strong>활동 종류</strong><br>\
+                ${item.eventType}<br>\
+                <strong>파일명</strong><br> ${item.fileName}<br>\
+                <strong>사용자</strong><br> ${item.email}<br>\
+                <strong>히스토리 시각</strong><br> ${new Date(item.eventTs).toLocaleString()}<br>\
+                <strong>파일 경로</strong><br> ${item.uploadChannel}`,
+        selected: true,
       },
-      targetPosition: 'left',
-      sourcePosition: 'right',
+      targetPosition: Position.Left,
+      sourcePosition: Position.Right,
       position: { x: 50 + index * 350, y: 50 },
       parentNode: item.saas,
       extent: 'parent',
+      style: {
+        padding: '10px',
+        // border: '2px solid ' + (item.eventId % 2 === 0 ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)'),
+        borderRadius: '5px',
+        backgroundColor: 'white',  //item.eventType == 'file_uploaded' ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)',
+        fontSize: '12px',
+        lineHeight: 1.5,
+        width: '300px',
+        textAlign: 'left'
+      }
     })
     
     if (index > 0) {
@@ -210,13 +218,12 @@ const elements = computed(() => {
     nodes.push({
       id: nodeId,
       data: { 
-        label: `<v-icon>mdi-delete-outline</v-icon>
-                활동 종류 : ${item.eventType}<br>\
+        label: `활동 종류 : ${item.eventType}<br>\
                 파일명 : ${item.fileName}<br>\
                 사용자 : ${item.email}<br>\
                 히스토리 시각 : ${new Date(item.eventTs).toLocaleString()}`,
         events: `${item.eventTs}`,
-        // selected: true,
+        selected: true,
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
