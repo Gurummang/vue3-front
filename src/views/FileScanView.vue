@@ -418,7 +418,10 @@ Promise.all([
         ]
     }
 };
-    detectionFileCount.value = [2222, 13, 21];
+  detectionFileCount.value = [11, 0, 1];
+//   detectionFileCount.value = [values.data.total, values.data.dlpTotal, values.data.malwareTotal];
+// const { total, dlpTotal, malwareTotal, ...otherProps } = values.data;
+// detectionFileCount.value = [total, dlpTotal, malwareTotal];
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
