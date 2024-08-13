@@ -81,13 +81,13 @@
                 />
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <span v-if="details.dlp === 0">
+                <span v-if="details.fileStatus.dlpStatus === 0">
                   <v-icon :size="22" class="text-gray-300">mdi-dots-horizontal-circle-outline</v-icon>
                 </span>
-                <span v-else-if="details.dlp === 1">
+                <span v-else-if="details.fileStatus.dlpStatus === 1">
                   <v-icon :size="22" class="text-amber-400">mdi-alert-circle-outline</v-icon>
                 </span>
-                <span v-else-if="details.dlp === 2">
+                <span v-else-if="details.fileStatus.dlpStatus === 2">
                   <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                 </span>
                 <span v-else>
@@ -95,13 +95,13 @@
                 </span>
               </td>
               <td class="px-2 py-2 text-center whitespace-nowrap">
-                <span v-if="details.detect === 0">
+                <span v-if="details.fileStatus.gscanStatus === 0">
                   <v-icon :size="22" class="text-gray-300">mdi-dots-horizontal-circle-outline</v-icon>
                 </span>
-                <span v-else-if="details.detect === 1">
+                <span v-else-if="details.fileStatus.gscanStatus === 1">
                   <v-icon :size="22" class="text-red-600">mdi-alert-circle-outline</v-icon>
                 </span>
-                <span v-else-if="details.detect === 2">
+                <span v-else-if="details.fileStatus.gscanStatus === 2">
                   <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                 </span>
                 <span v-else>
@@ -117,12 +117,13 @@
               <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
               <td class="px-2 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" />
+                  <!-- <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" /> -->
                   <span class="text-sm"> {{ details.saas }}</span>
                 </div>
               </td>
               <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
-              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td>
+              <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
+              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.date }}</td>
             </tr>
             
             <!-- Accordion row -->
@@ -134,11 +135,11 @@
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일명</span>
                     <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.name }}</span>
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일크기</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">200 Byte</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ details.size }} Byte</span>
                   </div>
                   <div class="flex border-t border-gray-200">
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
-                    <span class="inline-block w-3/6 p-2 bg-white text-xs">grummang / dddd / aaasd.pdf</span>
+                    <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
                     <span class="inline-block w-1/6 p-2 bg-white text-xs">20</span>
                   </div>
@@ -287,27 +288,36 @@ import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import { getSaasImg, getDate } from '@/utils/utils.js'
 
-const fileDetails = ref(null);
+
+const props = defineProps({
+  fileDetails: Object,
+  required: true
+});
+const fileDetails = ref(props.fileDetails.data.files);
+
+console.log(fileDetails.value[0].fileStatus);
+// fileDetails.value = ;
+
 // const fileDetails = ref([
-//   { detect: 0, dlp: 0, virustoal: 0, name: '1ㅀㅇ라강라하ㅏ가하아라하가ㅘ파아아라가하f', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
-//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', date: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '1ㅀㅇ라강라하ㅏ가하아라하가ㅘ파아아라가하f', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 1, dlp: 1, virustoal: 1, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 2, dlp: 2, virustoal: 2, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'jira', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
+//   { detect: 0, dlp: 0, virustoal: 0, name: '123123123ssdfsdfsdf', type: 'pdf', saas: 'slack', user: 'asdasdasd', name: '2024.08.22T17:00:22' },
 // ]);
 
 let checkedIndex = ref([]);

@@ -16,7 +16,7 @@ let totalFileInfoApi = async (data) => {
 
 let fileScanApi = async (data) => {
   try {
-    const response = await axios.get('/api/v1/files/scan', data);
+    const response = await axios.post('/api/v1/files/scan', data);
     if(response.status == '200') {
       return response.data;
     }
@@ -346,4 +346,4 @@ let historyDetailsApi = async (data) => {
   }
 };
 
-export { totalFileInfoApi, historyStatisticsApi, historyTrendsApi, historyDetailsApi };
+export { totalFileInfoApi, fileScanApi ,historyStatisticsApi, historyTrendsApi, historyDetailsApi };
