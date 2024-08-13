@@ -19,6 +19,7 @@ import { defineComponent, h } from 'vue'
 
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
+import CustomNode from './nodes/CustomNode.vue'
 
 // 커스텀 Slack 노드 컴포넌트
 const CustomSlackNode = defineComponent({
@@ -47,6 +48,7 @@ const CustomSlackNode = defineComponent({
 
 const nodeTypes = {
   customSlack: CustomSlackNode,
+  custom: CustomNode,
 }
 
 // 샘플 데이터
@@ -151,6 +153,8 @@ const data = {
 const elements = computed(() => {
   const slackData = data.data.slack.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
   const googleDriveData = data.data.googleDrive.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
+
+  // 부모 노드 추가
   const nodes = [
     {
       id: 'slack',
@@ -171,31 +175,19 @@ const elements = computed(() => {
     const nodeId = `file-${item.eventId}`
     nodes.push({
       id: nodeId,
-      type: 'default',
+      type: 'custom',
       data: { 
-        label: `<strong>활동 종류</strong><br>\
-                ${item.eventType}<br>\
-                <strong>파일명</strong><br> ${item.fileName}<br>\
-                <strong>사용자</strong><br> ${item.email}<br>\
-                <strong>히스토리 시각</strong><br> ${new Date(item.eventTs).toLocaleString()}<br>\
-                <strong>파일 경로</strong><br> ${item.uploadChannel}`,
-        selected: true,
+        eventType: item.eventType,
+        fileName: item.fileName,
+        email: item.email,
+        eventTs: item.eventTs,
+        uploadChannel: item.uploadChannel
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
       position: { x: 50 + index * 350, y: 50 },
       parentNode: item.saas,
       extent: 'parent',
-      style: {
-        padding: '10px',
-        // border: '2px solid ' + (item.eventId % 2 === 0 ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)'),
-        borderRadius: '5px',
-        backgroundColor: 'white',  //item.eventType == 'file_uploaded' ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)',
-        fontSize: '12px',
-        lineHeight: 1.5,
-        width: '300px',
-        textAlign: 'left'
-      }
     })
     
     if (index > 0) {
@@ -243,7 +235,6 @@ const elements = computed(() => {
     })
     
     if (index > 0) {
-      console.log(googleDriveData[index - 1].eventId);
       const prevNodeId = `file-${googleDriveData[index - 1].eventId}`
       edges.push({
         id: `e-${prevNodeId}-${nodeId}`,
