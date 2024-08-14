@@ -38,20 +38,6 @@ let fileVtUploadApi = async (data) => {
   }
 };
 
-// let historyStatisticsApi = async (data) => {
-//   try {
-//     // const response = await axios.post('/api/v1/files/board', data);
-//     // if(response.status == '200') {
-//     //   return response.data;
-//     // }
-//     const response = [20, 5, 10];
-//     return response;
-//   } catch (err) {
-//     console.error('Error:', err);
-//     throw err;  
-//   }
-// };
-
 let historyStatisticsApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/files/history/statistics', data);
