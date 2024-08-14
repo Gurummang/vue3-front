@@ -65,7 +65,7 @@
                   v-model="selectedHistory"
                 />
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ index + 1 }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-center text-xs">{{ index + 1 }}</td>
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
                   <img class="w-5 h-5 mr-2" :src="getSaasImg(detail.saas)" :alt="detail.saas" />
@@ -73,23 +73,23 @@
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs align-middle">
-                <p v-if="detail.activityType === 'upload'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_uploaded'" class="flex items-center">
                   <v-icon :size="20" class="text-orange mr-1">mdi-file-upload-outline</v-icon>
                   파일 업로드
                 </p>
-                <p v-if="detail.activityType === 'edit'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_changed'" class="flex items-center">
                   <v-icon :size="20" class="text-amber-400 mr-1">mdi-file-edit-outline</v-icon>
                   파일 수정
                 </p>
-                <p v-if="detail.activityType === 'delete'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_deleted'" class="flex items-center">
                   <v-icon :size="20" class="text-slate-400 mr-1">mdi-file-remove-outline</v-icon>
                   파일 삭제
                 </p>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.fileName }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.historyTime }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.lastActionTime }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.account }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.eventTs) }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.uploadTs) }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.email }}</td>
             </tr>
           </tbody>
         </table>
@@ -107,7 +107,7 @@
 
 <script setup>
 import { ref, watch, defineProps } from 'vue'
-import { getSaasImg, getDate } from '@/utils/utils.js'
+import { getSaasImg, getDate, removeWordDate } from '@/utils/utils.js'
 import ThePagination from '@/components/ThePagination.vue'
 import HistoryVisualizationModal from '@/components/modals/HistoryVisualizationModal.vue'
 
