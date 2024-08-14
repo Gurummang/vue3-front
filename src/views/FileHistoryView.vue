@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { historyTrendsApi, historyDetailsApi } from '@/apis/file.js'
+import { historyStatisticsApi, historyDetailsApi } from '@/apis/file.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -48,11 +48,11 @@ const data = {
 }
 
 Promise.all([
-  historyTrendsApi(data),
+  historyStatisticsApi(data),
   historyDetailsApi(data),
 ]).then((values) => {
   historyStatistics.value = [values[0].data.totalUpload, values[0].data.totalChanged, values[0].data.totalDeleted];
-  console.log(historyStatistics.value);
+  // console.log(historyStatistics.value);
   historyTrends.value = values[0].data.fileHistoryStatistics;
   historyDetails.value = values[1];
   // console.log(historyTrends.value);
