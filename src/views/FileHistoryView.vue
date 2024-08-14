@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { historyStatisticsApi, historyTrendsApi, historyDetailsApi } from '@/apis/file.js'
+import { historyTrendsApi, historyDetailsApi } from '@/apis/file.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -44,17 +44,17 @@ let historyTrends = ref([]);
 let historyDetails = ref([]);
 
 const data = {
-  "email": "hsp003636@gmail.com"
+  "orgId": 1
 }
 
 Promise.all([
-  historyStatisticsApi(data),
   historyTrendsApi(data),
   historyDetailsApi(data),
 ]).then((values) => {
-  historyStatistics.value = values[0];
-  historyTrends.value = values[1];
-  historyDetails.value = values[2];
+  historyStatistics.value = [values[0].data.totalUpload, values[0].data.totalChanged, values[0].data.totalDeleted];
+  console.log(historyStatistics.value);
+  historyTrends.value = values[0].data.fileHistoryStatistics;
+  historyDetails.value = values[1];
   // console.log(historyTrends.value);
   isApiOk.value = true;
 }).catch((err) => {

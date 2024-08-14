@@ -41,7 +41,7 @@ onMounted(() => {
       labels: chartData.map(row => row.date),
       datasets: [{
         label: '업로드',
-        data: chartData.map(row => row.upload),
+        data: chartData.map(row => row.uploadCount),
         fill: false,
         borderColor: '#FF9A00',
         backgroundColor: '#FF9A00',
@@ -55,7 +55,7 @@ onMounted(() => {
       },
       {
         label: '수정',
-        data: chartData.map(row => row.edit),
+        data: chartData.map(row => row.modifyCount),
         fill: false,
         borderColor: 'rgb(251, 191, 36)',
         hoverBorderColor: 'rgb(251, 191, 36)',
@@ -70,7 +70,7 @@ onMounted(() => {
       },
       {
         label: '삭제',
-        data: chartData.map(row => row.delete),
+        data: chartData.map(row => row.deletedCount),
         fill: false,
         borderColor: 'rgb(200, 200, 200)',
         hoverBorderColor: 'rgb(148, 163, 184)',
