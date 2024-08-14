@@ -23,4 +23,12 @@ export const removeZeroDivision = (num) => {
   return num <= 0 ? 0.001 : num;
 }
 
+export const convertDate = (date) => {
+  return new Date(date).toLocaleString();
+}
+
+export const removeWordDate = (date) => {
+  return date.replace('T', ' ');
+}
+
 // export { getTodayDate, getSaasImg, getDate };

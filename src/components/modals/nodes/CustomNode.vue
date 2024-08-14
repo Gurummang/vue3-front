@@ -1,20 +1,33 @@
 <template>
   <Handle type="target" :position="Position.Left" />
-  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black">
-    <div class="flex justify-between items-center pl-2 pr-2 border-b-2 border-black bg-orange-100 h-10 rounded-t-lg">
+  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black shadow-xl">
+    <div :class="['flex', 'justify-between', 'items-center', 'pl-2', 'pr-2', 'border-b-2', 'border-black', 'h-10', 'rounded-t-lg', headerBackgroundClass]">
       <div class="flex items-center">
-        <v-icon :size="25" class="text-orange mr-2">mdi-file-upload-outline</v-icon>
-        <p class="font-semibold">{{ data.eventType }}</p>
+        <div v-if="data.eventType=='file_uploaded'" class="flex">
+          <v-icon :size="25" class="text-orange-700 mr-2">mdi-file-upload-outline</v-icon>
+          <p class="font-semibold text-orange-700">파일 업로드</p>
+        </div>
+        <div v-if="data.eventType=='file_changed'" class="flex">
+          <v-icon :size="25" class="text-amber-600 mr-2">mdi-file-edit-outline</v-icon>
+          <p class="font-semibold text-amber-600">파일 수정</p>
+        </div>
+        <div v-if="data.eventType=='file_deleted'" class="flex">
+          <v-icon :size="25" class="text-gray-600 mr-2">mdi-file-remove-outline</v-icon>
+          <p class="font-semibold text-gray-600">파일 삭제</p>
+        </div>
       </div>
       <div class="flex items-center">
-        <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon>
+        <!-- 파일 악성 유무 -->
+        <!-- <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon> -->
       </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
+      <p class="capitalize"><strong>SaaS : </strong>{{ data.saas }}</p>
       <p><strong>파일명 : </strong>{{ data.fileName }}</p>
       <p><strong>사용자 : </strong>{{ data.email }}</p>
       <p><strong>히스토리 시각 : </strong>{{ formattedDate }}</p>
       <p><strong>파일 경로 : </strong>{{ data.uploadChannel }}</p>
+      <p><strong>유사도 : </strong>{{ data.similarity }}</p>
     </div>
     <!-- <h3>{{ data.eventType }}</h3> -->
     
@@ -65,6 +78,19 @@ const props = defineProps(['data'])
 
 const formattedDate = computed(() => {
   return new Date(props.data.eventTs).toLocaleString()
+})
+
+const headerBackgroundClass = computed(() => {
+  switch (props.data.eventType.toLowerCase()) {
+    case 'file_uploaded':
+      return 'bg-orange-100'
+    case 'file_changed':
+      return 'bg-amber-100'
+    case 'file_deleted':
+      return 'bg-gray-100'
+    default:
+      return 'bg-orange-100' // 기본값
+  }
 })
 </script>
 
