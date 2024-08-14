@@ -1,13 +1,16 @@
 <template>
   <Handle type="target" :position="Position.Left" />
-  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black">
+  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black shadow-xl">
     <div :class="['flex', 'justify-between', 'items-center', 'pl-2', 'pr-2', 'border-b-2', 'border-black', 'h-10', 'rounded-t-lg', headerBackgroundClass]">
       <div class="flex items-center">
-        <v-icon :size="25" class="text-orange mr-2">mdi-file-upload-outline</v-icon>
+        <v-icon v-if="data.eventType=='file_uploaded'" :size="25" class="text-orange mr-2">mdi-file-upload-outline</v-icon>
+        <v-icon v-if="data.eventType=='file_changed'" :size="25" class="text-amber-600 mr-2">mdi-file-edit-outline</v-icon>
+        <v-icon v-if="data.eventType=='file_deleted'" :size="25" class="text-gray-600 mr-2">mdi-file-remove-outline</v-icon>
         <p class="font-semibold">{{ data.eventType }}</p>
       </div>
       <div class="flex items-center">
-        <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon>
+        <!-- 파일 악성 유무 -->
+        <!-- <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon> -->
       </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
