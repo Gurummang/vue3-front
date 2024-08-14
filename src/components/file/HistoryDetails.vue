@@ -45,7 +45,7 @@
           <thead class="bg-indigo-900">
             <tr>
               <th class="pl-6 pr-2 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">선택</th>
-              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">번호</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider text-center">번호</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">활동 종류</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
