@@ -86,9 +86,5 @@ let unconnectSaasApi = async (id) => {
   }
 }
 
-// Promise.all([getSaasListApi(orgId)]).then((values) => {
-//   console.log('Promise.all : ',values);
-//   responseData.value = values[0];
-// })
 
 export { getSaasListApi, getWebhookApi, TokenValidationApi, connectSaasApi, modifySaasApi, unconnectSaasApi };
