@@ -379,15 +379,16 @@ const elements = computed(() => {
     console.log(nodeId);
 
     let yPosition;
+    let tuning = 25;
     switch(item.eventType.toLowerCase()) {
       case 'file_uploaded':
-        yPosition = Math.floor((Math.random() * (50 - (-50))) + (-50));
+        yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
         break;
       case 'file_changed':
         yPosition = -300;
         break;
       case 'file_deleted':
-        yPosition = 300;
+        yPosition = -600;
         break;
       default:
         yPosition = 0; // 기본값
