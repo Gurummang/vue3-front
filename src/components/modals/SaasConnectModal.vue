@@ -19,9 +19,9 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="2">Jira</option>
+            <option value="2">Google Drive</option>
             <option value="1">Slack</option>
-            <option value="3">O365</option>
+            <!-- <option value="3">O365</option> -->
           </select>
         </div>
         <div class="mb-2">
@@ -46,7 +46,7 @@
           />
           <p v-if="!isValidEmail" class="text-rose-500">이메일 형식을 맞춰서 작성해주세요.</p>
         </div>
-        <div class="mb-2 relative">
+        <div v-if="showApiInput" class="mb-2 relative">
           <label for="ApiKey" class="block text-sm font-semibold text-gray-700">API Key</label>
           <div class="relative">
             <form>
@@ -88,7 +88,8 @@
         </div>
       </div>
       <div class="flex justify-end p-3">
-        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-if="saasType != 2" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-else @click="googleOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
       </div>
     </div>
   </div>
@@ -120,6 +121,7 @@ let agreeToTerms = ref(false);
 
 let showPassword = ref(true);
 let isValidEmail = ref(true);
+let showApiInput = ref(true);
 let isValidApiToken = ref(true);
 let selectedSaaS = ref(null);
 let isErrorModalOpen = ref(false);
@@ -191,6 +193,26 @@ const syncSaaS = () => {
   .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 };
 
+const googleOAuth2 = () => {
+  // alert('Heelo');
+  const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;
+  const clientSecret = import.meta.env.VITE_GOOGLEDRIVE_CLIENTSECRET;
+  const responseType = 'code';
+  const redirectUri = import.meta.env.VITE_GOOGLEDRIVE_REDIRECTURL;
+  const scope = import.meta.env.VITE_GOOGLEDRIVE_SCOPE;
+  const state = '';
+  
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}`;
+  // window.location.href = authUrl;
+  // 새 탭에서 인증 페이지 열기
+  const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+
+  // 선택적: 팝업이 차단되었는지 확인
+  if (authWindow === null || typeof(authWindow) === 'undefined') {
+    alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+  }
+}
+
 
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
@@ -205,6 +227,12 @@ const validateWebhook = () => {
     getWebhookApi(saasType.value).then((response) => {
       webhookUrl.value = response;
     });
+  }
+  if(saasType.value != '2') {
+    showApiInput.value = true;
+  }
+  else {
+    showApiInput.value = false;
   }
 }
 
