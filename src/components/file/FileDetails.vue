@@ -75,7 +75,7 @@
                 <input 
                   type="checkbox" 
                   class="size-3.5 rounded border-gray-300" 
-                  :value="index"
+                  :value="details.id"
                   v-model="checkedIndex" 
                   onclick="event.cancelBubble = true;"
                 />
