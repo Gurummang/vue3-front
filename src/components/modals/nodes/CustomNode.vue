@@ -1,6 +1,6 @@
 <template>
   <Handle type="target" :position="Position.Left" />
-  <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black shadow-xl">
+  <div :class="['rounded-lg', 'bg-white', 'w-[300px]', 'text-sm', 'text-left', 'border-2', 'border-black', 'shadow-xl', backgroundClass]">
     <div :class="['flex', 'justify-between', 'items-center', 'pl-2', 'pr-2', 'border-b-2', 'border-black', 'h-10', 'rounded-t-lg', headerBackgroundClass]">
       <div class="flex items-center">
         <div v-if="data.eventType=='file_uploaded'" class="flex">
@@ -90,6 +90,19 @@ const headerBackgroundClass = computed(() => {
       return 'bg-gray-100'
     default:
       return 'bg-orange-100' // 기본값
+  }
+})
+
+const backgroundClass = computed(() => {
+  switch (props.data.eventType.toLowerCase()) {
+    case 'file_uploaded':
+      return 'hover:bg-orange-50'
+    case 'file_changed':
+      return 'hover:bg-amber-50'
+    case 'file_deleted':
+      return 'hover:bg-gray-50'
+    default:
+      return 'hover:bg-orange-50'
   }
 })
 </script>
