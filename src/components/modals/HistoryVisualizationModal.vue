@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="w-[90%] h-[90%] bg-white rounded-lg mt-10">
+    <div class="w-[90%] h-[90%] bg-white rounded-lg">
       <div class="flex justify-between p-3">
         <div class="flex items-center">
           <v-icon :size=20 class="text-orange-400 mr-2">mdi-alert-circle-outline</v-icon>
@@ -10,7 +10,7 @@
           <v-icon>mdi-close</v-icon>
         </button>
       </div>
-      <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="0.7" :node-types="nodeTypes" />
+      <VueFlow v-model="elements" :fit-view-on-init="true" :default-zoom="2" :node-types="nodeTypes" style="height: calc(100% - 50px);"/>
     </div>
   </div>
 </template>
