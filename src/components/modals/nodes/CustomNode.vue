@@ -3,10 +3,18 @@
   <div class="rounded-lg bg-white w-[300px] text-sm text-left border-2 border-black shadow-xl">
     <div :class="['flex', 'justify-between', 'items-center', 'pl-2', 'pr-2', 'border-b-2', 'border-black', 'h-10', 'rounded-t-lg', headerBackgroundClass]">
       <div class="flex items-center">
-        <v-icon v-if="data.eventType=='file_uploaded'" :size="25" class="text-orange mr-2">mdi-file-upload-outline</v-icon>
-        <v-icon v-if="data.eventType=='file_changed'" :size="25" class="text-amber-600 mr-2">mdi-file-edit-outline</v-icon>
-        <v-icon v-if="data.eventType=='file_deleted'" :size="25" class="text-gray-600 mr-2">mdi-file-remove-outline</v-icon>
-        <p class="font-semibold">{{ data.eventType }}</p>
+        <div v-if="data.eventType=='file_uploaded'" class="flex">
+          <v-icon :size="25" class="text-orange-700 mr-2">mdi-file-upload-outline</v-icon>
+          <p class="font-semibold text-orange-700">파일 업로드</p>
+        </div>
+        <div v-if="data.eventType=='file_changed'" class="flex">
+          <v-icon :size="25" class="text-amber-600 mr-2">mdi-file-edit-outline</v-icon>
+          <p class="font-semibold text-amber-600">파일 수정</p>
+        </div>
+        <div v-if="data.eventType=='file_deleted'" class="flex">
+          <v-icon :size="25" class="text-gray-600 mr-2">mdi-file-remove-outline</v-icon>
+          <p class="font-semibold text-gray-600">파일 삭제</p>
+        </div>
       </div>
       <div class="flex items-center">
         <!-- 파일 악성 유무 -->
