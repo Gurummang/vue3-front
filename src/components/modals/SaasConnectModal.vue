@@ -194,7 +194,23 @@ const syncSaaS = () => {
 };
 
 const googleOAuth2 = () => {
-  // alert('Heelo');
+  if(!saasType.value || saasType.value === 'None') {
+    alert('연동할 SaaS가 정의되지 않았습니다.');
+    return;
+  }
+  if(!SaasAlias.value) {
+    alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
+    return;
+  }
+  if(!SaaSEmail.value) {
+    alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
+    return;
+  }
+  if (!agreeToTerms.value) {
+    alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
+    return;
+  }
+  
   const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;
   const clientSecret = import.meta.env.VITE_GOOGLEDRIVE_CLIENTSECRET;
   const responseType = 'code';
@@ -205,7 +221,10 @@ const googleOAuth2 = () => {
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}`;
   // window.location.href = authUrl;
   // 새 탭에서 인증 페이지 열기
-  const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+  const authWindow = window.open(authUrl, '_blank');
+  // 새 창에서 인증 페이지 열기
+  // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+
 
   // 선택적: 팝업이 차단되었는지 확인
   if (authWindow === null || typeof(authWindow) === 'undefined') {
