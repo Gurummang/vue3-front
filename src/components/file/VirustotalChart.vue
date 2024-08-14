@@ -39,7 +39,7 @@ const ratioValue = ref(Math.round(props.score * 100));
 //   fileVolume.value = newSize;
 // });
 
-console.log('#' + props.color);
+// console.log('#' + props.color);
 
 const data = {
   datasets: [
