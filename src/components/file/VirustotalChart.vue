@@ -3,8 +3,8 @@
     <canvas ref="myChart"></canvas>
     <div class="score-text">
       <h2 class="m-0 text-base">{{ props.name }}</h2>
-      <p v-if="props.name == '엔진탐색'" class="m-0 text-2xl font-bold">{{ props.score }}%</p>
-      <p v-else class="m-0 text-2xl font-bold">{{ props.score }}</p>
+      <p v-if="props.name == '엔진탐색'" class="m-0 text-2xl font-bold">{{ ratioValue }}%</p>
+      <p v-else class="m-0 text-2xl font-bold">{{ ratioValue }}</p>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ const props = defineProps({
 
 const myChart = ref(null);
 
+const ratioValue = ref(Math.round(props.score * 100));
 // watch(() => props.fileSize, (newSize) => {
 //   fileVolume.value = newSize;
 // });
@@ -44,7 +45,7 @@ const data = {
   datasets: [
     {
       label: props.name,
-      data: [props.score, 100 - props.score],
+      data: [ratioValue.value, 100 - ratioValue.value],
       backgroundColor: [props.color, '#e5e7eb'],
       cutout: "75%",
       hoverOffset: 4,
