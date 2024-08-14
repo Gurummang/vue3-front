@@ -60,192 +60,216 @@ let historyTrendsApi = async (data) => {
     // }
     const response = [
       {
-        "date": "2024-08-01",
-        "upload": 7,
-        "delete": 2,
-        "edit": 9
+          "date": "2024-07-16",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-02",
-        "upload": 5,
-        "delete": 1,
-        "edit": 8
+          "date": "2024-07-17",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-03",
-        "upload": 9,
-        "delete": 3,
-        "edit": 6
+          "date": "2024-07-18",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-04",
-        "upload": 2,
-        "delete": 4,
-        "edit": 9
+          "date": "2024-07-19",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-05",
-        "upload": 6,
-        "delete": 0,
-        "edit": 1
+          "date": "2024-07-20",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-06",
-        "upload": 3,
-        "delete": 2,
-        "edit": 2
+          "date": "2024-07-21",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-07",
-        "upload": 8,
-        "delete": 4,
-        "edit": 5
+          "date": "2024-07-22",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-08",
-        "upload": 1,
-        "delete": 1,
-        "edit": 7
+          "date": "2024-07-23",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-09",
-        "upload": 9,
-        "delete": 2,
-        "edit": 3
+          "date": "2024-07-24",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-10",
-        "upload": 5,
-        "delete": 4,
-        "edit": 8
+          "date": "2024-07-25",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-11",
-        "upload": 7,
-        "delete": 1,
-        "edit": 9
+          "date": "2024-07-26",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-12",
-        "upload": 2,
-        "delete": 3,
-        "edit": 6
+          "date": "2024-07-27",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-13",
-        "upload": 19,
-        "delete": 0,
-        "edit": 2
+          "date": "2024-07-28",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-14",
-        "upload": 11,
-        "delete": 2,
-        "edit": 5
+          "date": "2024-07-29",
+          "uploadCount": 2,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-15",
-        "upload": 18,
-        "delete": 3,
-        "edit": 9
+          "date": "2024-07-30",
+          "uploadCount": 3,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-16",
-        "upload": 6,
-        "delete": 4,
-        "edit": 1
+          "date": "2024-07-31",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-17",
-        "upload": 13,
-        "delete": 2,
-        "edit": 7
+          "date": "2024-08-01",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-18",
-        "upload": 9,
-        "delete": 1,
-        "edit": 3
+          "date": "2024-08-02",
+          "uploadCount": 1,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-19",
-        "upload": 15,
-        "delete": 3,
-        "edit": 9
+          "date": "2024-08-03",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 1,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-20",
-        "upload": 7,
-        "delete": 1,
-        "edit": 6
+          "date": "2024-08-04",
+          "uploadCount": 1,
+          "deletedCount": 2,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-21",
-        "upload": 12,
-        "delete": 4,
-        "edit": 2
+          "date": "2024-08-05",
+          "uploadCount": 1,
+          "deletedCount": 0,
+          "modifyCount": 1,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-22",
-        "upload": 8,
-        "delete": 0,
-        "edit": 8
+          "date": "2024-08-06",
+          "uploadCount": 1,
+          "deletedCount": 1,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-23",
-        "upload": 1,
-        "delete": 2,
-        "edit": 5
+          "date": "2024-08-07",
+          "uploadCount": 1,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-24",
-        "upload": 20,
-        "delete": 3,
-        "edit": 1
+          "date": "2024-08-08",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-25",
-        "upload": 16,
-        "delete": 4,
-        "edit": 9
+          "date": "2024-08-09",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-26",
-        "upload": 3,
-        "delete": 2,
-        "edit": 7
+          "date": "2024-08-10",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-27",
-        "upload": 19,
-        "delete": 1,
-        "edit": 3
+          "date": "2024-08-11",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-28",
-        "upload": 5,
-        "delete": 3,
-        "edit": 9
+          "date": "2024-08-12",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-29",
-        "upload": 17,
-        "delete": 1,
-        "edit": 6
+          "date": "2024-08-13",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       },
       {
-        "date": "2024-08-30",
-        "upload": 2,
-        "delete": 4,
-        "edit": 2
-      },
-      {
-        "date": "2024-08-31",
-        "upload": 18,
-        "delete": 0,
-        "edit": 8
+          "date": "2024-08-14",
+          "uploadCount": 0,
+          "deletedCount": 0,
+          "modifyCount": 0,
+          "movedCount": 0
       }
-    ];
+  ];
     return response;
   } catch (err) {
     console.error('Error:', err);
