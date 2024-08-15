@@ -144,7 +144,6 @@ const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
 const saasData = ref(await props.responseData);
-console.log('saasData' + saasData);
 
 const router = useRouter();
 
