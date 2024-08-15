@@ -48,11 +48,8 @@ const data = {
 Promise.all([
   fileScanApi(data),
   ]).then((values) => {
-    fileDetails.value = values[0],
-  detectionFileCount.value = [11, 0, 1];
-//   detectionFileCount.value = [values.data.total, values.data.dlpTotal, values.data.malwareTotal];
-// const { total, dlpTotal, malwareTotal, ...otherProps } = values.data;
-// detectionFileCount.value = [total, dlpTotal, malwareTotal];
+    fileDetails.value = values[0]
+  detectionFileCount.value = [values[0].data.total, values[0].data.dlpTotal, values[0].data.malwareTotal];
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
