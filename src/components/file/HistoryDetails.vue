@@ -69,7 +69,6 @@
         </table>
       </div>
     </div>
-    <the-pagination></the-pagination>
 
   </div>
 
@@ -83,7 +82,6 @@
 <script setup>
 import { ref, watch, defineProps } from 'vue'
 import { getSaasImg, getDate, removeWordDate } from '@/utils/utils.js'
-import ThePagination from '@/components/ThePagination.vue'
 import HistoryVisualizationModal from '@/components/modals/HistoryVisualizationModal.vue'
 import { historyVisualizatuonApi } from '@/apis/file'
 
