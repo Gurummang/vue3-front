@@ -86,9 +86,7 @@ const elements = computed(() => {
   const edges = []
 
   slackData.forEach((item, index) => {
-    const nodeId = `${item.eventId}`
-    console.log(nodeId);
-
+    const nodeId = `${item.eventId}`    
     let yPosition;
     let tuning = 25;
     switch(item.eventType.toLowerCase()) {
@@ -220,9 +218,6 @@ const elements = computed(() => {
       },
     });
   });
-
-  console.log(nodes);
-  console.log(edges);
 
   return [...nodes, ...edges]
 })

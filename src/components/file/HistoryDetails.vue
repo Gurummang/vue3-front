@@ -92,8 +92,6 @@ const props = defineProps({
   }
 });
 
-console.log(props.historyDetails);
-
 const historyCount = ref(Object.keys(props.historyDetails).length);
 const selectedHistory = ref(null);
 
