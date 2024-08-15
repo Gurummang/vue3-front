@@ -23,11 +23,11 @@
             </div>
             <v-icon :size="48" class="text-indigo-900 ml-auto">mdi-server</v-icon>
           </div>
-          <div class="row-span-2 bg-white p-4 rounded-lg shadow-sm">
+          <!-- <div class="row-span-2 bg-white p-4 rounded-lg shadow-sm">
             <h2 class="text-lg font-semibold mb-2">DLP 비율</h2>
             <semicircular-chart :score=dlpRatio :color="'#fbbf24'" class="size-40"></semicircular-chart>
-          </div>
-          <div class="row-span-2 bg-white p-4 rounded-lg shadow-sm">
+          </div> -->
+          <div class="row-span-2 col-span-2 bg-white p-4 rounded-lg shadow-sm">
             <h2 class="text-lg font-semibold mb-2">악성 비율</h2>
             <semicircular-chart :score=malwareRatio :color="'#dc2626'" class="size-40"></semicircular-chart>
           </div>
