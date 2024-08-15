@@ -27,9 +27,9 @@ const routes = [
     component: () => import('../views/RegisterEmailView.vue')
   },
   {
-    path: '/saas/jira',
-    name: 'SaaS - Jira',
-    component: () => import('../views/SaasJiraView.vue')
+    path: '/saas/googledrive',
+    name: 'SaaS - Google Drive',
+    component: () => import('../views/SaasGoogleDriveView.vue')
   },
   {
     path: '/saas/slack',

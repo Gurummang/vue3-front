@@ -19,7 +19,15 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 
 import ContentError from '@/components/ContentError.vue'
+import { gasbUserValidateApi } from '@/apis/signup.js'
 
+console.log(gasbUserValidateApi());
+
+if(gasbUserValidateApi() === true) {
+  console.log('인증되었용.');
+} else {
+  console.log('너 모르는 놈이야.');
+}
 let responseData = ref(null);
 
 </script>

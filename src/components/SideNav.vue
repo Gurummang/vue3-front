@@ -103,7 +103,7 @@ export default defineComponent({
         expanded: false, 
         active: false, 
         children: [
-          { title: 'Jira', icon: CloudArrowUpIcon, active: false, link: '/saas/jira', },
+          { title: 'Google Drive', icon: CloudArrowUpIcon, active: false, link: '/saas/googledrive', },
           { title: 'Slack', icon: CloudArrowUpIcon, active: false, link: '/saas/slack', }
         ] 
       },
