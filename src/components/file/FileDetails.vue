@@ -250,11 +250,11 @@
   :checkedIndex="checkedIndex"
   @close="closeVirustotalModal"
 ></virustotal-modal>
-<file-delete-modal
+<!-- <file-delete-modal
   v-if="isFileDeleteModalOpen"
   :checkedIndex="checkedIndex"
   @close="closeFileDeleteModal"
-></file-delete-modal>
+></file-delete-modal> -->
 
 </template>
 
