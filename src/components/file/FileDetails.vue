@@ -100,9 +100,9 @@
                   </div>
                   <div class="flex border-t border-gray-200">
                     <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
-                    <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
-                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span>
+                    <span class="inline-block w-5/6 p-2 bg-white text-xs">{{ details.path }}</span>
+                    <!-- <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
+                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span> -->
                   </div>
 
 
