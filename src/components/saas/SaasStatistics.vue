@@ -1,19 +1,11 @@
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
     <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
       <div>
         <h3 class="font-semibold text-gray-700">총 파일 개수</h3>
         <p class="text-3xl font-semibold">{{ animatedStats[0] }}</p>
       </div>
       <v-icon :size="44" class="text-orange ml-auto">mdi-file-cloud-outline</v-icon>
-    </div>
-
-    <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
-      <div>
-        <h3 class="font-semibold text-gray-700">민감 파일 개수</h3>
-        <p class="text-3xl font-semibold">{{ animatedStats[1] }}</p>
-      </div>
-      <v-icon :size="44" class="text-amber-400 ml-auto">mdi-file-search-outline</v-icon>
     </div>
 
     <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
