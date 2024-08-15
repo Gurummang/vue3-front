@@ -28,7 +28,7 @@ let gasbLoginApi = async (data) => {
 let gasbSignupApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/auth/register', data);
-    if (response.status === 200 && true) {
+    if (response.status === 200) {
       return response.data;
     } else {
       alert('회원가입에 실패했습니다.');
