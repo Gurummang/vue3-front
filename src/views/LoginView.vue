@@ -69,6 +69,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { gasbLoginApi } from '@/apis/signup.js'
 import { useAuth } from '../utils/auth'
 
 const email = ref('')
@@ -79,10 +80,28 @@ const { login } = useAuth()
 
 const handleSubmit = async () => {
   try {
-    await login(email.value, password.value)
-    router.push('/')
+    let data = {
+      "email": email.value,
+      "password": password.value
+    }
+    const response = await gasbLoginApi(data);
+    let setCookie = '';
+    setCookie += 'jwt=' + response.jwt;
+    console.log(response);
+
+    // document.cookie = setCookie;
+    // 쿠키가 정상적으로 설정되었는지 확인 (서버 응답에 따라)
+    if (response.status === 'success') {
+      router.push('/');
+    } else {
+      console.error('Cookie was not set properly');
+      alert('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    }
   } catch (error) {
-    console.error('Login failed:', error)
+    console.error('Login failed:', error);
+    // 서버에서 보낸 에러 메시지가 있다면 그것을 사용하고, 없다면 기본 메시지 사용
+    const errorMessage = error.response?.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.';
+    alert(errorMessage);
   }
 }
 

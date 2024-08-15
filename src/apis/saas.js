@@ -1,8 +1,12 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
+const api = axios.create({
+  baseURL: import.meta.env.VITE_APP_API_URL,
+  withCredentials: true
+})
+// axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
-let saasScoreApi = async (saas, data) => {
+let saasScoreApi = async (saas) => {
   try {
     // const response = await axios.post('/api/v1/board/' + saas +'/files/count', data);
     // if(response.status == '200') {
@@ -16,9 +20,9 @@ let saasScoreApi = async (saas, data) => {
   }
 };
 
-let fileStatisticsApi = async (saas, data) => {
+let fileStatisticsApi = async (saas) => {
   try {
-    const response = await axios.post('/api/v1/board/' + saas +'/files/count', data);
+    const response = await api.get('/api/v1/board/' + saas +'/files/count');
     if(response.status == '200') {
       return response.data;
     }
@@ -28,9 +32,9 @@ let fileStatisticsApi = async (saas, data) => {
   }
 };
 
-let fileSizeApi = async (saas, data) => {
+let fileSizeApi = async (saas) => {
   try {
-    const response = await axios.post('/api/v1/board/' + saas +'/files/size', data);
+    const response = await api.get('/api/v1/board/' + saas +'/files/size');
     if(response.status == '200') {
       return response.data;
     }
@@ -40,9 +44,9 @@ let fileSizeApi = async (saas, data) => {
   }
 }
 
-let fileRecentApi = async (saas, data) => {
+let fileRecentApi = async (saas) => {
   try {
-    const response = await axios.post('/api/v1/board/' + saas +'/files/recent', data);
+    const response = await api.get('/api/v1/board/' + saas +'/files/recent');
     if(response.status == '200') {
       return response.data;
     }
@@ -54,7 +58,7 @@ let fileRecentApi = async (saas, data) => {
 
 let usersTop5Api = async (saas, data) => {
   try {
-    const response = await axios.post('/api/v1/board/' + saas +'/user-ranking', data);
+    const response = await api.get('/api/v1/board/' + saas +'/user-ranking');
     if(response.status == '200') {
       return response.data;
     }
