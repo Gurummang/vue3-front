@@ -62,4 +62,16 @@ let historyDetailsApi = async (data) => {
   }
 };
 
-export { totalFileInfoApi, fileScanApi, fileVtUploadApi, historyStatisticsApi, historyDetailsApi };
+let historyVisualizatuonApi = async (data) => {
+  try {
+    const response = await axios.post('/api/v1/files/history/visualize', data);
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+};
+
+export { totalFileInfoApi, fileScanApi, fileVtUploadApi, historyStatisticsApi, historyDetailsApi, historyVisualizatuonApi };
