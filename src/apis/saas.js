@@ -33,7 +33,7 @@ let fileStatisticsApi = async (saas) => {
     console.error('Error:', err);
     if(err.response.status == '401') {
       router.push('/login');
-      console.log('누구냐!')
+      // console.log('누구냐!')
     }
     throw err;  
   }

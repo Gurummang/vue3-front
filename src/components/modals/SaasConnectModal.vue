@@ -19,7 +19,7 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="2">Google Drive</option>
+            <option value="6">Google Drive</option>
             <option value="1">Slack</option>
             <!-- <option value="3">O365</option> -->
           </select>
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="flex justify-end p-3">
-        <button v-if="saasType != 2" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-if="saasType != 6" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
         <button v-else @click="googleOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
       </div>
     </div>
@@ -248,8 +248,8 @@ const googleOAuth2 = () => {
       "saasId": saasType.value,    // slack
       "alias": safeAlias,
       "adminEmail": safeSaasEmail,
-      "apiToken": null,
-      "webhookUrl": webhookUrl.value
+      // "apiToken": null,
+      // "webhookUrl": webhookUrl.value
     };
 
     connectSaasApi(connectData).then((response) => {
@@ -285,7 +285,7 @@ const validateWebhook = () => {
       webhookUrl.value = response;
     });
   }
-  if(saasType.value != '2') {
+  if(saasType.value != '6') {
     showApiInput.value = true;
   }
   else {
