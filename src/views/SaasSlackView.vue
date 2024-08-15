@@ -8,8 +8,8 @@
       class="scroll-h scroll overflow-auto rounded-lg"
       v-else-if="!loading && isApiOk">
       <div>
-        <saas-score
-          :saasScore="saasScore"></saas-score>
+        <!-- <saas-score
+          :saasScore="saasScore"></saas-score> -->
         <saas-statistics
           :fileStatistics="fileStatistics"></saas-statistics>
         <div class="grid grid-cols-2 gap-5 mb-5">
@@ -39,7 +39,7 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
-import SaasScore from '@/components/saas/SaasScore.vue'
+// import SaasScore from '@/components/saas/SaasScore.vue'
 import SaasStatistics from '@/components/saas/SaasStatistics.vue'
 import FileRatioChart from '@/components/saas/FileRatioChart.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
