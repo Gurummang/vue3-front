@@ -1,9 +1,11 @@
+import router from '@/router/index.js';
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
   withCredentials: true
 })
+
 // axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
 let saasScoreApi = async (saas) => {
@@ -23,11 +25,16 @@ let saasScoreApi = async (saas) => {
 let fileStatisticsApi = async (saas) => {
   try {
     const response = await api.get('/api/v1/board/' + saas +'/files/count');
+    console.log(response);
     if(response.status == '200') {
       return response.data;
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      console.log('누구냐!')
+    }
     throw err;  
   }
 };

@@ -54,10 +54,6 @@ let fileStatistics = ref(null);
 let fileRecent = ref(null);
 let usersTop5 = ref(null);
 
-// const data = {
-//   "email": "hsp003636@gmail.com"
-// }
-
 Promise.all([
   saasScoreApi('slack'),
   fileStatisticsApi('slack'),
