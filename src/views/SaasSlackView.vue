@@ -54,16 +54,16 @@ let fileStatistics = ref(null);
 let fileRecent = ref(null);
 let usersTop5 = ref(null);
 
-const data = {
-  "email": "hsp003636@gmail.com"
-}
+// const data = {
+//   "email": "hsp003636@gmail.com"
+// }
 
 Promise.all([
-  saasScoreApi('slack', data),
-  fileStatisticsApi('slack', data),
-  fileSizeApi('slack', data),
-  fileRecentApi('slack', data),
-  usersTop5Api('slack', data),
+  saasScoreApi('slack'),
+  fileStatisticsApi('slack'),
+  fileSizeApi('slack'),
+  fileRecentApi('slack'),
+  usersTop5Api('slack'),
   ]).then((values) => {
   saasScore.value = values[0];
   fileStatistics.value = values[1];
