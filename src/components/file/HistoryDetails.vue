@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
-      <h2 class="text-xl font-bold mb-4">파일 히스토리 - 2000건</h2>
+      <h2 class="text-xl font-bold mb-4">파일 히스토리 - {{ historyCount }}건</h2>
 
       <div class="flex pb-2">
         <div class="space-x-2">
@@ -120,6 +120,9 @@ const props = defineProps({
   }
 });
 
+console.log(props.historyDetails);
+
+const historyCount = ref(Object.keys(props.historyDetails).length);
 const selectedHistory = ref(null);
 
 const isHistoryVisualizationModalOpen = ref(false);
@@ -133,9 +136,7 @@ const openHistoryVisualizationModal = () => {
       "eventId": selectedHistory.value.eventId
     }
     historyVisualizatuonApi(data).then((response) => {
-      console.log(response);
       visualizationInfo.value = response;
-      console.log('!!!!',visualizationInfo.value);
       isHistoryVisualizationModalOpen.value = true;
     })
   } else {
