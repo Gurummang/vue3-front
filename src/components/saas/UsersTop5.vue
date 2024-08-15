@@ -6,7 +6,7 @@
         <thead class="bg-indigo-900">
           <tr>
             <th class="w-1/3 px-4 py-3 text-left text-sm font-bold text-white tracking-wider">사용자</th>
-            <th class="w-1/6 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">민감 파일</th>
+            <!-- <th class="w-1/6 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">민감 파일</th> -->
             <th class="w-1/6 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">악성 파일</th>
             <th class="w-1/3 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">마지막 업로드 시각</th>
           </tr>
@@ -16,9 +16,9 @@
             <td class="px-4 py-3">
               <div class="w-full text-sm truncate">{{ user.userName }}</div>
             </td>
-            <td class="px-4 py-3">
+            <!-- <td class="px-4 py-3">
               <div class="w-full text-center text-sm">{{ user.sensitiveFilesCount }}</div>
-            </td>
+            </td> -->
             <td class="px-4 py-3">
               <div class="w-full text-center text-sm">{{ user.maliciousFilesCount }}</div>
             </td>
