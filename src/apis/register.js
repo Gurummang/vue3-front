@@ -51,7 +51,6 @@ let connectSaasApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/org-saas/register', data);
     if(response.status == '200') {
-      console.log('connectSaasApi : ' + response);
       return response.data;
     }
   } catch (err) {
@@ -64,7 +63,6 @@ let modifySaasApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/org-saas/modify', data);
     if(response.status == '200') {
-      console.log('modifySaasApi : ' + response);
       return response.data;
     }
   } catch (err) {
@@ -77,7 +75,6 @@ let unconnectSaasApi = async (id) => {
   try {
     const response = await axios.post('/api/v1/org-saas/delete', id);
     if(response.status == '200') {
-      console.log('unconnectSaasApi : ' + response);
       return response.data;
     }
   } catch (err) {
