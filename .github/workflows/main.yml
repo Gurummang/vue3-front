@@ -2,7 +2,9 @@ name: Deploy to S3 and CloudFront
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - "main"
+      - "kisa-sw"
 
 
 env:
