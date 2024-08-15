@@ -108,6 +108,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
 let emit = defineEmits(['close']);
 
@@ -136,10 +137,21 @@ const closeErrorModal = () => {
 }
 
 const syncSaaS = () => {
+  // 보안 조치
+  const safeAlias = htmlEscape(alias.value);
+  const safeSaasEmail = htmlEscape(saasEmail.value);
+  const safeApiToken = htmlEscape(apiToken.value);
+  if (!specialChar(safeAlias) || !specialChar(safeSaasEmail) || !specialChar(safeApiToken)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
   }
+
+
   if(!SaasAlias.value) {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
@@ -169,14 +181,13 @@ const syncSaaS = () => {
   let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
-    "apiToken": apiToken.value,
+    "alias": safeAlias,
+    "adminEmail": safeSaasEmail,
+    "apiToken": safeApiToken,
     "webhookUrl": webhookUrl.value
   };
 
   connectSaasApi(connectData).then((response) => {
-    console.log(response);
     errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
@@ -194,6 +205,14 @@ const syncSaaS = () => {
 };
 
 const googleOAuth2 = () => {
+  // 보안 조치
+  const safeAlias = htmlEscape(alias.value);
+  const safeSaasEmail = htmlEscape(saasEmail.value);
+  if (!specialChar(safeAlias) || !specialChar(safeSaasEmail)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -222,6 +241,32 @@ const googleOAuth2 = () => {
   // 선택적: 팝업이 차단되었는지 확인
   if (authWindow === null || typeof(authWindow) === 'undefined') {
     alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+  } else {
+    // 다음 스텝 -> 해당 값들을 POST로 보내기
+    let connectData = {
+      "orgId": 1,     // samsung
+      "saasId": saasType.value,    // slack
+      "alias": safeAlias,
+      "adminEmail": safeSaasEmail,
+      "apiToken": null,
+      "webhookUrl": webhookUrl.value
+    };
+
+    connectSaasApi(connectData).then((response) => {
+      errorCode = response.errorCode;
+      if(errorCode != 200) {
+        openErrorModal();
+        watch(isErrorModalOpen, (afterValue, beforeValue) => {
+          if (afterValue === false) {
+            emit('close');
+          }
+        });
+      }
+      else {
+        emit('close');
+      }
+    })
+    .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
   }
 }
 
