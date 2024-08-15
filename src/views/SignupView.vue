@@ -34,6 +34,9 @@
             <input type="password" id="password" name="password" v-model="password" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="비밀번호">
+            <p v-if="!isPasswordValid && password" class="mt-2 text-sm text-red-600">
+              비밀번호는 8~30자의 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다.
+            </p>
           </div>
 
           <div>
@@ -41,6 +44,9 @@
             <input type="password" id="confirmPassword" name="confirmPassword" v-model="confirmPassword" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="비밀번호 확인">
+            <p v-if="!isPasswordMatch && confirmPassword" class="mt-2 text-sm text-red-600">
+              비밀번호가 일치하지 않습니다.
+            </p>
           </div>
 
           <div class="flex items-center">
@@ -77,8 +83,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { gasbSignupApi } from '@/apis/signup.js'
 import { useAuth } from '../utils/auth'
 
 const company = ref('')
@@ -90,18 +97,43 @@ const agreeTerms = ref(false)
 const router = useRouter()
 const { register } = useAuth()
 
+const isPasswordValid = ref(true)
+const isPasswordMatch = ref(true)
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/
+
+watch(password, (newValue) => {
+  isPasswordValid.value = passwordRegex.test(newValue)
+})
+
+watch([password, confirmPassword], ([newPassword, newConfirmPassword]) => {
+  isPasswordMatch.value = newPassword === newConfirmPassword
+})
+
 const handleSubmit = async () => {
   if (!agreeTerms.value) {
     alert('이용약관에 동의해주세요.')
     return
   }
-  if (password.value !== confirmPassword.value) {
+  if (!isPasswordValid.value) {
+    alert('비밀번호 형식이 올바르지 않습니다.')
+    return
+  }
+  if (!isPasswordMatch.value) {
     alert('비밀번호가 일치하지 않습니다.')
     return
   }
   try {
-    await register(company.value, adminName.value, email.value, password.value)
-    router.push('/login')
+    let data = {
+      "email" : email.value,
+      "password" : password.value,
+      "firstName" : company.value,
+      "lastName" : adminName.value
+    }
+    const response = await gasbSignupApi(data);
+    if (response.status === 'success') {
+      router.push('/login');
+    }
   } catch (error) {
     console.error('Registration failed:', error)
   }
