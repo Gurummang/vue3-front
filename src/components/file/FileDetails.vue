@@ -182,7 +182,7 @@
                           <div class="w-2/3 h-full flex items-center p-2">
                             <a 
                               class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-blue-600 hover:bg-blue-500"
-                              :href="details.vtReport.reportUrl"
+                              :href="details.vtReport.reportUrl.startsWith('https://www.virustotal.com/') ? details.vtReport.reportUrl : '#'"
                               target='_blank'
                             >바로가기</a>
                           </div>
