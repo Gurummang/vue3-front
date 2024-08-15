@@ -101,6 +101,7 @@
 
 <history-visualization-modal
   v-if="isHistoryVisualizationModalOpen"
+  :visualizationInfo="visualizationInfo"
   @close="closeHistoryVisualizationModal"
 ></history-visualization-modal>
 </template>
@@ -110,6 +111,7 @@ import { ref, watch, defineProps } from 'vue'
 import { getSaasImg, getDate, removeWordDate } from '@/utils/utils.js'
 import ThePagination from '@/components/ThePagination.vue'
 import HistoryVisualizationModal from '@/components/modals/HistoryVisualizationModal.vue'
+import { historyVisualizatuonApi } from '@/apis/file'
 
 const props = defineProps({
   historyDetails: {
@@ -122,10 +124,20 @@ const selectedHistory = ref(null);
 
 const isHistoryVisualizationModalOpen = ref(false);
 
+const visualizationInfo = ref(null);
+
 // Modal Function
 const openHistoryVisualizationModal = () => {
   if(selectedHistory.value) {
-    isHistoryVisualizationModalOpen.value = true;
+    let data = {
+      "eventId": selectedHistory.value.eventId
+    }
+    historyVisualizatuonApi(data).then((response) => {
+      console.log(response);
+      visualizationInfo.value = response;
+      console.log('!!!!',visualizationInfo.value);
+      isHistoryVisualizationModalOpen.value = true;
+    })
   } else {
     alert('시각화할 파일을 선택해주세요.');
   }
