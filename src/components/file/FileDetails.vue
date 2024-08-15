@@ -10,45 +10,6 @@
           >
             <v-icon :size="20">mdi-shield-bug-outline</v-icon> VirusTotal 검사
           </button>
-          <button
-            class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
-            @click="openFileDeleteModal"
-          >
-            <v-icon :size="20">mdi-delete-outline</v-icon> 파일삭제
-          </button>
-          <button
-            class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
-            @click="openconnectModal"
-          >
-            <v-icon :size="20">mdi-refresh</v-icon> 새로고침
-          </button>
-        </div>
-        <div class="flex ml-auto space-x-2">
-          
-          <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-            <option value="week">DLP</option>
-            <option value="month">악성 탐지</option>
-            <option value="year">VirusTotal</option>
-            <option value="year">파일명</option>
-            <option value="year">SaaS</option>
-            <option value="year">사용자</option>
-            <option value="year" selected>생성날짜</option>
-          </select>
-          <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-            <option value="week">오름차순</option>
-            <option value="month" selected>내림차순</option>
-          </select>
-
-          <div class="relative max-w-sm">
-            <input class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
-            <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
-            </svg>
-          </button>
-        </div>
-
-
         </div>
       </div>
     </div>
@@ -319,12 +280,9 @@ const clearCheckedIndex = () => {
 }
 
 const accordionStatus = ref({});
-const gscanStatus = ref({});
-const dlpReportStatus = ref({});
 const virusTotalReportStatus = ref({});
 
 const isVirustotalModalOpen = ref(false);
-const isFileDeleteModalOpen = ref(false);
 
 // Accordion Function
 const toggleAccordion = (index) => {
@@ -333,22 +291,6 @@ const toggleAccordion = (index) => {
 
 const isAccordionOpen = (index) => {
   return accordionStatus.value[index] || false;
-}
-
-const toggleGscanReport = (index) => {
-  gscanStatus.value[index] = !gscanStatus.value[index];
-}
-
-const isGscanOpen = (index) => {
-  return gscanStatus.value[index] || false;
-}
-
-const toggleDLPReport = (index) => {
-  dlpReportStatus.value[index] = !dlpReportStatus.value[index];
-}
-
-const isDLPReportOpen = (index) => {
-  return dlpReportStatus.value[index] || false;
 }
 
 const toggleVirusTotalReport = (index) => {
@@ -370,19 +312,6 @@ const openVirustotalModal = () => {
 
 const closeVirustotalModal = () => {
   isVirustotalModalOpen.value = false;
-  clearCheckedIndex();
-}
-
-const openFileDeleteModal = () => {
-  if(checkedIndex.value.length) {
-    isFileDeleteModalOpen.value = true;
-  } else {
-    alert('삭제할 파일을 선택해주세요.');
-  }
-}
-
-const closeFileDeleteModal = () => {
-  isFileDeleteModalOpen.value = false;
   clearCheckedIndex();
 }
 
