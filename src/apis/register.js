@@ -5,7 +5,6 @@ axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 let getSaasListApi = async (orgId) => {
   try {
     const response = await axios.get('/api/v1/org-saas/' + orgId);
-    // console.log(await response.data);
     if(response.status == '200') {
       return response.data;
     }
@@ -19,7 +18,6 @@ let getWebhookApi = async (saasId) => {
   try {
     const response = await axios.get('/api/v1/org-saas/'+saasId+'/mkUrl');
     if(response.status == '200') {
-      // console.log(await response.data.webhookUrl);
       return response.data.webhookUrl;
     }
   } catch (err) {
@@ -30,14 +28,8 @@ let getWebhookApi = async (saasId) => {
 
 let TokenValidationApi = async (data, saasId) => {
   try {
-    // const response = await axios.post('/api/v1/org-saas/slackValid', {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // });
     const response = await axios.post('/api/v1/org-saas/slackValid', data);
     if(response.status == 200) {
-      console.log('검증되었습니다.' + response.data.validation);
       return response.data.validation;
     }
     else return false;
