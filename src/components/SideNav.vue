@@ -4,7 +4,7 @@
     <!-- Logo and Title -->
     <div class="flex items-center justify-center p-2.5 border-b border-gray-200">
       <img src="../../public/gurummang_logo.png" alt="Logo" class="size-10 mr-4">
-      <h1 class="text-xl font-semibold text-indigo-950">구름망 CASB</h1>
+      <h1 class="text-xl font-semibold text-indigo-950 text-center">구름망</h1>
     </div>
     
     <!-- Navigation Items -->
