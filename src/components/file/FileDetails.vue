@@ -19,8 +19,8 @@
         <thead class="bg-indigo-900">
           <tr>
             <th class="px-2 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
-            <th class="px-1 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider">DLP</th>
-            <th class="px-1 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">악성탐지</th>
+            <!-- <th class="px-1 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider">DLP</th> -->
+            <!-- <th class="px-1 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">악성탐지</th> -->
             <th class="px-2 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">VirusTotal</th>
             <th class="px-2 py-3 w-[26%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
             <th class="px-2 py-3 w-[10%] text-center text-sm font-bold font-medium text-white tracking-wider">파일 유형</th>
@@ -41,7 +41,7 @@
                   onclick="event.cancelBubble = true;"
                 />
               </td>
-              <td class="px-2 py-2 text-center whitespace-nowrap">
+              <!-- <td class="px-2 py-2 text-center whitespace-nowrap">
                 <span v-if="details.fileStatus.dlpStatus === -1">
                   <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
                 </span>
@@ -68,7 +68,7 @@
                 <span v-else>
                   <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
                 </span>
-              </td>
+              </td> -->
               <td class="px-2 py-2 text-center whitespace-nowrap">
                 <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
                 <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
