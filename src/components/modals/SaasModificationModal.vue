@@ -104,6 +104,7 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { TokenValidationApi, modifySaasApi } from '@/apis/register.js'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
 const props = defineProps({
   selectedSaas: {
@@ -137,6 +138,15 @@ const closeErrorModal = () => {
 }
 
 const syncSaaS = () => {
+  // 보안 조치
+  const safeAlias = htmlEscape(alias.value);
+  const safeSaasEmail = htmlEscape(saasEmail.value);
+  const safeApiToken = htmlEscape(apiToken.value);
+  if (!specialChar(safeAlias) || !specialChar(safeSaasEmail) || !specialChar(safeApiToken)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -167,25 +177,15 @@ const syncSaaS = () => {
     return;
   }
 
-  // 다음 스텝 -> 해당 값들을 POST로 보내기
-  // console.log('Syncing SaaS:', {
-  //   saas: saasType.value,
-  //   alias: alias.value,
-  //   saasEmail: saasEmail.value,
-  //   apiToken: apiToken.value,
-  //   webhookUrl: webhookUrl.value,
-  // });
-
   let modifyData = {
     "id": saasId.value,
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
-    "apiToken": apiToken.value,
+    "alias": safeAlias,
+    "adminEmail": safeSaasEmail,
+    "apiToken": safeApiToken,
     "webhookUrl": webhookUrl.value
   };
 
   modifySaasApi(modifyData).then((response) => {
-    console.log('ModifyModal: ' + response);
     errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
@@ -233,7 +233,6 @@ const validateApiToken = () => {
   TokenValidationApi(data, 1).then((response) => {
     isValidApiToken.value = response;
   });
-  console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
 }
 
 watch(saasType, validateWebhook);
