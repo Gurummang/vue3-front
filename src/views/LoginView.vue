@@ -87,9 +87,8 @@ const handleSubmit = async () => {
     const response = await gasbLoginApi(data);
     let setCookie = '';
     setCookie += 'jwt=' + response.jwt;
-    console.log(response);
-
     // document.cookie = setCookie;
+    
     // 쿠키가 정상적으로 설정되었는지 확인 (서버 응답에 따라)
     if (response.status === 'success') {
       router.push('/');

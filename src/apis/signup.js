@@ -5,10 +5,7 @@ axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 let gasbLoginApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/auth/login', data, { withCredentials: true });
-    console.log('첫 로그인 :', response);
-    console.log(document.cookie);
     if (response.status === 200 && response.data.status === 'success') {
-      console.log('정상 로그인 :', response.data);
       return response.data;
     }
     return false;
