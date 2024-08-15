@@ -145,8 +145,8 @@
                   </div>
 
 
-
-                  <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
+                  <!-- 악성탐지 -->
+                  <!-- <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
                     <v-icon v-if="!gscanStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>악성탐지
                   </div>
@@ -164,15 +164,14 @@
                         {{details.gscan.step2 }}
                       </span>
                     </div>
-                  </div>
+                  </div> -->
 
-
-                  <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
+                  <!-- DLP Report -->
+                  <!-- <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
                     <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>DLP Report
                   </div>
                   <div v-if="isDLPReportOpen(index) && (details.fileStatus.dlpStatus == 1)" class="bg-white">
-                    <!-- DLP Report content -->
                     <div class="flex">
                       <div class="w-1/2 border-t border-gray-200">
                         <div>
@@ -188,26 +187,26 @@
                           <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
                         </div>
                       </div>
-
                       <div class="w-1/2 border-t border-l border-gray-200">
                         <dlp-chart></dlp-chart>
                       </div>
-
                     </div>
+                  </div> -->
 
-                  </div>
-
+                  <!-- VT Report -->
                   <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleVirusTotalReport(index)">
                     <v-icon v-if="!virusTotalReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
                   </div>
-                  <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white">
+                  <!-- 원본 VT Report -->
+                  <!-- <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white"> -->
+                  <div v-if="isVirusTotalReportOpen(index)" class="bg-white">
                     <!-- VirusTotal Report content -->
                     <div class="flex h-full">
                       <div class="flex flex-col w-1/2 border-t border-gray-200">
                         <div class="flex flex-1 items-center border-b border-gray-200">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">SHA-256</span>
-                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs break-all">{{ details.saltedHash }}</span>
+                          <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs break-all">{{ details.vtReport.sha256 }}</span>
                         </div>
                         <div class="flex flex-1 items-center border-b border-gray-200">
                           <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">File Type</span>
