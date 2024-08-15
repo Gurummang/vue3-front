@@ -66,7 +66,7 @@ onMounted(() => {
                 }
 
                 // 소수점 두 자리까지 표시하고, 불필요한 0은 제거
-                label += bytes.toFixed(2).replace(/\.?0+$/, '') + ' ' + units[unitIndex];
+                label += parseFloat(bytes.toFixed(2)) + ' ' + units[unitIndex];
               }
               return label;
             }
