@@ -12,7 +12,6 @@
           :detectionFileCount="detectionFileCount"></detection-count>
         <file-details
           :fileDetails="fileDetails"></file-details>
-        <the-pagination></the-pagination>
       </div>
     </main>
     <content-error
@@ -33,7 +32,6 @@ import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 import DetectionCount from '@/components/file/DetectionCount.vue'
 import FileDetails from '@/components/file/FileDetails.vue'
-import ThePagination from '@/components/ThePagination.vue'
 
 let loading = ref(true);
 let isApiOk = ref(false);
