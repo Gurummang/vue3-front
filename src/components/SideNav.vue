@@ -94,7 +94,6 @@ export default defineComponent({
         active: false, 
         children: [
           { title: 'SaaS', icon: CloudIcon, active: false, link: '/register/saas', },
-          { title: '이메일 알림', icon: ChatBubbleLeftIcon, active: false, link: '/register/email', },
         ] 
       },
       { 
@@ -113,22 +112,9 @@ export default defineComponent({
         expanded: false, 
         active: false, 
         children: [
-          { title: 'DashBoard', icon: ChartPieIcon, active: false, link: '/file/dashboard', },
           { title: '파일 히스토리', icon: ListBulletIcon, active: false, link: '/file/history', },
           { title: '파일 검사', icon: DocumentCheckIcon, active: false, link: '/file/scan', }
         ]
-      },
-      { 
-        title: '사용자', 
-        icon: UsersIcon, 
-        active: false,
-        link: '/users',
-      },
-      { 
-        title: 'DLP 설정', 
-        icon: ShieldCheckIcon, 
-        active: false ,
-        link: '/dlp',
       },
     ]);
 
