@@ -57,24 +57,55 @@ const encodedText = computed(() => {
 const fileName = "requirements.txt";
 const fileHash = "886b15487fa6ae32484b1bb291abb6ac8ad78d5c09ad686651676215719f598b";
 
-const getDownloadApi = async (file) => {
-  const response = await fetch('https://back.grummang.com/api/v1/board/slack/files/download', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "file_name": btoa(`${fileName}-${fileHash}`)
-    })
-  });
-  console.log(btoa(`${fileName}-${fileHash}`));
-  console.log(response);
+// Function to fetch and download the file from the API
+const downloadFile = async() => {
+  // Create the file_name using btoa
+  const fileNameHash = btoa(`${fileName}-${fileHash}`);
 
-  if (!response.ok) throw new Error('다운로드 토큰 요청 실패');
+  try {
+    const response = await fetch('https://back.grummang.com/api/v1/board/slack/files/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        file_name: fileNameHash
+      }),
+      credentials: 'include'  // Ensures cookies are sent with the request
+    });
 
-  const data = await response.json();
-  return data.downloadToken;
-};
+    if (!response.ok) {
+      console.error('Failed to fetch the file');
+      return;
+    }
+
+    // Extract the filename from the Content-Disposition header
+    const contentDisposition = response.headers.get('Content-Disposition');
+    let filename = 'downloaded-file'; // Default filename
+    if (contentDisposition) {
+      const match = contentDisposition.match(/filename="(.+)"/);
+      if (match && match[1]) {
+        filename = match[1];
+      }
+    }
+
+    // Convert the response to a Blob (binary data)
+    const blob = await response.blob();
+
+    // Create a URL for the Blob and trigger the download
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // Set the filename from the header
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a); // Clean up the DOM
+    window.URL.revokeObjectURL(url); // Release memory
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 const handleDownload = async (file) => {
   if (file.isDownloading) return;
