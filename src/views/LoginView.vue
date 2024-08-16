@@ -91,7 +91,7 @@ const handleSubmit = async () => {
     
     // 쿠키가 정상적으로 설정되었는지 확인 (서버 응답에 따라)
     if (response.status === 'success') {
-      router.push('/');
+      router.push('/register/saas');
     } else {
       console.error('Cookie was not set properly');
       alert('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.');
