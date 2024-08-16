@@ -1,3 +1,4 @@
+import router from '@/router/index.js';
 import axios from 'axios';
 
 // axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
@@ -16,6 +17,10 @@ let totalFileInfoApi = async () => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
@@ -29,6 +34,10 @@ let fileScanApi = async () => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
@@ -42,6 +51,10 @@ let fileVtUploadApi = async (data) => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
@@ -55,6 +68,10 @@ let historyStatisticsApi = async () => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
@@ -68,6 +85,10 @@ let historyDetailsApi = async () => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
@@ -80,6 +101,10 @@ let historyVisualizatuonApi = async (data) => {
     }
   } catch (err) {
     console.error('Error:', err);
+    if(err.response.status == '401') {
+      router.push('/login');
+      // console.log('누구냐!')
+    }
     throw err;  
   }
 };
