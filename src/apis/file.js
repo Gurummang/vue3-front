@@ -1,8 +1,6 @@
 import router from '@/router/index.js';
 import axios from 'axios';
 
-// axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
-
 const api = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
   withCredentials: true
@@ -24,9 +22,9 @@ let totalFileInfoApi = async () => {
   }
 };
 
-let fileScanApi = async (data) => {
+let fileScanApi = async () => {
   try {
-    const response = await api.post('/api/v1/files/scan', data);
+    const response = await api.get('/api/v1/files/scan');
     if(response.data.status == 'error') {
       router.push('/login');
     }
