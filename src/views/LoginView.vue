@@ -3,7 +3,7 @@
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">구름망 CASB</h2>
+        <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">구름망</h2>
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">관리자 이메일</label>

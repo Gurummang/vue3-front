@@ -18,7 +18,7 @@
         <p class="text-sm font-bold text-center mb-4">별칭 : {{ props.selectedSaas.alias }}</p>
         <p class="text-sm text-red-700 font-bold text-center mb-2">위 SaaS의 연동 해제하시겠습니까?</p>
         <p class="text-xs text-black text-center mb-2">
-          위 SaaS의 연동 해제하면은<br> 앞으로 CASB에서 관리될 수 없습니다.<br>
+          위 SaaS의 연동 해제하면은<br> 앞으로 관리될 수 없습니다.<br>
           정말 Jira의 연동을 해제하시겠습니까?
         </p>
 
