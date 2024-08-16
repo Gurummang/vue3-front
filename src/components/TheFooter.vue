@@ -5,7 +5,7 @@
         <div class="flex justify-center text-teal-600 lg:justify-start dark:text-teal-300">
           <div class="flex items-center justify-center">
             <img src="../../public/gurummang_logo.png" alt="Logo" class="size-9 mr-4">
-            <h1 class="text-2xl font-bold text-white">구름망 CASB</h1>
+            <h1 class="text-2xl font-bold text-white">구름망</h1>
           </div>
           <p class="flex items-center pl-6 text-center text-xs text-white lg:text-right dark:text-white">
             Copyright &copy; 2024. All rights reserved.
