@@ -331,8 +331,10 @@ function toBase64(str) {
 // Function to fetch and download the file from the API
 const downloadFile = async(fileName, fileHash) => {
   // Create the file_name using btoa
-  const fileNameHash = toBase64(`${fileName}-${fileHash}`);
 
+  console.log(`'name:', ${fileName}, ' Hash: ', ${fileHash}`);
+  const fileBase64 = toBase64(`${fileName}-${fileHash}`);
+  console.log(fileBase64);;
   try {
     const response = await fetch('https://back.grummang.com/api/v1/board/slack/files/download', {
       method: 'POST',
@@ -340,7 +342,7 @@ const downloadFile = async(fileName, fileHash) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        file_name: fileNameHash
+        file_name: fileBase64
       }),
       credentials: 'include'  // Ensures cookies are sent with the request
     });
