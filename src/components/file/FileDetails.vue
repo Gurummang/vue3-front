@@ -323,10 +323,15 @@ const closeVirustotalModal = () => {
   clearCheckedIndex();
 }
 
+// Function to handle UTF-8 encoding before Base64 encoding
+function toBase64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
 // Function to fetch and download the file from the API
 const downloadFile = async(fileName, fileHash) => {
   // Create the file_name using btoa
-  const fileNameHash = btoa(`${fileName}-${fileHash}`);
+  const fileNameHash = toBase64(`${fileName}-${fileHash}`);
 
   try {
     const response = await fetch('https://back.grummang.com/api/v1/board/slack/files/download', {
