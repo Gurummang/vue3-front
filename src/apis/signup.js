@@ -6,6 +6,7 @@ let gasbLoginApi = async (data) => {
   try {
     const response = await axios.post('/api/v1/auth/login', data, { withCredentials: true });
     if (response.status === 200 && response.data.status === 'success') {
+      console.log(response.data);
       return response.data;
     }
     return false;
