@@ -21,6 +21,7 @@
                     placeholder="관리자명">
             </div>
           </div>
+          <p v-if="companyHasSpecialChar" class="text-sm text-red-600">회사명 또는 관리자명에 특수문자를 사용할 수 없습니다.</p>
 
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">관리자 이메일</label>
@@ -28,6 +29,7 @@
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="관리자 이메일">
           </div>
+          <p v-if="adminEmailHasSpecialChar" class="text-sm text-red-600">관리자 이메일에 특수문자를 사용할 수 없습니다.</p>
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
@@ -35,7 +37,7 @@
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="비밀번호">
             <p v-if="!isPasswordValid && password" class="mt-2 text-sm text-red-600">
-              비밀번호는 8~30자의 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다.
+              비밀번호는 8~30자의 대문자, 소문자, 숫자, 특수문자(_,@,#,$,!)를 각 1개 이상씩 포함해야 합니다.
             </p>
           </div>
 
@@ -87,6 +89,7 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gasbSignupApi } from '@/apis/signup.js'
 import { useAuth } from '../utils/auth'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
 const company = ref('')
 const adminName = ref('')
@@ -100,7 +103,19 @@ const { register } = useAuth()
 const isPasswordValid = ref(true)
 const isPasswordMatch = ref(true)
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/
+const companyHasSpecialChar = ref(false)
+const adminEmailHasSpecialChar = ref(false)
+
+// _, @, #, $, ! 특수문자만 허용
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@#$!])[A-Za-z\d_@#$!]{8,30}$/
+
+watch([company, adminName], (newValue) => {
+  companyHasSpecialChar.value = !specialChar(newValue);
+})
+
+watch(email, (newValue) => {
+  adminEmailHasSpecialChar.value = !specialChar(newValue);
+})
 
 watch(password, (newValue) => {
   isPasswordValid.value = passwordRegex.test(newValue)
@@ -111,6 +126,15 @@ watch([password, confirmPassword], ([newPassword, newConfirmPassword]) => {
 })
 
 const handleSubmit = async () => {
+  const safeCompanyName = htmlEscape(company.value);
+  const safeAdminName = htmlEscape(adminName.value);
+  const safeAdminEmail = htmlEscape(email.value);
+  if (!specialChar(safeCompanyName) || !specialChar(safeAdminName) || !specialChar(safeAdminEmail)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
+
   if (!agreeTerms.value) {
     alert('이용약관에 동의해주세요.')
     return
