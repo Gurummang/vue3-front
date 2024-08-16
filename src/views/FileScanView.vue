@@ -39,12 +39,12 @@ let isApiOk = ref(false);
 let detectionFileCount = ref(null);
 let fileDetails = ref(null);
 
-const data = {
-  "orgId": 1
-}
+// const data = {
+//   "orgId": 1
+// }
 
 Promise.all([
-  fileScanApi(data),
+  fileScanApi(),
   ]).then((values) => {
     fileDetails.value = values[0]
   detectionFileCount.value = [values[0].data.total, values[0].data.dlpTotal, values[0].data.malwareTotal];

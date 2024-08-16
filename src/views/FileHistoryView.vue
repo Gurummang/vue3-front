@@ -43,13 +43,13 @@ let historyStatistics = ref([]);
 let historyTrends = ref([]);
 let historyDetails = ref([]);
 
-const data = {
-  "orgId": 1
-}
+// const data = {
+//   "orgId": 1
+// }
 
 Promise.all([
-  historyStatisticsApi(data),
-  historyDetailsApi(data),
+  historyStatisticsApi(),
+  historyDetailsApi(),
 ]).then((values) => {
   historyStatistics.value = [values[0].data.totalUpload, values[0].data.totalChanged, values[0].data.totalDeleted];
   // console.log(historyStatistics.value);
