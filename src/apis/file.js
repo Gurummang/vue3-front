@@ -1,10 +1,15 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
-let totalFileInfoApi = async (data) => {
+const api = axios.create({
+  baseURL: import.meta.env.VITE_APP_API_URL,
+  withCredentials: true
+})
+
+let totalFileInfoApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/board', data);
+    const response = await api.get('/api/v1/files/board');
     if(response.status == '200') {
       return response.data;
     }
@@ -14,9 +19,9 @@ let totalFileInfoApi = async (data) => {
   }
 };
 
-let fileScanApi = async (data) => {
+let fileScanApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/scan', data);
+    const response = await api.get('/api/v1/files/scan');
     if(response.status == '200') {
       return response.data;
     }
@@ -28,7 +33,7 @@ let fileScanApi = async (data) => {
 
 let fileVtUploadApi = async (data) => {
   try {
-    const response = await axios.post('/api/v1/vt/upload', data);
+    const response = await api.post('/api/v1/vt/upload', data);
     if(response.status == '200') {
       return response.data;
     }
@@ -38,9 +43,9 @@ let fileVtUploadApi = async (data) => {
   }
 };
 
-let historyStatisticsApi = async (data) => {
+let historyStatisticsApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/history/statistics', data);
+    const response = await api.get('/api/v1/files/history/statistics');
     if(response.status == '200') {
       return response.data;
     }
@@ -50,9 +55,9 @@ let historyStatisticsApi = async (data) => {
   }
 };
 
-let historyDetailsApi = async (data) => {
+let historyDetailsApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/history', data);
+    const response = await api.get('/api/v1/files/history');
     if(response.status == '200') {
       return response.data;
     }
@@ -64,7 +69,7 @@ let historyDetailsApi = async (data) => {
 
 let historyVisualizatuonApi = async (data) => {
   try {
-    const response = await axios.post('/api/v1/files/history/visualize', data);
+    const response = await api.post('/api/v1/files/history/visualize', data);
     if(response.status == '200') {
       return response.data;
     }
