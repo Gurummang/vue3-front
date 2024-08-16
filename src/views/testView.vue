@@ -83,14 +83,14 @@ const downloadFile = async() => {
     }
 
     // Extract the filename from the Content-Disposition header
-    const contentDisposition = response.headers.get('Content-Disposition');
-    let filename = ''; // Default filename
-    if (contentDisposition) {
-      const match = contentDisposition.match(/filename="(.+)"/);
-      if (match && match[1]) {
-        filename = match[1];
-      }
-    }
+    // const contentDisposition = response.headers.get('Content-Disposition');
+    // if (contentDisposition) {
+    //   const match = contentDisposition.match(/filename="(.+)"/);
+    //   if (match && match[1]) {
+    //     filename = match[1];
+    //   }
+    // }
+    let filename = fileName; // Default filename
 
     console.log('파일명:', filename);
     // Convert the response to a Blob (binary data)
@@ -99,7 +99,7 @@ const downloadFile = async() => {
     // Create a URL for the Blob and trigger the download
     const url = window.URL.createObjectURL(blob);
     console.log('url : ',url);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = filename; // Set the filename from the header
