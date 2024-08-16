@@ -63,11 +63,11 @@ const getDownloadApi = async (file) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: { 
-      "file_name" : btoa(`${fileName}-${fileHash}`)
-    }
+    body: JSON.stringify({
+      "file_name": btoa(`${fileName}-${fileHash}`)
+    })
   });
-
+  console.log(btoa(`${fileName}-${fileHash}`));
   console.log(response);
 
   if (!response.ok) throw new Error('다운로드 토큰 요청 실패');
