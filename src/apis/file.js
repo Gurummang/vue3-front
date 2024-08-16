@@ -24,9 +24,9 @@ let totalFileInfoApi = async () => {
   }
 };
 
-let fileScanApi = async () => {
+let fileScanApi = async (data) => {
   try {
-    const response = await api.get('/api/v1/files/scan');
+    const response = await api.post('/api/v1/files/scan', data);
     if(response.data.status == 'error') {
       router.push('/login');
     }
