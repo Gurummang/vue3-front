@@ -41,6 +41,11 @@ const routes = [
     name: '파일 - 파일 검사',
     component: () => import('../views/FileScanView.vue')
   },
+  {
+    path: '/test',
+    name: 'Test - Test',
+    component: () => import('../views/testView.vue')
+  },
 ];
 
 const router = createRouter({
