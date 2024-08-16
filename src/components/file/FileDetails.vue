@@ -107,7 +107,7 @@
                         <a 
                           class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-orange hover:bg-orange-500"
                           href="#"
-                          target='_blank'
+                          @click.prevent="downloadFile(details.name, details.vtReport.sha256)"
                         >다운로드</a>
                       </div>
                     </span>
@@ -321,6 +321,61 @@ const openVirustotalModal = () => {
 const closeVirustotalModal = () => {
   isVirustotalModalOpen.value = false;
   clearCheckedIndex();
+}
+
+// Function to fetch and download the file from the API
+const downloadFile = async(fileName, fileHash) => {
+  // Create the file_name using btoa
+  const fileNameHash = btoa(`${fileName}-${fileHash}`);
+
+  try {
+    const response = await fetch('https://back.grummang.com/api/v1/board/slack/files/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        file_name: fileNameHash
+      }),
+      credentials: 'include'  // Ensures cookies are sent with the request
+    });
+
+    console.log(response);
+
+    if (!response.ok) {
+      alert('다운로드 하는 과정에서 오류가 발생했어요.');
+      console.error('Failed to fetch the file');
+      return;
+    }
+
+    // Extract the filename from the Content-Disposition header
+    // const contentDisposition = response.headers.get('Content-Disposition');
+    // if (contentDisposition) {
+    //   const match = contentDisposition.match(/filename="(.+)"/);
+    //   if (match && match[1]) {
+    //     filename = match[1];
+    //   }
+    // }
+    let filename = fileName; // Default filename
+
+    console.log('파일명:', filename);
+    // Convert the response to a Blob (binary data)
+    const blob = await response.blob();
+
+    // Create a URL for the Blob and trigger the download
+    const url = window.URL.createObjectURL(blob);
+    console.log('url : ',url);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // Set the filename from the header
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a); // Clean up the DOM
+    window.URL.revokeObjectURL(url); // Release memory
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 </script>
