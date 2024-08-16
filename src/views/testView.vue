@@ -6,9 +6,10 @@
       <div class="space-y-4">
         <div v-for="file in files" :key="file.path" class="flex items-center justify-between border-b pb-2">
           <span class="text-sm">{{ file.path }}</span>
+            <!-- @click="() => handleDownload(file)" -->
           <button 
             class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-orange hover:bg-orange-500"
-            @click="() => handleDownload(file)"
+            @click="downloadFile"
             :disabled="file.isDownloading"
           >
             {{ file.isDownloading ? '다운로드 중...' : '다운로드' }}
@@ -18,7 +19,7 @@
 
       <a 
         href="/some-url"
-        @click.prevent="getDownloadApi"
+        @click.prevent="downloadFile"
       >클릭</a>
 
       <div>
