@@ -99,10 +99,18 @@
                     <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ getfileSize(details.size) }}</span>
                   </div>
                   <div class="flex border-t border-gray-200">
-                    <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
-                    <span class="inline-block w-5/6 p-2 bg-white text-xs">{{ details.path }}</span>
-                    <!-- <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
-                    <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span> -->
+                    <span class="inline-flex items-center justify-center w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
+                    <span class="inline-flex items-center w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
+                    <span class="inline-flex items-center justify-center w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 다운로드</span>
+                    <span class="inline-flex items-center w-1/6 p-2 bg-white text-xs">
+                      <div class="flex items-center">
+                        <a 
+                          class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-orange hover:bg-orange-500"
+                          href="#"
+                          target='_blank'
+                        >다운로드</a>
+                      </div>
+                    </span>
                   </div>
 
 
