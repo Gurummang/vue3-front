@@ -106,9 +106,9 @@
                       <div class="flex items-center">
                         <a 
                           class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-orange hover:bg-orange-500"
-                          :href="details.vtReport.reportUrl.startsWith('https://www.virustotal.com/') ? details.vtReport.reportUrl : '#'"
+                          href="#"
                           target='_blank'
-                        >바로가기</a>
+                        >다운로드</a>
                       </div>
                     </span>
                   </div>
