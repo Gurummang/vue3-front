@@ -75,6 +75,8 @@ const downloadFile = async() => {
       credentials: 'include'  // Ensures cookies are sent with the request
     });
 
+    console.log(response);
+
     if (!response.ok) {
       console.error('Failed to fetch the file');
       return;
@@ -82,7 +84,7 @@ const downloadFile = async() => {
 
     // Extract the filename from the Content-Disposition header
     const contentDisposition = response.headers.get('Content-Disposition');
-    let filename = 'downloaded-file'; // Default filename
+    let filename = ''; // Default filename
     if (contentDisposition) {
       const match = contentDisposition.match(/filename="(.+)"/);
       if (match && match[1]) {
@@ -90,11 +92,14 @@ const downloadFile = async() => {
       }
     }
 
+    console.log('파일명:', filename);
     // Convert the response to a Blob (binary data)
     const blob = await response.blob();
 
     // Create a URL for the Blob and trigger the download
     const url = window.URL.createObjectURL(blob);
+    console.log('url : ',url);
+    
     const a = document.createElement('a');
     a.href = url;
     a.download = filename; // Set the filename from the header
@@ -102,7 +107,6 @@ const downloadFile = async() => {
     a.click();
     document.body.removeChild(a); // Clean up the DOM
     window.URL.revokeObjectURL(url); // Release memory
-
   } catch (error) {
     console.error('Error:', error);
   }
