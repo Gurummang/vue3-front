@@ -73,7 +73,7 @@
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs align-middle">
-                <p v-if="detail.eventType === 'file_uploaded'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_upload'" class="flex items-center">
                   <v-icon :size="20" class="text-orange mr-1">mdi-file-upload-outline</v-icon>
                   파일 업로드
                 </p>
