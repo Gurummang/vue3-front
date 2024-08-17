@@ -45,7 +45,7 @@ const props = defineProps({
 
 let emit = defineEmits(['close']);
 
-let fileCount = ref(Object.keys(props.checkedIndex).length);;
+let fileCount = ref(Object.keys(props.checkedIndex).length);
 // 리스트 값
 console.log(Object.values(props.checkedIndex));
 

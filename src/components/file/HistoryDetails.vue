@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
-      <h2 class="text-xl font-bold mb-4">파일 히스토리 - 2000건</h2>
+      <h2 class="text-xl font-bold mb-4">파일 히스토리 - {{ historyCount }}건</h2>
 
       <div class="flex pb-2">
         <div class="space-x-2">
@@ -121,7 +121,7 @@ const props = defineProps({
 });
 
 const selectedHistory = ref(null);
-
+const historyCount = ref(Object.keys(props.historyDetails).length);
 const isHistoryVisualizationModalOpen = ref(false);
 
 const visualizationInfo = ref(null);
