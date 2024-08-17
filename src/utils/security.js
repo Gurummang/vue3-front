@@ -16,6 +16,6 @@ export const htmlEscape = (input) => {
 }
 
 export const specialChar = (str) => {
-  const specialCharRegex = /[&<>"'/`=%^()?*/[/]]/;
-  return !specialCharRegex.test(str);
+  const specialCharRegex = /[&<>"'/`=%^()?*/[\]]/;
+  return specialCharRegex.test(str);
 }
