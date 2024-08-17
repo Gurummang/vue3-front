@@ -1,3 +1,4 @@
+import router from '@/router/index.js';
 import axios from 'axios';
 
 const api = axios.create({
@@ -8,6 +9,10 @@ const api = axios.create({
 let totalFileInfoApi = async () => {
   try {
     const response = await api.get('/api/v1/files/board');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
@@ -21,6 +26,10 @@ let totalFileInfoApi = async () => {
 let fileScanApi = async () => {
   try {
     const response = await api.get('/api/v1/files/scan');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
@@ -34,6 +43,10 @@ let fileScanApi = async () => {
 let fileVtUploadApi = async (data) => {
   try {
     const response = await api.post('/api/v1/vt/upload', data);
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
@@ -47,6 +60,10 @@ let fileVtUploadApi = async (data) => {
 let historyStatisticsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history/statistics', );
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
@@ -60,6 +77,10 @@ let historyStatisticsApi = async () => {
 let historyDetailsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
@@ -73,6 +94,10 @@ let historyDetailsApi = async () => {
 let historyVisualizatuonApi = async (data) => {
   try {
     const response = await api.post('/api/v1/files/history/visualize', data);
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
       console.log(response.data);
       return response.data;
