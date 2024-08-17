@@ -1,11 +1,20 @@
+import router from '@/router/index.js';
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
+const api = axios.create({
+  baseURL: import.meta.env.VITE_APP_API_URL,
+  withCredentials: true
+})
 
-let totalFileInfoApi = async (data) => {
+let totalFileInfoApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/board', data);
+    const response = await api.get('/api/v1/files/board');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
@@ -14,10 +23,15 @@ let totalFileInfoApi = async (data) => {
   }
 };
 
-let fileScanApi = async (data) => {
+let fileScanApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/scan', data);
+    const response = await api.get('/api/v1/files/scan');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
@@ -28,8 +42,13 @@ let fileScanApi = async (data) => {
 
 let fileVtUploadApi = async (data) => {
   try {
-    const response = await axios.post('/api/v1/vt/upload', data);
+    const response = await api.post('/api/v1/vt/upload', data);
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
@@ -38,10 +57,15 @@ let fileVtUploadApi = async (data) => {
   }
 };
 
-let historyStatisticsApi = async (data) => {
+let historyStatisticsApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/history/statistics', data);
+    const response = await api.get('/api/v1/files/history/statistics', );
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
@@ -50,10 +74,15 @@ let historyStatisticsApi = async (data) => {
   }
 };
 
-let historyDetailsApi = async (data) => {
+let historyDetailsApi = async () => {
   try {
-    const response = await axios.post('/api/v1/files/history', data);
+    const response = await api.get('/api/v1/files/history');
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
@@ -64,8 +93,13 @@ let historyDetailsApi = async (data) => {
 
 let historyVisualizatuonApi = async (data) => {
   try {
-    const response = await axios.post('/api/v1/files/history/visualize', data);
+    const response = await api.post('/api/v1/files/history/visualize', data);
+    if(response.data.error == 'error') {
+      router.push('/login');
+      return;
+    }
     if(response.status == '200') {
+      console.log(response.data);
       return response.data;
     }
   } catch (err) {
