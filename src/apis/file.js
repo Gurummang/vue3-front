@@ -9,7 +9,7 @@ const api = axios.create({
 let totalFileInfoApi = async () => {
   try {
     const response = await api.get('/api/v1/files/board');
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
@@ -26,7 +26,7 @@ let totalFileInfoApi = async () => {
 let fileScanApi = async () => {
   try {
     const response = await api.get('/api/v1/files/scan');
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
@@ -43,7 +43,7 @@ let fileScanApi = async () => {
 let fileVtUploadApi = async (data) => {
   try {
     const response = await api.post('/api/v1/vt/upload', data);
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
@@ -60,7 +60,7 @@ let fileVtUploadApi = async (data) => {
 let historyStatisticsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history/statistics', );
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
@@ -77,7 +77,7 @@ let historyStatisticsApi = async () => {
 let historyDetailsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history');
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
@@ -94,7 +94,7 @@ let historyDetailsApi = async () => {
 let historyVisualizatuonApi = async (data) => {
   try {
     const response = await api.post('/api/v1/files/history/visualize', data);
-    if(response.data.error == 'error') {
+    if(response.data.status == 'error') {
       router.push('/login');
       return;
     }
