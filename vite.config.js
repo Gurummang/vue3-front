@@ -11,13 +11,23 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://back.grummang.com',
+        target: 'https://grummang.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
+        rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false,
-        ws: true
+        cookieDomainRewrite: 'localhost',
       }
     }
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://back.grummang.com',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
+    //     secure: false,
+    //     ws: true,
+    //     cookieDomainRewrite: 'localhost',
+    //   }
+    // }
     // proxy: {
     //   'api/': {
     //     target: 'https://back.grummang.com/api/', // Spring 서버 주소
