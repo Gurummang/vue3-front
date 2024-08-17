@@ -80,14 +80,10 @@ let dlpRatio = ref(0);
 let malwareRatio = ref(0);
 let statistics = ref(null);
 
-const org = {
-  "orgId": 1,
-};
-
 const reponseData = ref(null);
 
 Promise.all([
-  totalFileInfoApi(org),
+  totalFileInfoApi(),
 ]).then((values) => {
   reponseData.value = values[0].data; 
   totalCount = values[0].data.totalCount;
