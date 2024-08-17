@@ -92,13 +92,13 @@ const elements = computed(() => {
     let yPosition;
     let tuning = 25;
     switch(item.eventType.toLowerCase()) {
-      case 'file_uploaded':
+      case 'file_upload':
         yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
         break;
-      case 'file_changed':
+      case 'file_change':
         yPosition = -300;
         break;
-      case 'file_deleted':
+      case 'file_delete':
         yPosition = -600;
         break;
       default:

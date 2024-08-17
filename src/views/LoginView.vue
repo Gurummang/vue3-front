@@ -13,6 +13,7 @@
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="관리자 이메일">
             </div>
+            <p v-if="emailHasSpecialChar" class="mt-1 text-sm text-red-500">입력 값에 특수문자를 제거해주세요</p>
           </div>
 
           <div>
@@ -23,10 +24,11 @@
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="비밀번호">
             </div>
+            <p v-if="passwordHasSpecialChar" class="mt-1 text-sm text-red-500">입력 값에 특수문자를 제거해주세요</p>
             <!-- <p class="mt-2 text-xs text-gray-500">최소 8글자 이상</p> -->
           </div>
 
-          <div class="flex items-center justify-between">
+          <!-- <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input id="remember-me" name="remember-me" type="checkbox"
                     v-model="rememberMe"
@@ -34,12 +36,12 @@
               <label for="remember-me" class="ml-2 block text-sm text-gray-900">로그인 유지</label>
             </div>
 
-            <!-- <div class="text-sm">
+            <div class="text-sm">
               <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500" @click.prevent="forgotPassword">
                 Forgot Password?
               </a>
-            </div> -->
-          </div>
+            </div>
+          </div> -->
 
           <div>
             <button type="submit"
@@ -67,18 +69,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gasbLoginApi } from '@/apis/signup.js'
-import { useAuth } from '../utils/auth'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
-const email = ref('')
-const password = ref('')
-const rememberMe = ref(false)
-const router = useRouter()
-const { login } = useAuth()
+const email = ref('');
+const password = ref('');
+const router = useRouter();
+
+const emailHasSpecialChar = ref(false);
+const passwordHasSpecialChar = ref(false);
 
 const handleSubmit = async () => {
+  const safeEmail = ref(htmlEscape(email.value));
+  const safePassword = ref(htmlEscape(password.value));
+  if(specialChar(safeEmail.value) || specialChar(safePassword.value)) {
+    alert('입력값에 특수문자가 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   try {
     let data = {
       "email": email.value,
@@ -94,21 +104,20 @@ const handleSubmit = async () => {
     if (response.status === 'success') {
       router.push('/');
     } else {
-      console.error('Cookie was not set properly');
-      alert('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   } catch (error) {
     console.error('Login failed:', error);
-    // 서버에서 보낸 에러 메시지가 있다면 그것을 사용하고, 없다면 기본 메시지 사용
-    const errorMessage = error.response?.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.';
-    alert(errorMessage);
+    alert('로그인을 처리하는 과정에서 오류가 발생했습니다.');
   }
 }
 
-const forgotPassword = () => {
-  // Implement forgot password functionality
-  console.log('Forgot password')
-}
+watch(email, (newValue) => {
+  emailHasSpecialChar.value = specialChar(newValue);
+})
+watch(password, (newValue) => {
+  passwordHasSpecialChar.value = specialChar(newValue);
+})
 </script>
 
 <style scoped>

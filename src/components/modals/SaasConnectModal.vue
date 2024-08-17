@@ -108,6 +108,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
 let emit = defineEmits(['close']);
 
@@ -136,6 +137,11 @@ const closeErrorModal = () => {
 }
 
 const syncSaaS = () => {
+  // 보안 조치
+  const safeAlias = ref(htmlEscape(alias.value));
+  const safeSaasEmail = ref(htmlEscape(saasEmail.value));
+  const safeApiToken = ref(htmlEscape(apiToken.value));
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -143,9 +149,15 @@ const syncSaaS = () => {
   if(!SaasAlias.value) {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
+  } else if(specialChar(safeAlias.value)) {
+    alert('연동 별칭에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
+    return;
   }
   if(!SaaSEmail.value) {
     alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
+    return;
+  } else if(specialChar(safeSaasEmail.value)) {
+    alert('관리자 이메일에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
     return;
   }
   else if(!isValidEmail.value) {
@@ -155,9 +167,12 @@ const syncSaaS = () => {
   if(!apiToken.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
+  } else if(specialChar(safeApiToken.value)) {
+    alert('API Key 값에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
+    return;
   }
   else if(!isValidApiToken.value) {
-    alert('해당 API Token이 올바르지 않습니다.\n다시 작성해주세요.');
+    alert('해당 API Key이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
   }
   if (!agreeToTerms.value) {
@@ -169,9 +184,9 @@ const syncSaaS = () => {
   let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
-    "apiToken": apiToken.value,
+    "alias": safeAlias.value,
+    "adminEmail": safeSaasEmail.value,
+    "apiToken": safeApiToken.value,
     "webhookUrl": webhookUrl.value
   };
 
@@ -194,6 +209,10 @@ const syncSaaS = () => {
 };
 
 const googleOAuth2 = () => {
+  // 보안 조치
+  const safeAlias = ref(htmlEscape(alias.value));
+  const safeSaasEmail = ref(htmlEscape(saasEmail.value));
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -201,9 +220,15 @@ const googleOAuth2 = () => {
   if(!SaasAlias.value) {
     alert('연동 별칭이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
+  } else if(specialChar(safeAlias.value)) {
+    alert('연동 별칭에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
+    return;
   }
   if(!SaaSEmail.value) {
     alert('SaaS 관리자 이메일이 정의되지 않았습니다.\n해당 칸에 다시 작성해주세요.');
+    return;
+  } else if(specialChar(safeSaasEmail.value)) {
+    alert('관리자 이메일에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
     return;
   }
   if (!agreeToTerms.value) {
@@ -229,12 +254,11 @@ const googleOAuth2 = () => {
     return;
   }
 
-  // 다음 스텝 -> 해당 값들을 POST로 보내기
   let connectData = {
     "orgId": 1,     // samsung
-    "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
+    "saasId": saasType.value,
+    "alias": safeAlias.value,
+    "adminEmail": safeSaasEmail.value,
   };
 
   connectSaasApi(connectData).then((response) => {

@@ -146,7 +146,7 @@
 
 
                   <!-- 악성탐지 -->
-                  <!-- <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
+                  <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
                     <v-icon v-if="!gscanStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>악성탐지
                   </div>
@@ -164,10 +164,10 @@
                         {{details.gscan.step2 }}
                       </span>
                     </div>
-                  </div> -->
+                  </div>
 
                   <!-- DLP Report -->
-                  <!-- <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
+                  <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
                     <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                     <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>DLP Report
                   </div>
@@ -191,7 +191,7 @@
                         <dlp-chart></dlp-chart>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
 
                   <!-- VT Report -->
                   <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleVirusTotalReport(index)">
