@@ -77,11 +77,11 @@
                   <v-icon :size="20" class="text-orange mr-1">mdi-file-upload-outline</v-icon>
                   파일 업로드
                 </p>
-                <p v-if="detail.eventType === 'file_changed'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_change'" class="flex items-center">
                   <v-icon :size="20" class="text-amber-400 mr-1">mdi-file-edit-outline</v-icon>
                   파일 수정
                 </p>
-                <p v-if="detail.eventType === 'file_deleted'" class="flex items-center">
+                <p v-if="detail.eventType === 'file_delete'" class="flex items-center">
                   <v-icon :size="20" class="text-slate-400 mr-1">mdi-file-remove-outline</v-icon>
                   파일 삭제
                 </p>
