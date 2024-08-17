@@ -67,9 +67,14 @@ const uploadVirustotalScan = () => {
   console.log(data);
   fileVtUploadApi(data).then((response) => {
     console.log(response);
-
+    if(response.status != 'success') {
+      alert('파일을 전송하는 데에 문제가 발생했어요.');
+    }
+    emit('close');
   })
-  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+  .catch((err) => {
+    alert(err + "\n서버에 문제가 발생했어요.")
+  });
 
 
   // connectSaasApi(connectData).then((response) => {
