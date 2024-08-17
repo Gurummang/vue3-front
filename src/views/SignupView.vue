@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex justify-center py-12 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gray-100 flex justify-center py-4 sm:px-6 lg:px-8">
     <!-- <div class="h-1/2">
       <img src="../../public/meta_logo.png" class="h-1/2 rounded-lg">
     </div> -->
@@ -7,7 +7,7 @@
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
         <form class="space-y-6" @submit.prevent="handleSubmit">
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 gap-x-4">
             <div>
               <label for="company" class="block text-sm font-medium text-gray-700">회사명</label>
               <input type="text" id="company" name="company" v-model="company" required
@@ -20,6 +20,7 @@
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="관리자명">
             </div>
+            <p v-if="companyHasSpecialChar" class="mt-1 col-span-2 text-xs text-red-600">회사명 또는 관리자명에 특수문자를 사용할 수 없습니다.</p>
           </div>
 
           <div>
@@ -27,6 +28,7 @@
             <input type="email" id="email" name="email" v-model="email" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="관리자 이메일">
+            <p v-if="adminEmailHasSpecialChar" class="mt-1 text-xs text-red-600">관리자 이메일에 특수문자를 사용할 수 없습니다.</p>
           </div>
 
           <div>
@@ -34,8 +36,8 @@
             <input type="password" id="password" name="password" v-model="password" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="비밀번호">
-            <p v-if="!isPasswordValid && password" class="mt-2 text-sm text-red-600">
-              비밀번호는 8~30자의 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다.
+            <p v-if="!isPasswordValid && password" class="mt-1 text-xs text-red-600">
+              비밀번호는 8~30자의 대문자, 소문자, 숫자, 특수문자(_,@,#,$,!)를 각 1개 이상 포함해야 합니다.
             </p>
           </div>
 
@@ -86,26 +88,34 @@
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gasbSignupApi } from '@/apis/signup.js'
-import { useAuth } from '../utils/auth'
+import { specialChar } from '@/utils/security'
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 
-const company = ref('')
-const adminName = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const agreeTerms = ref(false)
-const router = useRouter()
-const { register } = useAuth()
+const company = ref('');
+const adminName = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const agreeTerms = ref(false);
+const router = useRouter();
 
-const isPasswordValid = ref(true)
-const isPasswordMatch = ref(true)
+const companyHasSpecialChar = ref(false);
+const adminEmailHasSpecialChar = ref(false);
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/
+const isPasswordValid = ref(true);
+const isPasswordMatch = ref(true);
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@#$!])[A-Za-z\d_@#$!]{8,30}$/
+
+watch([company, adminName], (newValue) => {
+  companyHasSpecialChar.value = specialChar(newValue);
+})
+watch(email, (newValue) => {
+  adminEmailHasSpecialChar.value = specialChar(newValue);
+})
 watch(password, (newValue) => {
   isPasswordValid.value = passwordRegex.test(newValue)
 })
-
 watch([password, confirmPassword], ([newPassword, newConfirmPassword]) => {
   isPasswordMatch.value = newPassword === newConfirmPassword
 })
