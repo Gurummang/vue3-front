@@ -212,13 +212,11 @@ const googleOAuth2 = () => {
   }
   
   const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;
-  const clientSecret = import.meta.env.VITE_GOOGLEDRIVE_CLIENTSECRET;
-  const responseType = 'code';
+  const responseType = import.meta.env.VITE_GOOGLEDRIVE_RESPONSETYPE;
   const redirectUri = import.meta.env.VITE_GOOGLEDRIVE_REDIRECTURL;
   const scope = import.meta.env.VITE_GOOGLEDRIVE_SCOPE;
-  const state = '';
   
-  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}`;
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
   // window.location.href = authUrl;
   // 새 탭에서 인증 페이지 열기
   const authWindow = window.open(authUrl, '_blank');
