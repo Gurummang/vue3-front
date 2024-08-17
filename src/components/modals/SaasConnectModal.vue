@@ -19,7 +19,7 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="2">Google Drive</option>
+            <option value="6">Google Drive</option>
             <option value="1">Slack</option>
             <!-- <option value="3">O365</option> -->
           </select>
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="flex justify-end p-3">
-        <button v-if="saasType != 2" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-if="saasType != 6" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
         <button v-else @click="googleOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
       </div>
     </div>
@@ -223,11 +223,36 @@ const googleOAuth2 = () => {
   // 새 창에서 인증 페이지 열기
   // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
 
-
   // 선택적: 팝업이 차단되었는지 확인
   if (authWindow === null || typeof(authWindow) === 'undefined') {
     alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+    return;
   }
+
+  // 다음 스텝 -> 해당 값들을 POST로 보내기
+  let connectData = {
+    "orgId": 1,     // samsung
+    "saasId": saasType.value,    // slack
+    "alias": alias.value,
+    "adminEmail": saasEmail.value,
+  };
+
+  connectSaasApi(connectData).then((response) => {
+    console.log(response);
+    errorCode = response.errorCode;
+    if(errorCode != 200) {
+      openErrorModal();
+      watch(isErrorModalOpen, (afterValue, beforeValue) => {
+        if (afterValue === false) {
+          emit('close');
+        }
+      });
+    }
+    else {
+      emit('close');
+    }
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 }
 
 
@@ -245,7 +270,7 @@ const validateWebhook = () => {
       webhookUrl.value = response;
     });
   }
-  if(saasType.value != '2') {
+  if(saasType.value != '6') {
     showApiInput.value = true;
   }
   else {
