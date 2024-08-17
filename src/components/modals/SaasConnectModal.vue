@@ -108,6 +108,7 @@ import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
+import { htmlEscape, specialChar } from '@/utils/security.js';
 
 let emit = defineEmits(['close']);
 
@@ -136,6 +137,15 @@ const closeErrorModal = () => {
 }
 
 const syncSaaS = () => {
+  // 보안 조치
+  const safeAlias = htmlEscape(alias.value);
+  const safeAdminEmail = htmlEscape(saasEmail.value);
+  const safeApiToken = htmlEscape(apiToken.value);
+  if(!specialChar(safeAlias) || !specialChar(safeAdminEmail) || !specialChar(safeApiToken)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -169,9 +179,9 @@ const syncSaaS = () => {
   let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
-    "apiToken": apiToken.value,
+    "alias": safeAlias,
+    "adminEmail": safeAdminEmail,
+    "apiToken": safeApiToken,
     "webhookUrl": webhookUrl.value
   };
 
@@ -194,6 +204,14 @@ const syncSaaS = () => {
 };
 
 const googleOAuth2 = () => {
+  // 보안 조치
+  const safeAlias = htmlEscape(alias.value);
+  const safeAdminEmail = htmlEscape(saasEmail.value);
+  if(!specialChar(safeAlias) || !specialChar(safeAdminEmail)) {
+    alert('입력에 특수 문자가 포함되어 있습니다. 다시 확인해주세요.');
+    return;
+  }
+
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
     return;
@@ -233,8 +251,8 @@ const googleOAuth2 = () => {
   let connectData = {
     "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
+    "alias": safeAlias,
+    "adminEmail": safeAdminEmail,
   };
 
   connectSaasApi(connectData).then((response) => {
