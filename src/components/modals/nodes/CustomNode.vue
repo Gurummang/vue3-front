@@ -82,11 +82,11 @@ const formattedDate = computed(() => {
 
 const headerBackgroundClass = computed(() => {
   switch (props.data.eventType.toLowerCase()) {
-    case 'file_uploaded':
+    case 'file_upload':
       return 'bg-orange-100'
-    case 'file_changed':
+    case 'file_change':
       return 'bg-amber-100'
-    case 'file_deleted':
+    case 'file_delete':
       return 'bg-gray-100'
     default:
       return 'bg-orange-100' // 기본값
@@ -95,11 +95,11 @@ const headerBackgroundClass = computed(() => {
 
 const backgroundClass = computed(() => {
   switch (props.data.eventType.toLowerCase()) {
-    case 'file_uploaded':
+    case 'file_uploade':
       return 'hover:bg-orange-50'
-    case 'file_changed':
+    case 'file_change':
       return 'hover:bg-amber-50'
-    case 'file_deleted':
+    case 'file_delete':
       return 'hover:bg-gray-50'
     default:
       return 'hover:bg-orange-50'
