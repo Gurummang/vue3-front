@@ -20,6 +20,10 @@
         <!-- 파일 악성 유무 -->
         <!-- <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon> -->
       </div>
+      <div v-if="data.originNode" class="flex item-center">
+        <span class="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-cyan-600 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-4 w-4 bg-cyan-700"></span>
+      </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
       <p class="capitalize"><strong>SaaS : </strong>{{ data.saas }}</p>
@@ -109,4 +113,23 @@ const backgroundClass = computed(() => {
 
 <style scoped>
 
+/* , { 'animated-border': data.originNode } */
+@keyframes borderAnimation {
+  0% {
+    border-color: black;
+    box-shadow: 0 0 0 0 rgba(49, 46, 129, 0.5);
+  }
+  50% {
+    border-color: rgb(0, 0, 0);
+    box-shadow: 0 0 0 7px rgba(49, 46, 129, 0.5);
+  }
+  100% {
+    border-color: rgb(0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(49, 46, 129, 0.5);
+  }
+}
+
+.animated-border {
+  animation: borderAnimation 2s infinite;
+}
 </style>
