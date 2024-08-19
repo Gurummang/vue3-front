@@ -31,7 +31,7 @@ let fileScanApi = async () => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
+      console.log('dlpscan', response.data);
       return response.data;
     }
   } catch (err) {
