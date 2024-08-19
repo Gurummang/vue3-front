@@ -8,7 +8,7 @@ let gasbLoginApi = async (data) => {
     // console.log('첫 로그인 :', response);
     // console.log(document.cookie);
     if (response.status === 200 && response.data.status === 'success') {
-      // console.log('정상 로그인 :', response.data);
+      console.log('정상 로그인 :', response.data);
       return response.data;
     }
     return false;
