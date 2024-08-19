@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
-      <h2 class="text-xl font-bold mb-4">파일 히스토리 - 2000건</h2>
+      <h2 class="text-xl font-bold mb-4">파일 히스토리 - {{ props.historyDetails.totalEvent }}건</h2>
 
       <div class="flex pb-2">
         <div class="space-x-2">
@@ -55,7 +55,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(detail, index) in props.historyDetails" :key="index">
+            <tr v-for="(detail, index) in props.historyDetails.fileHistoryDto" :key="index">
               <td class="pl-6 pr-1 py-2 whitespace-nowrap">
                 <input 
                   type="radio" 
@@ -119,11 +119,8 @@ const props = defineProps({
     required: true
   }
 });
-
 const selectedHistory = ref(null);
-
 const isHistoryVisualizationModalOpen = ref(false);
-
 const visualizationInfo = ref(null);
 
 // Modal Function

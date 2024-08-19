@@ -33,6 +33,7 @@ const props = defineProps({
 })
 
 let data = props.visualizationInfo;
+console.log('props.visualization', data);
 
 // 커스텀 Slack 노드 컴포넌트
 const CustomSlackNode = defineComponent({
@@ -86,9 +87,7 @@ const elements = computed(() => {
   const edges = []
 
   slackData.forEach((item, index) => {
-    const nodeId = `${item.eventId}`
-    console.log(nodeId);
-
+    const nodeId = `${item.eventId}`;
     let yPosition;
     let tuning = 25;
     switch(item.eventType.toLowerCase()) {
@@ -109,6 +108,7 @@ const elements = computed(() => {
       id: nodeId,
       type: 'custom',
       data: { 
+        originNode : item.eventId === data.data.originNode,
         eventType: item.eventType,
         saas: item.saas,
         fileName: item.fileName,
@@ -124,26 +124,6 @@ const elements = computed(() => {
       // extent: 'parent',
     })
     
-
-    // if (index > 0) {
-    //   const prevNodeId = `file-${slackData[index - 1].eventId}`
-    //   edges.push({
-    //     id: `e-${prevNodeId}-${nodeId}`,
-    //     source: prevNodeId,
-    //     target: nodeId,
-    //     markerEnd: {
-    //       type: index % 2 == 0 ? 'arrowclosed' : 'arrow', // arrow, arrowclosed
-    //       width: 30,
-    //       height: 30,
-    //       color: '#000',
-    //     },
-    //     label: 'Test',
-    //     animated: index % 2 == 0 ? false : true,
-    //     style: { stroke: '#4A154B',
-    //             textColor: '#FFF',
-    //     }
-    //   })
-    // }
   })
 
 
