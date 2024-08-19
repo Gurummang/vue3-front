@@ -89,8 +89,8 @@ const movePage = (pageIdx:number) => {
 }
 
 const moveToPrev = () => {
-    // console.log('이전 이동');
-    if(page.value <= 0) {
+    console.log('이전 이동', pages.value.length, totalPage.value);
+    if(page.value <= 1) {
         console.log('불가', page.value);
         return;
     }
