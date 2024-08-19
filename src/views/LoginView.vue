@@ -95,8 +95,8 @@ const handleSubmit = async () => {
       "password": password.value
     }
     const response = await gasbLoginApi(data);
-    let setCookie = '';
-    setCookie += 'jwt=' + response.jwt;
+    // let setCookie = '';
+    // setCookie += 'jwt=' + response.jwt;
     console.log(response);
 
     // document.cookie = setCookie;

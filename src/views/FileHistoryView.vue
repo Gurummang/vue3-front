@@ -50,7 +50,7 @@ Promise.all([
   historyStatistics.value = [values[0].data.totalUpload, values[0].data.totalChanged, values[0].data.totalDeleted];
   // console.log(historyStatistics.value);
   historyTrends.value = values[0].data.fileHistoryStatistics;
-  historyDetails.value = values[1].data[0].fileHistoryDto;
+  historyDetails.value = values[1].data[0];
   // console.log(historyDetails.value);
   isApiOk.value = true;
 }).catch((err) => {
