@@ -45,14 +45,12 @@ const colors = [
   // '#B5C18E',
 ];
 
+// 
+const limit = 7;
+const sortedData = computed(() => [...props.data].sort((a, b) => b.count - a.count).slice(0, limit));
 const totalCount = computed(() => props.data.reduce((sum, item) => sum + item.count, 0));
-
-const sortedData = computed(() => [...props.data].sort((a, b) => b.count - a.count));
-
 const mostCommonType = computed(() => sortedData.value[0] || { type: 'N/A', count: 0 });
-
 const leastCommonType = computed(() => sortedData.value[sortedData.value.length - 1] || { type: 'N/A', count: 0 });
-
 const calculatePercentage = (count) => ((count / totalCount.value) * 100).toFixed(1);
 
 const getColor = (type) => {
@@ -66,9 +64,9 @@ const createChart = () => {
   chart = new Chart(ctx, {
     type: 'polarArea',
     data: {
-      labels: props.data.map(item => item.type),
+      labels: sortedData.value.map(item => item.type),
       datasets: [{
-        data: props.data.map(item => item.count),
+        data: sortedData.value.map(item => item.count),
         backgroundColor: colors,
       }]
     },

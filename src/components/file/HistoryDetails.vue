@@ -55,7 +55,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(detail, index) in props.historyDetails.fileHistoryDto" :key="index">
+            <tr v-for="(detail, index) in totalData" :key="index">
               <td class="pl-6 pr-1 py-2 whitespace-nowrap">
                 <input 
                   type="radio" 
@@ -95,7 +95,8 @@
         </table>
       </div>
     </div>
-    <the-pagination></the-pagination>
+    <!-- <the-pagination></the-pagination> -->
+    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
 
   </div>
 
@@ -107,7 +108,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps } from 'vue'
+import { ref, watch, defineProps, onMounted } from 'vue'
 import { getSaasImg, getDate, removeWordDate } from '@/utils/utils.js'
 import ThePagination from '@/components/ThePagination.vue'
 import HistoryVisualizationModal from '@/components/modals/HistoryVisualizationModal.vue'
@@ -122,6 +123,51 @@ const props = defineProps({
 const selectedHistory = ref(null);
 const isHistoryVisualizationModalOpen = ref(false);
 const visualizationInfo = ref(null);
+
+const idx = ref(0);
+
+// 페이지
+const items = ref([]);
+const totalData = ref([]);
+const selectPages = ref(1); // 1이라는 페이지로 셋팅
+const totalPage = ref(0); // totalData의 개수에 따라 페이지네이션을 그려지는 리스트를 뜻합니다.
+const totalCount = ref(null);
+const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
+
+
+const getData = () => {
+  totalData.value = props.historyDetails.fileHistoryDto;
+  // console.log('totalData', totalData.value);
+  totalCount.value = totalData !== undefined ? totalData.value.length : 0;
+  totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1;
+  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value);
+}
+
+const disassemble = (index, data, size) => {
+  const res = new Array();
+
+  for(let i = 0; i < data.length; i += size) {
+    res.push(data.slice(i, i + size));
+  }
+  // console.log('res:', res);
+  return res[index];
+}
+
+totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value);
+
+onMounted(() => {
+  getData();
+})
+
+const reset = (pageIdx) => {
+  if(pageIdx === 0 ) selectPages.value = 1;
+  else selectPages.value = pageIdx;
+}
+
+watch(selectPages, () => {
+  getData();
+})
+
 
 // Modal Function
 const openHistoryVisualizationModal = () => {
