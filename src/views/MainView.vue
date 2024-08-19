@@ -21,14 +21,17 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 
-// const router = useRouter();
+const router = useRouter();
 let responseData = ref(null);
+
+// router.push('/login');
 
 // 로그인 유도
 import { fileScanApi } from '@/apis/file.js'
 Promise.all([
   fileScanApi(),
   ]).then((values) => {
+    // router.push('/');
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);

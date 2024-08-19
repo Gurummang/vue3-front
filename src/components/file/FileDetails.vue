@@ -123,7 +123,8 @@
               </td>
               <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
               <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
-              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td>
+              <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
+              <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.date }}</td>
             </tr>
             
             <!-- Accordion row -->
