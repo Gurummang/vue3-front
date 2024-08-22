@@ -49,8 +49,13 @@
 import { computed, ref } from 'vue'
 
 const props = defineProps({
-  totalPage: Number
+  totalPage: {
+    type: Number,
+    required: true
+  }
 })
+
+console.log('props.test : ', props.test)
 
 const step = ref(0)
 const pages = computed(() => {
