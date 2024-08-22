@@ -70,8 +70,6 @@ const getData = () => {
   totalData.value = generateItems();
   totalCount.value = totalData !== undefined ? totalData.value.length : 0;
   totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1;
-  console.log('원본 totalPage:', totalPage.value);
-  console.log('원본 totalData:', totalData.value);
   totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value);
 }
 
