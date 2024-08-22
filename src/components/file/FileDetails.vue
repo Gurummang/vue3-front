@@ -123,9 +123,7 @@
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
-                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
-                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ getDate(details.date) }}</td> -->
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.date }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td>
               </tr>
               
               <!-- Accordion row -->
@@ -285,8 +283,8 @@
         </table>
       </div>
     </div>
-    {{ typeof totalPage + ' '+ totalPage }}
-    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
+
+    <the-pagination :totalPage="totalPage" @send-event="reset" :test="test"></the-pagination>
   </div>
 
 <virustotal-modal
@@ -308,130 +306,134 @@ import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
-import { getSaasImg, getDate, getfileSize } from '@/utils/utils.js'
+import ThePagination from '@/components/ThePagination.vue'
+import { getSaasImg, removeWordDate, getfileSize } from '@/utils/utils.js'
 
-
+const test = ref('test')
 const props = defineProps({
   fileDetails: Object,
   required: true
-});
-const fileDetails = ref(props.fileDetails.data.files);
+})
+const fileDetails = ref(props.fileDetails.data.files)
 
-console.log('fileDetails', props.fileDetails.data);
+console.log('fileDetails', props.fileDetails.data)
 
-const items = ref([]);
-const totalData = ref([]);
-const selectPages = ref(1); // 1이라는 페이지로 셋팅
-const totalPage = ref(0); // totalData의 개수에 따라 페이지네이션을 그려지는 리스트를 뜻합니다.
-const totalCount = ref(null);
-const limit = ref(10) // 한 페이지에 보여줄 아이템 개수
+// 페이지 네비게이션
+const items = ref([])
+const totalData = ref([])
+const selectPages = ref(1) // 1이라는 페이지로 셋팅
+const totalPage = ref(0) // totalData의 개수에 따라 페이지네이션을 그려지는 리스트를 뜻합니다.
+const totalCount = ref(null)
+const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = props.fileDetails.data.files;
-  totalCount.value = totalData !== undefined ? totalData.value.length : 0;
-  totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1;
-  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value);
+  totalData.value = fileDetails.value
+  console.log('totalData', totalData.value)
+  totalCount.value = totalData !== undefined ? totalData.value.length : 0
+  totalPage.value =
+    Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
+  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
 }
 
 const disassemble = (index, data, size) => {
-  const res = new Array();
+  const res = new Array()
 
-  for(let i = 0; i < data.length; i += size) {
-    res.push(data.slice(i, i + size));
+  for (let i = 0; i < data.length; i += size) {
+    res.push(data.slice(i, i + size))
   }
-  console.log('res:', res);
-  return res[index];
+  // console.log('res:', res);
+  return res[index]
 }
 
+totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+
 onMounted(() => {
-  getData();
+  getData()
 })
 
 const reset = (pageIdx) => {
-  if(pageIdx === 0 ) selectPages.value = 1;
-  else selectPages.value = pageIdx;
+  if (pageIdx === 0) selectPages.value = 1
+  else selectPages.value = pageIdx
 }
 
 watch(selectPages, () => {
-  getData();
+  getData()
 })
 
-let checkedIndex = ref([]);
+let checkedIndex = ref([])
 
 const clearCheckedIndex = () => {
-  checkedIndex.value = [];
+  checkedIndex.value = []
 }
 
-const accordionStatus = ref({});
-const gscanStatus = ref({});
-const dlpReportStatus = ref({});
-const virusTotalReportStatus = ref({});
+const accordionStatus = ref({})
+const gscanStatus = ref({})
+const dlpReportStatus = ref({})
+const virusTotalReportStatus = ref({})
 
-const isVirustotalModalOpen = ref(false);
-const isFileDeleteModalOpen = ref(false);
+const isVirustotalModalOpen = ref(false)
+const isFileDeleteModalOpen = ref(false)
 
 // Accordion Function
 const toggleAccordion = (index) => {
-  accordionStatus.value[index] = !accordionStatus.value[index];
+  accordionStatus.value[index] = !accordionStatus.value[index]
 }
 
 const isAccordionOpen = (index) => {
-  return accordionStatus.value[index] || false;
+  return accordionStatus.value[index] || false
 }
 
 const toggleGscanReport = (index) => {
-  gscanStatus.value[index] = !gscanStatus.value[index];
+  gscanStatus.value[index] = !gscanStatus.value[index]
 }
 
 const isGscanOpen = (index) => {
-  return gscanStatus.value[index] || false;
+  return gscanStatus.value[index] || false
 }
 
 const toggleDLPReport = (index) => {
-  dlpReportStatus.value[index] = !dlpReportStatus.value[index];
+  dlpReportStatus.value[index] = !dlpReportStatus.value[index]
 }
 
 const isDLPReportOpen = (index) => {
-  return dlpReportStatus.value[index] || false;
+  return dlpReportStatus.value[index] || false
 }
 
 const toggleVirusTotalReport = (index) => {
-  virusTotalReportStatus.value[index] = !virusTotalReportStatus.value[index];
+  virusTotalReportStatus.value[index] = !virusTotalReportStatus.value[index]
 }
 
 const isVirusTotalReportOpen = (index) => {
-  return virusTotalReportStatus.value[index] || false;
+  return virusTotalReportStatus.value[index] || false
 }
 
 // Modal Function
 const openVirustotalModal = () => {
-  if(checkedIndex.value.length) {
-    isVirustotalModalOpen.value = true;
+  if (checkedIndex.value.length) {
+    isVirustotalModalOpen.value = true
   } else {
-    alert('검사할 파일을 선택해주세요.');
+    alert('검사할 파일을 선택해주세요.')
   }
 }
 
 const closeVirustotalModal = () => {
-  isVirustotalModalOpen.value = false;
-  clearCheckedIndex();
+  isVirustotalModalOpen.value = false
+  clearCheckedIndex()
 }
 
 const openFileDeleteModal = () => {
-  if(checkedIndex.value.length) {
-    isFileDeleteModalOpen.value = true;
+  if (checkedIndex.value.length) {
+    isFileDeleteModalOpen.value = true
   } else {
-    alert('삭제할 파일을 선택해주세요.');
+    alert('삭제할 파일을 선택해주세요.')
   }
 }
 
 const closeFileDeleteModal = () => {
-  isFileDeleteModalOpen.value = false;
-  clearCheckedIndex();
+  isFileDeleteModalOpen.value = false
+  clearCheckedIndex()
 }
-
 </script>
 
 <style scoped>
-
 </style>
