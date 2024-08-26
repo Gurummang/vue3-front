@@ -199,8 +199,8 @@
                       <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
                     </div>
                     <!-- 원본 VT Report -->
-                    <!-- <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white"> -->
-                    <div v-if="isVirusTotalReportOpen(index)" class="bg-white">
+                    <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white">
+                    <!-- <div v-if="isVirusTotalReportOpen(index)" class="bg-white"> -->
                       <!-- VirusTotal Report content -->
                       <div class="flex h-full">
                         <div class="flex flex-col w-1/2 border-t border-gray-200">
