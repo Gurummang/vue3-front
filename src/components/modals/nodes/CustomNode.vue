@@ -31,7 +31,7 @@
       <p><strong>사용자 : </strong>{{ data.email }}</p>
       <p><strong>히스토리 시각 : </strong>{{ formattedDate }}</p>
       <p><strong>파일 경로 : </strong>{{ data.uploadChannel }}</p>
-      <p><strong>유사도 : </strong>{{ data.similarity }}</p>
+      <p><strong>유사도 : </strong>{{ data.similarity }}%</p>
     </div>
     <!-- <h3>{{ data.eventType }}</h3> -->
     
