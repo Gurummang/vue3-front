@@ -8,19 +8,19 @@
       <div class="mt-4">
         <ul class="space-y-1.5 mx-5">
           <li class="flex items-center">
-            <span class="w-4 h-4 rounded-lg bg-amber-400 mr-2"></span>
-            <span class="flex-1 text-sm">민감 파일 비율</span>
-            <span class="bg-amber-300 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dlpRatio }}%</span>
+            <span class="w-4 h-4 rounded-lg bg-indigo-900 mr-2"></span>
+            <span class="flex-1 text-sm">6개월 미만</span>
+            <span class="bg-indigo-900 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dlpRatio }}명</span>
           </li>
           <li class="flex items-center">
-            <span class="w-4 h-4 rounded-lg bg-red-600 mr-2"></span>
-            <span class="flex-1 text-sm">악성 파일 비율</span>
-            <span class="bg-red-600 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ malwareRatio }}%</span>
+            <span class="w-4 h-4 rounded-lg bg-indigo-600 mr-2"></span>
+            <span class="flex-1 text-sm">6~12개월 사이</span>
+            <span class="bg-indigo-600 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ malwareRatio }}명</span>
           </li>
           <li class="flex items-center">
-            <span class="w-4 h-4 rounded-lg bg-gray-200 mr-2"></span>
-            <span class="flex-1 text-sm">전체 파일 크기</span>
-            <span class="bg-gray-200 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ fileVolume }}GB</span>
+            <span class="w-4 h-4 rounded-lg bg-indigo-300 mr-2"></span>
+            <span class="flex-1 text-sm">12개월 이상</span>
+            <span class="bg-indigo-300 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ normalRatio }}명</span>
           </li>
         </ul>
       </div>
@@ -39,17 +39,17 @@ const props = defineProps({
 });
 
 const myChart = ref(null);
-const fileVolume = ref(Math.round(120 * 100) / 100);
-const dlpRatio = ref(Math.round((123123123 / 1203012300) * 100));
-const malwareRatio = ref(Math.round((123123 / 1200230) * 100));
-const normalRatio = ref(100 - dlpRatio.value - malwareRatio.value);
+const fileVolume = ref(2024);
+const dlpRatio = ref(24);
+const malwareRatio = ref(123);
+const normalRatio = ref(11);
 
 const data = {
   labels: ['DLP', 'Malware', 'Normal'],
   datasets: [
     {
       data: [dlpRatio.value, malwareRatio.value, normalRatio.value],
-      backgroundColor: ['#fbbf24', '#dc2626', '#22c55e'],
+      backgroundColor: ['rgb(49 46 129)', 'rgb(79 70 229)', 'rgb(165 180 252)'],
       hoverOffset: 4
     }
   ]
@@ -78,18 +78,18 @@ onMounted(() => {
   new Chart(ctx, config);
 });
 
-watch(() => props.fileSize, (newSize) => {
-  if (newSize) {
-    fileVolume.value = Math.round(newSize.totalSize * 100) / 100;
-    dlpRatio.value = Math.round((newSize.sensitiveSize / newSize.totalSize) * 100);
-    malwareRatio.value = Math.round((newSize.maliciousSize / newSize.totalSize) * 100);
-    normalRatio.value = 100 - dlpRatio.value - malwareRatio.value;
+// watch(() => props.fileSize, (newSize) => {
+//   if (newSize) {
+//     fileVolume.value = Math.round(newSize.totalSize * 100) / 100;
+//     dlpRatio.value = Math.round((newSize.sensitiveSize / newSize.totalSize) * 100);
+//     malwareRatio.value = Math.round((newSize.maliciousSize / newSize.totalSize) * 100);
+//     normalRatio.value = 100 - dlpRatio.value - malwareRatio.value;
     
-    // 차트 업데이트
-    myChart.value.data.datasets[0].data = [dlpRatio.value, malwareRatio.value, normalRatio.value];
-    myChart.value.options.plugins.title.text = `Total File Volume: ${fileVolume.value} GB`;
-    myChart.value.update();
-  }
-}, { deep: true });
+//     // 차트 업데이트
+//     myChart.value.data.datasets[0].data = [dlpRatio.value, malwareRatio.value, normalRatio.value];
+//     myChart.value.options.plugins.title.text = `Total File Volume: ${fileVolume.value} GB`;
+//     myChart.value.update();
+//   }
+// }, { deep: true });
 
 </script>
