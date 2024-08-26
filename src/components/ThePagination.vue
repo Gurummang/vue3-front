@@ -74,8 +74,6 @@ const pages = computed(() => {
   return res
 })
 
-console.log('pages: ', pages)
-
 const page = ref(1)
 const emit = defineEmits(['send-event'])
 
