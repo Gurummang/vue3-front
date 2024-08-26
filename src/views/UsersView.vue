@@ -4,7 +4,9 @@
     <header-breadcrumb></header-breadcrumb>
     <cycle-loading v-if="loading"></cycle-loading>
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
-      <div></div>
+      <div>
+        <user-statistics :userStatistics="userStatistics"></user-statistics>
+      </div>
     </main>
     <content-error v-else></content-error>
   </div>
@@ -14,10 +16,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
 import { historyStatisticsApi, historyDetailsApi } from '@/apis/file.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
+
+import UserStatistics from '@/components/user/UserStatistics.vue'
+
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
@@ -25,8 +30,11 @@ import CycleLoading from '@/components/CycleLoading.vue'
 let loading = ref(true)
 let isApiOk = ref(false)
 
+const userStatistics = ref(null)
+
 Promise.all([])
   .then((values) => {
+    userStatistics.value = [2024, 0, 22, 11]
     isApiOk.value = true
   })
   .catch((err) => {
