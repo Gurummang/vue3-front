@@ -95,6 +95,7 @@
                     <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
                   </span>
                 </td>
+                <!-- 구름망 스캔 -->
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <span v-if="details.fileStatus.gscanStatus === -1">
                     <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
@@ -102,8 +103,9 @@
                   <span v-else-if="details.fileStatus.gscanStatus === 0">
                     <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                   </span>
-                  <span v-else-if="details.fileStatus.gscanStatus === 1">
+                  <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct">
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
+                    <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
                   </span>
                   <span v-else>
                     <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
@@ -112,7 +114,8 @@
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
                   <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
-                  <span v-if="details.fileStatus.vtStatus === 1" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">완료</span>
+                  <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
+                  <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
@@ -150,7 +153,7 @@
                       <v-icon v-if="!gscanStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
                       <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>악성탐지
                     </div>
-                    <div v-if="isGscanOpen(index) && details.fileStatus.gscanStatus == 1" class="bg-white">
+                    <div v-if="isGscanOpen(index) && details.fileStatus.gscanStatus === 1" class="bg-white">
                       <div class="flex items-stretch border-t border-gray-200">
                         <span class="flex items-center justify-center w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center text-sm">확장자 시그니쳐 일치 여부</span>
                         <span class="flex inline-block w-1/4 p-2 bg-white text-xs">
