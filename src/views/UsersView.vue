@@ -6,6 +6,9 @@
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
         <user-statistics :userStatistics="userStatistics"></user-statistics>
+        <div class="grid grid-cols-3 gap-5 mb-5">
+          <DormantRadioChart></DormantRadioChart>
+        </div>
       </div>
     </main>
     <content-error v-else></content-error>
@@ -22,6 +25,9 @@ import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 
 import UserStatistics from '@/components/user/UserStatistics.vue'
+import DormantRadioChart from '@/components/user/DormantRadioChart.vue'
+import TopSensitiveUser from '@/components/user/TopSensitiveUser.vue'
+import TopMalwareUser from '@/components/user/TopMalwareUser.vue'
 
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
