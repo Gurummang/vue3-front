@@ -30,11 +30,10 @@ const router = useRouter()
 const route = useRoute()
 
 const handleSettingsClick = () => {
-  localStorage.removeItem('jwt')
-  router.push('/login')
+  // 2. 쿠키 제거
+  // router.push('/login')
   console.log('JWT token removed from localStorage')
-  // 필요한 경우 여기에 추가 로직을 구현할 수 있습니다.
-  // 예: 로그아웃 처리, 리다이렉션 등
+
 }
 </script>
 
