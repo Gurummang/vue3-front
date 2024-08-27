@@ -57,52 +57,26 @@
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">계정</th>
-              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">전체 업로드 수</th>
-              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">DLP파일</th>
-              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">악성파일</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider text-center">업로드 수</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider text-center">DLP파일</th>
+              <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider text-center">악성파일</th>
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">마지막 활동 날짜</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="(detail, index) in totalData" :key="index">
-              <!-- <td class="pl-6 pr-1 py-2 whitespace-nowrap">
-                <input
-                  type="radio"
-                  name="detail"
-                  class="form-radio size-3"
-                  :value="detail"
-                  v-model="selectedHistory"
-                />
-              </td>
-              <td class="px-6 py-2 whitespace-nowrap text-center text-xs">{{ index + 1 }}</td> -->
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
                   <img class="w-5 h-5 mr-2" :src="getSaasImg(detail.saas)" :alt="detail.saas" />
                   <span class="text-sm capitalize"> {{ detail.saas }}</span>
                 </div>
               </td>
-              <!-- <td class="px-6 py-2 whitespace-nowrap text-xs align-middle">
-                <p v-if="detail.eventType === 'file_upload'" class="flex items-center">
-                  <v-icon :size="20" class="text-orange mr-1">mdi-file-upload-outline</v-icon>
-                  파일 업로드
-                </p>
-                <p v-if="detail.eventType === 'file_change'" class="flex items-center">
-                  <v-icon :size="20" class="text-amber-400 mr-1">mdi-file-edit-outline</v-icon>
-                  파일 수정
-                </p>
-                <p v-if="detail.eventType === 'file_delete'" class="flex items-center">
-                  <v-icon :size="20" class="text-slate-400 mr-1">mdi-file-remove-outline</v-icon>
-                  파일 삭제
-                </p>
-              </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.fileName }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">
-                {{ removeWordDate(detail.eventTs) }}
-              </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">
-                {{ removeWordDate(detail.uploadTs) }}
-              </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.email }}</td> -->
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.user }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.account }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.totalUpload }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.sensitive }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.malware }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.lastDate) }}</td>
             </tr>
           </tbody>
         </table>
@@ -140,7 +114,7 @@ const mockupData = [
   },
   {
     id: 2,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'JaneSmith',
     account: 'janesmith@company.com',
     totalUpload: 32,
@@ -170,7 +144,7 @@ const mockupData = [
   },
   {
     id: 5,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'DavidLee',
     account: 'david.lee@company.com',
     totalUpload: 41,
@@ -200,7 +174,7 @@ const mockupData = [
   },
   {
     id: 8,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'LisaAnderson',
     account: 'lisa.anderson@company.com',
     totalUpload: 52,
@@ -230,7 +204,7 @@ const mockupData = [
   },
   {
     id: 11,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'RyanClark',
     account: 'ryan.clark@company.com',
     totalUpload: 71,
@@ -260,7 +234,7 @@ const mockupData = [
   },
   {
     id: 14,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'SophiaLee',
     account: 'sophia.lee@company.com',
     totalUpload: 59,
@@ -290,7 +264,7 @@ const mockupData = [
   },
   {
     id: 17,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'JamesWhite',
     account: 'james.white@company.com',
     totalUpload: 67,
@@ -320,7 +294,7 @@ const mockupData = [
   },
   {
     id: 20,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'MiaNguyen',
     account: 'mia.nguyen@company.com',
     totalUpload: 74,
@@ -350,7 +324,7 @@ const mockupData = [
   },
   {
     id: 23,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'BenjaminChen',
     account: 'benjamin.chen@company.com',
     totalUpload: 68,
@@ -380,7 +354,7 @@ const mockupData = [
   },
   {
     id: 26,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'HarperWilson',
     account: 'harper.wilson@company.com',
     totalUpload: 57,
@@ -410,7 +384,7 @@ const mockupData = [
   },
   {
     id: 29,
-    saas: 'o365',
+    saas: 'Microsoft365',
     user: 'LoganGarcia',
     account: 'logan.garcia@company.com',
     totalUpload: 61,
