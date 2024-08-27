@@ -28,7 +28,7 @@ const routes = [
   },
   {
     path: '/saas/googledrive',
-    name: 'SaaS - Google Drive',
+    name: 'SaaS - GoogleDrive',
     component: () => import('../views/SaasGoogleDriveView.vue')
   },
   {

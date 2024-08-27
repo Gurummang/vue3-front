@@ -7,12 +7,12 @@
       <div>
         <UserStatistics :userStatistics="userStatistics"></UserStatistics>
         <div class="grid grid-cols-3 gap-5 mb-5">
-          <DormantRadioChart></DormantRadioChart>
-          <TopSensitiveUser></TopSensitiveUser>
-          <TopMalwareUser></TopMalwareUser>
+          <DormantRadioChart :dormantRadio="dormantRadio"></DormantRadioChart>
+          <TopSensitiveUser :topSensitiveUser="topSensitiveUser"></TopSensitiveUser>
+          <TopMalwareUser :topMalwareUser="topMalwareUser"></TopMalwareUser>
           <!-- <TopUserRanking></TopUserRanking> -->
         </div>
-        <UserDetails></UserDetails>
+        <UserDetails :userDetails="userDetails"></UserDetails>
       </div>
     </main>
     <content-error v-else></content-error>
@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, toRef } from 'vue'
-import { historyStatisticsApi, historyDetailsApi } from '@/apis/file.js'
+import { userStatisticsApi, dormantRadioApi, topSensitiveUserApi, topMalwareUserApi, userDetailsApi } from '@/apis/user.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 
@@ -43,10 +43,24 @@ let loading = ref(true)
 let isApiOk = ref(false)
 
 const userStatistics = ref(null)
+const dormantRadio = ref(null);
+const topSensitiveUser = ref(null);
+const topMalwareUser = ref(null);
+const userDetails = ref(null);
 
-Promise.all([])
+Promise.all([
+  userStatisticsApi(),
+  dormantRadioApi(),
+  topSensitiveUserApi(),
+  topMalwareUserApi(),
+  userDetailsApi()
+])
   .then((values) => {
-    userStatistics.value = [2024, 24, 22, 11]
+    userStatistics.value = values[0],
+    dormantRadio.value = values[1],
+    topSensitiveUser.value = values[2].topSensitive,
+    topMalwareUser.value = values[3].topMalware,
+    userDetails.value = values[4],
     isApiOk.value = true
   })
   .catch((err) => {

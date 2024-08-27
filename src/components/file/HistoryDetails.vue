@@ -118,8 +118,8 @@
               <td class="px-6 py-2 whitespace-nowrap text-center text-xs">{{ index + 1 }}</td>
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
-                  <img class="w-5 h-5 mr-2" :src="getSaasImg(detail.saas)" :alt="detail.saas" />
-                  <span class="text-sm"> {{ detail.saas }}</span>
+                  <img class="w-5 h-5 mr-2" :src="getSaasImg(convertSaasName(detail.saas))" :alt="detail.saas" />
+                  <span class="text-sm"> {{ convertSaasName(detail.saas) }}</span>
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs align-middle">

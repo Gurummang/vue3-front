@@ -1,9 +1,11 @@
 <template>
   <div class="flex items-center justify-between  px-4 py-2 mb-5 bg-white shadow-sm rounded-lg">
-      <div class="w-1/12 flex items-center justify-center space-x-4 text-center">
-        <h1 class="text-lg text-gray-700 px-3 content-center">
+      <div class="w-2/13 flex items-center justify-center space-x-4 text-center">
+        <h1 class="flex items-center text-lg text-gray-700 px-3 content-center">
           <!-- <v-icon size="30">mdi-chevron-right</v-icon>  -->
-          {{ $route.name.slice($route.name.lastIndexOf(' ')) }}
+          <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName($route.name.slice($route.name.lastIndexOf(' '))))" :alt="$route.name.slice($route.name.lastIndexOf(' '))" />
+          <span class="text-base capitalize font-semibold"> {{ convertSaasName($route.name.slice($route.name.lastIndexOf(' '))) }}</span>
+          <!-- {{ $route.name.slice($route.name.lastIndexOf(' ')) }} -->
         </h1>
       </div>
 
@@ -26,6 +28,7 @@
 
 <script setup>
 import { ref, defineProps } from 'vue'
+import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 
 const props = defineProps({
   saasScore: {
