@@ -36,6 +36,7 @@ Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 const props = defineProps({
   dormantRadio: Object,
+  required: true
 });
 
 const myChart = ref(null);

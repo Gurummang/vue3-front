@@ -100,9 +100,6 @@ const props = defineProps({
     required: true
   }
 })
-
-const mockupData = "";
-
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)

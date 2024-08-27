@@ -15,6 +15,7 @@ Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, L
 
 const props = defineProps({
   topSensitiveUser: Object,
+  required: true
 });
 
 const myChart = ref(null);
