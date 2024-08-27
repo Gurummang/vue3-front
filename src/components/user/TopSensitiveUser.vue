@@ -24,11 +24,11 @@ const data = {
   datasets: [{
     data: [300, 250, 200, 150, 100],
     backgroundColor: [
+      'rgb(180 83 9)',
       'rgb(245 158 11)',
       'rgb(251 191 36)',
-      'rgb(251 191 36)',
       'rgb(252 211 77)',
-      'rgb(253 230 138)'
+      'rgb(253 230 138)',
     ],
     categoryPercentage: 0.5,
     barPercentage: 0.5,

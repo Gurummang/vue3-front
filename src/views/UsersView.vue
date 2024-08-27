@@ -46,7 +46,7 @@ const userStatistics = ref(null)
 
 Promise.all([])
   .then((values) => {
-    userStatistics.value = [2024, 0, 22, 11]
+    userStatistics.value = [2024, 24, 22, 11]
     isApiOk.value = true
   })
   .catch((err) => {

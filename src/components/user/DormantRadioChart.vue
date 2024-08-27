@@ -9,7 +9,7 @@
         <ul class="space-y-1.5 mx-5">
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-indigo-900 mr-2"></span>
-            <span class="flex-1 text-sm">6개월 미만</span>
+            <span class="flex-1 text-sm">12개월 이상</span>
             <span class="bg-indigo-900 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dlpRatio }}명</span>
           </li>
           <li class="flex items-center">
@@ -19,7 +19,7 @@
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-indigo-300 mr-2"></span>
-            <span class="flex-1 text-sm">12개월 이상</span>
+            <span class="flex-1 text-sm">6개월 미만</span>
             <span class="bg-indigo-300 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ normalRatio }}명</span>
           </li>
         </ul>
