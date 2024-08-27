@@ -92,7 +92,7 @@
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
                   <span v-else>
-                    <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
+                    <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
                 </td>
                 <!-- 구름망 스캔 -->
@@ -108,7 +108,7 @@
                     <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
                   </span>
                   <span v-else>
-                    <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
+                    <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
                 </td>
                 <td class="px-2 py-2 text-center whitespace-nowrap">
