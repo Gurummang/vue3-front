@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col p-4 bg-gray-800 border rounded-lg shadow-sm h-full">
-    <h2 class="text-xl font-bold mb-4 text-white">DLP 업로드 Top 5 사용자</h2>
+  <div class="flex flex-col p-4 bg-white border rounded-lg shadow-sm h-full">
+    <h2 class="text-xl font-bold mb-4">민감 업로드 Top 5 사용자</h2>
     <div class="flex-grow relative">
       <canvas ref="myChart" class="absolute inset-0"></canvas>
     </div>
@@ -51,21 +51,7 @@ const config = {
     },
     scales: {
       x: {
-        beginAtZero: true,
-        ticks: {
-          color: 'white'  // x축 숫자 색상을 흰색으로 설정
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)'  // x축 그리드 선 색상을 흰색으로 설정 (투명도 10%)
-        }
-      },
-      y: {
-        ticks: {
-          color: 'white'  // y축 라벨 (유저 이름) 색상을 흰색으로 설정
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)'  // y축 그리드 선 색상을 흰색으로 설정 (투명도 10%)
-        }
+        beginAtZero: true
       }
     }
   },
