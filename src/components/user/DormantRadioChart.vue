@@ -10,17 +10,17 @@
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-indigo-900 mr-2"></span>
             <span class="flex-1 text-sm">12개월 이상</span>
-            <span class="bg-indigo-900 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dlpRatio }}명</span>
+            <span class="bg-indigo-900 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dormant }}명</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-indigo-600 mr-2"></span>
             <span class="flex-1 text-sm">6~12개월 사이</span>
-            <span class="bg-indigo-600 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ malwareRatio }}명</span>
+            <span class="bg-indigo-600 text-slate-50 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ dormanting }}명</span>
           </li>
           <li class="flex items-center">
             <span class="w-4 h-4 rounded-lg bg-indigo-300 mr-2"></span>
             <span class="flex-1 text-sm">6개월 미만</span>
-            <span class="bg-indigo-300 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ normalRatio }}명</span>
+            <span class="bg-indigo-300 text-slate-900 text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ undormant }}명</span>
           </li>
         </ul>
       </div>
@@ -35,20 +35,19 @@ import { Chart, PieController, ArcElement, Tooltip, Legend } from 'chart.js';
 Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 const props = defineProps({
-  fileSize: Object,
+  dormantRadio: Object,
 });
 
 const myChart = ref(null);
-const fileVolume = ref(2024);
-const dlpRatio = ref(24);
-const malwareRatio = ref(123);
-const normalRatio = ref(11);
+const undormant = ref(props.dormantRadio.undormant);
+const dormanting = ref(props.dormantRadio.dormanting);
+const dormant = ref(props.dormantRadio.dormant);
 
 const data = {
-  labels: ['DLP', 'Malware', 'Normal'],
+  labels: ['6개월 미만', '6~12개월 사이', '12개월 이상'],
   datasets: [
     {
-      data: [dlpRatio.value, malwareRatio.value, normalRatio.value],
+      data: [dormant.value, dormanting.value, undormant.value],
       backgroundColor: ['rgb(49 46 129)', 'rgb(79 70 229)', 'rgb(165 180 252)'],
       hoverOffset: 4
     }
@@ -67,7 +66,6 @@ const config = {
       },
       title: {
         display: false,
-        text: `Total File Volume: ${fileVolume.value} GB`
       }
     }
   }
