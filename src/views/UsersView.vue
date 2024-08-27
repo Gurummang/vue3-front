@@ -8,6 +8,9 @@
         <user-statistics :userStatistics="userStatistics"></user-statistics>
         <div class="grid grid-cols-3 gap-5 mb-5">
           <DormantRadioChart></DormantRadioChart>
+          <TopSensitiveUser></TopSensitiveUser>
+          <TopMalwareUser></TopMalwareUser>
+          <!-- <TopUserRanking></TopUserRanking> -->
         </div>
       </div>
     </main>
@@ -28,6 +31,7 @@ import UserStatistics from '@/components/user/UserStatistics.vue'
 import DormantRadioChart from '@/components/user/DormantRadioChart.vue'
 import TopSensitiveUser from '@/components/user/TopSensitiveUser.vue'
 import TopMalwareUser from '@/components/user/TopMalwareUser.vue'
+import TopUserRanking from '@/components/user/TopUserRanking.vue'
 
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
