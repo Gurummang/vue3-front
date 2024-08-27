@@ -8,10 +8,9 @@
         </h1>
       </div>
       <div class="flex items-center space-x-4">
-        <button class="relative p-2 text-gray-400 hover:text-gray-500">
-          <v-icon size="25">mdi-bell</v-icon> <!-- Notification Icon -->
-          <!-- <span class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">2</span> -->
-        </button>
+        <!-- <button class="relative p-2 text-gray-400 hover:text-gray-500">
+          <v-icon size="25">mdi-bell</v-icon>
+        </button> -->
         <button class="p-2 text-gray-400 hover:text-gray-500" @click="handleSettingsClick">
           <v-icon size="25">mdi-cog</v-icon> <!-- Settings Icon -->
         </button>
