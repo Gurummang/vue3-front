@@ -25,13 +25,15 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import { gasbLogoutApi } from '@/apis/signup.js'
 
 const router = useRouter()
 const route = useRoute()
 
-const handleSettingsClick = () => {
+const handleSettingsClick = async () => {
   // 2. 쿠키 제거
   // router.push('/login')
+  const result = await gasbLogoutApi();
   console.log('JWT token removed from localStorage')
 
 }
