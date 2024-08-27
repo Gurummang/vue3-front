@@ -32,4 +32,19 @@ let gasbSignupApi = async (data) => {
   }
 }
 
-export { gasbLoginApi, gasbSignupApi };
+let gasbLogoutApi = async (data) => {
+  try {
+    const response = await axios.get('/api/v1/auth/logout');
+    if (response.status === 200) {
+      return true;
+    } else {
+      alert('로그아웃에 실패했습니다.');
+      return false;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    return false;
+  }
+}
+
+export { gasbLoginApi, gasbSignupApi, gasbLogoutApi };
