@@ -67,8 +67,8 @@
             <tr v-for="(detail, index) in totalData" :key="index">
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
-                  <img class="w-5 h-5 mr-2" :src="getSaasImg(detail.saas)" :alt="detail.saas" />
-                  <span class="text-sm capitalize"> {{ detail.saas }}</span>
+                  <img class="w-5 h-5 mr-2" :src="getSaasImg(convertSaasName(detail.saas))" :alt="detail.saas" />
+                  <span class="text-sm capitalize"> {{ convertSaasName(detail.saas) }}</span>
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.user }}</td>
@@ -89,7 +89,7 @@
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
-import { getSaasImg, getDate, removeWordDate } from '@/utils/utils.js'
+import { getSaasImg, getDate, removeWordDate, convertSaasName } from '@/utils/utils.js'
 import ThePagination from '@/components/ThePagination.vue'
 import HistoryVisualizationModal from '@/components/modals/HistoryVisualizationModal.vue'
 import { historyVisualizatuonApi } from '@/apis/file'
@@ -114,7 +114,7 @@ const mockupData = [
   },
   {
     id: 2,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'JaneSmith',
     account: 'janesmith@company.com',
     totalUpload: 32,
@@ -144,7 +144,7 @@ const mockupData = [
   },
   {
     id: 5,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'DavidLee',
     account: 'david.lee@company.com',
     totalUpload: 41,
@@ -174,7 +174,7 @@ const mockupData = [
   },
   {
     id: 8,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'LisaAnderson',
     account: 'lisa.anderson@company.com',
     totalUpload: 52,
@@ -204,7 +204,7 @@ const mockupData = [
   },
   {
     id: 11,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'RyanClark',
     account: 'ryan.clark@company.com',
     totalUpload: 71,
@@ -234,7 +234,7 @@ const mockupData = [
   },
   {
     id: 14,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'SophiaLee',
     account: 'sophia.lee@company.com',
     totalUpload: 59,
@@ -264,7 +264,7 @@ const mockupData = [
   },
   {
     id: 17,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'JamesWhite',
     account: 'james.white@company.com',
     totalUpload: 67,
@@ -294,7 +294,7 @@ const mockupData = [
   },
   {
     id: 20,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'MiaNguyen',
     account: 'mia.nguyen@company.com',
     totalUpload: 74,
@@ -324,7 +324,7 @@ const mockupData = [
   },
   {
     id: 23,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'BenjaminChen',
     account: 'benjamin.chen@company.com',
     totalUpload: 68,
@@ -354,7 +354,7 @@ const mockupData = [
   },
   {
     id: 26,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'HarperWilson',
     account: 'harper.wilson@company.com',
     totalUpload: 57,
@@ -384,7 +384,7 @@ const mockupData = [
   },
   {
     id: 29,
-    saas: 'Microsoft365',
+    saas: 'o365',
     user: 'LoganGarcia',
     account: 'logan.garcia@company.com',
     totalUpload: 61,

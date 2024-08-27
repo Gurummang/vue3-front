@@ -121,8 +121,8 @@
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
-                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" />
-                    <span class="text-sm"> {{ details.saas }}</span>
+                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
+                    <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
@@ -310,7 +310,7 @@ import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
-import { getSaasImg, removeWordDate, getfileSize } from '@/utils/utils.js'
+import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
 
 const test = ref('test')
 const props = defineProps({
