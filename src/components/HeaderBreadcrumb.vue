@@ -4,7 +4,7 @@
       <div class="flex items-center space-x-4">
         <h1 class="text-xl font-semibold text-gray-700 px-3 content-center">
           <v-icon size="30">mdi-chevron-right</v-icon> 
-          {{ $route.name }}
+          {{ route.name }}
         </h1>
       </div>
       <div class="flex items-center space-x-4">
@@ -12,7 +12,7 @@
           <v-icon size="25">mdi-bell</v-icon> <!-- Notification Icon -->
           <!-- <span class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">2</span> -->
         </button>
-        <button class="p-2 text-gray-400 hover:text-gray-500">
+        <button class="p-2 text-gray-400 hover:text-gray-500" @click="handleSettingsClick">
           <v-icon size="25">mdi-cog</v-icon> <!-- Settings Icon -->
         </button>
         <!-- <button class="w-10 h-10 overflow-hidden rounded-full">
@@ -23,24 +23,18 @@
   </header>
 </template>
 
-<script>
-// import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
 
-export default {
-  name: 'HeaderBreadcrumb',
-  setup() {
-    const route = useRoute()
+const router = useRouter()
+const route = useRoute()
 
-    // const currentRouteTitle = computed(() => {
-    //   return route.meta.koreanTitle || '홈'
-    // })
-
-    return {
-      route,
-      // currentRouteTitle
-    }
-  }
+const handleSettingsClick = () => {
+  localStorage.removeItem('jwt')
+  router.push('/login')
+  console.log('JWT token removed from localStorage')
+  // 필요한 경우 여기에 추가 로직을 구현할 수 있습니다.
+  // 예: 로그아웃 처리, 리다이렉션 등
 }
 </script>
 
