@@ -58,8 +58,8 @@ Promise.all([
   .then((values) => {
     userStatistics.value = values[0],
     dormantRadio.value = values[1],
-    topSensitiveUser.value = values[2],
-    topMalwareUser.value = values[3],
+    topSensitiveUser.value = values[2].topSensitive,
+    topMalwareUser.value = values[3].topMalware,
     userDetails.value = values[4],
     isApiOk.value = true
   })
