@@ -6,22 +6,16 @@
         <div class="flex">
           <div class="space-x-2">
             <button
-              class="inline-block border border-blue-600 px-3 py-2 align-text-bottom text-sm font-semibold text-blue-600 hover:bg-blue-600 hover:text-white active:bg-blue-600"
-              @click="openVirustotalModal"
+              class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
             >
-              <v-icon :size="20">mdi-shield-bug-outline</v-icon> VirusTotal 검사
+              <!-- @click="openVirustotalModal" -->
+              <v-icon :size="20">mdi-magnify-plus-outline</v-icon> DLP 정책 생성
             </button>
             <button
               class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
               @click="openFileDeleteModal"
             >
-              <v-icon :size="20">mdi-delete-outline</v-icon> 파일삭제
-            </button>
-            <button
-              class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
-              @click="openconnectModal"
-            >
-              <v-icon :size="20">mdi-refresh</v-icon> 새로고침
+              <v-icon :size="20">mdi-magnify-minus-outline</v-icon> DLP 정책 삭제
             </button>
           </div>
           <div class="flex ml-auto space-x-2">
@@ -46,9 +40,8 @@
               <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
               </svg>
-            </button>
-          </div>
-
+              </button>
+            </div>
 
           </div>
         </div>
@@ -58,20 +51,16 @@
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
             <tr>
-              <th class="px-2 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
-              <th class="px-1 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider">DLP</th>
-              <th class="px-1 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">악성탐지</th>
-              <th class="px-2 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">VirusTotal</th>
-              <th class="px-2 py-3 w-[26%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
-              <th class="px-2 py-3 w-[10%] text-center text-sm font-bold font-medium text-white tracking-wider">파일 유형</th>
-              <th class="px-2 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
-              <th class="px-2 py-3 w-[15%] text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
-              <th class="px-2 py-3 w-[15%] text-center text-sm font-bold font-medium text-white tracking-wider">생성 날짜</th>
+              <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
+              <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
+              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">파일종류</th>
+              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
+              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in totalData" :key="index" >
-              <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
+              <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <input 
                     type="checkbox" 
@@ -81,210 +70,13 @@
                     onclick="event.cancelBubble = true;"
                   />
                 </td>
-                <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <div v-if="details.fileStatus">
-                    <span v-if="details.fileStatus.dlpStatus === -1">
-                      <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
-                    </span>
-                    <span v-else-if="details.fileStatus.dlpStatus === 0">
-                      <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
-                    </span>
-                    <span v-else-if="details.fileStatus.dlpStatus === 1">
-                      <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
-                    </span>
-                    <span v-else>
-                      <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
-                    </span>
-                  </div>
-                </td>
-                <!-- 구름망 스캔 -->
-                <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <div v-if="details.fileStatus">
-                    <span v-if="details.fileStatus.gscanStatus === -1">
-                      <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
-                    </span>
-                    <span v-else-if="details.fileStatus.gscanStatus === 0">
-                      <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
-                    </span>
-                    <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct">
-                      <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
-                      <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
-                    </span>
-                    <span v-else>
-                      <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <div v-if="details.fileStatus">
-                    <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
-                    <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
-                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
-                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
-                  </div>
-                </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
-                <td class="px-2 py-2 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
-                    <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
-                  </div>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">
+                  <span v-for="(type, idx) in details.fileType" :key="idx" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td>
-              </tr>
-              
-              <!-- Accordion row -->
-              <tr v-if="isAccordionOpen(index)" class="">
-                <td colspan="9" class="">           
-                  <div class="flex-col pl-[5%] bg-gray-100">
-                    <div class="flex">
-                      <!-- cause divide-y to add empty span-->
-                      <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일명</span>
-                      <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.name }}</span>
-                      <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일크기</span>
-                      <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ getfileSize(details.size) }}</span>
-                    </div>
-                    <div class="flex border-t border-gray-200">
-                      <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
-                      <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
-                      <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
-                      <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span>
-                    </div>
-
-
-                    <!-- 악성탐지 -->
-                    <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleGscanReport(index)">
-                      <v-icon v-if="!gscanStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
-                      <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>악성탐지
-                    </div>
-                    <div v-if="isGscanOpen(index) && details.fileStatus.gscanStatus === 1" class="bg-white">
-                      <div class="flex items-stretch border-t border-gray-200">
-                        <span class="flex items-center justify-center w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center text-sm">확장자 시그니쳐 일치 여부</span>
-                        <span class="flex inline-block w-1/4 p-2 bg-white text-xs">
-                          일치 여부 : {{ details.gscan.step1.correct  }}<br>
-                          MimeType 값 : {{ details.gscan.step1.mimeType }}<br>
-                          Signature 값: {{ details.gscan.step1.signature }}<br>
-                          파일 확장자 : {{ details.gscan.step1.extension }}
-                        </span>
-                        <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">심층분석</span>
-                        <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
-                          {{details.gscan.step2 }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- DLP Report -->
-                    <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleDLPReport(index)">
-                      <v-icon v-if="!dlpReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
-                      <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>DLP Report
-                    </div>
-                    <div v-if="isDLPReportOpen(index) && (details.fileStatus.dlpStatus == 1)" class="bg-white">
-                      <div class="flex">
-                        <div class="w-1/2 border-t border-gray-200">
-                          <div>
-                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 정책 수</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
-                          </div>
-                          <div class="border-t border-gray-200">
-                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 개수</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
-                          </div>
-                          <div class="border-t border-gray-200">
-                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">권장 조치사항</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
-                          </div>
-                        </div>
-                        <div class="w-1/2 border-t border-l border-gray-200">
-                          <dlp-chart></dlp-chart>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- VT Report -->
-                    <div class="p-2 border-t border-gray-200 border-l bg-gray-100 cursor-pointer" @click="toggleVirusTotalReport(index)">
-                      <v-icon v-if="!virusTotalReportStatus[index]" class="mr-2">mdi-chevron-right</v-icon>
-                      <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
-                    </div>
-                    <!-- 원본 VT Report -->
-                    <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white">
-                    <!-- <div v-if="isVirusTotalReportOpen(index)" class="bg-white"> -->
-                      <!-- VirusTotal Report content -->
-                      <div class="flex h-full">
-                        <div class="flex flex-col w-1/2 border-t border-gray-200">
-                          <div class="flex flex-1 items-center border-b border-gray-200">
-                            <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">SHA-256</span>
-                            <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs break-all">{{ details.vtReport.sha256 }}</span>
-                          </div>
-                          <div class="flex flex-1 items-center border-b border-gray-200">
-                            <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">File Type</span>
-                            <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">{{ details.vtReport.type }}</span>
-                          </div>
-                          <div class="flex flex-1 items-center border-b border-gray-200">
-                            <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">Threat Label</span>
-                            <span class="w-2/3 h-full flex items-center p-2 bg-white text-xs">{{ details.vtReport.threatLabel }}</span>
-                          </div>
-                          <div class="flex flex-1 items-center">
-                            <span class="w-1/3 h-full flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm">VirusTotal Report</span>
-                            <div class="w-2/3 h-full flex items-center p-2">
-                              <a 
-                                class="px-3 py-1 font-medium tracking-wide text-white text-sm bg-blue-600 hover:bg-blue-500"
-                                :href="details.vtReport.reportUrl"
-                                target='_blank'
-                              >바로가기</a>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="flex w-1/2 border-t border-l border-gray-200">
-                          <div class="flex-1 p-2">
-                            <virustotal-chart :name="'엔진탐색'" :score=(details.vtReport.detectEngine/details.vtReport.completeEngine) :color="'#dc2626'"></virustotal-chart>
-                          </div>
-                          <div class="flex-1 border-l border-gray-200 p-2">
-                            <virustotal-chart :name="'Score'" :score=(details.vtReport.score/100) :color="'#FF8A00'"></virustotal-chart>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="p-2 border-t border-gray-200 border-l bg-gray-100 text-center">주요 탐지 엔진 </div>
-                      <div class="flex h-full">
-                        <div class="flex flex-col w-1/2 border-t border-gray-200">
-                          <div class="flex flex-1 border-b border-gray-200">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">V3</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.v3 }}</span>
-                          </div>
-                          <div class="flex flex-1 border-b border-gray-200">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Kaspersky</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.kaspersky }}</span>
-                          </div>
-                          <div class="flex flex-1">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Avast</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.avast }}</span>
-                          </div>
-                        </div>
-                        <div class="flex flex-col w-1/2 border-t border-gray-200">
-                          <div class="flex flex-1 border-b border-gray-200">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">ALYac</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.alyac }}</span>
-                          </div>
-                          <div class="flex flex-1 border-b border-gray-200">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Falcon</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.falcon }}</span>
-                          </div>
-                          <div class="flex flex-1">
-                            <span class="w-1/3 flex items-center justify-center p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">Sentinal One</span>
-                            <span class="w-2/3 flex items-center p-2 text-xs bg-white">{{ details.vtReport.sentinelone }}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <!-- VT Report -->
-
-
-                  </div>
-                </td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.action }}</td>
+                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td> -->
               </tr>
             </template>
               <!-- Accordion row -->
@@ -293,7 +85,7 @@
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset" :test="test"></the-pagination>
+    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
   </div>
 
 <virustotal-modal
@@ -322,7 +114,7 @@ const props = defineProps({
   policyDetails: Object,
   required: true
 })
-const policys = ref(props.policyDetails)
+const policys = ref(props.policyDetails.policy)
 
 console.log('policys', props.policyDetails)
 
@@ -372,47 +164,6 @@ let checkedIndex = ref([])
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
-}
-
-const accordionStatus = ref({})
-const gscanStatus = ref({})
-const dlpReportStatus = ref({})
-const virusTotalReportStatus = ref({})
-
-const isVirustotalModalOpen = ref(false)
-const isFileDeleteModalOpen = ref(false)
-
-// Accordion Function
-const toggleAccordion = (index) => {
-  accordionStatus.value[index] = !accordionStatus.value[index]
-}
-
-const isAccordionOpen = (index) => {
-  return accordionStatus.value[index] || false
-}
-
-const toggleGscanReport = (index) => {
-  gscanStatus.value[index] = !gscanStatus.value[index]
-}
-
-const isGscanOpen = (index) => {
-  return gscanStatus.value[index] || false
-}
-
-const toggleDLPReport = (index) => {
-  dlpReportStatus.value[index] = !dlpReportStatus.value[index]
-}
-
-const isDLPReportOpen = (index) => {
-  return dlpReportStatus.value[index] || false
-}
-
-const toggleVirusTotalReport = (index) => {
-  virusTotalReportStatus.value[index] = !virusTotalReportStatus.value[index]
-}
-
-const isVirusTotalReportOpen = (index) => {
-  return virusTotalReportStatus.value[index] || false
 }
 
 // Modal Function
