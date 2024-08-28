@@ -32,6 +32,11 @@ const routes = [
     component: () => import('../views/SaasGoogleDriveView.vue')
   },
   {
+    path: '/saas/microsoft365',
+    name: 'SaaS - Microsoft365',
+    component: () => import('../views/SaasMicrosoft365View.vue')
+  },
+  {
     path: '/saas/slack',
     name: 'SaaS - Slack',
     component: () => import('../views/SaasSlackView.vue')
