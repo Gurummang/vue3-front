@@ -214,7 +214,7 @@ const elements = computed(() => {
       id: edgeId,
       source: `${item.source}`,  // 문자열로 변환
       target: `${item.target}`,  // 문자열로 변환
-      label: item.label == 'File_SaaS_Match' ? '같은 파일': (item.label == 'File_Hash_Match' ? '내용 동일': '파일 그룹' ),
+      label: item.label == 'File_SaaS_Match' ? '': (item.label == 'File_Hash_Match' ? '내용 동일': '파일명 유사' ),
       animated: item.label == ['File_Hash_Match', 'File_SaaS_Match'] ? true : false,
       style: { 
         stroke: item.label == 'File_SaaS_Match' ? '#000' : '#A7A7A7',
