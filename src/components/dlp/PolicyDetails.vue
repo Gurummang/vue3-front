@@ -2,7 +2,7 @@
   <div>
     <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">파일 검사</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">DLP 정책 목록</h2>
         <div class="flex">
           <div class="space-x-2">
             <button
