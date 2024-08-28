@@ -32,9 +32,12 @@ const route = useRoute()
 const handleSettingsClick = async () => {
   // 2. 쿠키 제거
   // router.push('/login')
-  const result = await gasbLogoutApi();
-  console.log('JWT token removed from localStorage')
-
+  const result = await gasbLogoutApi()
+  if(result) {
+    console.log('JWT token removed from localStorage')
+    return
+  }
+  console.log('로그아웃 실패')
 }
 </script>
 
