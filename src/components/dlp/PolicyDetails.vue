@@ -52,11 +52,11 @@
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
             <tr>
-              <th class="px-2 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
+              <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
               <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
-              <th class="px-1 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">파일종류</th>
-              <th class="px-2 py-3 w-[30%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
-              <th class="px-2 py-3 w-[30%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
+              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">파일종류</th>
+              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
+              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
