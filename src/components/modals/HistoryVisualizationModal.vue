@@ -90,19 +90,25 @@ const elements = computed(() => {
     const nodeId = `${item.eventId}`;
     let yPosition;
     let tuning = 25;
-    switch(item.eventType.toLowerCase()) {
-      case 'file_upload':
-        yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
-        break;
-      case 'file_change':
-        yPosition = -300;
-        break;
-      case 'file_delete':
-        yPosition = -600;
-        break;
-      default:
-        yPosition = 0; // 기본값
-    }
+    
+    // (1) 이벤트 행위에 따른 높이 구분
+    // switch(item.eventType.toLowerCase()) {
+    //   case 'file_upload':
+    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     break;
+    //   case 'file_change':
+    //     yPosition = -300;
+    //     break;
+    //   case 'file_delete':
+    //     yPosition = -600;
+    //     break;
+    //   default:
+    //     yPosition = 0; // 기본값
+    // }
+
+    // (2) 유사도가 같은 것 높이 유지
+    yPosition = Math.floor(-(100 - (item.similarity)) * 5)
+    if(yPosition < 0) yPosition -= 300
 
     nodes.push({
       id: nodeId,
@@ -214,7 +220,7 @@ const elements = computed(() => {
       id: edgeId,
       source: `${item.source}`,  // 문자열로 변환
       target: `${item.target}`,  // 문자열로 변환
-      label: item.label == 'File_SaaS_Match' ? '같은 파일': (item.label == 'File_Hash_Match' ? '내용 동일': '파일 그룹' ),
+      label: item.label == 'File_SaaS_Match' ? '': (item.label == 'File_Hash_Match' ? '내용 동일': '파일명 유사' ),
       animated: item.label == ['File_Hash_Match', 'File_SaaS_Match'] ? true : false,
       style: { 
         stroke: item.label == 'File_SaaS_Match' ? '#000' : '#A7A7A7',
