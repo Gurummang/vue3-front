@@ -87,8 +87,8 @@
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <div class="flex items-center">
-                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(saas.name)" :alt="saas.name" />
-                  <span class="text-sm"> {{ saas.name }}</span>
+                  <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(saas.name))" :alt="saas.name" />
+                  <span class="text-sm capitalize"> {{ convertSaasName(saas.name) }}</span>
                 </div>
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ saas.adminEmail }}</td>
@@ -129,7 +129,7 @@ import axios from 'axios'
 import SaasConnectModal from '@/components/modals/SaasConnectModal.vue'
 import SaasModificationModal from '@/components/modals/SaasModificationModal.vue'
 import SaasUnconnectModal from '@/components/modals/SaasUnconnectModal.vue'
-import { getSaasImg, getDate } from '@/utils/utils.js'
+import { getSaasImg, getDate, convertSaasName } from '@/utils/utils.js'
 
 const props = defineProps({
   responseData: {

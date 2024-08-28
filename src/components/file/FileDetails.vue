@@ -82,47 +82,53 @@
                   />
                 </td>
                 <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <span v-if="details.fileStatus.dlpStatus === -1">
-                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
-                  </span>
-                  <span v-else-if="details.fileStatus.dlpStatus === 0">
-                    <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
-                  </span>
-                  <span v-else-if="details.fileStatus.dlpStatus === 1">
-                    <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
-                  </span>
-                  <span v-else>
-                    <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
-                  </span>
+                  <div v-if="details.fileStatus">
+                    <span v-if="details.fileStatus.dlpStatus === -1">
+                      <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                    </span>
+                    <span v-else-if="details.fileStatus.dlpStatus === 0">
+                      <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
+                    </span>
+                    <span v-else-if="details.fileStatus.dlpStatus === 1">
+                      <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
+                    </span>
+                    <span v-else>
+                      <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
+                    </span>
+                  </div>
                 </td>
                 <!-- 구름망 스캔 -->
                 <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <span v-if="details.fileStatus.gscanStatus === -1">
-                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
-                  </span>
-                  <span v-else-if="details.fileStatus.gscanStatus === 0">
-                    <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
-                  </span>
-                  <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct">
-                    <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
-                    <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
-                  </span>
-                  <span v-else>
-                    <v-icon :size="24" class="text-rose-600">mdi-help-circle-outline</v-icon>
-                  </span>
+                  <div v-if="details.fileStatus">
+                    <span v-if="details.fileStatus.gscanStatus === -1">
+                      <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                    </span>
+                    <span v-else-if="details.fileStatus.gscanStatus === 0">
+                      <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
+                    </span>
+                    <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct">
+                      <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
+                      <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
+                    </span>
+                    <span v-else>
+                      <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
+                    </span>
+                  </div>
                 </td>
                 <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
-                  <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
-                  <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
-                  <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
+                  <div v-if="details.fileStatus">
+                    <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
+                    <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
+                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
+                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
+                  </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
-                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(details.saas)" :alt="details.saas" />
-                    <span class="text-sm"> {{ details.saas }}</span>
+                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
+                    <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
@@ -310,7 +316,7 @@ import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
-import { getSaasImg, removeWordDate, getfileSize } from '@/utils/utils.js'
+import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
 
 const test = ref('test')
 const props = defineProps({

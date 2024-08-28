@@ -33,4 +33,9 @@ export const removeWordDate = (date) => {
   return date.replace('T', ' ');
 }
 
+export const convertSaasName = (saas) => {
+  const saasName = ( saas === 'o365'? 'microsoft365': saas);
+  return saasName;
+}
+
 // export { getTodayDate, getSaasImg, getDate };

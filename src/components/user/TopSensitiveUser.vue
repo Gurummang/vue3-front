@@ -14,15 +14,16 @@ import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const props = defineProps({
-  fileSize: Number,
+  topSensitiveUser: Object,
+  required: true
 });
 
 const myChart = ref(null);
 
 const data = {
-  labels: ['유저 1', '유저 2', '유저 3', '유저 4', '유저 5'],
+  labels: props.topSensitiveUser.map(row => row.user),
   datasets: [{
-    data: [300, 250, 200, 150, 100],
+    data: props.topSensitiveUser.map(row => row.sensitive),
     backgroundColor: [
       'rgb(180 83 9)',
       'rgb(245 158 11)',
