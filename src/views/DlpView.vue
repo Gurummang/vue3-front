@@ -41,43 +41,50 @@ Promise.all([
           "id": 1,
           "name": "정책v1",
           "description": "정책v1에 대한 설명입니다.",
-          "fileType": ["pdf", "xlsx", "hwp"]
+          "fileType": ["pdf", "xlsx", "hwp"],
+          "action": "정책v1에 따른 기본 DLP 모니터링 실시"
         },
         {
           "id": 2,
           "name": "환경보호정책",
           "description": "지속 가능한 발전을 위한 환경보호 DLP 가이드라인입니다.",
-          "fileType": ["pdf", "docx", "pptx"]
+          "fileType": ["pdf", "docx", "pptx"],
+          "action": "환경 관련 데이터 유출 방지를 위한 키워드 필터링 강화"
         },
         {
           "id": 3,
           "name": "인사관리규정",
           "description": "직원 채용, 평가, 승진에 관한 DLP 규정입니다.",
-          "fileType": ["pdf", "hwp", "txt"]
+          "fileType": ["pdf", "hwp", "txt"],
+          "action": "개인정보 포함 문서 암호화 및 접근 권한 제한"
         },
         {
           "id": 4,
           "name": "정보보안지침",
           "description": "회사 정보 자산 보호를 위한 DLP 보안 지침입니다.",
-          "fileType": ["pdf", "docx", "html"]
+          "fileType": ["pdf", "docx", "html"],
+          "action": "외부 전송 시 자동 암호화 및 로그 기록"
         },
         {
           "id": 5,
           "name": "품질관리매뉴얼",
           "description": "제품 및 서비스 품질 향상을 위한 DLP 관리 지침입니다.",
-          "fileType": ["pdf", "xlsx", "csv"]
+          "fileType": ["pdf", "xlsx", "csv"],
+          "action": "품질 관련 중요 문서 워터마크 적용 및 버전 관리"
         },
         {
           "id": 6,
           "name": "고객서비스정책",
           "description": "고객 만족도 향상을 위한 서비스 DLP 정책입니다.",
-          "fileType": ["pdf", "pptx", "mp4"]
+          "fileType": ["pdf", "pptx", "mp4"],
+          "action": "고객 데이터 포함 파일 전송 시 관리자 승인 프로세스 적용"
         },
         {
           "id": 7,
           "name": "재무관리규정",
           "description": "회사의 재무 건전성 유지를 위한 DLP 관리 규정입니다.",
-          "fileType": ["pdf", "xlsx", "json"]
+          "fileType": ["pdf", "xlsx", "json"],
+          "action": "재무 정보 포함 문서 외부 전송 차단 및 내부 접근 로그 분석"
         }
       ]
     }
