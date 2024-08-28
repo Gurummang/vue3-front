@@ -90,19 +90,25 @@ const elements = computed(() => {
     const nodeId = `${item.eventId}`;
     let yPosition;
     let tuning = 25;
-    switch(item.eventType.toLowerCase()) {
-      case 'file_upload':
-        yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
-        break;
-      case 'file_change':
-        yPosition = -300;
-        break;
-      case 'file_delete':
-        yPosition = -600;
-        break;
-      default:
-        yPosition = 0; // 기본값
-    }
+    
+    // (1) 이벤트 행위에 따른 높이 구분
+    // switch(item.eventType.toLowerCase()) {
+    //   case 'file_upload':
+    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     break;
+    //   case 'file_change':
+    //     yPosition = -300;
+    //     break;
+    //   case 'file_delete':
+    //     yPosition = -600;
+    //     break;
+    //   default:
+    //     yPosition = 0; // 기본값
+    // }
+
+    // (2) 유사도가 같은 것 높이 유지
+    yPosition = Math.floor(-(100 - (item.similarity)) * 5)
+    if(yPosition < 0) yPosition -= 300
 
     nodes.push({
       id: nodeId,
