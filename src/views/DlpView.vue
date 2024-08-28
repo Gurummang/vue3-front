@@ -5,7 +5,8 @@
     <cycle-loading v-if="loading"></cycle-loading>
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
-        <file-details :fileDetails="fileDetails"></file-details>
+        <!-- <file-details :fileDetails="fileDetails"></file-details> -->
+        <PolicyDetails :fileDetails="fileDetails"></PolicyDetails>
         <the-pagination></the-pagination>
       </div>
     </main>
@@ -24,7 +25,7 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
-import FileDetails from '@/components/file/FileDetails.vue'
+import PolicyDetails from '@/components/dlp/PolicyDetails.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
@@ -37,11 +38,6 @@ Promise.all([
   ])
   .then((values) => {
     fileDetails.value = values[0]
-    detectionFileCount.value = [
-      values[0].data.total,
-      values[0].data.dlpTotal,
-      values[0].data.malwareTotal
-    ]
     isApiOk.value = true
   })
   .catch((err) => {
