@@ -72,7 +72,7 @@
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">
-                  <span v-for="(type, idx) in details.fileType" :key="idx" class="bg-gray-200 text-gray-800 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
+                  <span v-for="(type, idx) in details.fileType" :key="idx" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.action }}</td>
