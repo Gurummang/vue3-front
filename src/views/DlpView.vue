@@ -5,7 +5,6 @@
     <cycle-loading v-if="loading"></cycle-loading>
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
-        <!-- <detection-count :detectionFileCount="detectionFileCount"></detection-count> -->
         <file-details :fileDetails="fileDetails"></file-details>
         <the-pagination></the-pagination>
       </div>
@@ -25,7 +24,6 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
-import DetectionCount from '@/components/file/DetectionCount.vue'
 import FileDetails from '@/components/file/FileDetails.vue'
 
 let loading = ref(true)
@@ -34,7 +32,9 @@ let isApiOk = ref(false)
 let detectionFileCount = ref(null)
 let fileDetails = ref(null)
 
-Promise.all([fileScanApi()])
+Promise.all([
+  fileScanApi()
+  ])
   .then((values) => {
     fileDetails.value = values[0]
     detectionFileCount.value = [
