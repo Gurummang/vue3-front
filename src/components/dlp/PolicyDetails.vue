@@ -2,7 +2,7 @@
   <div>
     <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">파일 검사</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">DLP 정책 목록</h2>
         <div class="flex">
           <div class="space-x-2">
             <button
@@ -318,14 +318,13 @@ import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
 
-const test = ref('test')
 const props = defineProps({
-  fileDetails: Object,
+  policyDetails: Object,
   required: true
 })
-const fileDetails = ref(props.fileDetails.data.files)
+const policys = ref(props.policyDetails)
 
-console.log('fileDetails', props.fileDetails.data)
+console.log('policys', props.policyDetails)
 
 // 페이지 네비게이션
 const items = ref([])
@@ -336,7 +335,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = fileDetails.value
+  totalData.value = policys.value
   console.log('totalData', totalData.value)
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
