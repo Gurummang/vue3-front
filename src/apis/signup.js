@@ -32,9 +32,9 @@ let gasbSignupApi = async (data) => {
   }
 }
 
-let gasbLogoutApi = async (data) => {
+let gasbLogoutApi = async () => {
   try {
-    const response = await axios.get('/api/v1/auth/logout');
+    const response = await axios.get('/api/v1/auth/logout', { withCredentials: true });
     if (response.status === 200) {
       return true;
     } else {
