@@ -53,7 +53,7 @@
             <tr>
               <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
               <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
-              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">파일종류</th>
+              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
               <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
               <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
@@ -71,7 +71,7 @@
                   />
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">
+                <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
                   <span v-for="(type, idx) in details.fileType" :key="idx" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
