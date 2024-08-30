@@ -38,4 +38,11 @@ export const convertSaasName = (saas) => {
   return saasName;
 }
 
+export const formatFileTypes = (types) => {
+  if (types.length <= 2) {
+    return types;
+  }
+  return [...types.slice(0, 2), `...외의 ${types.length - 2}개`];
+}
+
 // export { getTodayDate, getSaasImg, getDate };
