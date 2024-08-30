@@ -34,7 +34,6 @@ import SaasStatistics from '@/components/saas/SaasStatistics.vue'
 import FileRatioChart from '@/components/saas/FileRatioChart.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
 import UsersTop5 from '@/components/saas/UsersTop5.vue'
-import { unconnectSaasApi } from '@/apis/register'
 
 let loading = ref(true);
 let isApiOk = ref(false);
