@@ -53,8 +53,8 @@
             <tr>
               <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
               <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
-              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
-              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
+              <th class="px-1 py-3 w-[21%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
+              <th class="px-2 py-3 w-[30%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
               <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
@@ -72,7 +72,10 @@
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
-                  <span v-for="(type, idx) in details.fileType" :key="idx" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
+                  <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
+                    <span v-if="type.startsWith('...')" class="text-gray-500 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
+                    <span v-else class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
+                  </span>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.action }}</td>
@@ -108,7 +111,7 @@ import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
-import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
+import { formatFileTypes } from '@/utils/utils.js'
 
 const props = defineProps({
   policyDetails: Object,
