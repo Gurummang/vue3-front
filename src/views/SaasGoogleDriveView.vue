@@ -2,29 +2,18 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <cycle-loading
-      v-if="loading"></cycle-loading>
-    <main 
-      class="scroll-h scroll overflow-auto rounded-lg"
-      v-else-if="!loading && isApiOk">
-      <div>
-        <saas-score
-          :saasScore="saasScore"></saas-score>
-        <saas-statistics
-          :fileStatistics="fileStatistics"></saas-statistics>
-        <div class="grid grid-cols-2 gap-5 mb-5">
-          <file-ratio-chart
-            :fileSize="fileSize"
-          ></file-ratio-chart>
-          <recent-upload-list
-            :fileRecent="fileRecent"></recent-upload-list>
-        </div>
-        <users-top-5
-          :usersTop5="usersTop5"></users-top-5>
+    <content-error v-if="isError"></content-error>
+    <cycle-loading v-else-if="loading"></cycle-loading>
+    <unconnect-saas v-else-if="!isApiOk"></unconnect-saas>
+    <main v-else class="scroll-h scroll overflow-auto rounded-lg">
+      <saas-score :saasScore="saasScore"></saas-score>
+      <saas-statistics :fileStatistics="fileStatistics"></saas-statistics>
+      <div class="grid grid-cols-2 gap-5 mb-5">
+        <file-ratio-chart :fileSize="fileSize"></file-ratio-chart>
+        <recent-upload-list :fileRecent="fileRecent"></recent-upload-list>
       </div>
+      <users-top-5 :usersTop5="usersTop5"></users-top-5>
     </main>
-    <content-error
-      v-else></content-error>
   </div>
   <!-- <footer>
     <the-footer></the-footer>
@@ -39,14 +28,17 @@ import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
+import UnconnectSaas from '@/components/UnconnectSaas.vue'
 import SaasScore from '@/components/saas/SaasScore.vue'
 import SaasStatistics from '@/components/saas/SaasStatistics.vue'
 import FileRatioChart from '@/components/saas/FileRatioChart.vue'
 import RecentUploadList from '@/components/saas/RecentUploadList.vue'
 import UsersTop5 from '@/components/saas/UsersTop5.vue'
+import { unconnectSaasApi } from '@/apis/register'
 
 let loading = ref(true);
 let isApiOk = ref(false);
+let isError = ref(false);
 
 let saasScore = ref(0);
 let fileSize = ref(null);
@@ -69,10 +61,12 @@ Promise.all([
   fileRecent.value = values[3];
   usersTop5.value = values[4];
 
-  // console.log(values[0], values[1], values[2]);  
-  isApiOk.value = true;
+  if(values[0].connectedAccounts) {
+    isApiOk.value = true;
+  }
 }).catch((err) => {
   console.log(err);
+  isError.value = true;
 }).finally(() => {
   loading.value = false;
 });
