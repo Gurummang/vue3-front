@@ -126,7 +126,7 @@ let topMalwareUserApi = async () => {
           "malware": 8
         },
       ]
-    };;
+    };
     return response;
   } catch (err) {
     console.error('Error:', err);

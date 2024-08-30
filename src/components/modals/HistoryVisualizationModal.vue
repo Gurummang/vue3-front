@@ -69,6 +69,12 @@ const elements = computed(() => {
   const slackData = data.data.slack.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
   const googleDriveData = data.data.googleDrive.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
 
+  // 유사도에 따른 높이 랭크 설정
+  const similarities = [...new Set(slackData.map(item => item.similarity))].sort((a, b) => b - a)
+  const similarityRanks = Object.fromEntries(similarities.map((sim, index) => [sim, index + 1]))
+  
+  // console.log(similarityRanks);
+
   // 부모 노드 추가
   const nodes = [
     // {
@@ -107,8 +113,12 @@ const elements = computed(() => {
     // }
 
     // (2) 유사도가 같은 것 높이 유지
-    yPosition = Math.floor(-(100 - (item.similarity)) * 5)
-    if(yPosition < 0) yPosition -= 300
+    // yPosition = Math.floor(-(100 - (item.similarity)) * 5)
+    // if(yPosition < 0) yPosition -= 300
+
+    // (3) 유사도에 따른 높이랭크를 설정
+    const similarityHeight = similarityRanks[item.similarity]
+    yPosition = -(similarityHeight * 260);
 
     nodes.push({
       id: nodeId,
