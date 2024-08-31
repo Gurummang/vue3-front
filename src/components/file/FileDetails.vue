@@ -62,10 +62,11 @@
               <th class="px-1 py-3 w-[5%] text-center text-sm font-bold font-medium text-white tracking-wider">DLP</th>
               <th class="px-1 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">악성탐지</th>
               <th class="px-2 py-3 w-[7%] text-center text-sm font-bold font-medium text-white tracking-wider">VirusTotal</th>
+              <!-- <th class="px-2 py-3 w-[26%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th> -->
               <th class="px-2 py-3 w-[26%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
               <th class="px-2 py-3 w-[10%] text-center text-sm font-bold font-medium text-white tracking-wider">파일 유형</th>
-              <th class="px-2 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
-              <th class="px-2 py-3 w-[15%] text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
+              <th class="px-2 py-3 w-[13%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
+              <th class="px-2 py-3 w-[12%] text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
               <th class="px-2 py-3 w-[15%] text-center text-sm font-bold font-medium text-white tracking-wider">생성 날짜</th>
             </tr>
           </thead>
@@ -123,15 +124,18 @@
                     <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
                   </div>
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.type }}</td>
+                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs truncate">{{ details.name }}</td> -->
+                <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate" :title="details.name">{{ details.name }}
+                  <!-- <div class="truncate" :title="details.name">{{ details.name }}</div> -->
+                </td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center max-w-1 truncate">{{ details.type }}</td>
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
                     <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
                     <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
                   </div>
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.user }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate">{{ details.user }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td>
               </tr>
               
