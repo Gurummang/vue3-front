@@ -327,9 +327,11 @@ const props = defineProps({
   fileDetails: Object,
   required: true
 })
-const fileDetails = ref(props.fileDetails.data.files)
 
-console.log('fileDetails', props.fileDetails.data)
+const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
+// const fileDetails = ref(props.fileDetails.data.files)
+
+// console.log('fileDetails', props.fileDetails.data)
 
 // 페이지 네비게이션
 const items = ref([])
@@ -340,7 +342,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = fileDetails.value
+  totalData.value = sortedDate.value
   console.log('totalData', totalData.value)
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =

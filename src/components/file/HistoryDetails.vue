@@ -144,7 +144,7 @@ const props = defineProps({
   }
 })
 
-const sortedEventTs = props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs));
+const sortedEventTs = ref(props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)));
 
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
@@ -159,7 +159,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = sortedEventTs
+  totalData.value = sortedEventTs.value
   // console.log('totalData', totalData.value);
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
