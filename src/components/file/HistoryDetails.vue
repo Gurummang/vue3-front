@@ -11,7 +11,7 @@
             class="inline-block border border-orange px-3 py-2 align-text-bottom flex items-center text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
             @click="openHistoryVisualizationModal"
           >
-            <v-icon :size="20" class="mr-1">mdi-weather-cloudy-clock</v-icon> 히스토리 시각화
+            <v-icon :size="20" class="mr-1">mdi-weather-cloudy-clock</v-icon> 파일 분포np 시각화
           </button>
         </div>
         <div class="flex ml-auto space-x-2">
