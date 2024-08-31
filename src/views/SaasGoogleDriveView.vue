@@ -60,7 +60,7 @@ Promise.all([
   fileRecent.value = values[3];
   usersTop5.value = values[4];
 
-  if(values[0].connectedAccounts) {
+  if(values[1].connectedAccounts) {
     isApiOk.value = true;
   }
 }).catch((err) => {
