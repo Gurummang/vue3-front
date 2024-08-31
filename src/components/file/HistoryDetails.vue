@@ -11,7 +11,7 @@
             class="inline-block border border-orange px-3 py-2 align-text-bottom flex items-center text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
             @click="openHistoryVisualizationModal"
           >
-            <v-icon :size="20" class="mr-1">mdi-weather-cloudy-clock</v-icon> 파일 분포np 시각화
+            <v-icon :size="20" class="mr-1">mdi-weather-cloudy-clock</v-icon> 파일 분포 시각화
           </button>
         </div>
         <div class="flex ml-auto space-x-2">
@@ -62,46 +62,14 @@
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
             <tr>
-              <th
-                class="pl-6 pr-2 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                선택
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider text-center"
-              >
-                번호
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                SaaS
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                활동 종류
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                파일명
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                히스토리 시각
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                최초 시각
-              </th>
-              <th
-                class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider"
-              >
-                사용자
-              </th>
+              <th class="pl-4 pr-2 py-3 w-[6%] text-left text-sm font-bold font-medium text-white tracking-wider">선택</th>
+              <th class="px-2 py-3 w-[5%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">번호</th>
+              <th class="px-2 py-3 w-[13%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
+              <th class="px-2 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">활동 종류</th>
+              <th class="px-2 py-3 w-[27%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
+              <th class="px-2 py-3 w-[12%] text-left text-sm font-bold font-medium text-white tracking-wider">히스토리 시각</th>
+              <th class="px-2 py-3 w-[12%] text-left text-sm font-bold font-medium text-white tracking-wider">최초 시각</th>
+              <th class="px-2 py-3 w=[15%] text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -115,8 +83,8 @@
                   v-model="selectedHistory"
                 />
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-center text-xs">{{ index + 1 }}</td>
-              <td class="px-6 py-2 whitespace-nowrap align-middle">
+              <td class="px-2 py-2 whitespace-nowrap text-center text-xs">{{ index + 1 }}</td>
+              <td class="px-2 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
                   <!-- <img class="w-5 h-5 mr-2" :src="getSaasImg(detail.saas)" :alt="detail.saas" />
                   <span class="text-sm"> {{ detail.saas }}</span> -->
@@ -124,7 +92,7 @@
                   <span class="text-sm"> {{ convertSaasName(detail.saas) }}</span>
                 </div>
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs align-middle">
+              <td class="px-2 py-2 whitespace-nowrap text-xs align-middle">
                 <p v-if="detail.eventType === 'file_upload'" class="flex items-center">
                   <v-icon :size="20" class="text-orange mr-1">mdi-file-upload-outline</v-icon>
                   파일 업로드
@@ -138,14 +106,14 @@
                   파일 삭제
                 </p>
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.fileName }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">
+              <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate" :title="detail.fileName">{{ detail.fileName }}</td>
+              <td class="px-2 py-2 whitespace-nowrap text-xs">
                 {{ removeWordDate(detail.eventTs) }}
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">
+              <td class="px-2 py-2 whitespace-nowrap text-xs">
                 {{ removeWordDate(detail.uploadTs) }}
               </td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ detail.email }}</td>
+              <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate" :title="detail.email">{{ detail.email }}</td>
             </tr>
           </tbody>
         </table>
