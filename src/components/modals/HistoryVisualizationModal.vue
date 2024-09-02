@@ -67,11 +67,18 @@ const nodeTypes = {
 
 const elements = computed(() => {
   const slackData = data.data.slack.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
-  const googleDriveData = data.data.googleDrive.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
+  const googledriveData = data.data.googleDrive.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
+  const o365Data = data.data.o365.sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs));
 
   // 유사도에 따른 높이 랭크 설정
-  const similarities = [...new Set(slackData.map(item => item.similarity))].sort((a, b) => b - a)
-  const similarityRanks = Object.fromEntries(similarities.map((sim, index) => [sim, index + 1]))
+  const slackSimilarities = [...new Set(slackData.map(item => item.similarity))].sort((a, b) => b - a)
+  const slackSimilarityRanks = Object.fromEntries(slackSimilarities.map((sim, index) => [sim, index + 1]))
+
+  const googledriveSimilarities = [...new Set(googledriveData.map(item => item.similarity))].sort((a, b) => b - a)
+  const googledriveSimilarityRanks = Object.fromEntries(googledriveSimilarities.map((sim, index) => [sim, index + 1]))
+
+  const o365Similarities = [...new Set(o365Data.map(item => item.similarity))].sort((a, b) => b - a)
+  const o365SimilarityRanks = Object.fromEntries(o365Similarities.map((sim, index) => [sim, index + 1]))
   
   // console.log(similarityRanks);
 
@@ -117,7 +124,7 @@ const elements = computed(() => {
     // if(yPosition < 0) yPosition -= 300
 
     // (3) 유사도에 따른 높이랭크를 설정
-    const similarityHeight = similarityRanks[item.similarity]
+    const similarityHeight = slackSimilarityRanks[item.similarity]
     yPosition = -(similarityHeight * 260);
 
     nodes.push({
@@ -141,23 +148,33 @@ const elements = computed(() => {
     })
   })
 
-  googleDriveData.forEach((item, index) => {
+  googledriveData.forEach((item, index) => {
     const nodeId = `${item.eventId}`;
     let yPosition;
     let tuning = 25;
-    switch(item.eventType.toLowerCase()) {
-      case 'file_upload':
-        yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
-        break;
-      case 'file_change':
-        yPosition = 600;
-        break;
-      case 'file_delete':
-        yPosition = 300;
-        break;
-      default:
-        yPosition = 900; // 기본값
-    }
+    
+    // (1) 이벤트 행위에 따른 높이 구분
+    // switch(item.eventType.toLowerCase()) {
+    //   case 'file_upload':
+    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     break;
+    //   case 'file_change':
+    //     yPosition = -300;
+    //     break;
+    //   case 'file_delete':
+    //     yPosition = -600;
+    //     break;
+    //   default:
+    //     yPosition = 0; // 기본값
+    // }
+
+    // (2) 유사도가 같은 것 높이 유지
+    // yPosition = Math.floor(-(100 - (item.similarity)) * 5)
+    // if(yPosition < 0) yPosition -= 300
+
+    // (3) 유사도에 따른 높이랭크를 설정
+    const similarityHeight = googledriveSimilarityRanks[item.similarity]
+    yPosition = -(similarityHeight * 260);
 
     nodes.push({
       id: nodeId,
@@ -175,53 +192,60 @@ const elements = computed(() => {
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
       position: { x: 50 + index * 400, y: yPosition },
+      // parentNode: item.saas,
+      // extent: 'parent',
     })
   })
 
+  o365Data.forEach((item, index) => {
+    const nodeId = `${item.eventId}`;
+    let yPosition;
+    
+    // (1) 이벤트 행위에 따른 높이 구분
+    // switch(item.eventType.toLowerCase()) {
+    //   case 'file_upload':
+    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     break;
+    //   case 'file_change':
+    //     yPosition = -300;
+    //     break;
+    //   case 'file_delete':
+    //     yPosition = -600;
+    //     break;
+    //   default:
+    //     yPosition = 0; // 기본값
+    // }
 
-  googleDriveData.forEach((item, index) => {
-    const nodeId = `file-${item.eventId}`
+    // (2) 유사도가 같은 것 높이 유지
+    // yPosition = Math.floor(-(100 - (item.similarity)) * 5)
+    // if(yPosition < 0) yPosition -= 300
+
+    // (3) 유사도에 따른 높이랭크를 설정
+    const similarityHeight = o365SimilarityRanks[item.similarity]
+    yPosition = -(similarityHeight * 260);
+
+    console.log('0365: ', yPosition);
+
     nodes.push({
       id: nodeId,
+      type: 'custom',
       data: { 
-        label: `활동 종류 : ${item.eventType}<br>\
-                파일명 : ${item.fileName}<br>\
-                사용자 : ${item.email}<br>\
-                히스토리 시각 : ${new Date(item.eventTs).toLocaleString()}`,
-        events: `${item.eventTs}`,
-        selected: true,
+        originNode : item.eventId === data.data.originNode,
+        eventType: item.eventType,
+        saas: item.saas,
+        fileName: item.fileName,
+        email: item.email,
+        eventTs: item.eventTs,
+        uploadChannel: item.uploadChannel,
+        similarity : item.similarity
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
-      position: { x: 50 + index * 350, y: 150 },
-      parentNode: item.saas,
-      extent: 'parent',
-      style: {
-        padding: '10px',
-        // border: '2px solid ' + (item.eventId % 2 === 0 ? 'rgba(0, 255, 75, 0.2)' : 'rgba(255, 0, 75, 0.2)'),
-        borderRadius: '5px',
-        backgroundColor: 'white',
-        fontSize: '12px',
-        lineHeight: 1.5,
-        width: '300px',
-        textAlign: 'left'
-      }
+      position: { x: 50 + index * 400, y: yPosition + 600},
+      // parentNode: item.saas,
+      // extent: 'parent',
     })
-    
-    if (index > 0) {
-      const prevNodeId = `file-${googleDriveData[index - 1].eventId}`
-      edges.push({
-        id: `e-${prevNodeId}-${nodeId}`,
-        source: prevNodeId,
-        target: nodeId,
-        animated: true,
-        style: { stroke: '#4A154B',
-                textColor: '#000',
-        }
-      })
-    }
   })
-
 
 // Edges 생성
   data.data.edges.forEach((item) => {

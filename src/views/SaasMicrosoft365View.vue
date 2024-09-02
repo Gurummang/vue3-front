@@ -45,7 +45,7 @@ let fileStatistics = ref(null);
 let fileRecent = ref(null);
 let usersTop5 = ref(null);
 
-const saas = 'google-drive';
+const saas = 'o365';
 
 Promise.all([
   saasScoreApi(saas),

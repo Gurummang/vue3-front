@@ -2,7 +2,7 @@
   <div class="p-4 bg-white border rounded-lg shadow-sm">
     <h2 class="text-xl font-bold mb-4">최근 업로드 파일</h2>
     <div class="overflow-x-auto">
-      <table class="w-full table-fixed bg-white">
+      <table class="w-full h-[22rem] table-fixed bg-white">
         <thead class="bg-indigo-900">
           <tr>
             <th class="w-3/6 px-3 py-3 text-left text-sm font-bold text-white tracking-wider">파일명</th>
