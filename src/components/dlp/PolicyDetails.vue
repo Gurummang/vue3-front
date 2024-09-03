@@ -13,7 +13,7 @@
             </button>
             <button
               class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
-              @click="openFileDeleteModal"
+              @click="openDlpDeleteModal"
             >
               <v-icon :size="20">mdi-magnify-minus-outline</v-icon> DLP 정책 삭제
             </button>
@@ -91,25 +91,17 @@
     <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
   </div>
 
-<virustotal-modal
-  v-if="isVirustotalModalOpen"
+<DlpDeleteModal
+  v-if="isDlpDeleteModalOpen"
   :checkedIndex="checkedIndex"
-  @close="closeVirustotalModal"
-></virustotal-modal>
-<file-delete-modal
-  v-if="isFileDeleteModalOpen"
-  :checkedIndex="checkedIndex"
-  @close="closeFileDeleteModal"
-></file-delete-modal>
+  @close="closeDlpDeleteModal"
+></DlpDeleteModal>
 
 </template>
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
-import DlpChart from '@/components/file/DlpChart.vue'
-import VirustotalChart from '@/components/file/VirustotalChart.vue'
-import VirustotalModal from '@/components/modals/VirustotalModal.vue'
-import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
+import DlpDeleteModal from '@/components/modals/DlpDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { formatFileTypes } from '@/utils/utils.js'
 
@@ -118,6 +110,8 @@ const props = defineProps({
   required: true
 })
 const policys = ref(props.policyDetails.policy)
+let checkedIndex = ref([])
+const isDlpDeleteModalOpen = ref(false)
 
 console.log('policys', props.policyDetails)
 
@@ -163,36 +157,21 @@ watch(selectPages, () => {
   getData()
 })
 
-let checkedIndex = ref([])
-
 const clearCheckedIndex = () => {
   checkedIndex.value = []
 }
 
 // Modal Function
-const openVirustotalModal = () => {
+const openDlpDeleteModal = () => {
   if (checkedIndex.value.length) {
-    isVirustotalModalOpen.value = true
+    isDlpDeleteModalOpen.value = true
   } else {
-    alert('검사할 파일을 선택해주세요.')
+    alert('삭제할 정책을 선택해주세요.')
   }
 }
 
-const closeVirustotalModal = () => {
-  isVirustotalModalOpen.value = false
-  clearCheckedIndex()
-}
-
-const openFileDeleteModal = () => {
-  if (checkedIndex.value.length) {
-    isFileDeleteModalOpen.value = true
-  } else {
-    alert('삭제할 파일을 선택해주세요.')
-  }
-}
-
-const closeFileDeleteModal = () => {
-  isFileDeleteModalOpen.value = false
+const closeDlpDeleteModal = () => {
+  isDlpDeleteModalOpen.value = false
   clearCheckedIndex()
 }
 </script>
