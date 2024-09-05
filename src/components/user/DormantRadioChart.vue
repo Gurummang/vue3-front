@@ -48,8 +48,8 @@ const data = {
   labels: ['6개월 미만', '6~12개월 사이', '12개월 이상'],
   datasets: [
     {
-      data: [dormant.value, dormanting.value, undormant.value],
-      backgroundColor: ['rgb(49 46 129)', 'rgb(79 70 229)', 'rgb(165 180 252)'],
+      data: [undormant.value, dormanting.value, dormant.value],
+      backgroundColor: ['rgb(165 180 252)', 'rgb(79 70 229)', 'rgb(49 46 129)'],
       hoverOffset: 4
     }
   ]

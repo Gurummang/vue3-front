@@ -10,7 +10,7 @@
 
     <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
       <div>
-        <h3 class="font-semibold text-gray-700">휴먼 사용자 수</h3>
+        <h3 class="font-semibold text-gray-700">휴면 사용자 수</h3>
         <p class="text-3xl font-semibold">{{ animatedStats[1] }}</p>
       </div>
       <v-icon :size="44" class="text-gray-400 ml-auto">mdi-account-cancel</v-icon>
