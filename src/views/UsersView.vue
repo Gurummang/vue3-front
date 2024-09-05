@@ -56,7 +56,12 @@ Promise.all([
   userDetailsApi()
 ])
   .then((values) => {
-    userStatistics.value = values[0],
+    userStatistics.value = [
+      values[0].data.total,
+      values[0].data.dlpTotal,
+      values[0].data.malwareTotal,
+      values[0].data.dormantTotal,
+    ],
     dormantRadio.value = values[1],
     topSensitiveUser.value = values[2].topSensitive,
     topMalwareUser.value = values[3].topMalware,
