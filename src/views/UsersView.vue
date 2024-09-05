@@ -56,9 +56,9 @@ Promise.all([
   .then((values) => {
     userStatistics.value = [
       values[0].data.total,
+      values[0].data.dormantTotal,
       values[0].data.dlpTotal,
       values[0].data.malwareTotal,
-      values[0].data.dormantTotal,
     ],
     dormantRadio.value = values[1].data.lastActivities,
     topSensitiveUser.value = values[1].data.topSensitive,
