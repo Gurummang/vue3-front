@@ -65,7 +65,7 @@ Promise.all([
     dormantRadio.value = values[1],
     topSensitiveUser.value = values[2].topSensitive,
     topMalwareUser.value = values[3].topMalware,
-    userDetails.value = values[4],
+    userDetails.value = values[4].data,
     isApiOk.value = true
   })
   .catch((err) => {
