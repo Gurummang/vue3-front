@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, toRef } from 'vue'
-import { userStatisticsApi, dormantRadioApi, topSensitiveUserApi, topMalwareUserApi, userDetailsApi } from '@/apis/user.js'
+import { userStatisticsApi, userChartInfoApi, userDetailsApi } from '@/apis/user.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 
@@ -50,17 +50,20 @@ const userDetails = ref(null);
 
 Promise.all([
   userStatisticsApi(),
-  dormantRadioApi(),
-  topSensitiveUserApi(),
-  topMalwareUserApi(),
+  userChartInfoApi(),
   userDetailsApi()
 ])
   .then((values) => {
-    userStatistics.value = values[0],
-    dormantRadio.value = values[1],
-    topSensitiveUser.value = values[2].topSensitive,
-    topMalwareUser.value = values[3].topMalware,
-    userDetails.value = values[4],
+    userStatistics.value = [
+      values[0].data.total,
+      values[0].data.dormantTotal,
+      values[0].data.dlpTotal,
+      values[0].data.malwareTotal,
+    ],
+    dormantRadio.value = values[1].data.lastActivities,
+    topSensitiveUser.value = values[1].data.topSensitive,
+    topMalwareUser.value = values[1].data.topMalware,
+    userDetails.value = values[2].data,
     isApiOk.value = true
   })
   .catch((err) => {
