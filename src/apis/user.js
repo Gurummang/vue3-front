@@ -8,17 +8,15 @@ const api = axios.create({
 
 let userStatisticsApi = async () => {
   try {
-    // const response = await api.get('/api/v1/files/history/statistics', );
-    // if(response.data.status == 'error') {
-    //   router.push('/login');
-    //   return;
-    // }
-    // if(response.status == '200') {
-    //   console.log(response.data);
-    //   return response.data;
-    // }
-    const response = [2024, 2, 11, 22];
-    return response;
+    const response = await api.get('/api/v1/users/total');
+    if(response.data.status == 'error') {
+      router.push('/login');
+      return;
+    }
+    if(response.status == '200') {
+      console.log(response.data);
+      return response.data;
+    }
   } catch (err) {
     console.error('Error:', err);
     throw err;  
