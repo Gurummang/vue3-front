@@ -3,7 +3,7 @@
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
     <main>
-      
+      <PolicyAdd></PolicyAdd>
       <!-- <content-error></content-error> -->
     </main>
   </div>
@@ -20,6 +20,7 @@ import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
+import PolicyAdd from '@/components/dlp/PolicyAdd.vue'
 // 로그인 유도
 import { fileScanApi } from '@/apis/file.js'
 
