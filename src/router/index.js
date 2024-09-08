@@ -67,6 +67,11 @@ const routes = [
     component: () => import('../views/DlpView.vue')
   },
   {
+    path: '/dlp/add',
+    name: 'DLP 추가',
+    component: () => import('../views/DlpAddView.vue')
+  },
+  {
     path: '/test',
     name: 'test',
     component: () => import('../views/testView.vue')

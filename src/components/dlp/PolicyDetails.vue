@@ -7,6 +7,7 @@
           <div class="space-x-2">
             <button
               class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
+              @click="router.push('/dlp/add')"
             >
               <!-- @click="openVirustotalModal" -->
               <v-icon :size="20">mdi-magnify-plus-outline</v-icon> DLP 정책 생성
@@ -101,6 +102,7 @@
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import DlpDeleteModal from '@/components/modals/DlpDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { formatFileTypes } from '@/utils/utils.js'
@@ -109,6 +111,8 @@ const props = defineProps({
   policyDetails: Object,
   required: true
 })
+const router = useRouter();
+
 const policys = ref(props.policyDetails.policy)
 let checkedIndex = ref([])
 const isDlpDeleteModalOpen = ref(false)
