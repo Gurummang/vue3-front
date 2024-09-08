@@ -28,7 +28,7 @@
 
         <div class="flex space-x-4 mb-3">
           <div class="w-1/2">
-            <h3 class="font-semibold text-gray-700 mb-1">탐지 목록</h3>
+            <h3 class="font-semibold text-gray-700 mb-1">식별 목록</h3>
             <select multiple class="w-full h-40 border rounded-md p-2" v-model="selectedLeft">
               <option v-for="item in leftList" :key="item" :value="item">{{ item }}</option>
             </select>
@@ -38,7 +38,7 @@
             <button @click="moveToLeft" class="bg-orange text-white px-4 py-2 rounded-md text-xs" v-html="'&#9664;'"></button>
           </div>
           <div class="w-1/2">
-            <h3 class="font-semibold text-gray-700 mb-1">선택한 탐지 목록</h3>
+            <h3 class="font-semibold text-gray-700 mb-1">선택한 식별 목록</h3>
             <select multiple class="w-full h-40 border rounded-md p-2" v-model="selectedRight">
               <option v-for="item in rightList" :key="item" :value="item">{{ item }}</option>
             </select>
