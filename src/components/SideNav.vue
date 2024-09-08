@@ -194,6 +194,10 @@ export default defineComponent({
           }
         }
       });
+      // 정책 추가 페이지 예외 추가
+      if(route.path === '/dlp/add') {
+        navItems.value[5].active = true
+      }
     };
 
     watch(route, setActiveNavItem, { immediate: true });
