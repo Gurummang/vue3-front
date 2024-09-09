@@ -119,9 +119,10 @@
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <div v-if="details.fileStatus">
                     <span v-if="details.fileStatus.vtStatus === -1" class="bg-gray-200 text-slate-900 text-xs me-2 px-2.5 py-0.5 rounded-full">미검사</span>
-                    <span v-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
-                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
-                    <span v-if="details.fileStatus.vtStatus === 1 && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
+                    <span v-else-if="details.fileStatus.vtStatus === 0" class="bg-amber-200 text-amber-800 text-xs me-2 px-2.5 py-0.5 rounded-full">스캔중</span>
+                    <span v-else-if="details.fileStatus.vtStatus === 1 && details.vtReport !== null && details.vtReport.threatLabel === 'none'" class="bg-green-200 text-green-800 text-xs me-2 px-2.5 py-0.5 rounded-full">안전</span>
+                    <span v-else-if="details.fileStatus.vtStatus === 1 && details.vtReport !== null && details.vtReport.threatLabel !== 'none'" class="bg-red-200 text-red-800 text-xs me-2 px-2.5 py-0.5 rounded-full">위험</span>
+                    <span v-else class="bg-purple-950 text-white text-xs me-2 px-2.5 py-0.5 rounded-full">오류</span>
                   </div>
                 </td>
                 <!-- <td class="px-2 py-2 whitespace-nowrap text-xs truncate">{{ details.name }}</td> -->
@@ -212,7 +213,7 @@
                       <v-icon v-else class="mr-2">mdi-chevron-down</v-icon>VirusTotal Report
                     </div>
                     <!-- 원본 VT Report -->
-                    <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1" class="bg-white">
+                    <div v-if="isVirusTotalReportOpen(index) && details.fileStatus.vtStatus == 1 && details.vtReport !== null" class="bg-white">
                     <!-- <div v-if="isVirusTotalReportOpen(index)" class="bg-white"> -->
                       <!-- VirusTotal Report content -->
                       <div class="flex h-full">
