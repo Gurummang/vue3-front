@@ -26,6 +26,22 @@
           />
         </div>
 
+        <h3 class="font-semibold text-gray-700 mb-2">적용할 SaaS 종류</h3>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <div
+            v-for="chip in chips"
+            :key="chip.id"
+            class="cursor-pointer border flex rounded-full px-3 py-1 text-sm"
+            :class="{
+              'bg-orange text-white border-orange-900': isSelected(chip.id),
+              'bg-gray-100 text-black border-gray-400': !isSelected(chip.id)
+            }"
+            @click="toggleChip(chip)"
+          >
+            <img class="w-5 h-5 mr-2" :src="getSaasImg(convertSaasName(chip.name))" :alt="chip.name" /> {{ chip.alias }}
+          </div>
+        </div>
+
         <div class="flex space-x-4 mb-3">
           <div class="w-1/2">
             <h3 class="font-semibold text-gray-700 mb-1">식별 목록</h3>
@@ -52,7 +68,7 @@
             id="SaasAlias"
             placeholder="정책이 탐지 될 시에 할 권장 조치사항을 입력해주세요."
             class="mt-1 p-1.5 w-full rounded-md shadow-sm text-sm border-2 border-gray-300"
-            v-model="alias"
+            v-model="action"
           />
         </div>
 
@@ -65,22 +81,19 @@
 
   </div>
 
-<DlpDeleteModal
-  v-if="isDlpDeleteModalOpen"
-  :checkedIndex="checkedIndex"
-  @close="closeDlpDeleteModal"
-></DlpDeleteModal>
+  <!-- {{ selectedChips.map(item => ( item.id )) }}  -->
 
 </template>
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 
 const props = defineProps({
-  policyDetails: {
+  orgSaasList: {
     type: Object,
-  // required: true
+    required: true
   },
   initialLeftList: {
     type: Array,
@@ -94,6 +107,14 @@ const leftList = ref(props.initialLeftList)
 const rightList = ref([])
 const selectedLeft = ref([])
 const selectedRight = ref([])
+// 선택된 칩들 저장
+const selectedChips = ref([]);
+
+let name = ref("");
+let description = ref("");
+let action = ref("");
+
+// console.log('props.orgSaas', props.orgSaasList)
 
 const moveToRight = () => {
   rightList.value = [...rightList.value, ...selectedLeft.value]
@@ -107,7 +128,26 @@ const moveToLeft = () => {
   selectedRight.value = []
 }
 
+// 주어진 chips 데이터
+const chips = [
+  { name: "slack", id: 28, alias: "fffffff" },
+  { name: "slack", id: 139, alias: "slack_test" },
+  { name: "o365", id: 174, alias: "테스트" }
+];
 
+// 칩 선택 여부 확인
+const isSelected = (id) => {
+  return selectedChips.value.some(chip => chip.id === id);
+};
+
+// 칩 선택/해제 토글
+const toggleChip = (chip) => {
+  if (isSelected(chip.id)) {
+    selectedChips.value = selectedChips.value.filter(c => c.id !== chip.id);
+  } else {
+    selectedChips.value.push(chip);
+  }
+};
 </script>
 
 <style scoped>
