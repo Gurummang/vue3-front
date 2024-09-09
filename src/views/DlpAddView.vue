@@ -25,20 +25,26 @@ import PolicyAdd from '@/components/dlp/PolicyAdd.vue'
 import { getSaasListApi } from '@/apis/register.js'
 
 const router = useRouter();
+
+let loading = ref(true)
+let isApiOk = ref(false)
 let orgSaasList = ref(null);
 let orgId = 1
 
 Promise.all([
   getSaasListApi(orgId),
 ]).then((values) => {
-  orgSaasList.value = values[0],
+  orgSaasList.value = values[0].map(item => ({
+    name: item.name,
+    id: item.id,
+    alias: item.alias
+  })),
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
 }).finally(() => {
   loading.value = false;
 });
-
 
 
 </script>
