@@ -117,8 +117,6 @@ const policys = ref(props.policyDetails.policy)
 let checkedIndex = ref([])
 const isDlpDeleteModalOpen = ref(false)
 
-console.log('policys', props.policyDetails)
-
 // 페이지 네비게이션
 const items = ref([])
 const totalData = ref([])
@@ -129,7 +127,6 @@ const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
   totalData.value = policys.value
-  console.log('totalData', totalData.value)
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
