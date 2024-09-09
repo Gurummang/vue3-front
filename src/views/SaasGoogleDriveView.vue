@@ -6,7 +6,7 @@
     <cycle-loading v-else-if="loading"></cycle-loading>
     <unconnect-saas v-else-if="!isApiOk"></unconnect-saas>
     <main v-else class="scroll-h scroll overflow-auto rounded-lg">
-      <saas-score :saasScore="saasScore"></saas-score>
+      <!-- <saas-score :saasScore="saasScore"></saas-score> -->
       <saas-statistics :fileStatistics="fileStatistics"></saas-statistics>
       <div class="grid grid-cols-2 gap-5 mb-5">
         <file-ratio-chart :fileSize="fileSize"></file-ratio-chart>

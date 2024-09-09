@@ -55,8 +55,6 @@ const props = defineProps({
   }
 })
 
-console.log('props.test : ', props.test)
-
 const step = ref(0)
 const pages = computed(() => {
   const newArr = []
@@ -70,7 +68,6 @@ const pages = computed(() => {
   for (let i = 0; i <= divide; i++) {
     res.push(newArr.slice(0, 10))
   }
-  console.log('페이지네이션 res', res)
   return res
 })
 
@@ -83,9 +80,7 @@ const movePage = (pageIdx) => {
 }
 
 const moveToPrev = () => {
-  console.log('이전 이동', pages.value.length, props.totalPage)
   if (page.value <= 1) {
-    console.log('불가', page.value)
     return
   } else page.value--
 
@@ -93,7 +88,6 @@ const moveToPrev = () => {
 }
 
 const moveToNext = () => {
-  console.log('다음 이동', page.value, props.totalPage)
   if (page.value <= props.totalPage - 1) page.value++
   else return
 
