@@ -3,7 +3,7 @@
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
     <main>
-      <PolicyAdd></PolicyAdd>
+      <PolicyAdd :orgSaasList="orgSaasList"></PolicyAdd>
       <!-- <content-error></content-error> -->
     </main>
   </div>
@@ -22,20 +22,23 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import PolicyAdd from '@/components/dlp/PolicyAdd.vue'
 // 로그인 유도
-import { fileScanApi } from '@/apis/file.js'
+import { getSaasListApi } from '@/apis/register.js'
 
 const router = useRouter();
-let responseData = ref(null);
+let orgSaasList = ref(null);
+let orgId = 1
 
 Promise.all([
-  fileScanApi(),
-  ]).then((values) => {
-
+  getSaasListApi(orgId),
+]).then((values) => {
+  orgSaasList.value = values[0],
   isApiOk.value = true;
 }).catch((err) => {
   console.log(err);
 }).finally(() => {
   loading.value = false;
 });
+
+
 
 </script>
