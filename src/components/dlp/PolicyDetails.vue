@@ -54,9 +54,10 @@
             <tr>
               <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
               <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
-              <th class="px-1 py-3 w-[21%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
-              <th class="px-2 py-3 w-[30%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
-              <th class="px-2 py-3 w-[35%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
+              <th class="px-1 py-3 w-[20%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
+              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
+              <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
+              <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -72,6 +73,12 @@
                   />
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saasName))" :alt="details.saasName" />
+                    <span class="text-xs"> {{ details.saasAlias }}</span>
+                  </div>
+                </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
                   <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
                     <span v-if="type.startsWith('...')" class="text-gray-500 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
@@ -105,7 +112,7 @@ import { ref, watch, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import DlpDeleteModal from '@/components/modals/DlpDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
-import { formatFileTypes } from '@/utils/utils.js'
+import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
 
 const props = defineProps({
   policyDetails: Object,
