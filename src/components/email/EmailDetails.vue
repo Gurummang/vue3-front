@@ -6,24 +6,24 @@
         <div class="flex">
           <div class="space-x-2">
             <button
-              class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
+              class="inline-block rounded border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
               @click="router.push('/dlp/add')"
             >
               <!-- @click="openVirustotalModal" -->
-              <v-icon :size="20">mdi-magnify-plus-outline</v-icon> 이메일 알림 생성
+              <v-icon :size="20">mdi-email-plus-outline</v-icon> 이메일 알림 생성
             </button>
             <button
-              class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
+              class="inline-block rounded border border-indigo-900 px-3 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white hover:border-indigo-900 active:bg-indigo-900"
               @click="router.push('/dlp/add')"
             >
               <!-- @click="openVirustotalModal" -->
-              <v-icon :size="20">mdi-magnify-plus-outline</v-icon> 이메일 알림 수정
+              <v-icon :size="20">mdi-email-sync-outline</v-icon> 이메일 알림 수정
             </button>
             <button
-              class="inline-block border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
+              class="inline-block rounded border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
               @click="openDlpDeleteModal"
             >
-              <v-icon :size="20">mdi-magnify-minus-outline</v-icon> 이메일 알림 삭제
+              <v-icon :size="20">mdi-email-remove-outline</v-icon> 이메일 알림 삭제
             </button>
           </div>
           <div class="flex ml-auto space-x-2">
