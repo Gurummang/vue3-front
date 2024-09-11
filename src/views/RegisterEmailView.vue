@@ -2,11 +2,14 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <main>
-      <content-error></content-error>
+    <cycle-loading v-if="loading"></cycle-loading>
+    <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
+      <div>
+        <EmailDetails></EmailDetails>
+      </div>
     </main>
+    <content-error v-else></content-error>
   </div>
-
   <!-- <footer>
     <the-footer></the-footer>
   </footer> -->
@@ -14,12 +17,29 @@
 
 <script setup>
 import { ref } from 'vue'
+// import { fileScanApi } from '@/apis/file.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
-
 import ContentError from '@/components/ContentError.vue'
+import CycleLoading from '@/components/CycleLoading.vue'
+import EmailDetails from '@/components/email/EmailDetails.vue'
 
-let responseData = ref(null);
+let loading = ref(true)
+let isApiOk = ref(false)
 
+let emailDetails = ref(null)
+
+Promise.all([
+])
+.then((values) => {
+  
+  isApiOk.value = true
+})
+.catch((err) => {
+  console.log(err)
+})
+.finally(() => {
+  loading.value = false
+})
 </script>
