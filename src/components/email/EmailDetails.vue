@@ -94,10 +94,15 @@
                     <span v-else class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                   </span>
                 </td> -->
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.gscanCheck }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.dlpCheck }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.vtCheck }}</td>
-                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td> -->
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.dlpCheck" disabled/>
+                </td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.gscanCheck" disabled/>
+                </td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.vtCheck" disabled/>
+                </td>
               </tr>
             </template>
               <!-- Accordion row -->
