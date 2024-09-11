@@ -29,13 +29,12 @@
           <div class="flex ml-auto space-x-2">
             
             <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-              <option value="week">DLP</option>
-              <option value="month">악성 탐지</option>
+              <option value="week">수신 이메일</option>
+              <option value="month" selected>제목</option>
+              <option value="year">설명</option>
+              <option value="year">DLP</option>
+              <option value="year">악성탐지</option>
               <option value="year">VirusTotal</option>
-              <option value="year">파일명</option>
-              <option value="year">SaaS</option>
-              <option value="year">사용자</option>
-              <option value="year" selected>생성날짜</option>
             </select>
             <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
               <option value="week">오름차순</option>
@@ -63,9 +62,9 @@
               <th class="px-1 py-3 w-[20%] text-left text-sm font-bold font-medium text-white tracking-wider">수신 이메일</th>
               <th class="px-1 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">제목</th>
               <th class="px-1 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">내용</th>
-              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider">DLP</th>
-              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider">악성 탐지</th>
-              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider">VirusTotal</th>
+              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">DLP</th>
+              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">악성 탐지</th>
+              <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">VirusTotal</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -80,21 +79,24 @@
                     onclick="event.cancelBubble = true;"
                   />
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
-                <td class="px-2 py-2 whitespace-nowrap">
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.email }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.title }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
+                <!-- <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
                     <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saasName))" :alt="details.saasName" />
                     <span class="text-xs"> {{ details.saasAlias }}</span>
                   </div>
-                </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
+                </td> -->
+                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
                   <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
                     <span v-if="type.startsWith('...')" class="text-gray-500 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                     <span v-else class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                   </span>
-                </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.action }}</td>
+                </td> -->
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.gscanCheck }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.dlpCheck }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ details.vtCheck }}</td>
                 <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td> -->
               </tr>
             </template>
@@ -123,12 +125,12 @@ import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
 
 const props = defineProps({
-  policyDetails: Object,
-  required: true
+  emailDetails: Object,
+  // required: true
 })
 const router = useRouter();
 
-const policys = ref(props.policyDetails)
+const emails = ref(props.emailDetails.emails)
 let checkedIndex = ref([])
 const isDlpDeleteModalOpen = ref(false)
 
@@ -141,7 +143,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = policys.value
+  totalData.value = emails.value
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
