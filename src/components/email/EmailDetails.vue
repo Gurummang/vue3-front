@@ -7,14 +7,14 @@
           <div class="space-x-2">
             <button
               class="inline-block rounded border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
-              @click="router.push('/dlp/add')"
+              @click="openEmailCreatModal"
             >
               <!-- @click="openVirustotalModal" -->
               <v-icon :size="20">mdi-email-plus-outline</v-icon> 이메일 알림 생성
             </button>
             <button
               class="inline-block rounded border border-indigo-900 px-3 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white hover:border-indigo-900 active:bg-indigo-900"
-              @click="router.push('/dlp/add')"
+              @click="openEmailCreatModal"
             >
               <!-- @click="openVirustotalModal" -->
               <v-icon :size="20">mdi-email-sync-outline</v-icon> 이메일 알림 수정
@@ -82,18 +82,6 @@
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.email }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.title }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
-                <!-- <td class="px-2 py-2 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saasName))" :alt="details.saasName" />
-                    <span class="text-xs"> {{ details.saasAlias }}</span>
-                  </div>
-                </td> -->
-                <!-- <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
-                  <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
-                    <span v-if="type.startsWith('...')" class="text-gray-500 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
-                    <span v-else class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
-                  </span>
-                </td> -->
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
                   <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.dlpCheck" disabled/>
                 </td>
@@ -114,18 +102,24 @@
     <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
   </div>
 
-<DlpDeleteModal
+<!-- <DlpDeleteModal
   v-if="isDlpDeleteModalOpen"
   :checkedIndex="checkedIndex"
   @close="closeDlpDeleteModal"
-></DlpDeleteModal>
+></DlpDeleteModal> -->
+
+<EmailCreatModal
+  v-if="isEmailCreatModalOpen"
+  @close="closeEmailCreatModal"  
+></EmailCreatModal>
+
 
 </template>
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import DlpDeleteModal from '@/components/modals/DlpDeleteModal.vue'
+import EmailCreatModal from '@/components/modals/EmailCreatModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
 
@@ -137,6 +131,7 @@ const router = useRouter();
 
 const emails = ref(props.emailDetails.emails)
 let checkedIndex = ref([])
+const isEmailCreatModalOpen = ref(false)
 const isDlpDeleteModalOpen = ref(false)
 
 // 페이지 네비게이션
@@ -182,6 +177,15 @@ watch(selectPages, () => {
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
+}
+
+const openEmailCreatModal = () => {
+  isEmailCreatModalOpen.value = true;
+};
+
+const closeEmailCreatModal = () => {
+  isEmailCreatModalOpen.value = false;
+  router.go();
 }
 
 // Modal Function
