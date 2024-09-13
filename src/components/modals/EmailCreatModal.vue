@@ -1,20 +1,24 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white rounded-lg shadow-lg w-1/2">
-      <div class="flex justify-end p-3">
+      <div class="flex justify-between px-4 py-3">
+        <div class="flex items-center">
+          <v-icon :size="25" class="text-orange">mdi-email-plus-outline</v-icon>
+          <h2 class="text-lg font-bold text-gray-700 ml-1.5">이메일알림 생성</h2>
+        </div>
         <button @click="$emit('close')" class="text-gray-400 hover:text-black">
           <v-icon>mdi-close</v-icon>
         </button>
       </div>
       <div class="px-4">
         <div class="mb-2">
-          <label for="SaasAlias" class="block text-sm font-semibold text-gray-700"> 이메일 제목 </label>
+          <label for="emailTitle" class="block text-sm font-semibold text-gray-700"> 이메일 제목 </label>
           <input
             type="text"
-            id="SaasAlias"
-            placeholder="연동할 SaaS의 별칭을 입력해주세요."
+            id="emailTitle"
+            placeholder="이메일의 제목을 입력해주세요."
             class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
-            v-model="alias"
+            v-model="emailtitle"
           />
         </div>
         <div class="mb-2">
@@ -39,36 +43,39 @@
         </div> 
         <div class="mb-5">
           <label for="SaaSEmail" class="block text-sm font-semibold text-gray-700"> 이메일 내용 </label>
-          <textarea rows="10" class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"></textarea>
+          <textarea 
+            rows="7" 
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
+            v-model="emailContent"
+          ></textarea>
         </div> 
         <!-- Items Toggle -->
         <div class="flex justify-between mb-5 pb-2 w-60 border-b-2">
           <span class="text-sm font-semibold text-gray-700">악성코드 탐지</span>
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" value="" class="sr-only peer">
+            <input type="checkbox" v-model="gscanCheck" class="sr-only peer">
             <div class="relative w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange"></div>
           </label>
         </div> 
         <div class="flex justify-between mb-5 pb-2 w-60 border-b-2">
           <span class="text-sm font-semibold text-gray-700">DLP 탐지</span>
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" value="" class="sr-only peer">
+            <input type="checkbox" v-model="dlpCheck" class="sr-only peer">
             <div class="relative w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange"></div>
           </label>
         </div> 
         <div class="flex justify-between mb-2 pb-2 w-60 border-b-2">
           <span class="text-sm font-semibold text-gray-700">VirusTotal 탐지</span>
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" value="" class="sr-only peer">
+            <input type="checkbox" v-model="vtCheck" class="sr-only peer">
             <div class="relative w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange"></div>
           </label>
         </div> 
       </div>
 
-
-      <div class="flex justify-end p-3">
-        <button v-if="saasType != 6" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
-        <button v-else @click="googleOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+      <div class="flex justify-end p-3 gap-2">
+        <button @click="emit('close')" class="bg-white text-orange px-4 py-2 rounded text-sm font-semibold border border-orange hover:bg-orange-600 hover:text-white">알림 취소</button>
+        <button @click="" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">알림 생성</button>
       </div>
     </div>
   </div>
@@ -89,21 +96,20 @@ import { validateEmail } from '@/utils/validation.js'
 // import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
 
-let emit = defineEmits(['close']);
+let emit = defineEmits(['close'])
 
 // 임의의 값 넣기
-let saasType = ref('None');
-let alias = ref('');
-let saasEmail = ref('');
-let webhookUrl = ref('');
-let apiToken = ref('');
-let agreeToTerms = ref(false);
+const emailtitle = ref('')
+const emailContent = ref('')
+const emails = ref([])
+const newEmail = ref('')
+const errorEmail = ref('')
+const emailInput = ref(null)
+const gscanCheck = ref(false)
+const dlpCheck = ref(false)
+const vtCheck = ref(false)
 
-let showPassword = ref(true);
 // let isValidEmail = ref(true);
-let showApiInput = ref(true);
-let isValidApiToken = ref(true);
-let selectedSaaS = ref(null);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
 
@@ -116,12 +122,6 @@ const closeErrorModal = () => {
 }
 
 // 구분선
-
-const emails = ref([])
-const newEmail = ref('')
-const errorEmail = ref('')
-const emailInput = ref(null)
-
 // const isValidEmail = (email) => {
 //   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 //   return re.test(email)
