@@ -109,7 +109,6 @@ const gscanCheck = ref(false)
 const dlpCheck = ref(false)
 const vtCheck = ref(false)
 
-// let isValidEmail = ref(true);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
 
@@ -122,11 +121,6 @@ const closeErrorModal = () => {
 }
 
 // 구분선
-// const isValidEmail = (email) => {
-//   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-//   return re.test(email)
-// }
-
 const addEmail = () => {
   const email = newEmail.value.trim()
   if (email && validateEmail(email)) {
@@ -151,10 +145,5 @@ const removeEmail = (index) => {
 //     emails.value.pop()
 //   }
 // }
-
-watch(emails, (newEmails) => {
-  console.log('등록된 이메일:', newEmails)
-  console.log(emails.value);
-})
 
 </script>
