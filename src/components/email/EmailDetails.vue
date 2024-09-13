@@ -71,12 +71,12 @@
             <template v-for="(details, index) in totalData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
-                  <input 
-                    type="checkbox" 
-                    class="size-3.5 rounded border-gray-300" 
-                    :value="details.id"
-                    v-model="checkedIndex" 
-                    onclick="event.cancelBubble = true;"
+                    <input 
+                    type="radio" 
+                    name="email"
+                    class="form-radio size-3"
+                    :value="details"
+                    v-model="selectedEmail"
                   />
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.email }}</td>
@@ -133,6 +133,7 @@ const emails = ref(props.emailDetails.emails)
 let checkedIndex = ref([])
 const isEmailCreatModalOpen = ref(false)
 const isDlpDeleteModalOpen = ref(false)
+const selectedEmail = ref(null)
 
 // 페이지 네비게이션
 const items = ref([])
