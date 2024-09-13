@@ -39,7 +39,7 @@
               ref="emailInput"
             >
           </div>
-          <p v-if="errorEmail" class="mt-1 text-sm text--rose-500">{{ errorEmail }}</p>
+          <p v-if="errorEmail" class="mt-1 text-sm text-rose-500">{{ errorEmail }}</p>
         </div> 
         <div class="mb-5">
           <label for="SaaSEmail" class="block text-sm font-semibold text-gray-700"> 이메일 내용 </label>
