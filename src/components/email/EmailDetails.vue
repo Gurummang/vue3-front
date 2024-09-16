@@ -21,7 +21,7 @@
             </button>
             <button
               class="inline-block rounded border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white active:bg-red-600"
-              @click="openDlpDeleteModal"
+              @click="openEmailDeleteModal"
             >
               <v-icon :size="20">mdi-email-remove-outline</v-icon> 이메일 알림 삭제
             </button>
@@ -112,7 +112,11 @@
   v-if="isEmailCreatModalOpen"
   @close="closeEmailCreatModal"  
 ></EmailCreatModal>
-
+<EmailDeleteModal
+  v-if="isEmailDeleteModalOpen"
+  :selectedEmail="selectedEmail"
+  @close="closeEmailDeleteModal"  
+></EmailDeleteModal>
 
 </template>
 
@@ -120,6 +124,7 @@
 import { ref, watch, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import EmailCreatModal from '@/components/modals/EmailCreatModal.vue'
+import EmailDeleteModal from '@/components/modals/EmailDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
 
@@ -132,7 +137,7 @@ const router = useRouter();
 const emails = ref(props.emailDetails.emails)
 let checkedIndex = ref([])
 const isEmailCreatModalOpen = ref(false)
-const isDlpDeleteModalOpen = ref(false)
+const isEmailDeleteModalOpen = ref(false)
 const selectedEmail = ref(null)
 
 // 페이지 네비게이션
@@ -190,16 +195,16 @@ const closeEmailCreatModal = () => {
 }
 
 // Modal Function
-const openDlpDeleteModal = () => {
-  if (checkedIndex.value.length) {
-    isDlpDeleteModalOpen.value = true
+const openEmailDeleteModal = () => {
+  if (selectedEmail.value) {
+    isEmailDeleteModalOpen.value = true
   } else {
-    alert('삭제할 정책을 선택해주세요.')
+    alert('삭제할 Email 알림을 선택해주세요.')
   }
 }
 
-const closeDlpDeleteModal = () => {
-  isDlpDeleteModalOpen.value = false
+const closeEmailDeleteModal = () => {
+  isEmailDeleteModalOpen.value = false
   clearCheckedIndex()
 }
 </script>
