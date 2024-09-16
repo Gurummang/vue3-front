@@ -114,6 +114,7 @@
 ></EmailCreatModal>
 <EmailDeleteModal
   v-if="isEmailDeleteModalOpen"
+  :selectedEmail="selectedEmail"
   @close="closeEmailDeleteModal"  
 ></EmailDeleteModal>
 
