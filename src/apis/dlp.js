@@ -6,7 +6,7 @@ const api = axios.create({
   withCredentials: true
 })
 
-let dlpListApi = async () => {
+let dlpPolicyListApi = async () => {
   try {
     const response = await api.get('/api/v1/dlp/policy/list');
     if(response.data.status == 'error') {
@@ -40,4 +40,4 @@ let dlpPolicyMakeApi = async () => {
   }
 };
 
-export { dlpListApi, dlpPolicyMakeApi };
+export { dlpPolicyListApi, dlpPolicyMakeApi };

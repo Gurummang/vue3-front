@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { dlpListApi } from '@/apis/dlp.js'
+import { dlpPolicyListApi } from '@/apis/dlp.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -32,7 +32,7 @@ let isApiOk = ref(false)
 let policyDetails = ref(null)
 
 Promise.all([
-  dlpListApi()
+  dlpPolicyListApi()
   ])
   .then((values) => {
     policyDetails.value = values[0]
