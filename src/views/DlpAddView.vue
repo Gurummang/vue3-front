@@ -2,10 +2,14 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <main>
-      <PolicyAdd :orgSaasList="orgSaasList"></PolicyAdd>
-      <!-- <content-error></content-error> -->
+    <cycle-loading v-if="loading"></cycle-loading>
+    <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
+      <div>
+        <PolicyAdd :orgSaasList="orgSaasList"></PolicyAdd>
+        <the-pagination></the-pagination>
+      </div>
     </main>
+    <content-error v-else></content-error>
   </div>
 
   <!-- <footer>
