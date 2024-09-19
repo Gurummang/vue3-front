@@ -54,8 +54,8 @@
             <tr>
               <th class="px-2 py-3 w-[4%] text-center text-sm font-bold font-medium text-white tracking-wider"></th>
               <th class="px-1 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">정책명</th>
-              <th class="px-1 py-3 w-[20%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
-              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
+              <th class="px-1 py-3 w-[16%] text-left text-sm font-bold font-medium text-white tracking-wider">SaaS</th>
+              <th class="px-1 py-3 w-[20%] text-left text-sm font-bold font-medium text-white tracking-wider">식별종류</th>
               <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">정책설명</th>
               <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
@@ -72,21 +72,25 @@
                     onclick="event.cancelBubble = true;"
                   />
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.name }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.policyName }}</td>
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
                     <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saasName))" :alt="details.saasName" />
-                    <span class="text-xs"> {{ details.saasAlias }}</span>
+                    <span class="text-xs"> {{ details.alias }}</span>
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs truncate">
-                  <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
+                  <span v-if="details.identify" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">주민등록번호</span>
+                  <span v-if="details.passport" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">여권번호</span>
+                  <span v-if="details.drive" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">운전면허번호</span>
+                  <span v-if="details.foreigner" class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">외국인등록번호</span>
+                  <!-- <span v-for="(type, idx) in formatFileTypes(details.fileType)" :key="idx">
                     <span v-if="type.startsWith('...')" class="text-gray-500 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
                     <span v-else class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ type }}</span>
-                  </span>
+                  </span> -->
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.action }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.comment }}</td>
                 <!-- <td class="px-2 py-2 whitespace-nowrap text-xs text-center">{{ removeWordDate(details.date) }}</td> -->
               </tr>
             </template>
@@ -120,7 +124,7 @@ const props = defineProps({
 })
 const router = useRouter();
 
-const policys = ref(props.policyDetails.policy)
+const policys = ref(props.policyDetails)
 let checkedIndex = ref([])
 const isDlpDeleteModalOpen = ref(false)
 
