@@ -23,4 +23,21 @@ let dlpListApi = async () => {
   }
 };
 
-export { dlpListApi };
+let dlpPolicyMakeApi = async () => {
+  try {
+    const response = await api.get('/api/v1/dlp/policy/make');
+    if(response.data.status == 'error') {
+      router.push('/login');
+      return;
+    }
+    if(response.status == '200') {
+      console.log(response.data);
+      return response.data;
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    throw err;  
+  }
+};
+
+export { dlpListApi, dlpPolicyMakeApi };
