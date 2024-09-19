@@ -23,9 +23,9 @@ let dlpPolicyListApi = async () => {
   }
 };
 
-let dlpPolicyMakeApi = async () => {
+let dlpPolicyMakeApi = async (data) => {
   try {
-    const response = await api.get('/api/v1/dlp/policy/make');
+    const response = await api.post('/api/v1/dlp/policy/make', data);
     if(response.data.status == 'error') {
       router.push('/login');
       return;
