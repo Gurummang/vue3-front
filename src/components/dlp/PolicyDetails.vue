@@ -22,13 +22,11 @@
           <div class="flex ml-auto space-x-2">
             
             <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-              <option value="week">DLP</option>
-              <option value="month">악성 탐지</option>
-              <option value="year">VirusTotal</option>
-              <option value="year">파일명</option>
-              <option value="year">SaaS</option>
-              <option value="year">사용자</option>
-              <option value="year" selected>생성날짜</option>
+              <option value="policyName" selected>정책명</option>
+              <option value="saas">SaaS</option>
+              <option value="year">식별종류</option>
+              <option value="description">정책설명</option>
+              <option value="content">권장 조치사항</option>
             </select>
             <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
               <option value="week">오름차순</option>
