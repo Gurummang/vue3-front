@@ -75,18 +75,16 @@
       </div>
       <div class="flex justify-end py-3 gap-2">
         <button @click="router.go(-1)" class="bg-white text-orange-500 px-4 py-2 rounded border border-orange text-sm font-semibold hover:bg-orange-600 hover:text-white">정책 취소</button>
-        <button @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">정책 추가</button>
+        <button @click="policyMake" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">정책 추가</button>
       </div>
     </div>
 
   </div>
-
-  <!-- {{ selectedChips.map(item => ( item.id )) }}  -->
-
 </template>
 
 <script setup>
 import { ref, watch, defineProps, onMounted } from 'vue'
+import { dlpPolicyMakeApi } from '@/apis/dlp.js'
 import { useRouter } from 'vue-router'
 import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 
@@ -113,8 +111,6 @@ const selectedChips = ref([]);
 let name = ref("");
 let description = ref("");
 let action = ref("");
-
-// console.log('props.orgSaas', props.orgSaasList)
 
 const moveToRight = () => {
   rightList.value = [...rightList.value, ...selectedLeft.value]
@@ -148,6 +144,50 @@ const toggleChip = (chip) => {
     selectedChips.value.push(chip);
   }
 };
+
+const policyMake = () => {
+  if(!name.value) {
+    alert('정책명이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
+    return;
+  }
+  if(!description.value) {
+    alert('정책 설명이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
+    return;
+  }
+  if(!selectedChips.value.length) {
+    alert('적용할 SaaS가 선택되지 않았습니다.\n선택해주세요.');
+    return;
+  }
+  if(!rightList.value.length) {
+    alert('식별할 항목을 선택하지 않았습니다.\n선택해주세요.');
+    return;
+  }
+  if(!action.value) {
+    alert('권장 조치가 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
+    return;
+  }
+  let policyData = {
+    "policyName": name.value,
+    "orgSaasId": selectedChips.value.map(chip => ( chip.id )),
+    "description": description.value,
+    "identify": rightList.value.includes('주민등록번호'),
+    "passport": rightList.value.includes('여권번호'),
+    "drive": rightList.value.includes('운전면허번호'),
+    "foreigner": rightList.value.includes('외국인등록번호'),
+    "comment": action.value
+  }
+
+  dlpPolicyMakeApi(policyData).then((response) => {
+    if(response[0].success) {
+      router.go(-1)
+    }
+    else {
+      alert("정책 생성 과정에서 오류가 발생했습니다.")
+    }
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."))
+
+}
 </script>
 
 <style scoped>
