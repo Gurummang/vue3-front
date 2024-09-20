@@ -125,11 +125,7 @@ const moveToLeft = () => {
 }
 
 // 주어진 chips 데이터
-const chips = [
-  { name: "slack", id: 28, alias: "fffffff" },
-  { name: "slack", id: 139, alias: "slack_test" },
-  { name: "o365", id: 174, alias: "테스트" }
-];
+const chips = props.orgSaasList;
 
 // 칩 선택 여부 확인
 const isSelected = (id) => {
