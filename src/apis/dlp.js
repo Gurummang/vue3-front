@@ -9,7 +9,7 @@ const api = axios.create({
 let dlpPolicyListApi = async () => {
   try {
     const response = await api.get('/api/v1/dlp/policy/list');
-    if(response.data.success == false) {
+    if(response.data[0].success == false) {
       router.push('/login');
       return;
     }
@@ -26,7 +26,7 @@ let dlpPolicyListApi = async () => {
 let dlpPolicyMakeApi = async (data) => {
   try {
     const response = await api.post('/api/v1/dlp/policy/make', data);
-    if(response.data.success == false) {
+    if(response.data[0].success == false) {
       router.push('/login');
       return;
     }
@@ -43,7 +43,7 @@ let dlpPolicyMakeApi = async (data) => {
 let dlpPolicyDeleteApi = async (data) => {
   try {
     const response = await api.post('/api/v1/vt/policy/delete', data);
-    if(response.data.success == false) {
+    if(response.data[0].success == false) {
       router.push('/login');
       return;
     }
