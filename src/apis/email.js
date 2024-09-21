@@ -51,6 +51,21 @@ let verifyEmailApi = async (data) => {
   }
 };
 
+let alertModifyApi = async (id, data) => {
+  try {
+    const response = await api.put('/api/v1/alerts/edit/' + id, data);
+    if(response.data.status == 'error') {
+      router.push('/login');
+      return;
+    }
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    throw err;  
+  }
+};
+
 let alertDeleteApi = async (data) => {
   try {
     const response = await api.post('/api/v1/alerts/delete', data);
@@ -66,4 +81,4 @@ let alertDeleteApi = async (data) => {
   }
 };
 
-export { alertsListApi, alertMakeApi, verifyEmailApi, alertDeleteApi };
+export { alertsListApi, alertMakeApi, verifyEmailApi, alertModifyApi, alertDeleteApi };
