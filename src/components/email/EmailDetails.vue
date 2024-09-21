@@ -209,6 +209,7 @@ const openEmailDeleteModal = () => {
 const closeEmailDeleteModal = () => {
   isEmailDeleteModalOpen.value = false
   clearCheckedIndex()
+  router.go()
 }
 </script>
 
