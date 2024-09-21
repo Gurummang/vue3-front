@@ -144,7 +144,6 @@ const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
 const saasData = ref(props.responseData);
-console.log('saasData' + saasData.value);
 
 const router = useRouter();
 
@@ -184,11 +183,6 @@ const closeUnconnectModal = () => {
   selectedSaas.value = null;
   router.go();
 }
-
-const handleSubmit = (data) => {
-  console.log('SaaS 연동 데이터:', data);
-  // 여기서 연동 로직을 처리합니다.
-};
 
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);

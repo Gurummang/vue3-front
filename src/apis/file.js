@@ -14,11 +14,9 @@ let totalFileInfoApi = async () => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };
@@ -31,11 +29,9 @@ let fileScanApi = async () => {
       return;
     }
     if(response.status == '200') {
-      console.log('dlpscan', response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };
@@ -48,11 +44,9 @@ let fileVtUploadApi = async (data) => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };
@@ -65,11 +59,9 @@ let historyStatisticsApi = async () => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };
@@ -82,11 +74,9 @@ let historyDetailsApi = async () => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };
@@ -99,11 +89,9 @@ let historyVisualizatuonApi = async (data) => {
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
     throw err;  
   }
 };

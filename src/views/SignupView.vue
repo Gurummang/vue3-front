@@ -145,7 +145,7 @@ const handleSubmit = async () => {
       router.push('/login');
     }
   } catch (error) {
-    console.error('Registration failed:', error)
+    
   }
 }
 </script>

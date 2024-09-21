@@ -28,7 +28,6 @@ export const convertDate = (date) => {
 }
 
 export const removeWordDate = (date) => {
-  // console.log('오류 찾자',date);
   if(date == null) return date;
   return date.replace('T', ' ');
 }

@@ -6,9 +6,9 @@ const api = axios.create({
   withCredentials: true
 })
 
-let userStatisticsApi = async () => {
+let alertsListApi = async () => {
   try {
-    const response = await api.get('/api/v1/users/total');
+    const response = await api.get('/api/v1/alerts');
     if(response.data.status == 'error') {
       router.push('/login');
       return;
@@ -21,9 +21,9 @@ let userStatisticsApi = async () => {
   }
 };
 
-let userChartInfoApi = async () => {
+let alertDeleteApi = async (data) => {
   try {
-    const response = await api.get('/api/v1/users/statistics');
+    const response = await api.post('/api/v1/alerts/delete', data);
     if(response.data.status == 'error') {
       router.push('/login');
       return;
@@ -36,19 +36,4 @@ let userChartInfoApi = async () => {
   }
 };
 
-let userDetailsApi = async () => {
-  try {
-    const response = await api.get('/api/v1/users/info');
-    if(response.data.status == 'error') {
-      router.push('/login');
-      return;
-    }
-    if(response.status == '200') {
-      return response.data;
-    }
-  } catch (err) {
-    throw err;  
-  }
-};
-
-export { userStatisticsApi, userChartInfoApi, userDetailsApi };
+export { alertsListApi, alertDeleteApi };

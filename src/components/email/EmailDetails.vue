@@ -79,17 +79,21 @@
                     v-model="selectedEmail"
                   />
                 </td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.email }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">
+                  <span v-for="(em, idx) in details.email" :key="idx">
+                    <span class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ em }}</span>
+                  </span>
+                </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.title }}</td>
-                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.description }}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.content }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.dlpCheck" disabled/>
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.sensitive" disabled/>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.gscanCheck" disabled/>
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.suspicious" disabled/>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.vtCheck" disabled/>
+                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.vt" disabled/>
                 </td>
               </tr>
             </template>
@@ -134,7 +138,7 @@ const props = defineProps({
 })
 const router = useRouter();
 
-const emails = ref(props.emailDetails.emails)
+const emails = ref(props.emailDetails.data)
 let checkedIndex = ref([])
 const isEmailCreatModalOpen = ref(false)
 const isEmailDeleteModalOpen = ref(false)
@@ -162,7 +166,6 @@ const disassemble = (index, data, size) => {
   for (let i = 0; i < data.length; i += size) {
     res.push(data.slice(i, i + size))
   }
-  // console.log('res:', res);
   return res[index]
 }
 
@@ -206,6 +209,7 @@ const openEmailDeleteModal = () => {
 const closeEmailDeleteModal = () => {
   isEmailDeleteModalOpen.value = false
   clearCheckedIndex()
+  router.go()
 }
 </script>
 

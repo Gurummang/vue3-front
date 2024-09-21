@@ -19,8 +19,9 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="6">Google Drive</option>
             <option value="1">Slack</option>
+            <option value="3">Microsoft365</option>
+            <option value="6">Google Drive</option>
             <!-- <option value="3">O365</option> -->
           </select>
         </div>
@@ -88,8 +89,8 @@
         </div>
       </div>
       <div class="flex justify-end p-3">
-        <button v-if="saasType != 6" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
-        <button v-else @click="googleOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-if="saasType == 1" @click="syncSaaS" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
+        <button v-else @click="syncOAuth2" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">SaaS 연동하기</button>
       </div>
     </div>
   </div>
@@ -182,7 +183,6 @@ const syncSaaS = () => {
 
   // 다음 스텝 -> 해당 값들을 POST로 보내기
   let connectData = {
-    "orgId": 1,     // samsung
     "saasId": saasType.value,    // slack
     "alias": safeAlias.value,
     "adminEmail": safeSaasEmail.value,
@@ -191,7 +191,6 @@ const syncSaaS = () => {
   };
 
   connectSaasApi(connectData).then((response) => {
-    console.log(response);
     errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
@@ -208,7 +207,7 @@ const syncSaaS = () => {
   .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 };
 
-const googleOAuth2 = () => {
+const syncOAuth2 = () => {
   // 보안 조치
   const safeAlias = ref(htmlEscape(alias.value));
   const safeSaasEmail = ref(htmlEscape(saasEmail.value));
@@ -235,48 +234,72 @@ const googleOAuth2 = () => {
     alert('SaaS 연동을 위해 체크박스로 연동에 동의 해야합니다.');
     return;
   }
-  
-  const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;
-  const responseType = import.meta.env.VITE_GOOGLEDRIVE_RESPONSETYPE;
-  const redirectUri = import.meta.env.VITE_GOOGLEDRIVE_REDIRECTURL;
-  const scope = import.meta.env.VITE_GOOGLEDRIVE_SCOPE;
-  
-  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-  // window.location.href = authUrl;
-  // 새 탭에서 인증 페이지 열기
-  const authWindow = window.open(authUrl, '_blank');
-  // 새 창에서 인증 페이지 열기
-  // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
 
-  // 선택적: 팝업이 차단되었는지 확인
-  if (authWindow === null || typeof(authWindow) === 'undefined') {
-    alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
-    return;
+  if(saasType.value === '3') {
+    let connectData = {
+      "saasId": saasType.value,
+      "alias": safeAlias.value,
+      "adminEmail": safeSaasEmail.value,
+    };
+
+    connectSaasApi(connectData).then((response) => {
+      errorCode = response.errorCode;
+      if(errorCode != 200) {
+        openErrorModal();
+        watch(isErrorModalOpen, (afterValue, beforeValue) => {
+          if (afterValue === false) {
+            emit('close');
+          }
+        });
+      }
+      else {
+        emit('close');
+      }
+    })
+    .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+  }
+  else if(saasType.value === '6') {
+    const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;
+    const responseType = import.meta.env.VITE_GOOGLEDRIVE_RESPONSETYPE;
+    const redirectUri = import.meta.env.VITE_GOOGLEDRIVE_REDIRECTURL;
+    const scope = import.meta.env.VITE_GOOGLEDRIVE_SCOPE;
+    
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+    // window.location.href = authUrl;
+    // 새 탭에서 인증 페이지 열기
+    const authWindow = window.open(authUrl, '_blank');
+    // 새 창에서 인증 페이지 열기
+    // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+
+    // 선택적: 팝업이 차단되었는지 확인
+    if (authWindow === null || typeof(authWindow) === 'undefined') {
+      alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+      return;
+    }
+
+    let connectData = {
+      "saasId": saasType.value,
+      "alias": safeAlias.value,
+      "adminEmail": safeSaasEmail.value,
+    };
+
+    connectSaasApi(connectData).then((response) => {
+      errorCode = response.errorCode;
+      if(errorCode != 200) {
+        openErrorModal();
+        watch(isErrorModalOpen, (afterValue, beforeValue) => {
+          if (afterValue === false) {
+            emit('close');
+          }
+        });
+      }
+      else {
+        emit('close');
+      }
+    })
+    .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
   }
 
-  let connectData = {
-    "orgId": 1,     // samsung
-    "saasId": saasType.value,
-    "alias": safeAlias.value,
-    "adminEmail": safeSaasEmail.value,
-  };
-
-  connectSaasApi(connectData).then((response) => {
-    console.log(response);
-    errorCode = response.errorCode;
-    if(errorCode != 200) {
-      openErrorModal();
-      watch(isErrorModalOpen, (afterValue, beforeValue) => {
-        if (afterValue === false) {
-          emit('close');
-        }
-      });
-    }
-    else {
-      emit('close');
-    }
-  })
-  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 }
 
 
@@ -294,7 +317,7 @@ const validateWebhook = () => {
       webhookUrl.value = response;
     });
   }
-  if(saasType.value != '6') {
+  if(saasType.value === '1') {
     showApiInput.value = true;
   }
   else {
@@ -309,7 +332,6 @@ const validateApiToken = () => {
   TokenValidationApi(data, 1).then((response) => {
     isValidApiToken.value = response;
   });
-  console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
 }
 
 watch(saasEmail, validateAdminEmail);

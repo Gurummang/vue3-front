@@ -235,7 +235,6 @@ const elements = computed(() => {
     })
     
     if (index > 0) {
-      console.log(googleDriveData[index - 1].eventId);
       const prevNodeId = `file-${googleDriveData[index - 1].eventId}`
       edges.push({
         id: `e-${prevNodeId}-${nodeId}`,
@@ -248,9 +247,6 @@ const elements = computed(() => {
       })
     }
   })
-
-  console.log(nodes);
-  console.log(edges);
 
   return [...nodes, ...edges]
 })

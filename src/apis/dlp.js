@@ -17,7 +17,6 @@ let dlpPolicyListApi = async () => {
       return response.data;
     }
   } catch (err) {
-    // console.error('Error:', err);
     throw err;  
   }
 };
@@ -33,7 +32,6 @@ let dlpPolicyMakeApi = async (data) => {
       return response.data;
     }
   } catch (err) {
-    // console.error('Error:', err);
     throw err;  
   }
 };
@@ -49,7 +47,6 @@ let dlpPolicyDeleteApi = async (data) => {
       return response.data;
     }
   } catch (err) {
-    // console.error('Error:', err);
     throw err;  
   }
 };

@@ -95,11 +95,6 @@ const handleSubmit = async () => {
       "password": password.value
     }
     const response = await gasbLoginApi(data);
-    // let setCookie = '';
-    // setCookie += 'jwt=' + response.jwt;
-    console.log(response);
-
-    // document.cookie = setCookie;
     // 쿠키가 정상적으로 설정되었는지 확인 (서버 응답에 따라)
     if (response.status === 'success') {
       router.push('/');
@@ -107,7 +102,6 @@ const handleSubmit = async () => {
       alert('아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   } catch (error) {
-    console.error('Login failed:', error);
     alert('로그인을 처리하는 과정에서 오류가 발생했습니다.');
   }
 }
