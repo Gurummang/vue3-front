@@ -10,7 +10,7 @@ let gasbLoginApi = async (data) => {
     }
     return false;
   } catch (err) {
-
+    return false;
   }
 };
 
