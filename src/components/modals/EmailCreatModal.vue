@@ -92,7 +92,7 @@
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
-import { alertMakeApi } from '@/apis/email.js'
+import { alertMakeApi, verifyEmailApi } from '@/apis/email.js'
 import { validateEmail } from '@/utils/validation.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
 
@@ -171,7 +171,20 @@ const emailMake = () => {
       emit('close')
     }
     else {
-      alert("일부 이메일에 알림할 수 없습니다. 메일함에서 링크를 확인하세요")
+      const unregisteredEmailList = response.data.email.map((email, index) => `${index + 1}. ${email}`)
+                                                       .join('\n'); //
+      if(confirm(response.data.message + '\n' + unregisteredEmailList)) {
+        let verifyEmailData = {
+          "email" : response.data.email
+        }
+        verifyEmailApi(verifyEmailData).then((response) => {
+          alert("각 이메일 주소로 등록 이메일을 발송하였습니다. 확인바랍니다.")
+        })
+        .catch(err => alert(err + "\n서버에 문제가 발생했어요."))
+      }
+      else {
+        emit('close')
+      }
     }
   })
   .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
