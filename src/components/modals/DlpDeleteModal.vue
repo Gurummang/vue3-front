@@ -29,7 +29,7 @@
         >아니오
         </button>
         <button 
-          @click="$emit('close')" 
+          @click="policyDelete" 
           :disabled="!confirmed"
           :class="['w-1/2 border px-3 py-2 align-text-bottom text-sm font-semibold text-white', confirmed ? 'bg-red-600 border-red-600 hover:bg-red-800 active:bg-red-800' : 'bg-gray-400 border-gray-400 cursor-not-allowed']"
         >예
@@ -48,7 +48,7 @@
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
-import axios from 'axios';
+import { dlpPolicyDeleteApi } from '@/apis/dlp.js'
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 
 const props = defineProps({
@@ -62,7 +62,6 @@ let emit = defineEmits(['close']);
 
 let fileCount = ref(Object.keys(props.checkedIndex).length);;
 // 리스트 값
-// console.log(Object.values(props.checkedIndex));
 let confirmed = ref(false);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
@@ -73,6 +72,22 @@ const openErrorModal = () => {
 
 const closeErrorModal = () => {
   isErrorModalOpen.value = false;
+}
+
+const policyDelete = () => {
+  let deleteData = {
+    "policyId": props.checkedIndex
+  }
+
+  console.log('policyId', props.checkedIndex)
+  dlpPolicyDeleteApi(deleteData).then((response) => {
+    if(response.some(item => item.success === true)) {
+      emit('close');
+    }
+    else {
+      alert("해당 정책을 삭제하는 과정에서 문제가 발생했습니다.")
+    }
+  }).catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 }
 </script>
 
