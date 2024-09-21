@@ -73,7 +73,7 @@
               </td>
               <td class="px-6 py-2 whitespace-nowrap">
                 <span v-if="saas.status === 1">
-                  <v-icon :size="24" class="text-orange-500">mdi-eye</v-icon>
+                  <v-icon :size="24" class="text-green-500">mdi-eye</v-icon>
                   </span>
                 <span v-else-if="saas.status === 0">
                   <v-icon :size="24" class="text-yellow-300">mdi-eye</v-icon>
