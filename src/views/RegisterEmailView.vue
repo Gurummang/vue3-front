@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref } from 'vue'
-// import { fileScanApi } from '@/apis/file.js'
+import { alertsListApi } from '@/apis/email.js'
 import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
@@ -31,44 +31,14 @@ let isApiOk = ref(false)
 let emailDetails = ref(null)
 
 Promise.all([
+  alertsListApi()
 ])
 .then((values) => {
-  emailDetails.value = {
-    "status": "success",
-    "emails": [
-      {
-        "id": 1,
-        "email": "test@grummang.com",
-        "title": "test",
-        "description": "이메일 발송 리스트 목록 테스트입니다.",
-        "gscanCheck": true,
-        "dlpCheck": false,
-        "vtCheck": true
-      },
-      {
-        "id": 2,
-        "email": "test123123@grummang.com",
-        "title": "test123123",
-        "description": "test123123 이메일 테스트",
-        "gscanCheck": false,
-        "dlpCheck": false,
-        "vtCheck": true
-      },
-      {
-        "id": 3,
-        "email": "test3333@grummang.com",
-        "title": "test3333",
-        "description": "test3333test3333test3333test3333",
-        "gscanCheck": true,
-        "dlpCheck": true,
-        "vtCheck": true
-      },
-    ]
-  }
+  emailDetails.value = values[0]
   isApiOk.value = true
 })
 .catch((err) => {
-  console.log(err)
+  
 })
 .finally(() => {
   loading.value = false
