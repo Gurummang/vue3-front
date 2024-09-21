@@ -43,8 +43,6 @@ const props = defineProps({
   }
 });
 
-// console.log('List.vue: ', props.fileRecent);
-
 const files = ref(props.fileRecent);
 
 </script>

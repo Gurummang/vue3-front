@@ -64,7 +64,6 @@ Promise.all([
     isApiOk.value = true;
   }
 }).catch((err) => {
-  console.log(err);
   isError.value = true;
 }).finally(() => {
   loading.value = false;

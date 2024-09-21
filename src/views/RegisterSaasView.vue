@@ -37,8 +37,7 @@ let orgId = 1;
 
 Promise.all([
   getSaasListApi()
-  ]).then((values) => {
-  console.log(values[0])
+]).then((values) => {
   responseData.value = values[0];
 
   isApiOk.value = true;

@@ -34,10 +34,8 @@ const handleSettingsClick = async () => {
   // router.push('/login')
   const result = await gasbLogoutApi()
   if(result) {
-    console.log('JWT token removed from localStorage')
     return
   }
-  console.log('로그아웃 실패')
 }
 </script>
 

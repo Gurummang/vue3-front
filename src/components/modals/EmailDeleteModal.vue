@@ -67,8 +67,6 @@ let confirmed = ref(false);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
 
-console.log(emailId.value);
-
 const openErrorModal = () => {
   isErrorModalOpen.value = true;
 };

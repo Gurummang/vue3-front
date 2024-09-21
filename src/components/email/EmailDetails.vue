@@ -162,7 +162,6 @@ const disassemble = (index, data, size) => {
   for (let i = 0; i < data.length; i += size) {
     res.push(data.slice(i, i + size))
   }
-  // console.log('res:', res);
   return res[index]
 }
 

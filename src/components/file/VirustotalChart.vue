@@ -35,11 +35,6 @@ const props = defineProps({
 const myChart = ref(null);
 
 const ratioValue = ref(Math.round(props.score * 100));
-// watch(() => props.fileSize, (newSize) => {
-//   fileVolume.value = newSize;
-// });
-
-// console.log('#' + props.color);
 
 const data = {
   datasets: [

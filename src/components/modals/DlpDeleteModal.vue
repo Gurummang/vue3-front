@@ -79,7 +79,6 @@ const policyDelete = () => {
     "policyId": props.checkedIndex
   }
 
-  console.log('policyId', props.checkedIndex)
   dlpPolicyDeleteApi(deleteData).then((response) => {
     if(response.some(item => item.success === true)) {
       emit('close');
