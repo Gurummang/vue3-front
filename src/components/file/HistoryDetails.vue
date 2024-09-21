@@ -160,7 +160,6 @@ const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
   totalData.value = sortedEventTs.value
-  // console.log('totalData', totalData.value);
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
@@ -198,9 +197,7 @@ const openHistoryVisualizationModal = () => {
       eventId: selectedHistory.value.eventId
     }
     historyVisualizatuonApi(data).then((response) => {
-      console.log(response)
       visualizationInfo.value = response
-      console.log('!!!!', visualizationInfo.value)
       isHistoryVisualizationModalOpen.value = true
     })
   } else {

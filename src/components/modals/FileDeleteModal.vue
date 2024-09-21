@@ -47,7 +47,6 @@ let emit = defineEmits(['close']);
 
 let fileCount = ref(Object.keys(props.checkedIndex).length);;
 // 리스트 값
-// console.log(Object.values(props.checkedIndex));
 
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
@@ -72,7 +71,6 @@ const syncSaaS = () => {
   };
 
   connectSaasApi(connectData).then((response) => {
-    console.log(response);
     errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();

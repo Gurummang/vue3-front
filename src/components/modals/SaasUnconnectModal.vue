@@ -87,14 +87,11 @@ const closeErrorModal = () => {
 }
 
 const UnconnectSaas = (saasId) => {
-  console.log(saasId);
-
   let deleteInfo = {
     "id": saasId
   }
   unconnectSaasApi(deleteInfo).then((response) => {
     errorCode.value = response.errorCode;
-    console.log(response);
     if(errorCode.value != 200) {
       openErrorModal();
       watch(isErrorModalOpen, (afterValue, beforeValue) => {

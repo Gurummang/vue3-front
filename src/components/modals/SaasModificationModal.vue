@@ -186,7 +186,6 @@ const syncSaaS = () => {
   };
 
   modifySaasApi(modifyData).then((response) => {
-    console.log('ModifyModal: ' + response);
     errorCode = response.errorCode;
     if(errorCode != 200) {
       openErrorModal();
@@ -234,7 +233,6 @@ const validateApiToken = () => {
   TokenValidationApi(data, 1).then((response) => {
     isValidApiToken.value = response;
   });
-  console.log('API 토큰 검증이래:  '+ isValidApiToken.value);
 }
 
 watch(saasType, validateWebhook);

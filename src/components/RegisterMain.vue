@@ -184,11 +184,6 @@ const closeUnconnectModal = () => {
   router.go();
 }
 
-const handleSubmit = (data) => {
-  console.log('SaaS 연동 데이터:', data);
-  // 여기서 연동 로직을 처리합니다.
-};
-
 // 통계 수치
 const connectedCount = computed(() => saasData.value.filter(saas => saas.status === 1).length);
 const connectingCount = computed(() => saasData.value.filter(saas => saas.status === 0).length);

@@ -44,8 +44,6 @@ const props = defineProps({
   },
 });
 
-// console.log("props.userStatistics : ", props.userStatistics);
-
 let animatedStats = ref([0, 0, 0, 0]);
 
 watch(

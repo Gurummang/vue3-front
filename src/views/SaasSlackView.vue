@@ -60,12 +60,10 @@ Promise.all([
   fileRecent.value = values[3];
   usersTop5.value = values[4];
 
-  console.log(values[1])
   if(values[1].connectedAccounts) {
     isApiOk.value = true;
   }
 }).catch((err) => {
-  console.log(err);
   isError.value = true;
 }).finally(() => {
   loading.value = false;

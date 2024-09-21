@@ -92,7 +92,7 @@ Promise.all([
   statistics.value = values[0].data.statistics;
   isApiOk.value = true;
 }).catch((err) => {
-  console.log(err);
+
 }).finally(() => {
   loading.value = false;
 });

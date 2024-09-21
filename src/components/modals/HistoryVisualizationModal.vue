@@ -33,7 +33,6 @@ const props = defineProps({
 })
 
 let data = props.visualizationInfo;
-console.log('props.visualization', data);
 
 // 커스텀 Slack 노드 컴포넌트
 const CustomSlackNode = defineComponent({
@@ -79,8 +78,6 @@ const elements = computed(() => {
 
   const o365Similarities = [...new Set(o365Data.map(item => item.similarity))].sort((a, b) => b - a)
   const o365SimilarityRanks = Object.fromEntries(o365Similarities.map((sim, index) => [sim, index + 1]))
-  
-  // console.log(similarityRanks);
 
   // 부모 노드 추가
   const nodes = [
@@ -224,8 +221,6 @@ const elements = computed(() => {
     const similarityHeight = o365SimilarityRanks[item.similarity]
     yPosition = -(similarityHeight * 260);
 
-    console.log('0365: ', yPosition);
-
     nodes.push({
       id: nodeId,
       type: 'custom',
@@ -276,9 +271,6 @@ const elements = computed(() => {
       },
     });
   });
-
-  console.log(nodes);
-  console.log(edges);
 
   return [...nodes, ...edges]
 })
