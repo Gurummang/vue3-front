@@ -14,7 +14,7 @@
             </button>
             <button
               class="inline-block rounded border border-indigo-900 px-3 py-2 align-text-bottom text-sm font-semibold text-indigo-900 hover:bg-indigo-900 hover:text-white hover:border-indigo-900 active:bg-indigo-900"
-              @click="openEmailCreatModal"
+              @click="openEmailModifyModal"
             >
               <!-- @click="openVirustotalModal" -->
               <v-icon :size="20">mdi-email-sync-outline</v-icon> 이메일 알림 수정
@@ -106,16 +106,15 @@
     <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
   </div>
 
-<!-- <DlpDeleteModal
-  v-if="isDlpDeleteModalOpen"
-  :checkedIndex="checkedIndex"
-  @close="closeDlpDeleteModal"
-></DlpDeleteModal> -->
-
 <EmailCreatModal
   v-if="isEmailCreatModalOpen"
   @close="closeEmailCreatModal"  
 ></EmailCreatModal>
+<EmailModifyModal
+  v-if="isEmailModifyModalOpen"
+  :selectedEmail="selectedEmail"
+  @close="closeEmailDeleteModal"  
+></EmailModifyModal>
 <EmailDeleteModal
   v-if="isEmailDeleteModalOpen"
   :selectedEmail="selectedEmail"
@@ -128,6 +127,7 @@
 import { ref, watch, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import EmailCreatModal from '@/components/modals/EmailCreatModal.vue'
+import EmailModifyModal from '@/components/modals/EmailModifyModal.vue'
 import EmailDeleteModal from '@/components/modals/EmailDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
@@ -141,6 +141,7 @@ const router = useRouter();
 const emails = ref(props.emailDetails.data)
 let checkedIndex = ref([])
 const isEmailCreatModalOpen = ref(false)
+const isEmailModifyModalOpen = ref(false)
 const isEmailDeleteModalOpen = ref(false)
 const selectedEmail = ref(null)
 
@@ -198,6 +199,20 @@ const closeEmailCreatModal = () => {
 }
 
 // Modal Function
+const openEmailModifyModal = () => {
+  if (selectedEmail.value) {
+    isEmailModifyModalOpen.value = true
+  } else {
+    alert('수정할 Email 알림을 선택해주세요.')
+  }
+}
+
+const closeEmailModifyModal = () => {
+  isEmailModifyModalOpen.value = false
+  clearCheckedIndex()
+  router.go()
+}
+
 const openEmailDeleteModal = () => {
   if (selectedEmail.value) {
     isEmailDeleteModalOpen.value = true
