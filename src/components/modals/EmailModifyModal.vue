@@ -106,7 +106,6 @@ const props = defineProps({
 let emit = defineEmits(['close'])
 
 // 임의의 값 넣기
-console.log(props.selectedEmail)
 const emailTitle = ref(props.selectedEmail.title)
 const emailContent = ref(props.selectedEmail.content)
 const emails = ref(props.selectedEmail.email)
