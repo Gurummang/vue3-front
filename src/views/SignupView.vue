@@ -145,7 +145,7 @@ const handleSubmit = async () => {
       router.push('/login');
     }
   } catch (error) {
-    
+    alert('회원가입하는 중에 오류가 발생했습니다.')
   }
 }
 </script>

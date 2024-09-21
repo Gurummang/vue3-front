@@ -104,28 +104,4 @@ const formatFileSize = (bytes) => {
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
 
-
-const volumeData = computed(() => ({
-  labels: data.value?.data?.statistics?.map(item => item.date) || [],
-  datasets: [{
-    label: '파일 용량',
-    data: data.value?.data?.statistics?.map(item => item.volume) || [],
-    borderColor: 'rgba(75, 192, 192, 1)',
-    tension: 0.1
-  }]
-}));
-
-const fileTypeData = computed(() => ({
-  datasets: [{
-    label: 'File Types',
-    data: data.value?.total_type.map(item => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      r: item.count * 5
-    })) || [],
-    backgroundColor: 'rgba(75, 192, 192, 0.6)'
-  }]
-}));
-
-
 </script>

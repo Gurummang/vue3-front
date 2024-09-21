@@ -188,21 +188,52 @@
                     <div v-if="isDLPReportOpen(index) && (details.fileStatus.dlpStatus == 1)" class="bg-white">
                       <div class="flex">
                         <div class="w-1/2 border-t border-gray-200">
-                          <div>
-                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 정책 수</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
-                          </div>
+                          <!-- <div class="">
+                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 정책</span>
+                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">{{ details.dlpReport.totalPolicies + ' / '+  details.dlpReport.totalDlp }}</span>
+                          </div> -->
+
                           <div class="border-t border-gray-200">
-                            <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">탐지 개수</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
+                            <div class="w-full flex">
+                              <div class="w-1/3 p-2 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">
+                                정책별 탐지 개수
+                              </div>
+                              <div class="w-2/3 p-2 bg-white text-xs flex flex-col justify-center">
+                                <div v-for="(item, index) in details.dlpReport.policies" :key="index" class="flex justify-between items-center">
+                                  <div>{{ item.policyName }}</div>
+                                  <div>{{ item.dlpCount }}</div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
+
+                          <div class="border-t border-gray-200">
+                            <div class="w-full flex">
+                              <div class="w-1/3 p-2 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">
+                                탐지된 식별 목록
+                              </div>
+                              <div class="w-2/3 p-2 bg-white text-xs flex flex-col justify-center">
+                                <div v-for="(item, index) in details.dlpReport.pii" :key="index" class="flex justify-between items-center">
+                                  <div v-if="item.pii === 'passport'">여권번호</div>
+                                  <div v-if="item.pii === 'identify'">주민등록번호</div>
+                                  <div v-if="item.pii === 'drive'">운전면허번호</div>
+                                  <div v-if="item.pii === 'foreigner'">외국인등록번호</div>
+                                  <div>{{ item.dlpCount }}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                           <div class="border-t border-gray-200">
                             <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">권장 조치사항</span>
-                            <span class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">20</span>
+                            <span v-for="(comment, idx) in details.dlpReport.comments" :key="idx" class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">
+                              <span class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ comment }}</span>
+                            </span>
                           </div>
+
                         </div>
                         <div class="w-1/2 border-t border-l border-gray-200">
-                          <dlp-chart></dlp-chart>
+                          <dlp-chart :dlpData="details.dlpReport.policies"></dlp-chart>
                         </div>
                       </div>
                     </div>

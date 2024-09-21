@@ -20,6 +20,7 @@ import { ref, onMounted, computed, defineProps, defineEmits } from 'vue'
 import { VueFlow, useVueFlow, getBezierPath } from '@vue-flow/core'
 import { Position } from '@vue-flow/core'
 import { defineComponent, h } from 'vue'
+import { getSecureRandomInt } from '@/utils/utils.js'
 
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
@@ -104,7 +105,7 @@ const elements = computed(() => {
     // (1) 이벤트 행위에 따른 높이 구분
     // switch(item.eventType.toLowerCase()) {
     //   case 'file_upload':
-    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     yPosition = Math.floor((getSecureRandomInt(10) * (tuning - (-tuning))) + (-tuning));
     //     break;
     //   case 'file_change':
     //     yPosition = -300;
@@ -153,7 +154,7 @@ const elements = computed(() => {
     // (1) 이벤트 행위에 따른 높이 구분
     // switch(item.eventType.toLowerCase()) {
     //   case 'file_upload':
-    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     yPosition = Math.floor((getSecureRandomInt(100) * (tuning - (-tuning))) + (-tuning));
     //     break;
     //   case 'file_change':
     //     yPosition = -300;
@@ -201,7 +202,7 @@ const elements = computed(() => {
     // (1) 이벤트 행위에 따른 높이 구분
     // switch(item.eventType.toLowerCase()) {
     //   case 'file_upload':
-    //     yPosition = Math.floor((Math.random() * (tuning - (-tuning))) + (-tuning));
+    //     yPosition = Math.floor((getSecureRandomInt(100) * (tuning - (-tuning))) + (-tuning));
     //     break;
     //   case 'file_change':
     //     yPosition = -300;
