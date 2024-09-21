@@ -19,8 +19,9 @@
             v-model="saasType"
           >
             <option value="None" selected disabled hidden>연동할 SaaS를 선택해주세요.</option>
-            <option value="6">Google Drive</option>
             <option value="1">Slack</option>
+            <option value="3">Microsoft365</option>
+            <option value="6">Google Drive</option>
             <!-- <option value="3">O365</option> -->
           </select>
         </div>

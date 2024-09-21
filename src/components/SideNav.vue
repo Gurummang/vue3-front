@@ -103,9 +103,9 @@ export default defineComponent({
         expanded: false, 
         active: false, 
         children: [
-          { title: 'Google Drive', icon: CloudArrowUpIcon, active: false, link: '/saas/googledrive', },
-          { title: 'Microsoft365', icon: CloudArrowUpIcon, active: false, link: '/saas/microsoft365', },
           { title: 'Slack', icon: CloudArrowUpIcon, active: false, link: '/saas/slack', },
+          { title: 'Microsoft365', icon: CloudArrowUpIcon, active: false, link: '/saas/microsoft365', },
+          { title: 'Google Drive', icon: CloudArrowUpIcon, active: false, link: '/saas/googledrive', },
         ] 
       },
       { 
