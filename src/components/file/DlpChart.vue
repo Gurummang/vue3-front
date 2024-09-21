@@ -12,15 +12,18 @@ import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const props = defineProps({
-  fileSize: Number,
+  dlpData: Object,
+  required: true,
 });
 
 const myChart = ref(null);
 
+const chartData = ref(props.dlpData);
+
 const data = {
-  labels: ['정책v1', '정책v2', 'Yellow'],
+  labels: chartData.value.map(row => row.policyName),
   datasets: [{
-    data: [300, 50, 100],
+    data: chartData.value.map(row => row.dlpCount),
     backgroundColor: [
       'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
