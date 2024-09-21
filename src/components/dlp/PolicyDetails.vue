@@ -115,6 +115,7 @@ import { useRouter } from 'vue-router'
 import DlpDeleteModal from '@/components/modals/DlpDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, convertSaasName, formatFileTypes } from '@/utils/utils.js'
+import { dlpPolicyListApi } from '@/apis/dlp.js'
 
 const props = defineProps({
   policyDetails: Object,
@@ -183,6 +184,11 @@ const openDlpDeleteModal = () => {
 const closeDlpDeleteModal = () => {
   isDlpDeleteModalOpen.value = false
   clearCheckedIndex()
+  router.go()
+  // dlpPolicyListApi().then((response) => {
+  //   policys.value = response
+  // })
+  // .catch(err => alert(err + "\n서버에 문제가 발생했어요."))
 }
 </script>
 
