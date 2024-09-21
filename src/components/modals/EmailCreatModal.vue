@@ -182,9 +182,6 @@ const emailMake = () => {
         })
         .catch(err => alert(err + "\n서버에 문제가 발생했어요."))
       }
-      else {
-        emit('close')
-      }
     }
   })
   .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
