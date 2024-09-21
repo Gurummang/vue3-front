@@ -2,21 +2,34 @@
   <div class="pb-5">
     <!-- SaaS 통계 -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
-      <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="font-semibold text-gray-700">총 연동 SaaS</h3>
-        <p class="text-3xl font-semibold">{{ saasData.length }}</p>
+
+      <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
+        <div>
+          <h3 class="font-semibold text-gray-700">총 연동 SaaS</h3>
+          <p class="text-3xl font-semibold">{{ saasData.length }}</p>
+        </div>
+        <v-icon :size="44" class="text-orange ml-auto">mdi-clouds</v-icon>
       </div>
-      <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="font-semibold text-gray-700">연동된 SaaS</h3>
-        <p class="text-3xl font-semibold">{{ connectedCount }}</p>
+      <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
+        <div>
+          <h3 class="font-semibold text-gray-700">연동된 SaaS</h3>
+          <p class="text-3xl font-semibold">{{ connectedCount }}</p>
+        </div>
+        <v-icon :size="44" class="text-green-500 ml-auto">mdi-cloud-check-outline</v-icon>
       </div>
-      <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="font-semibold text-gray-700">연동 중인 SaaS</h3>
-        <p class="text-3xl font-semibold">{{ connectingCount }}</p>
+      <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
+        <div>
+          <h3 class="font-semibold text-gray-700">연동 중인 SaaS</h3>
+          <p class="text-3xl font-semibold">{{ connectingCount }}</p>
+        </div>
+        <v-icon :size="44" class="text-yellow-300 ml-auto">mdi-cloud-sync-outline</v-icon>
       </div>
-      <div class="bg-white shadow rounded-lg p-4">
-        <h3 class="font-semibold text-gray-700">연동 못한 SaaS</h3>
-        <p class="text-3xl font-semibold">{{ failConnectCount }}</p>
+      <div class="flex items-center bg-white shadow-sm rounded-lg p-4">
+        <div>
+          <h3 class="font-semibold text-gray-700">연동 못한 SaaS</h3>
+          <p class="text-3xl font-semibold">{{ failConnectCount }}</p>
+        </div>
+        <v-icon :size="44" class="text-rose-600 ml-auto">mdi-cloud-remove-outline</v-icon>
       </div>
     </div>
 
