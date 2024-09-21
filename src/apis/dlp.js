@@ -9,16 +9,15 @@ const api = axios.create({
 let dlpPolicyListApi = async () => {
   try {
     const response = await api.get('/api/v1/dlp/policy/list');
-    if(response.data.status == 'error') {
+    if(response.data[0].success == false) {
       router.push('/login');
       return;
     }
     if(response.status == '200') {
-      // console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
+    // console.error('Error:', err);
     throw err;  
   }
 };
@@ -26,18 +25,33 @@ let dlpPolicyListApi = async () => {
 let dlpPolicyMakeApi = async (data) => {
   try {
     const response = await api.post('/api/v1/dlp/policy/make', data);
-    if(response.data.status == 'error') {
+    if(response.data[0].success == false) {
       router.push('/login');
       return;
     }
     if(response.status == '200') {
-      console.log(response.data);
       return response.data;
     }
   } catch (err) {
-    console.error('Error:', err);
+    // console.error('Error:', err);
     throw err;  
   }
 };
 
-export { dlpPolicyListApi, dlpPolicyMakeApi };
+let dlpPolicyDeleteApi = async (data) => {
+  try {
+    const response = await api.post('/api/v1/dlp/policy/delete', data);
+    if(response.data[0].success == false) {
+      router.push('/login');
+      return;
+    }
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    // console.error('Error:', err);
+    throw err;  
+  }
+};
+
+export { dlpPolicyListApi, dlpPolicyMakeApi, dlpPolicyDeleteApi };
