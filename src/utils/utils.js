@@ -44,4 +44,10 @@ export const formatFileTypes = (types) => {
   return [...types.slice(0, 2), `...외의 ${types.length - 2}개`];
 }
 
+export const getSecureRandomInt = (max) => {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] % max;
+}
+
 // export { getTodayDate, getSaasImg, getDate };
