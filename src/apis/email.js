@@ -21,4 +21,19 @@ let alertsListApi = async () => {
   }
 };
 
-export { alertsListApi };
+let alertDeleteApi = async (data) => {
+  try {
+    const response = await api.post('/api/v1/alerts/delete', data);
+    if(response.data.status == 'error') {
+      router.push('/login');
+      return;
+    }
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    throw err;  
+  }
+};
+
+export { alertsListApi, alertDeleteApi };
