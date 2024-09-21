@@ -2,14 +2,15 @@
   <side-nav class="w-1/6 float-left"></side-nav>
   <div class="w-5/6 float-right px-5">
     <header-breadcrumb></header-breadcrumb>
-    <main>
-      <Suspense>
-      <register-main 
+    <cycle-loading v-if="loading"></cycle-loading>
+    <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
+      <div>
+        <register-main 
         v-if="responseData"
         :responseData="responseData"></register-main>
-      <content-error v-else></content-error>
-      </Suspense>
+      </div>
     </main>
+    <content-error v-else></content-error>
   </div>
 
   <!-- <footer>
@@ -24,34 +25,28 @@ import SideNav from '@/components/SideNav.vue'
 import HeaderBreadcrumb from '@/components/HeaderBreadcrumb.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import RegisterMain from '@/components/RegisterMain.vue'
+import CycleLoading from '@/components/CycleLoading.vue'
 import ContentError from '@/components/ContentError.vue'
 import { getSaasListApi } from '@/apis/register.js'
 
+let loading = ref(true)
+let isApiOk = ref(false)
 let responseData = ref(null);
 let error = ref(null);
 let orgId = 1;
 
-// getSaasListApi(orgId).then((response) => {
-//   console.log("saasList : " + response);
-//   if(response.status == '200') {
-//     responseData.value = response;
-//   }
-// }).catch(err => alert(err + "\n문제가 발생했어요."));
+Promise.all([
+  getSaasListApi()
+  ]).then((values) => {
+  console.log(values[0])
+  responseData.value = values[0];
 
-responseData.value = getSaasListApi(orgId);
+  isApiOk.value = true;
+}).catch((err) => {
+  isError.value = true;
+}).finally(() => {
+  loading.value = false;
+});
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
-
-const fetchPosts = async (orgId) => {
-  try {
-    const response = await axios.get('/api/v1/org-saas/1');
-    if(response.status == '200') {
-      return await response.data;
-    }
-  } catch (err) {
-    console.error('Error:', err);
-    throw err;  
-  }
-};
 
 </script>
