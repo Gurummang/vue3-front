@@ -18,7 +18,7 @@
             id="emailTitle"
             placeholder="이메일의 제목을 입력해주세요."
             class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
-            v-model="emailtitle"
+            v-model="emailTitle"
           />
         </div>
         <div class="mb-2">
@@ -75,7 +75,7 @@
 
       <div class="flex justify-end p-3 gap-2">
         <button @click="emit('close')" class="bg-white text-orange px-4 py-2 rounded text-sm font-semibold border border-orange hover:bg-orange-600 hover:text-white">알림 취소</button>
-        <button @click="" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">알림 생성</button>
+        <button @click="emailMake" class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">알림 생성</button>
       </div>
     </div>
   </div>
@@ -92,14 +92,14 @@
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
+import { alertMakeApi } from '@/apis/email.js'
 import { validateEmail } from '@/utils/validation.js'
-// import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
 
 let emit = defineEmits(['close'])
 
 // 임의의 값 넣기
-const emailtitle = ref('')
+const emailTitle = ref('')
 const emailContent = ref('')
 const emails = ref([])
 const newEmail = ref('')
@@ -140,10 +140,41 @@ const removeEmail = (index) => {
   emails.value.splice(index, 1)
 }
 
-// const handleBackspace = (e) => {
-//   if (newEmail.value === '' && emails.value.length > 0) {
-//     emails.value.pop()
-//   }
-// }
+const emailMake = () => {
+  if(!emailTitle.value) {
+    alert('이메일 제목이 없습니다. \n이메일의 제목을 작성해주세요.')
+    return;
+  }
+  if(emails.value.length === 0) {
+    alert('이메일이 없습니다. \n알림할 이메일을 추가해주세요.')
+    return;
+  }
+  if(!emailContent.value) {
+    alert('이메일 내용이 없습니다. \n이메일의 내용을 작성해주세요.')
+    return;
+  }
+  if(!(gscanCheck.value || dlpCheck.value || vtCheck.value)) {
+    alert('탐지할 항목들이 없습니다. \n 탐지할 항목을 선택해주세요.')
+    return;
+  }
+  let data = {
+    "email": emails.value,
+    "title": emailTitle.value,
+    "content": emailContent.value,
+    "suspicious": gscanCheck.value,
+    "sensitive": dlpCheck.value,
+    "vt": vtCheck.value
+  };
+
+  alertMakeApi(data).then((response) => {
+    if(response.data.message.includes("완료")) {
+      emit('close')
+    }
+    else {
+      alert("일부 이메일에 알림할 수 없습니다. 메일함에서 링크를 확인하세요")
+    }
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+}
 
 </script>
