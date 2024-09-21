@@ -240,6 +240,7 @@ const syncOAuth2 = () => {
       "saasId": saasType.value,
       "alias": safeAlias.value,
       "adminEmail": safeSaasEmail.value,
+      "webhookUrl": webhookUrl.value
     };
 
     connectSaasApi(connectData).then((response) => {
@@ -281,6 +282,7 @@ const syncOAuth2 = () => {
       "saasId": saasType.value,
       "alias": safeAlias.value,
       "adminEmail": safeSaasEmail.value,
+      "webhookUrl": webhookUrl.value
     };
 
     connectSaasApi(connectData).then((response) => {
