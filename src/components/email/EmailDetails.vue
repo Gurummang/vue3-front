@@ -139,7 +139,6 @@ const props = defineProps({
 const router = useRouter();
 
 const emails = ref(props.emailDetails.data)
-console.log(emails.value)
 let checkedIndex = ref([])
 const isEmailCreatModalOpen = ref(false)
 const isEmailDeleteModalOpen = ref(false)
@@ -210,6 +209,7 @@ const openEmailDeleteModal = () => {
 const closeEmailDeleteModal = () => {
   isEmailDeleteModalOpen.value = false
   clearCheckedIndex()
+  router.go()
 }
 </script>
 

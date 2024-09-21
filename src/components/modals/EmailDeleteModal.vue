@@ -30,7 +30,7 @@
         >아니오
         </button>
         <button 
-          @click="$emit('close')" 
+          @click="emailDelete" 
           :disabled="!confirmed"
           :class="['w-1/2 border px-3 py-2 align-text-bottom text-sm font-semibold text-white', confirmed ? 'bg-red-600 border-red-600 hover:bg-red-800 active:bg-red-800' : 'bg-gray-400 border-gray-400 cursor-not-allowed']"
         >예
@@ -50,8 +50,7 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue'
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
-import { getSaasImg } from '@/utils/utils.js'
-import { unconnectSaasApi } from '@/apis/register.js'
+import { alertDeleteApi } from '@/apis/email.js'
 
 const props = defineProps({
   selectedEmail: {
@@ -62,7 +61,7 @@ const props = defineProps({
 
 let emit = defineEmits(['close'])
 
-let emailId = ref(props.selectedEmail.id);
+let emailId = ref([props.selectedEmail.id]);
 let confirmed = ref(false);
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
@@ -73,6 +72,17 @@ const openErrorModal = () => {
 
 const closeErrorModal = () => {
   isErrorModalOpen.value = false;
+}
+
+const emailDelete = () => {
+  let data = {
+    "alertIds": emailId.value
+  };
+
+  alertDeleteApi(data).then((response) => {
+    emit('close');
+  })
+  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
 }
 
 </script>
