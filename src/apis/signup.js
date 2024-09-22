@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/router/index.js';
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
@@ -17,7 +18,7 @@ let gasbLoginApi = async (data) => {
 let gasbJwtValidApi = async () => {
   try {
     const response = await axios.get('/api/v1/org-saas/list', { withCredentials: true });
-    if(response.status == '200') {
+    if(response.status == '200' && response.data[0].errorCode != '400') {
       return true
     }
     return false
