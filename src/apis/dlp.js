@@ -10,7 +10,7 @@ let dlpPolicyListApi = async () => {
   try {
     const response = await api.get('/api/v1/dlp/policy/list');
     if(response.data[0].success == false) {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -25,7 +25,7 @@ let dlpPolicyMakeApi = async (data) => {
   try {
     const response = await api.post('/api/v1/dlp/policy/make', data);
     if(response.data[0].success == false) {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -40,7 +40,7 @@ let dlpPolicyDeleteApi = async (data) => {
   try {
     const response = await api.post('/api/v1/dlp/policy/delete', data);
     if(response.data[0].success == false) {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {

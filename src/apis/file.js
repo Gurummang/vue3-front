@@ -10,7 +10,7 @@ let totalFileInfoApi = async () => {
   try {
     const response = await api.get('/api/v1/files/board');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -25,7 +25,7 @@ let fileScanApi = async () => {
   try {
     const response = await api.get('/api/v1/files/scan');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -40,7 +40,7 @@ let fileVtUploadApi = async (data) => {
   try {
     const response = await api.post('/api/v1/vt/upload', data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -55,7 +55,7 @@ let historyStatisticsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history/statistics', );
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -70,7 +70,7 @@ let historyDetailsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -85,7 +85,7 @@ let historyVisualizatuonApi = async (data) => {
   try {
     const response = await api.post('/api/v1/files/history/visualize', data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
