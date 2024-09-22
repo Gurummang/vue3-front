@@ -153,9 +153,9 @@
                     </div>
                     <div class="flex border-t border-gray-200">
                       <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">파일 경로</span>
-                      <span class="inline-block w-3/6 p-2 bg-white text-xs">{{ details.path }}</span>
-                      <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
-                      <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span>
+                      <span class="inline-block w-5/6 p-2 bg-white text-xs">{{ details.path }}</span>
+                      <!-- <span class="inline-block w-1/6 p-2 border-x border-gray-200 text-sm text-center">접근 가능 사용자 수</span>
+                      <span class="inline-block w-1/6 p-2 bg-white text-xs">{{ "20" }}</span> -->
                     </div>
 
 
@@ -173,9 +173,10 @@
                           Signature 값: {{ details.gscan.step1.signature }}<br>
                           파일 확장자 : {{ details.gscan.step1.extension }}
                         </span>
-                        <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">심층분석</span>
+                        <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">YARA 탐지</span>
                         <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
-                          {{details.gscan.step2 }}
+                          <!-- {{ details.gscan.step2 }} -->
+                          {{ "미완성" }}
                         </span>
                       </div>
                     </div>
