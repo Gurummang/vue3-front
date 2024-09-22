@@ -36,6 +36,9 @@ Promise.all([
   ])
   .then((values) => {
     policyDetails.value = values[0]
+    if(policyDetails.value[0].message.includes("No")) {
+      policyDetails.value = []
+    }
     isApiOk.value = true
   })
   .catch((err) => {
