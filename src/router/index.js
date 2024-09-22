@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/',
+    path: '/main',
     name: '메인',
     component: () => import('../views/MainView.vue')
   },

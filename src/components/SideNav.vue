@@ -86,7 +86,7 @@ export default defineComponent({
         title: '메인', 
         icon: HomeIcon, 
         active: false,
-        link: '/',
+        link: '/main',
       },
       { 
         title: '등록', 
