@@ -10,7 +10,7 @@ let alertsListApi = async () => {
   try {
     const response = await api.get('/api/v1/alerts');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -25,7 +25,7 @@ let alertMakeApi = async (data) => {
   try {
     const response = await api.post('/api/v1/alerts', data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -40,7 +40,7 @@ let verifyEmailApi = async (data) => {
   try {
     const response = await api.post('/api/v1/alerts/verify-email', data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -55,7 +55,7 @@ let alertModifyApi = async (id, data) => {
   try {
     const response = await api.put('/api/v1/alerts/edit/' + id, data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -70,7 +70,7 @@ let alertDeleteApi = async (data) => {
   try {
     const response = await api.post('/api/v1/alerts/delete', data);
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {

@@ -29,7 +29,7 @@ let fileStatisticsApi = async (saas) => {
     }
   } catch (err) {
     if(err.response.status == '401') {
-      router.push('/login');
+      router.push('/');
     }
     throw err;  
   }

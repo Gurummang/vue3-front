@@ -87,13 +87,37 @@
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.title }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs">{{ details.content }}</td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.sensitive" disabled/>
+                  <!-- <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.sensitive" disabled/> -->
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" v-model="details.sensitive" class="sr-only peer" disabled>
+                    <div class="relative flex items-center justify-center rounded size-4 bg-gray-100 border border-gray-400 peer peer-checked:bg-indigo-900">
+                      <svg v-if="details.sensitive" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </label>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.suspicious" disabled/>
+                  <!-- <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.suspicious" disabled/> -->
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" v-model="details.suspicious" class="sr-only peer" disabled>
+                    <div class="relative flex items-center justify-center rounded size-4 bg-gray-100 border border-gray-400 peer peer-checked:bg-indigo-900">
+                      <svg v-if="details.suspicious" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </label>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs text-center">
-                  <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.vt" disabled/>
+                  <!-- <input type="checkbox" class="size-3.5 rounded border-indigo-900 " :checked="details.vt" disabled/> -->
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" v-model="details.vt" class="sr-only peer" disabled>
+                    <div class="relative flex items-center justify-center rounded size-4 bg-gray-100 border border-gray-400 peer peer-checked:bg-indigo-900">
+                      <svg v-if="details.vt" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </label>
                 </td>
               </tr>
             </template>
@@ -229,4 +253,7 @@ const closeEmailDeleteModal = () => {
 </script>
 
 <style scoped>
+/* input[id='indigoCheckBox']{
+  display: none;
+} */
 </style>
