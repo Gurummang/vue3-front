@@ -42,7 +42,7 @@ Promise.all([
     isApiOk.value = true
   })
   .catch((err) => {
-    
+
   })
   .finally(() => {
     loading.value = false
