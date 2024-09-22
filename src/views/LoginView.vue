@@ -69,9 +69,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { gasbLoginApi } from '@/apis/signup.js'
+import { gasbLoginApi, gasbJwtValidApi } from '@/apis/signup.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
 
 const email = ref('');
@@ -80,6 +80,12 @@ const router = useRouter();
 
 const emailHasSpecialChar = ref(false);
 const passwordHasSpecialChar = ref(false);
+
+onMounted(async () => {
+  if(await gasbJwtValidApi()) {
+    router.push('/main');
+  }
+})
 
 const handleSubmit = async () => {
   const safeEmail = ref(htmlEscape(email.value));

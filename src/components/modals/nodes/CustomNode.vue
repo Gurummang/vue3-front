@@ -26,7 +26,10 @@
       </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
-      <p class="capitalize"><strong>SaaS : </strong>{{ data.saas }}</p>
+      <p class="capitalize flex items-center">
+        <strong>SaaS :</strong>
+          <img class="w-4 h-4 mx-1" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />{{ convertSaasName(data.saas) }}
+      </p>
       <p><strong>파일명 : </strong>{{ data.fileName }}</p>
       <p><strong>사용자 : </strong>{{ data.email }}</p>
       <p><strong>히스토리 시각 : </strong>{{ formattedDate }}</p>
@@ -77,6 +80,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Position, Handle } from '@vue-flow/core'
+import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 
 const props = defineProps(['data'])
 

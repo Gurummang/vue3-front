@@ -10,7 +10,7 @@ let userStatisticsApi = async () => {
   try {
     const response = await api.get('/api/v1/users/total');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -25,7 +25,7 @@ let userChartInfoApi = async () => {
   try {
     const response = await api.get('/api/v1/users/statistics');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {
@@ -40,7 +40,7 @@ let userDetailsApi = async () => {
   try {
     const response = await api.get('/api/v1/users/info');
     if(response.data.status == 'error') {
-      router.push('/login');
+      router.push('/');
       return;
     }
     if(response.status == '200') {

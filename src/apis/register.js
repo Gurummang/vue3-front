@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/router/index.js';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
@@ -9,6 +10,10 @@ let getSaasListApi = async (orgId) => {
   try {
     const response = await api.get('/api/v1/org-saas/list');
     if(response.status == '200') {
+      if(response.data[0].errorCode == '400') {
+        router.push('/');
+        return;
+      }
       return response.data;
     }
   } catch (err) {
