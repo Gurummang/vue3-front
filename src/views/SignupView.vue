@@ -74,7 +74,7 @@
             </div>
             <div class="relative flex justify-center text-sm">
               <span class="px-2 bg-white text-gray-500">
-                이미 계정을 가지고 계신가요? <router-link to="/login" class="font-medium text-indigo-600 hover:text-indigo-500">로그인</router-link>
+                이미 계정을 가지고 계신가요? <router-link to="/" class="font-medium text-indigo-600 hover:text-indigo-500">로그인</router-link>
               </span>
             </div>
           </div>
@@ -142,7 +142,7 @@ const handleSubmit = async () => {
     }
     const response = await gasbSignupApi(data);
     if (response.status === 'success') {
-      router.push('/login');
+      router.push('/');
     }
   } catch (error) {
     alert('회원가입하는 중에 오류가 발생했습니다.')
