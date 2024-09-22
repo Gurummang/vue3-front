@@ -12,7 +12,19 @@ let gasbLoginApi = async (data) => {
   } catch (err) {
     return false;
   }
-};
+}
+
+let gasbJwtValidApi = async () => {
+  try {
+    const response = await axios.get('/api/v1/org-saas/list', { withCredentials: true });
+    if(response.status == '200') {
+      return true
+    }
+    return false
+  } catch (err) {
+    throw err;  
+  }
+}
 
 let gasbSignupApi = async (data) => {
   try {
@@ -42,4 +54,4 @@ let gasbLogoutApi = async () => {
   }
 }
 
-export { gasbLoginApi, gasbSignupApi, gasbLogoutApi };
+export { gasbLoginApi, gasbJwtValidApi, gasbSignupApi, gasbLogoutApi };
