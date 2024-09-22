@@ -2,12 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/main',
-    name: '메인',
-    component: () => import('../views/MainView.vue')
-  },
-  {
-    path: '/login',
+    path: '/',
     name: '로그인',
     component: () => import('../views/LoginView.vue')
   },
@@ -15,6 +10,11 @@ const routes = [
     path: '/signup',
     name: '회원가입',
     component: () => import('../views/SignupView.vue')
+  },
+  {
+    path: '/main',
+    name: '메인',
+    component: () => import('../views/MainView.vue')
   },
   {
     path: '/register/saas',
