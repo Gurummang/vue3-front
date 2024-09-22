@@ -36,13 +36,13 @@ Promise.all([
   ])
   .then((values) => {
     policyDetails.value = values[0]
-    if(policyDetails.value[0].message.includes("No")) {
-      policyDetails.value = []
-    }
+    // if(policyDetails.value[0].message.includes("No") || false) {
+    //   policyDetails.value = []
+    // }
     isApiOk.value = true
   })
   .catch((err) => {
-
+    
   })
   .finally(() => {
     loading.value = false
