@@ -141,7 +141,7 @@ const syncSaaS = () => {
   // 보안 조치
   const safeAlias = ref(htmlEscape(alias.value));
   const safeSaasEmail = ref(htmlEscape(saasEmail.value));
-  const safeApiToken = ref(htmlEscape(apiToken.value));
+  // const safeApiToken = ref(htmlEscape(apiToken.value));
 
   if(!saasType.value || saasType.value === 'None') {
     alert('연동할 SaaS가 정의되지 않았습니다.');
@@ -168,10 +168,11 @@ const syncSaaS = () => {
   if(!apiToken.value) {
     alert('SaaS의 API Key 값이 정의되지 않았습니다.\n해당 칸에 작성해주세요.');
     return;
-  } else if(specialChar(safeApiToken.value)) {
-    alert('API Key 값에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
-    return;
-  }
+  } 
+  // else if(specialChar(safeApiToken.value)) {
+  //   alert('API Key 값에 특수 문자가 포함되어 있습니다. 다시 작성해주세요.');
+  //   return;
+  // }
   else if(!isValidApiToken.value) {
     alert('해당 API Key이 올바르지 않습니다.\n다시 작성해주세요.');
     return;
@@ -186,7 +187,7 @@ const syncSaaS = () => {
     "saasId": saasType.value,    // slack
     "alias": safeAlias.value,
     "adminEmail": safeSaasEmail.value,
-    "apiToken": safeApiToken.value,
+    "apiToken": apiToken.value,
     "webhookUrl": webhookUrl.value
   };
 
