@@ -9,10 +9,10 @@ const api = axios.create({
 let dlpPolicyListApi = async () => {
   try {
     const response = await api.get('/api/v1/dlp/policy/list');
-    if(response.data[0].success == false) {
-      router.push('/');
-      return;
-    }
+    // if(response.data[0].success == false) {
+    //   router.push('/');
+    //   return;
+    // }
     if(response.status == '200') {
       return response.data;
     }

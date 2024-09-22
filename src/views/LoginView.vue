@@ -103,7 +103,7 @@ const handleSubmit = async () => {
     const response = await gasbLoginApi(data);
     // 쿠키가 정상적으로 설정되었는지 확인 (서버 응답에 따라)
     if (response.status === 'success') {
-      router.push('/');
+      router.push('/main');
     } else {
       alert('아이디 또는 비밀번호가 올바르지 않습니다.');
     }

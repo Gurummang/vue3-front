@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex justify-center py-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-4 sm:px-6 lg:px-8">
     <!-- <div class="h-1/2">
       <img src="../../public/meta_logo.png" class="h-1/2 rounded-lg">
     </div> -->
