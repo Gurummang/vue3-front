@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset" :test="test"></the-pagination>
+    <the-pagination :totalPage="totalPage" @send-event="reset" :selectPages="selectPages"></the-pagination>
   </div>
 </template>
 

@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
+    <the-pagination :totalPage="totalPage" @send-event="reset" :selectPages="selectPages"></the-pagination>
   </div>
 
 <DlpDeleteModal
