@@ -332,7 +332,7 @@
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset" :test="test"></the-pagination>
+    <the-pagination :totalPage="totalPage" @send-event="reset" :selectPages="selectPages"></the-pagination>
   </div>
 
 <virustotal-modal
@@ -357,7 +357,6 @@ import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
 
-const test = ref('test')
 const props = defineProps({
   fileDetails: Object,
   required: true

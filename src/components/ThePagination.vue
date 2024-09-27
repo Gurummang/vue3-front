@@ -21,7 +21,7 @@
       @click="movePage(index + 1)"
       v-for="index in pages[step]"
       :key="index"
-      class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline hover:bg-indigo-900 hover:text-white dar"
+      :class="['hidden px-4 py-2 mx-1 transition-colors duration-300 transform rounded-md sm:inline hover:bg-indigo-900 hover:text-white dar', (index + 1) === props.selectPages ? 'bg-indigo-900 text-white' : 'text-gray-700 bg-white']"
     >
       {{ index + 1 }}
     </a>
@@ -50,6 +50,10 @@ import { computed, ref } from 'vue'
 
 const props = defineProps({
   totalPage: {
+    type: Number,
+    required: true
+  },
+  selectPages: {
     type: Number,
     required: true
   }
