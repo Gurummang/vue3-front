@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(user, index) in users" :key="index">
+          <tr v-for="(user, index) in users" :key="index" class="hover:bg-gray-100">
             <td class="px-4 py-3">
               <div class="w-full text-sm truncate">{{ user.userName }}</div>
             </td>

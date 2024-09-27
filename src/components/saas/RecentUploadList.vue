@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(file, index) in files" :key="index">
+          <tr v-for="(file, index) in files" :key="index" class="hover:bg-gray-100">
             <td class="px-3 py-1">
               <div class="w-full text-xs truncate">{{ file.fileName }}</div>
             </td>
