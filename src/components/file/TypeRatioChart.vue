@@ -7,7 +7,7 @@
       </div>
       <div class="w-1/2 pl-4 flex items-center">
         <ul class="list-none p-0 w-full">
-          <li v-for="item in sortedData" :key="item.type" class="mb-2 flex items-center justify-between">
+          <li v-for="item in sortedData" :key="item.type" class="mb-2 pl-10 flex items-center">
             <div class="flex items-center flex-grow">
               <span class="w-4 h-4 rounded-full mr-2" :style="{ backgroundColor: getColor(item.type) }"></span>
               <span class="text-sm">{{ item.type }}</span>

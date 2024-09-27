@@ -14,7 +14,7 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="(file, index) in files" :key="index">
             <td class="px-3 py-1">
-              <div class="w-full text-xs">{{ file.fileName }}</div>
+              <div class="w-full text-xs truncate">{{ file.fileName }}</div>
             </td>
             <td class="px-2 py-1">
               <div class="w-full text-xs truncate">{{ file.uploadedBy }}</div>
