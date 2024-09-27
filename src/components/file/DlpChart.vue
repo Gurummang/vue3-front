@@ -50,7 +50,10 @@ const config = {
     },
     scales: {
       x: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1
+        }
       }
     }
   },

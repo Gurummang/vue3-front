@@ -81,7 +81,7 @@ onMounted(() => {
             text: '크기 (MB)'
           },
           ticks: {
-            stepSize: 10,
+            stepSize: 2,
             callback: function(value, index, values) {
               return value + ' MB';
             }

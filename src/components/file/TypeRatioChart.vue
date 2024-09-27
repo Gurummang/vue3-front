@@ -112,12 +112,13 @@ onMounted(() => {
   createChart();
 });
 
-watch(() => props.data, () => {
-  if (chart) {
-    chart.destroy();
-  }
-  createChart();
-}, { deep: true });
+// chart.destroy() 가 최적의 방법이지만, 자꾸 결려서 제거
+// watch(() => props.data, () => {
+//   if (chart) {
+//     chart = null;
+//   }
+//   createChart();
+// }, { deep: true });
 </script>
 
 <style scoped>
