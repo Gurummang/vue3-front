@@ -52,7 +52,13 @@ const config = {
     },
     scales: {
       x: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          callback: function(value) {
+            return value + ' 개';
+          }
+        }
       }
     }
   },
