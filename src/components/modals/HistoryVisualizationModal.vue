@@ -100,21 +100,22 @@ const elements = computed(() => {
   slackData.forEach((item, index) => {
     const nodeId = `${item.eventId}`;
     let yPosition;
-    let tuning = 25;
+    let tuning = 0;
     
     // (1) 이벤트 행위에 따른 높이 구분
     // switch(item.eventType.toLowerCase()) {
     //   case 'file_upload':
-    //     yPosition = Math.floor((getSecureRandomInt(10) * (tuning - (-tuning))) + (-tuning));
+    //     // tuning = Math.floor((getSecureRandomInt(10) * (tuning - (-tuning))) + (-tuning));
+    //     tuning = 0;
     //     break;
     //   case 'file_change':
-    //     yPosition = -300;
+    //     tuning = -100;
     //     break;
     //   case 'file_delete':
-    //     yPosition = -600;
+    //     tuning = -200;
     //     break;
     //   default:
-    //     yPosition = 0; // 기본값
+    //     tuning = 0; // 기본값
     // }
 
     // (2) 유사도가 같은 것 높이 유지
@@ -123,7 +124,7 @@ const elements = computed(() => {
 
     // (3) 유사도에 따른 높이랭크를 설정
     const similarityHeight = slackSimilarityRanks[item.similarity]
-    yPosition = -(similarityHeight * 260);
+    yPosition = -(similarityHeight * 230) + tuning;
 
     nodes.push({
       id: nodeId,
@@ -172,7 +173,7 @@ const elements = computed(() => {
 
     // (3) 유사도에 따른 높이랭크를 설정
     const similarityHeight = googledriveSimilarityRanks[item.similarity]
-    yPosition = -(similarityHeight * 260);
+    yPosition = -(similarityHeight * 230);
 
     nodes.push({
       id: nodeId,
@@ -189,7 +190,7 @@ const elements = computed(() => {
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
-      position: { x: 50 + index * 400, y: yPosition },
+      position: { x: 50 + index * 400, y: yPosition + 300},
       // parentNode: item.saas,
       // extent: 'parent',
     })
@@ -220,7 +221,7 @@ const elements = computed(() => {
 
     // (3) 유사도에 따른 높이랭크를 설정
     const similarityHeight = o365SimilarityRanks[item.similarity]
-    yPosition = -(similarityHeight * 260);
+    yPosition = -(similarityHeight * 230);
 
     nodes.push({
       id: nodeId,
