@@ -167,16 +167,17 @@
                     <div v-if="isGscanOpen(index) && details.fileStatus.gscanStatus === 1" class="bg-white">
                       <div class="flex items-stretch border-t border-gray-200">
                         <span class="flex items-center justify-center w-1/4 p-2 bg-gray-100 border-x border-gray-200 text-center text-sm">확장자 시그니쳐 일치 여부</span>
-                        <span class="flex inline-block w-1/4 p-2 bg-white text-xs">
-                          일치 여부 : {{ details.gscan.step1.correct  }}<br>
-                          MimeType 값 : {{ details.gscan.step1.mimeType }}<br>
-                          Signature 값: {{ details.gscan.step1.signature }}<br>
-                          파일 확장자 : {{ details.gscan.step1.extension }}
+                        <span class="flex flex-col inline-block w-1/4 p-2 bg-white text-xs">
+                          <p>일치 여부 : {{ details.gscan.step1.correct  }}</p>
+                          <p>MimeType 값 : {{ details.gscan.step1.mimeType }}</p>
+                          <p>Signature 값: {{ details.gscan.step1.signature }}</p>
+                          <p>파일 확장자 : {{ details.gscan.step1.extension }}</p>
                         </span>
                         <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">YARA 탐지</span>
                         <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
-                          <!-- {{ details.gscan.step2 }} -->
-                          {{ "미완성" }}
+                          {{ details.gscan.step2 }}
+                          <p></p>
+                          <!-- {{ "미완성" }} -->
                         </span>
                       </div>
                     </div>
