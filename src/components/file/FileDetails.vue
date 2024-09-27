@@ -364,6 +364,11 @@ const props = defineProps({
 
 const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
 
+const accordionStatus = ref({})
+const gscanStatus = ref({})
+const dlpReportStatus = ref({})
+const virusTotalReportStatus = ref({})
+
 // 페이지 네비게이션
 const items = ref([])
 const totalData = ref([])
@@ -402,6 +407,11 @@ const reset = (pageIdx) => {
 
 watch(selectPages, () => {
   getData()
+  clearCheckedIndex()
+  accordionStatus.value = {}
+  gscanStatus.value = {}
+  dlpReportStatus.value = {}
+  virusTotalReportStatus.value = {}
 })
 
 let checkedIndex = ref([])
@@ -409,11 +419,6 @@ let checkedIndex = ref([])
 const clearCheckedIndex = () => {
   checkedIndex.value = []
 }
-
-const accordionStatus = ref({})
-const gscanStatus = ref({})
-const dlpReportStatus = ref({})
-const virusTotalReportStatus = ref({})
 
 const isVirustotalModalOpen = ref(false)
 const isFileDeleteModalOpen = ref(false)
