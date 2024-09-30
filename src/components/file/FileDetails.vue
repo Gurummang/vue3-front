@@ -53,7 +53,6 @@
           </div>
         </div>
       </div>
-
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
@@ -75,9 +74,9 @@
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <input 
-                    type="checkbox" 
-                    class="size-3.5 rounded border-gray-300" 
-                    :value="details.id"
+                    type="radio" 
+                    class="size-3 rounded border-gray-300" 
+                    :value="details"
                     v-model="checkedIndex" 
                     onclick="event.cancelBubble = true;"
                   />
@@ -337,19 +336,19 @@
 
 <virustotal-modal
   v-if="isVirustotalModalOpen"
-  :checkedIndex="checkedIndex"
+  :checkedIndex="checkedVtInfo"
   @close="closeVirustotalModal"
 ></virustotal-modal>
 <file-delete-modal
   v-if="isFileDeleteModalOpen"
-  :checkedIndex="checkedIndex"
+  :checkedIndex="checkedDeleteInfo"
   @close="closeFileDeleteModal"
 ></file-delete-modal>
 
 </template>
 
 <script setup>
-import { ref, watch, defineProps, onMounted } from 'vue'
+import { ref, watch, computed, defineProps, onMounted } from 'vue'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
@@ -415,6 +414,15 @@ watch(selectPages, () => {
 })
 
 let checkedIndex = ref([])
+let checkedVtInfo = computed(() => [
+  checkedIndex.value.id
+])
+let checkedDeleteInfo = computed(() => [{
+  id: checkedIndex.value.id,
+  file_name: checkedIndex.value.name,
+  path: checkedIndex.value.path
+}])
+
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
@@ -458,7 +466,7 @@ const isVirusTotalReportOpen = (index) => {
 
 // Modal Function
 const openVirustotalModal = () => {
-  if (checkedIndex.value.length) {
+  if (checkedVtInfo.value.length) {
     isVirustotalModalOpen.value = true
   } else {
     alert('검사할 파일을 선택해주세요.')
@@ -471,7 +479,7 @@ const closeVirustotalModal = () => {
 }
 
 const openFileDeleteModal = () => {
-  if (checkedIndex.value.length) {
+  if (checkedDeleteInfo.value.length) {
     isFileDeleteModalOpen.value = true
   } else {
     alert('삭제할 파일을 선택해주세요.')
