@@ -16,7 +16,7 @@
       </div>
       <div class="flex justify-center p-3 space-x-2">
         <button  @click="$emit('close')" class="w-1/2 border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-red-600 hover:bg-red-800 hover:text-white active:bg-red-800">아니오</button>
-        <button @click="close" class="w-1/2 bg-red-600 border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-white hover:bg-red-800 active:bg-red-800">예</button>
+        <button @click="fileDeleteFunc" class="w-1/2 bg-red-600 border border-red-600 px-3 py-2 align-text-bottom text-sm font-semibold text-white hover:bg-red-800 active:bg-red-800">예</button>
       </div>
     </div>
   </div>
@@ -59,34 +59,19 @@ const closeErrorModal = () => {
   isErrorModalOpen.value = false;
 }
 
-const syncSaaS = () => {
-  // 다음 스텝 -> 해당 값들을 POST로 보내기
-  let connectData = {
-    "orgId": 1,     // samsung
-    "saasId": saasType.value,    // slack
-    "alias": alias.value,
-    "adminEmail": saasEmail.value,
-    "apiToken": apiToken.value,
-    "webhookUrl": webhookUrl.value
-  };
-
-  connectSaasApi(connectData).then((response) => {
-    errorCode = response.errorCode;
-    if(errorCode != 200) {
-      openErrorModal();
-      watch(isErrorModalOpen, (afterValue, beforeValue) => {
-        if (afterValue === false) {
-          emit('close');
-        }
-      });
+const fileDeleteFunc = () => {
+  let data = Object.values(props.checkedIndex)
+  fileDeleteApi(data).then((response) => {
+    if(response.status != '200') {
+      alert('파일을 전송하는 데에 문제가 발생했어요.')
+      return
     }
-    else {
-      emit('close');
-    }
+    emit('close')
   })
-  .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
-};
-
+  .catch((err) => {
+    alert(err + "\n서버에 문제가 발생했어요.")
+  })
+}
 
 </script>
 
