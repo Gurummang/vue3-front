@@ -9,11 +9,12 @@
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
           >
             <option value="week">SaaS</option>
-            <option value="month">활동 종류</option>
-            <option value="year">파일명</option>
-            <option value="year" selected>히스토리 시각</option>
-            <option value="year">최초시각</option>
-            <option value="year">사용자</option>
+            <option value="month">사용자</option>
+            <option value="year">계정</option>
+            <option value="year">업로드 수</option>
+            <option value="year">DLP파일</option>
+            <option value="year">악성파일</option>
+            <option value="year" selected>마지막 활동 날짜</option>
           </select>
           <select
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
@@ -100,6 +101,13 @@ const props = defineProps({
     required: true
   }
 })
+
+const sortedDate = ref(props.userDetails.sort((a, b) => {
+  if (a.lastDate === "-999999999-01-01T00:00:00") return 1;
+  if (b.lastDate === "-999999999-01-01T00:00:00") return -1;
+  return new Date(b.lastDate) - new Date(a.lastDate)})
+)
+
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)
@@ -113,7 +121,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = props.userDetails
+  totalData.value = sortedDate.value
   totalCount.value = totalData !== undefined ? totalData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1

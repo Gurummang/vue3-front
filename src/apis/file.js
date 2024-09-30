@@ -51,6 +51,21 @@ let fileVtUploadApi = async (data) => {
   }
 };
 
+let fileDeleteApi = async (data) => {
+  try {
+    const response = await api.post('/api/v1/board/slack/files/delete', data);
+    if(response.data.status == '401') {
+      router.push('/');
+      return;
+    }
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    throw err;  
+  }
+};
+
 let historyStatisticsApi = async () => {
   try {
     const response = await api.get('/api/v1/files/history/statistics', );
@@ -96,4 +111,4 @@ let historyVisualizatuonApi = async (data) => {
   }
 };
 
-export { totalFileInfoApi, fileScanApi, fileVtUploadApi, historyStatisticsApi, historyDetailsApi, historyVisualizatuonApi };
+export { totalFileInfoApi, fileScanApi, fileVtUploadApi, fileDeleteApi, historyStatisticsApi, historyDetailsApi, historyVisualizatuonApi };
