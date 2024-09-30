@@ -34,7 +34,7 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
-import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
+import { fileDeleteApi } from '@/apis/file.js'
 
 const props = defineProps({
   checkedIndex: {
