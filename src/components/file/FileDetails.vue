@@ -493,4 +493,21 @@ const closeFileDeleteModal = () => {
 </script>
 
 <style scoped>
+/* input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none; 
+  cursor: pointer;
+}
+
+input[type='radio']:checked {
+  background-color: #22d3ee;
+  border: 3px solid white; 
+  box-shadow: 0 0 0 1.6px #22d3ee; 
+} */
 </style>
