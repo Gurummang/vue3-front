@@ -19,7 +19,7 @@
             </button>
             <button
               class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
-              @click="openconnectModal"
+              @click="router.go()"
             >
               <v-icon :size="20">mdi-refresh</v-icon> 새로고침
             </button>
@@ -53,7 +53,6 @@
           </div>
         </div>
       </div>
-
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
           <thead class="bg-indigo-900">
@@ -75,9 +74,9 @@
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <input 
-                    type="checkbox" 
-                    class="size-3.5 rounded border-gray-300" 
-                    :value="details.id"
+                    type="radio" 
+                    class="size-3 rounded border-gray-300" 
+                    :value="details"
                     v-model="checkedIndex" 
                     onclick="event.cancelBubble = true;"
                   />
@@ -107,7 +106,7 @@
                     <span v-else-if="details.fileStatus.gscanStatus === 0">
                       <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                     </span>
-                    <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct && (!details.gscan.step2.detect || details.gscan.step2.yara === 'none')">
+                    <span v-else-if="details.fileStatus.gscanStatus === 1 && details.gscan.step1.correct && (!details.gscan.step2.detect && details.gscan.step2.yara === 'none')">
                       <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                       <!-- <p>{{ typeof details.gscan.step1.correct }}</p> -->
                     </span>
@@ -176,7 +175,7 @@
                         <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">YARA 탐지</span>
                         <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
                           <p><strong>탐지 결과</strong> : {{ details.gscan.step2.detect ? '탐지' : '미탐지'}}</p>
-                          <p v-if="details.gscan.step2.detect" class="mt-2"><strong>YARA 결과</strong> : <span class="bg-red-200 text-red-800 text-xs me-2 px-2 py-0.5 rounded-full">{{ details.gscan.step2.yara }}</span></p> 
+                          <p v-if="details.gscan.step2.yara !== 'none'" class="mt-2"><strong>YARA 결과</strong> : <span class="bg-red-200 text-red-800 text-xs me-2 px-2 py-0.5 rounded-full">{{ details.gscan.step2.yara }}</span></p> 
                           <p v-else class="mt-2"><strong>YARA 결과</strong> : <span class="bg-green-200 text-green-800 text-xs me-2 px-2 py-0.5 rounded-full">{{ details.gscan.step2.yara }}</span></p> 
                           <!-- {{ "미완성" }} -->
                         </span>
@@ -337,19 +336,20 @@
 
 <virustotal-modal
   v-if="isVirustotalModalOpen"
-  :checkedIndex="checkedIndex"
+  :checkedIndex="checkedVtInfo"
   @close="closeVirustotalModal"
 ></virustotal-modal>
 <file-delete-modal
   v-if="isFileDeleteModalOpen"
-  :checkedIndex="checkedIndex"
+  :checkedIndex="checkedDeleteInfo"
   @close="closeFileDeleteModal"
 ></file-delete-modal>
 
 </template>
 
 <script setup>
-import { ref, watch, defineProps, onMounted } from 'vue'
+import { ref, watch, computed, defineProps, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
@@ -361,6 +361,8 @@ const props = defineProps({
   fileDetails: Object,
   required: true
 })
+
+const router = useRouter()
 
 const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
 
@@ -415,6 +417,15 @@ watch(selectPages, () => {
 })
 
 let checkedIndex = ref([])
+let checkedVtInfo = computed(() => [
+  checkedIndex.value.id
+])
+let checkedDeleteInfo = computed(() => [{
+  id: checkedIndex.value.id,
+  file_name: checkedIndex.value.name,
+  path: checkedIndex.value.path
+}])
+
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
@@ -458,7 +469,7 @@ const isVirusTotalReportOpen = (index) => {
 
 // Modal Function
 const openVirustotalModal = () => {
-  if (checkedIndex.value.length) {
+  if (checkedVtInfo.value.length) {
     isVirustotalModalOpen.value = true
   } else {
     alert('검사할 파일을 선택해주세요.')
@@ -471,7 +482,7 @@ const closeVirustotalModal = () => {
 }
 
 const openFileDeleteModal = () => {
-  if (checkedIndex.value.length) {
+  if (checkedDeleteInfo.value.length) {
     isFileDeleteModalOpen.value = true
   } else {
     alert('삭제할 파일을 선택해주세요.')
@@ -485,4 +496,21 @@ const closeFileDeleteModal = () => {
 </script>
 
 <style scoped>
+/* input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none; 
+  cursor: pointer;
+}
+
+input[type='radio']:checked {
+  background-color: #22d3ee;
+  border: 3px solid white; 
+  box-shadow: 0 0 0 1.6px #22d3ee; 
+} */
 </style>
