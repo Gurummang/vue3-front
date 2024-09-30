@@ -19,7 +19,7 @@
             </button>
             <button
               class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
-              @click="openconnectModal"
+              @click="router.go()"
             >
               <v-icon :size="20">mdi-refresh</v-icon> 새로고침
             </button>
@@ -349,6 +349,7 @@
 
 <script setup>
 import { ref, watch, computed, defineProps, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
@@ -360,6 +361,8 @@ const props = defineProps({
   fileDetails: Object,
   required: true
 })
+
+const router = useRouter()
 
 const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
 
