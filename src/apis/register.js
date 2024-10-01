@@ -32,6 +32,17 @@ let getWebhookApi = async (saasId) => {
   }
 };
 
+let getMs365UrlApi = async () => {
+  try {
+    const response = await api.get('/api/v1/org-saas/azure/getUrl');
+    if(response.status == '200') {
+      return response.data;
+    }
+  } catch (err) {
+    throw err;  // 에러를 다시 throw하여 호출자가 처리할 수 있게 합니다.
+  }
+};
+
 let TokenValidationApi = async (data, saasId) => {
   try {
     // const response = await axios.post('/api/v1/org-saas/slackValid', {
@@ -83,4 +94,4 @@ let unconnectSaasApi = async (id) => {
 }
 
 
-export { getSaasListApi, getWebhookApi, TokenValidationApi, connectSaasApi, modifySaasApi, unconnectSaasApi };
+export { getSaasListApi, getWebhookApi, getMs365UrlApi, TokenValidationApi, connectSaasApi, modifySaasApi, unconnectSaasApi };

@@ -108,7 +108,7 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
-import { getWebhookApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
+import { getWebhookApi, getMs365UrlApi, TokenValidationApi, connectSaasApi } from '@/apis/register.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
 
 let emit = defineEmits(['close']);
@@ -237,6 +237,27 @@ const syncOAuth2 = () => {
   }
 
   if(saasType.value === '3') {
+    const clientId = import.meta.env.VITE_MICROSOFT365_CLIENTID
+    const responseType = import.meta.env.VITE_MICROSOFT365_RESPONSETYPE
+    const redirectUrl = import.meta.env.VITE_MICROSOFT365_REDIRECTURL
+    const responseMode = import.meta.env.VITE_MICROSOFT365_RESPONSEMODE
+    const scope = import.meta.env.VITE_MICROSOFT365_SCOPE
+    const state = import.meta.env.VITE_MICROSOFT365_STATE
+    const propmt = import.meta.env.VITE_MICROSOFT365_PROPMT
+
+    const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUrl}&response_mode=${responseMode}&scope=${scope}&state=${state}&prompt=${propmt}`
+    // window.location.href = authUrl;
+    // 새 탭에서 인증 페이지 열기
+    const authWindow = window.open(authUrl, '_blank');
+    // 새 창에서 인증 페이지 열기
+    // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+
+    // 선택적: 팝업이 차단되었는지 확인
+    if (authWindow === null || typeof(authWindow) === 'undefined') {
+      alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+      return;
+    }
+
     let connectData = {
       "saasId": saasType.value,
       "alias": safeAlias.value,
