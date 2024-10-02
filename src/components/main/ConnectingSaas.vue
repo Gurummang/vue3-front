@@ -15,9 +15,9 @@
       </div>
     </button>
     <button class="flex flex-col items-center justify-center bg-white shadow-sm rounded-lg p-4" @click="router.push('/register/saas')">
-      <v-icon :size="36" class="text-orange">mdi-plus-circle-outline</v-icon>
-      <p class="text-base">새로운</p>
-      <p class="text-base">SaaS 등록하기</p>
+      <v-icon :size="36" class="text-orange mb-2">mdi-plus-circle-outline</v-icon>
+      <p class="text-sm font-semibold">새로운</p>
+      <p class="text-sm font-semibold">SaaS 등록하기</p>
     </button>
   </div>
 </template>
@@ -36,18 +36,7 @@ const props = defineProps({
 
 const router = useRouter()
 
-let connectingInfo = ref([
-              {
-                  "saas": "slack",
-                  "alias": "fffffff",
-                  "email": "sasd@123123.vv"
-              },
-              {
-                  "saas": "o365",
-                  "alias": "Test",
-                  "email": "lis@groommang.onmicrosoft.com"
-              }
-          ]);
+let connectingInfo = ref(props.connectSaas)
 </script>
 
 <style scoped>
