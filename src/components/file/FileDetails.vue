@@ -422,8 +422,8 @@ let checkedVtInfo = computed(() => [
 ])
 let checkedDeleteInfo = computed(() => [{
   id: checkedIndex.value.id,
+  saas: checkedIndex.value.saas,
   file_name: checkedIndex.value.name,
-  path: checkedIndex.value.path
 }])
 
 
