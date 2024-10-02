@@ -37,9 +37,13 @@
         <h3 class="font-semibold text-gray-700">총 파일 개수</h3>
         <p class="text-3xl font-semibold">{{ animatedStats[4] }} 개</p>
       </div>
-      <span class="flex items-center bg-green-200 text-green-800 text-base me-2 px-2 py-0.5 rounded-full">
+      <span v-if="props.statisticsValue.dailyFileCountDifference" class="flex items-center bg-green-200 text-green-800 text-base me-2 px-2 py-0.5 rounded-full">
         <v-icon :size=20 class="mr-2">mdi-arrow-up-bold</v-icon>
         {{ props.statisticsValue.dailyFileCountDifference }} 개
+      </span>
+      <span v-else class="flex items-center bg-gray-200 text-gray-800 text-base me-2 px-2 py-0.5 rounded-full">
+        <v-icon :size=20 class="mr-2">mdi-minus-thick</v-icon>
+        {{ "0 개" }}
       </span>
       <!-- <v-icon :size="44" class="text-red-600 ml-auto">mdi-file-code-outline</v-icon> -->
     </div>
@@ -49,9 +53,13 @@
         <h3 class="font-semibold text-gray-700">총 파일 크기</h3>
         <p class="text-3xl font-semibold">{{ getfileSize(animatedStats[5]) }}</p>
       </div>
-      <span class="flex items-center bg-green-200 text-green-800 text-base me-2 px-2 py-0.5 rounded-full">
+      <span v-if="props.statisticsValue.dailyFileSizeDifference" class="flex items-center bg-green-200 text-green-800 text-base me-2 px-2 py-0.5 rounded-full">
         <v-icon :size=20 class="mr-2">mdi-arrow-up-bold</v-icon>
         {{ getfileSize(props.statisticsValue.dailyFileSizeDifference) }}
+      </span>
+      <span v-else class="flex items-center bg-gray-200 text-gray-800 text-base me-2 px-2 py-0.5 rounded-full">
+        <v-icon :size=20 class="mr-2">mdi-minus-thick</v-icon>
+        {{ "0 Bytes" }}
       </span>
       <!-- <v-icon :size="44" class="text-red-600 ml-auto">mdi-file-code-outline</v-icon> -->
     </div>

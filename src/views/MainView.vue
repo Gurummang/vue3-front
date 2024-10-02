@@ -15,6 +15,10 @@
           <TodayFileDetect :todayFileDetect="todayFileDetect" class="col-span-2"></TodayFileDetect>
           <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
         </div>
+        <div class="grid grid-cols-5 gap-5">
+          <FileHistoryInfo :fileHistoryInfo="fileHistoryInfo" class="col-span-2"></FileHistoryInfo>
+          <FileHistoryLine :fileHistoryLine="fileHistoryLine" class="col-span-3"></FileHistoryLine>
+        </div>
 
         <!-- <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
@@ -45,6 +49,8 @@ import FileSizeChart from '@/components/main/FileSizeChart.vue'
 import FileCountChart from '@/components/main/FileCountChart.vue'
 import TodayFileDetect from '@/components/main/TodayFileDetect.vue'
 import FileAnalysisRate from '@/components/main/FileAnalysisRate.vue'
+import FileHistoryInfo from '@/components/main/FileHistoryInfo.vue'
+import FileHistoryLine from '@/components/main/FileHistoryLine.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
