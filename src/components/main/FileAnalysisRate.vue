@@ -32,20 +32,20 @@ import { ref, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
 
 const props = defineProps({
-  todayFileDetect: Object,
+  fileAnalysisRate: Object,
   required: true
 })
 
 const chartData = ref([
-  { score: props.todayFileDetect.suspiciousAnalysis, total: props.todayFileDetect.totalCount, percentage: Math.round((props.todayFileDetect.suspiciousAnalysis / props.todayFileDetect.totalCount) * 100), label: '악성 탐지', color: '#FFA500' },
-  { score: props.todayFileDetect.dlpAnalysis, total: props.todayFileDetect.totalCount, percentage: Math.round((props.todayFileDetect.dlpAnalysis / props.todayFileDetect.totalCount) * 100), label: 'DLP', color: '#FFD700' },
-  { score: props.todayFileDetect.vtAnalysis, total: props.todayFileDetect.totalCount, percentage: Math.round((props.todayFileDetect.vtAnalysis / props.todayFileDetect.totalCount) * 100), label: 'VirusTotal', color: '#1E90FF' }
+  { score: props.fileAnalysisRate.suspiciousAnalysis, total: props.fileAnalysisRate.totalCount, percentage: Math.round((props.fileAnalysisRate.suspiciousAnalysis / props.fileAnalysisRate.totalCount) * 100), label: '악성 탐지', color: '#FFA500' },
+  { score: props.fileAnalysisRate.dlpAnalysis, total: props.fileAnalysisRate.totalCount, percentage: Math.round((props.fileAnalysisRate.dlpAnalysis / props.fileAnalysisRate.totalCount) * 100), label: 'DLP', color: '#FFD700' },
+  { score: props.fileAnalysisRate.vtAnalysis, total: props.fileAnalysisRate.totalCount, percentage: Math.round((props.fileAnalysisRate.vtAnalysis / props.fileAnalysisRate.totalCount) * 100), label: 'VirusTotal', color: '#1E90FF' }
 ])
 
 const chartRefs = ref([]);
 
 onMounted(() => {
-  analysisData.value.forEach((item, index) => {
+  chartData.value.forEach((item, index) => {
     new Chart(chartRefs.value[index], {
       type: 'doughnut',
       data: {
