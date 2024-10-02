@@ -1,17 +1,17 @@
 <template>
   <div class="flex flex-col p-4 mb-5 bg-white border rounded-lg shadow-sm">
-    <h2 class="text-xl font-bold mb-4">SaaS별 파일 크기 비율</h2>
+    <h2 class="text-xl font-bold mb-4">SaaS별 업로드 개수</h2>
     <div class="my-2">
-      <div class="my-0 mx-auto size-56">
+      <div class="my-0 mx-auto w-80 h-56">
         <canvas ref="myChart"></canvas>
       </div>
       <div class="mt-4">
         <ul class="space-y-1.5">
-          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center">
+          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center mb-3">
             <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />
             <span class="flex-1 text-base capitalize">{{ convertSaasName(data.saas) }}</span>
-            <span class="bg-orange-300 text-white text-sm text-center w-20 py-0.5 px-2 rounded-xl">{{ getfileSize(data.size) }}</span>
-            <span class="text-green-700 text-xs text-center w-11 ml-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + getfileSize(data.dailyDifference) : '' }}</span>
+            <span class="bg-orange-300 text-white text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ data.upload }} 개</span>
+            <span class="text-green-700 text-xs text-center w-9 ml-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + data.dailyDifference + ' 개': '' }}</span>
           </li>
         </ul>
       </div>
@@ -20,63 +20,67 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
+import { ref, onMounted } from 'vue';
 import { removeZeroDivision, getfileSize, getSaasImg, convertSaasName } from '@/utils/utils.js';
+import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 
-Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const props = defineProps({
   saasFileCount: Object,
+  required: true
 });
 
 const myChart = ref(null);
 const chartData = ref(props.saasFileCount);
 
 const data = {
-  labels: chartData.value.map(row => convertSaasName(row.saas)),
-  datasets: [
-    {
-      data: chartData.value.map(row => row.size),
-      backgroundColor: ['#2EB67D', '#FFD388', '#485561'],
-      weight: 10,
-      hoverOffset: 4
-    },
-  ]
-}
+  labels: chartData.value.map(row => row.saas),
+  datasets: [{
+    data: chartData.value.map(row => row.upload),
+    backgroundColor: [
+      'rgb(49 46 129)',
+      'rgb(79 70 229)',
+      'rgb(129 140 248)',
+    ],
+    categoryPercentage: 0.5,
+    barPercentage: 0.5,
+    barThickness: 20,
+    maxBarThickness: 20
+  }]
+};
 
 const config = {
-  type: 'doughnut',
+  type: 'bar',
   data: data,
   options: {
+    // indexAxis: 'y',
     responsive: true,
-    cutout: '70%', 
+    aspectRatio: 1,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
       },
-      title: {
-        display: false,
-        text: ''
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            let label = ' '
-            label += getfileSize(context.parsed)
-            return label
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 10,
+          callback: function(value) {
+            return value + ' 개';
           }
         }
       }
-    },
-  }
+    }
+  },
 };
 
 onMounted(() => {
   const ctx = myChart.value.getContext('2d');
   new Chart(ctx, config);
 });
-
 </script>
 
 <style scoped>
