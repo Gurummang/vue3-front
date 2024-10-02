@@ -38,7 +38,11 @@ const data = {
   datasets: [
     {
       data: chartData.value.map(row => row.size),
-      backgroundColor: ['#2EB67D', '#FFD388', '#485561'],
+      backgroundColor: [ //'#2EB67D', '#FFD388', '#485561'
+        'rgb(49 46 129)',
+        'rgb(79 70 229)',
+        'rgb(129 140 248)',
+      ],
       weight: 10,
       hoverOffset: 4
     },
