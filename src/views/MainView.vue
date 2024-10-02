@@ -11,6 +11,10 @@
           <FileSizeChart :saasFileSize="saasFileSize"></FileSizeChart>
           <FileCountChart :saasFileCount="saasFileCount"></FileCountChart>
         </div>
+        <div class="grid grid-cols-3 gap-5">
+          <TodayFileDetect :todayFileDetect="todayFileDetect" class="col-span-2"></TodayFileDetect>
+          <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
+        </div>
 
         <p>{{ todayFileDetect }}</p>
         <p>{{ fileAnalysisRate }}</p>
@@ -41,6 +45,8 @@ import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
 import MainStatistics from '@/components/main/MainStatistics.vue'
 import FileSizeChart from '@/components/main/FileSizeChart.vue'
 import FileCountChart from '@/components/main/FileCountChart.vue'
+import TodayFileDetect from '@/components/main/TodayFileDetect.vue'
+import FileAnalysisRate from '@/components/main/FileAnalysisRate.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
