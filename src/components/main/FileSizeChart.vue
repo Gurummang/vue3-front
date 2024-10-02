@@ -10,7 +10,7 @@
           <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center">
             <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />
             <span class="flex-1 text-base capitalize">{{ convertSaasName(data.saas) }}</span>
-            <span class="bg-orange-300 text-white text-sm text-center w-20 py-0.5 px-2 rounded-xl">{{ getfileSize(data.size) }}</span>
+            <span class="bg-orange-300 text-white text-sm text-center w-20 py-0.5 px-2 rounded-xl">{{ data.size ? getfileSize(data.size) : '0 Bytes' }}</span>
             <span class="text-green-700 text-xs text-center w-11 ml-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + getfileSize(data.dailyDifference) : '' }}</span>
           </li>
         </ul>
