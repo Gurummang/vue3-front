@@ -35,7 +35,7 @@ const myChart = ref(null);
 const chartData = ref(props.saasFileCount);
 
 const data = {
-  labels: chartData.value.map(row => row.saas),
+  labels: chartData.value.map(row => convertSaasName(row.saas)),
   datasets: [{
     data: chartData.value.map(row => row.upload),
     backgroundColor: [
