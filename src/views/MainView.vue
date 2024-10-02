@@ -8,6 +8,7 @@
         <ConnectingSaas :connectSaas="connectSaas"></ConnectingSaas>
         <div class="grid grid-cols-3 gap-5">
           <MainStatistics :statisticsValue="statisticsValue"></MainStatistics>
+          <FileSizeChart :saasFileSize="saasFileSize"></FileSizeChart>
         </div>
         <p>{{ statisticsValue }}</p>
         <p>{{ saasFileSize }}</p>
@@ -39,6 +40,7 @@ import CycleLoading from '@/components/CycleLoading.vue'
 
 import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
 import MainStatistics from '@/components/main/MainStatistics.vue'
+import FileSizeChart from '@/components/main/FileSizeChart.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
