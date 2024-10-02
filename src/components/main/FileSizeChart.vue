@@ -67,7 +67,7 @@ const config = {
         callbacks: {
           label: function(context) {
             let label = ' '
-            label += getfileSize(context.parsed)
+            label += context.parsed ? getfileSize(context.parsed) : '0 Bytes'
             return label
           }
         }
