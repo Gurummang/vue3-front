@@ -57,7 +57,7 @@ Promise.all([
   mainDlpApi()
   ]).then((values) => {
   connectSaas = values[0].data.saas,
-  // mainStatisticsValue = values[0].data
+  mainStatisticsValue = values[0].data
   saasFileSize = values[0].data.fileSizeBySaaS,
   saasFileCount = values[0].data.fileUploadBySaaS,
   todayFileDetect = values[1].data.fileScanInToday,
