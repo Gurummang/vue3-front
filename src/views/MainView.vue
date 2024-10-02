@@ -9,7 +9,7 @@
         <div class="grid grid-cols-3 gap-5">
           <MainStatistics :statisticsValue="statisticsValue"></MainStatistics>
           <FileSizeChart :saasFileSize="saasFileSize"></FileSizeChart>
-          <FileCountChart :saasFileCount="saasFileSize"></FileCountChart>
+          <FileCountChart :saasFileCount="saasFileCount"></FileCountChart>
         </div>
 
         <p>{{ todayFileDetect }}</p>
