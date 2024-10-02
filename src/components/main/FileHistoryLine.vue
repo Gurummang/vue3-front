@@ -1,14 +1,10 @@
 <template>
   <div class="bg-white p-4 rounded-lg shadow-sm mb-5">
-    <h2 class="text-xl font-bold mb-4">히스토리 추이</h2>
+    <h2 class="text-xl font-bold mb-4">파일 히스토리 추이</h2>
     <canvas ref="chartRef" class=""></canvas>
     <div class="flex justify-end items-center">
-      <span class="size-3 rounded bg-orange"></span>
-      <span class="text-xs px-1.5">업로드</span>
-      <span class="size-3 rounded bg-amber-400"></span>
-      <span class="text-xs px-1.5">수정</span>
-      <span class="size-3 rounded bg-slate-400"></span>
-      <span class="text-xs px-1.5">삭제</span>
+      <span class="size-3 rounded bg-indigo-900"></span>
+      <span class="text-xs px-1.5">히스토리</span>
     </div>
   </div>
 </template>
@@ -45,15 +41,15 @@ onMounted(() => {
       datasets: [{
         label: '히스토리',
         data: chartData.value.map(row => row.total),
-        fill: false,
+        fill: 'start',
         borderColor: '#4D4C7D',
-        backgroundColor: '#4D4C7D',
+        backgroundColor: 'rgba(49, 46, 129, 0.7)',
         // borderDash: [4, 3],
         // hoverBorderDash: [0, 0],
-        pointRadius: 3,
-        pointHoverRadius: 3,
+        pointRadius: 2,
+        pointHoverRadius: 2,
         borderWidth: 2,
-        hoverBorderWidth: 2,
+        // hoverBorderWidth: 2,
         tension: 0.3,
       }]
     },
@@ -70,7 +66,7 @@ onMounted(() => {
           position: 'bottom',
         },
         tooltip: {
-          mode: 'nearest',
+          // mode: 'nearest',
           intersect: true,
         }
       },
