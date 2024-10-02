@@ -5,6 +5,7 @@
     <cycle-loading v-if="loading"></cycle-loading>
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
+        <ConnectingSaas :connectSaas="connectSaas"></ConnectingSaas>
         <p>{{ connectSaas }}</p>
         <p>{{ mainStatisticsValue }}</p>
         <p>{{ saasFileSize }}</p>
@@ -34,6 +35,8 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 
+import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
+
 let loading = ref(true)
 let isApiOk = ref(false)
 
@@ -56,16 +59,16 @@ Promise.all([
   mainStatisticsApi(),
   mainDlpApi()
   ]).then((values) => {
-  connectSaas = values[0].data.saas,
-  mainStatisticsValue = values[0].data
-  saasFileSize = values[0].data.fileSizeBySaaS,
-  saasFileCount = values[0].data.fileUploadBySaaS,
-  todayFileDetect = values[1].data.fileScanInToday,
-  fileAnalysisRate = values[1].data.fileAnalysis,
-  fileHistoryInfo = values[1].data.fileHistoryInfo, 
-  fileHistoryLine = values[1].data.fileHistoryStatistics,
-  dlpStatistics = values[2].data.statisticsByPolicies,
-  dlpPiis = values[2].data.statisticsByPiis,
+  connectSaas.value = values[0].data.saas,
+  mainStatisticsValue.value = values[0].data,
+  saasFileSize.value = values[0].data.fileSizeBySaaS,
+  saasFileCount.value = values[0].data.fileUploadBySaaS,
+  todayFileDetect.value = values[1].data.fileScanInToday,
+  fileAnalysisRate.value = values[1].data.fileAnalysis,
+  fileHistoryInfo.value = values[1].data.fileHistoryInfo, 
+  fileHistoryLine.value = values[1].data.fileHistoryStatistics,
+  dlpStatistics.value = values[2].data.statisticsByPolicies,
+  dlpPiis.value = values[2].data.statisticsByPiis,
   isApiOk.value = true;
 }).catch((err) => {
   
