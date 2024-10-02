@@ -46,8 +46,9 @@ onMounted(() => {
         backgroundColor: 'rgba(49, 46, 129, 0.7)',
         // borderDash: [4, 3],
         // hoverBorderDash: [0, 0],
-        pointRadius: 2,
-        pointHoverRadius: 2,
+        pointRadius: 4,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 2,
         borderWidth: 2,
         // hoverBorderWidth: 2,
         tension: 0.3,
@@ -60,6 +61,7 @@ onMounted(() => {
         mode: 'dataset',
         intersect: false
       },
+      pointBackgroundColor: '#fff',
       plugins: {
         legend: {
           display: false,
