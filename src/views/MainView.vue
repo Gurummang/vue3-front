@@ -9,10 +9,9 @@
         <div class="grid grid-cols-3 gap-5">
           <MainStatistics :statisticsValue="statisticsValue"></MainStatistics>
           <FileSizeChart :saasFileSize="saasFileSize"></FileSizeChart>
+          <FileCountChart :saasFileCount="saasFileSize"></FileCountChart>
         </div>
-        <p>{{ statisticsValue }}</p>
-        <p>{{ saasFileSize }}</p>
-        <p>{{ saasFileCount }}</p>
+
         <p>{{ todayFileDetect }}</p>
         <p>{{ fileAnalysisRate }}</p>
         <p>{{ fileHistoryInfo }}</p>
@@ -41,6 +40,7 @@ import CycleLoading from '@/components/CycleLoading.vue'
 import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
 import MainStatistics from '@/components/main/MainStatistics.vue'
 import FileSizeChart from '@/components/main/FileSizeChart.vue'
+import FileCountChart from '@/components/main/FileCountChart.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
