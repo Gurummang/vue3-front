@@ -8,14 +8,64 @@ const api = axios.create({
 
 let mainTotalApi = async () => {
   try {
-    const response = await api.get('/api/v1/main/total');
-    if(response.data.status == 'error' && response.data.message.includes("Invalid JWT")) {
-        router.push('/');
-        return;
-    }
-    if(response.status == '200') {
-      return response.data;
-    }
+    const response = {
+      "status": "success",
+      "data": {
+          "saas": [
+              {
+                  "saas": "slack",
+                  "alias": "fffffff",
+                  "email": "sasd@123123.vv"
+              },
+              {
+                  "saas": "o365",
+                  "alias": "Test",
+                  "email": "lis@groommang.onmicrosoft.com"
+              }
+          ],
+          "totalSaaS": 2,
+          "totalAlert": 0,
+          "totalDlp": 4,
+          "totalUser": 11,
+          "totalFile": 52,
+          "dailyFileCountDifference": 2,
+          "totalFileSize": 99098862,
+          "dailyFileSizeDifference": 50,
+          "fileSizeBySaaS": [
+              {
+                  "saas": "slack",
+                  "size": 98913133,
+                  "dailyDifference": 0
+              },
+              {
+                  "saas": "o365",
+                  "size": 185729,
+                  "dailyDifference": 50
+              }
+          ],
+          "fileUploadBySaaS": [
+              {
+                  "saas": "slack",
+                  "upload": 47,
+                  "dailyDifference": 0
+              },
+              {
+                  "saas": "o365",
+                  "upload": 5,
+                  "dailyDifference": 2
+              }
+          ]
+      }
+  }
+  return response
+    // const response = await api.get('/api/v1/main/total');
+    // if(response.data.status == 'error' && response.data.message.includes("Invalid JWT")) {
+    //     router.push('/');
+    //     return;
+    // }
+    // if(response.status == '200') {
+    //   return response.data;
+    // }
   } catch (err) {
     throw err;  
   }
