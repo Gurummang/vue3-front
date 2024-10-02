@@ -16,8 +16,6 @@
           <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
         </div>
 
-        <p>{{ todayFileDetect }}</p>
-        <p>{{ fileAnalysisRate }}</p>
         <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
         <p>{{ dlpStatistics }}</p>
