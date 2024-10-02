@@ -102,99 +102,99 @@ const props = defineProps({
   required: true
 })
 
-// const tableData = ref(props.todayFileDetect)
-const tableData = ref([
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasasdasdasdasdasdasdaasdasdasdasdasdasdasdsdasdasdasdasdd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 0,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": 1,
-                "vt": -1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": 1,
-                "vt": -1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },
-            {
-                "saas": "slack",
-                "fileName": "asdasd.txt",
-                "suspicious": -1,
-                "dlp": -1,
-                "vt": 1,
-                "creator": "haha",
-                "eventTs": "2024-12-11 00:00:00"
-            },        
-            ])
+const tableData = ref(props.todayFileDetect)
+// const tableData = ref([
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasasdasdasdasdasdasdaasdasdasdasdasdasdasdsdasdasdasdasdd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 0,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": 1,
+//                 "vt": -1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": 1,
+//                 "vt": -1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },
+//             {
+//                 "saas": "slack",
+//                 "fileName": "asdasd.txt",
+//                 "suspicious": -1,
+//                 "dlp": -1,
+//                 "vt": 1,
+//                 "creator": "haha",
+//                 "eventTs": "2024-12-11 00:00:00"
+//             },        
+//             ])
 
 // const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
 
