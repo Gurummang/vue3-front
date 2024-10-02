@@ -237,49 +237,51 @@ const syncOAuth2 = () => {
   }
 
   if(saasType.value === '3') {
-    const clientId = import.meta.env.VITE_MICROSOFT365_CLIENTID
-    const responseType = import.meta.env.VITE_MICROSOFT365_RESPONSETYPE
-    const redirectUrl = import.meta.env.VITE_MICROSOFT365_REDIRECTURL
-    const responseMode = import.meta.env.VITE_MICROSOFT365_RESPONSEMODE
-    const scope = import.meta.env.VITE_MICROSOFT365_SCOPE
-    const state = import.meta.env.VITE_MICROSOFT365_STATE
-    const propmt = import.meta.env.VITE_MICROSOFT365_PROPMT
+    // const clientId = import.meta.env.VITE_MICROSOFT365_CLIENTID
+    // const responseType = import.meta.env.VITE_MICROSOFT365_RESPONSETYPE
+    // const redirectUrl = import.meta.env.VITE_MICROSOFT365_REDIRECTURL
+    // const responseMode = import.meta.env.VITE_MICROSOFT365_RESPONSEMODE
+    // const scope = import.meta.env.VITE_MICROSOFT365_SCOPE
+    // const state = import.meta.env.VITE_MICROSOFT365_STATE
+    // const propmt = import.meta.env.VITE_MICROSOFT365_PROPMT
 
-    const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUrl}&response_mode=${responseMode}&scope=${scope}&state=${state}&prompt=${propmt}`
-    // window.location.href = authUrl;
-    // 새 탭에서 인증 페이지 열기
-    const authWindow = window.open(authUrl, '_blank');
-    // 새 창에서 인증 페이지 열기
-    // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+    getMs365UrlApi().then((response) => {
+      const authUrl = response
+      const authWindow = window.open(authUrl, '_blank');
+      // 새 창에서 인증 페이지 열기
+      // const authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
 
-    // 선택적: 팝업이 차단되었는지 확인
-    if (authWindow === null || typeof(authWindow) === 'undefined') {
-      alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
-      return;
-    }
-
-    let connectData = {
-      "saasId": saasType.value,
-      "alias": safeAlias.value,
-      "adminEmail": safeSaasEmail.value,
-      "webhookUrl": webhookUrl.value
-    };
-
-    connectSaasApi(connectData).then((response) => {
-      errorCode = response.errorCode;
-      if(errorCode != 200) {
-        openErrorModal();
-        watch(isErrorModalOpen, (afterValue, beforeValue) => {
-          if (afterValue === false) {
-            emit('close');
-          }
-        });
+      // 선택적: 팝업이 차단되었는지 확인
+      if (authWindow === null || typeof(authWindow) === 'undefined') {
+        alert('팝업이 차단되었습니다. 팝업을 허용해주세요.');
+        return;
       }
-      else {
-        emit('close');
+      let connectData = {
+        "saasId": saasType.value,
+        "alias": safeAlias.value,
+        "adminEmail": safeSaasEmail.value,
+        "webhookUrl": webhookUrl.value
       }
+
+      connectSaasApi(connectData).then((response) => {
+        errorCode = response.errorCode;
+        if(errorCode != 200) {
+          openErrorModal();
+          watch(isErrorModalOpen, (afterValue, beforeValue) => {
+            if (afterValue === false) {
+              emit('close');
+            }
+          });
+        }
+        else {
+          emit('close');
+        }
+      })
+      .catch(err => alert(err + "\n서버에 데이터를 전송하는데에 문제가 발생했어요."))
+
     })
-    .catch(err => alert(err + "\n서버에 문제가 발생했어요."));
+    .catch(err => alert(err + "\nMS365 URL에 문제가 발생했어요."))
+
   }
   else if(saasType.value === '6') {
     const clientId = import.meta.env.VITE_GOOGLEDRIVE_CLIENTID;

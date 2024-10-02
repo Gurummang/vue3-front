@@ -11,8 +11,8 @@
           <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-1/3 object-cover rounded-full">
         </div>
         <div class="flex justify-center">
-          <img class="size-7 float-left rounded-full mr-2" :src="getSaasImg(props.selectedSaas.name)" :alt="props.selectedSaas.name"/>
-          <h1 class="text-2xl font-bold mb-2">{{ props.selectedSaas.name }}</h1>
+          <img class="size-7 float-left rounded-full mr-2" :src="getSaasImg(convertSaasName(props.selectedSaas.name))" :alt="props.selectedSaas.name"/>
+          <h1 class="text-2xl font-bold mb-2 capitalize">{{ convertSaasName(props.selectedSaas.name) }}</h1>
         </div>
 
         <p class="text-sm font-bold text-center mb-4">별칭 : {{ props.selectedSaas.alias }}</p>
@@ -61,7 +61,7 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue'
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
-import { getSaasImg } from '@/utils/utils.js'
+import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 import { unconnectSaasApi } from '@/apis/register.js'
 
 const props = defineProps({

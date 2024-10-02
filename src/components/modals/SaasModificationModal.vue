@@ -15,7 +15,7 @@
           <input
             type="text"
             id="SaasType"
-            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300"
+            class="mt-1 p-1.5 w-full rounded-md shadow-sm text-xs border-2 border-gray-300 capitalize"
             v-model="saasType"
             readonly
           />
@@ -102,6 +102,7 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
+import { convertSaasName } from '@/utils/utils.js'
 import { validateEmail } from '@/utils/validation.js'
 import { TokenValidationApi, modifySaasApi } from '@/apis/register.js'
 import { htmlEscape, specialChar } from '@/utils/security.js';
@@ -116,7 +117,7 @@ const props = defineProps({
 let emit = defineEmits(['close']);
 
 let saasId = ref(props.selectedSaas.id);
-let saasType = ref(props.selectedSaas.name);
+let saasType = ref(convertSaasName(props.selectedSaas.name));
 let alias = ref(props.selectedSaas.alias);
 let saasEmail = ref(props.selectedSaas.adminEmail);
 let apiToken = ref(props.selectedSaas.apiToken);
