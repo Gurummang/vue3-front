@@ -5,7 +5,7 @@
         <h2 class="text-xl font-bold mb-4">오늘 탐지 이슈</h2>
       </div>
       <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
+        <table class="min-w-full min-h-full bg-white">
           <thead class="bg-indigo-900">
             <tr>
               <th class="px-2 py-3 w-[40%] text-left text-sm font-bold font-medium text-white tracking-wider">파일명</th>
@@ -16,7 +16,7 @@
               <th class="px-2 py-3 w-[15%] text-left text-sm font-bold font-medium text-white tracking-wider">생성 날짜</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="tableData.length" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in tableData" :key="index" >
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-1.5 whitespace-nowrap text-xs max-w-1" :title="details.fileName">
@@ -84,6 +84,16 @@
               </tr>
             </template>
               <!-- Accordion row -->
+          </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="6" class="text-center py-24 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-40 object-cover rounded-full mb-7">
+                  <p class="text-gray-500 text-xl">오늘 탐지된 이슈가 없습니다.</p>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
