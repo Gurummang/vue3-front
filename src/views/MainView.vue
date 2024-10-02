@@ -16,10 +16,10 @@
           <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
         </div>
 
-        <p>{{ fileHistoryInfo }}</p>
+        <!-- <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
         <p>{{ dlpStatistics }}</p>
-        <p>{{ dlpPiis }}</p>
+        <p>{{ dlpPiis }}</p> -->
       </div>
     </main>
     <content-error v-else></content-error>
