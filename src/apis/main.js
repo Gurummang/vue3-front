@@ -8,64 +8,14 @@ const api = axios.create({
 
 let mainTotalApi = async () => {
   try {
-    const response = {
-      "status": "success",
-      "data": {
-          "saas": [
-              {
-                  "saas": "slack",
-                  "alias": "fffffff",
-                  "email": "sasd@123123.vv"
-              },
-              {
-                  "saas": "o365",
-                  "alias": "Test",
-                  "email": "lis@groommang.onmicrosoft.com"
-              }
-          ],
-          "totalSaaS": 2,
-          "totalAlert": 0,
-          "totalDlp": 4,
-          "totalUser": 11,
-          "totalFile": 53,
-          "dailyFileCountDifference": 2,
-          "totalFileSize": 99131674,
-          "dailyFileSizeDifference": 50,
-          "fileSizeBySaaS": [
-              {
-                  "saas": "slack",
-                  "size": 98945945,
-                  "dailyDifference": 0
-              },
-              {
-                  "saas": "o365",
-                  "size": 185729,
-                  "dailyDifference": 50
-              }
-          ],
-          "fileUploadBySaaS": [
-              {
-                  "saas": "slack",
-                  "upload": 48,
-                  "dailyDifference": 0
-              },
-              {
-                  "saas": "o365",
-                  "upload": 5,
-                  "dailyDifference": 2
-              }
-          ]
-      }
+    const response = await api.get('/api/v1/main/total');
+    if(response.data.status == 'error' && response.data.message.includes("Invalid JWT")) {
+        router.push('/');
+        return;
     }
-    return response
-    // const response = await api.get('/api/v1/main/total');
-    // if(response.data.status == 'error') {
-    //   router.push('/');
-    //   return;
-    // }
-    // if(response.status == '200') {
-    //   return response.data;
-    // }
+    if(response.status == '200') {
+      return response.data;
+    }
   } catch (err) {
     throw err;  
   }
@@ -172,7 +122,7 @@ let mainStatisticsApi = async () => {
     }
     return response
     // const response = await api.get('/api/v1/main/statistics');
-    // if(response.data.status == 'error') {
+    // if(response.data.status == 'error' && response.data.message.includes("Invalid JWT")) {
     //   router.push('/');
     //   return;
     // }
@@ -186,66 +136,14 @@ let mainStatisticsApi = async () => {
 
 let mainDlpApi = async () => {
   try {
-    const response = {
-      "status": "success",
-      "data": {
-          "statisticsByPolicies": [
-              {
-                  "policy": "DLP 정책 테스트",
-                  "pii": [
-                      {
-                          "pii": "identify",
-                          "total": 4
-                      },
-                      {
-                          "pii": "passport",
-                          "total": 3
-                      },
-                      {
-                          "pii": "drive",
-                          "total": 2
-                      }
-                  ]
-              },
-              {
-                  "policy": "유빈 - TEST",
-                  "pii": [
-                      {
-                          "pii": "identify",
-                          "total": 4
-                      },
-                      {
-                          "pii": "passport",
-                          "total": 3
-                      }
-                  ]
-              }
-          ],
-          "statisticsByPiis": [
-              {
-                  "pii": "identify",
-                  "total": 44
-              },
-              {
-                  "pii": "passport",
-                  "total": 37
-              },
-              {
-                  "pii": "drive",
-                  "total": 36
-              }
-          ]
-      }
+    const response = await api.get('/api/v1/main/dlp');
+    if(response.data.status == 'error' && response.data.message.includes("Invalid JWT")) {
+      router.push('/');
+      return;
     }
-    return response
-    // const response = await api.get('/api/v1/main/dlp');
-    // if(response.data.status == 'error') {
-    //   router.push('/');
-    //   return;
-    // }
-    // if(response.status == '200') {
-    //   return response.data;
-    // }
+    if(response.status == '200') {
+      return response.data;
+    }
   } catch (err) {
     throw err;  
   }
