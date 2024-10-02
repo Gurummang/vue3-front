@@ -5,16 +5,21 @@
     <cycle-loading v-if="loading"></cycle-loading>
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
-        <p>{{ connectSaas }}</p>
-        <p>{{ mainStatisticsValue }}</p>
-        <p>{{ saasFileSize }}</p>
-        <p>{{ saasFileCount }}</p>
-        <p>{{ todayFileDetect }}</p>
-        <p>{{ fileAnalysisRate }}</p>
-        <p>{{ fileHistoryInfo }}</p>
+        <ConnectingSaas :connectSaas="connectSaas"></ConnectingSaas>
+        <div class="grid grid-cols-3 gap-5">
+          <MainStatistics :statisticsValue="statisticsValue"></MainStatistics>
+          <FileSizeChart :saasFileSize="saasFileSize"></FileSizeChart>
+          <FileCountChart :saasFileCount="saasFileCount"></FileCountChart>
+        </div>
+        <div class="grid grid-cols-3 gap-5">
+          <TodayFileDetect :todayFileDetect="todayFileDetect" class="col-span-2"></TodayFileDetect>
+          <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
+        </div>
+
+        <!-- <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
         <p>{{ dlpStatistics }}</p>
-        <p>{{ dlpPiis }}</p>
+        <p>{{ dlpPiis }}</p> -->
       </div>
     </main>
     <content-error v-else></content-error>
@@ -34,12 +39,19 @@ import TheFooter from '@/components/TheFooter.vue'
 import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 
+import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
+import MainStatistics from '@/components/main/MainStatistics.vue'
+import FileSizeChart from '@/components/main/FileSizeChart.vue'
+import FileCountChart from '@/components/main/FileCountChart.vue'
+import TodayFileDetect from '@/components/main/TodayFileDetect.vue'
+import FileAnalysisRate from '@/components/main/FileAnalysisRate.vue'
+
 let loading = ref(true)
 let isApiOk = ref(false)
 
 let responseData = ref(null)
 let connectSaas = ref(null)
-let mainStatisticsValue = ref(null)
+let statisticsValue = ref(null)
 let saasFileSize = ref(null)
 let saasFileCount = ref(null)
 let todayFileDetect = ref(null)
@@ -56,16 +68,16 @@ Promise.all([
   mainStatisticsApi(),
   mainDlpApi()
   ]).then((values) => {
-  connectSaas = values[0].data.saas,
-  mainStatisticsValue = values[0].data
-  saasFileSize = values[0].data.fileSizeBySaaS,
-  saasFileCount = values[0].data.fileUploadBySaaS,
-  todayFileDetect = values[1].data.fileScanInToday,
-  fileAnalysisRate = values[1].data.fileAnalysis,
-  fileHistoryInfo = values[1].data.fileHistoryInfo, 
-  fileHistoryLine = values[1].data.fileHistoryStatistics,
-  dlpStatistics = values[2].data.statisticsByPolicies,
-  dlpPiis = values[2].data.statisticsByPiis,
+  connectSaas.value = values[0].data.saas,
+  statisticsValue.value = values[0].data,
+  saasFileSize.value = values[0].data.fileSizeBySaaS,
+  saasFileCount.value = values[0].data.fileUploadBySaaS,
+  todayFileDetect.value = values[1].data.fileScanInToday,
+  fileAnalysisRate.value = values[1].data.fileAnalysis,
+  fileHistoryInfo.value = values[1].data.fileHistoryInfo, 
+  fileHistoryLine.value = values[1].data.fileHistoryStatistics,
+  dlpStatistics.value = values[2].data.statisticsByPolicies,
+  dlpPiis.value = values[2].data.statisticsByPiis,
   isApiOk.value = true;
 }).catch((err) => {
   
