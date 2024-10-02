@@ -6,8 +6,10 @@
     <main class="scroll-h scroll overflow-auto rounded-lg" v-else-if="!loading && isApiOk">
       <div>
         <ConnectingSaas :connectSaas="connectSaas"></ConnectingSaas>
-        <p>{{ connectSaas }}</p>
-        <p>{{ mainStatisticsValue }}</p>
+        <div class="grid grid-cols-3 gap-5">
+          <MainStatistics :statisticsValue="statisticsValue"></MainStatistics>
+        </div>
+        <p>{{ statisticsValue }}</p>
         <p>{{ saasFileSize }}</p>
         <p>{{ saasFileCount }}</p>
         <p>{{ todayFileDetect }}</p>
@@ -36,13 +38,14 @@ import ContentError from '@/components/ContentError.vue'
 import CycleLoading from '@/components/CycleLoading.vue'
 
 import ConnectingSaas from '@/components/main/ConnectingSaas.vue'
+import MainStatistics from '@/components/main/MainStatistics.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
 
 let responseData = ref(null)
 let connectSaas = ref(null)
-let mainStatisticsValue = ref(null)
+let statisticsValue = ref(null)
 let saasFileSize = ref(null)
 let saasFileCount = ref(null)
 let todayFileDetect = ref(null)
@@ -60,7 +63,7 @@ Promise.all([
   mainDlpApi()
   ]).then((values) => {
   connectSaas.value = values[0].data.saas,
-  mainStatisticsValue.value = values[0].data,
+  statisticsValue.value = values[0].data,
   saasFileSize.value = values[0].data.fileSizeBySaaS,
   saasFileCount.value = values[0].data.fileUploadBySaaS,
   todayFileDetect.value = values[1].data.fileScanInToday,
