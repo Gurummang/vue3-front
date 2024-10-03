@@ -5,9 +5,9 @@
         <img class="size-6 mr-2" :src="getSaasImg(convertSaasName(connect.saas))" :alt="connect.saas" />
         <span class="text-lg font-bold capitalize"> {{ convertSaasName(connect.saas) }}</span>
       </div>
-      <div class="flex pt-2">
-        <v-icon :size="25" class="text-green-500 ml-auto">mdi-cloud-check-outline</v-icon>
-        <p class="pl-2 text-sm">{{ connect.alias }}</p>
+      <div class="flex w-4/5 pt-2 items-center justify-center">
+        <v-icon :size="25" class="text-green-500">mdi-cloud-check</v-icon>
+        <p class="pl-2 text-sm truncate">{{ connect.alias }}</p>
       </div>
       <div class="flex w-full pt-2 items-center justify-center">
         <v-icon :size="16" class="text-black">mdi-key-variant</v-icon>
