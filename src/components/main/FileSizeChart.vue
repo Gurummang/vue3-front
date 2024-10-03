@@ -7,11 +7,11 @@
       </div>
       <div class="mt-4">
         <ul class="space-y-1.5">
-          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center">
+          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center mb-3 px-2.5">
             <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />
             <span class="flex-1 text-base capitalize">{{ convertSaasName(data.saas) }}</span>
+            <span class="text-green-700 text-xs text-center w-13 mr-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + getfileSize(data.dailyDifference).replace(/(\d+)\.\d+(\s\w+)/, '$1$2') : '' }}</span>
             <span class="bg-orange-300 text-white text-sm text-center w-20 py-0.5 px-2 rounded-xl">{{ data.size ? getfileSize(data.size) : '0 Bytes' }}</span>
-            <span class="text-green-700 text-xs text-center w-11 ml-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + getfileSize(data.dailyDifference) : '' }}</span>
           </li>
         </ul>
       </div>

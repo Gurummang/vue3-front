@@ -2,7 +2,7 @@
   <div>
     <div class="h-[32rem] bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold mb-4">오늘 탐지 이슈</h2>
+        <h2 class="text-xl font-bold mb-4">최근 업로드 목록</h2>
       </div>
       <div class="overflow-x-auto">
         <table class="min-w-full min-h-full bg-white">
@@ -25,10 +25,11 @@
                     <span class="truncate">{{ details.fileName }}</span>
                   </div>
                 </td>
+                <!-- -1 아직, 0 진행, 1 안전, 2 악성 -->
                 <!-- DLP -->
                 <td class="px-2 py-1.5 text-center whitespace-nowrap">
                   <span v-if="details.dlp === -1">
-                    <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
                   </span>
                   <span v-else-if="details.dlp === 0">
                     <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
@@ -37,13 +38,13 @@
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
                   <span v-else>
-                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
                 </td>
                 <!-- GSCAN -->
                 <td class="px-2 py-1.5 text-center whitespace-nowrap">
                   <span v-if="details.suspicious === -1">
-                    <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
                   </span>
                   <span v-else-if="details.suspicious === 0">
                     <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
@@ -52,13 +53,13 @@
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
                   <span v-else>
-                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
                 </td>
                 <!-- VT -->
                 <td class="px-2 py-1.5 text-center whitespace-nowrap">
                   <span v-if="details.vt === -1">
-                    <v-icon :size="24" class="text-rose-600">mdi-alert-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
                   </span>
                   <span v-else-if="details.suspicious === 0">
                     <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
@@ -67,7 +68,7 @@
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
                   <span v-else>
-                    <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
+                    <v-icon :size="22" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
                 </td>
                 <!-- <td class="px-2 py-1.5 text-center whitespace-nowrap">
@@ -90,7 +91,7 @@
               <td colspan="6" class="text-center py-24 h-full">
                 <div class="flex flex-col items-center justify-center h-full">
                   <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-40 object-cover rounded-full mb-7">
-                  <p class="text-gray-500 text-xl">오늘 탐지된 이슈가 없습니다.</p>
+                  <p class="text-gray-500 text-xl">최근 업로드된 파일이 없습니다.</p>
                 </div>
               </td>
             </tr>
@@ -112,7 +113,7 @@ const props = defineProps({
   required: true
 })
 
-const tableData = ref(props.todayFileDetect)
+const tableData = ref(props.todayFileDetect.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)))
 // const tableData = ref([
 //             {
 //                 "saas": "slack",

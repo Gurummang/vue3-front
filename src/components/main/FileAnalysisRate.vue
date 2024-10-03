@@ -8,13 +8,13 @@
         <div class="size-32 relative">
           <canvas :ref="el => { if (el) chartRefs[index] = el }"></canvas>
           <div class="absolute inset-0 flex items-center justify-center">
-            <span class="text-xl font-medium">{{ item.score }} / {{ item.total }}</span>
+            <span class="text-xl font-bold">{{ item.score }} / {{ item.total }}</span>
           </div>
           <!-- <div class="absolute inset-0 flex items-center justify-center">
             <div class="relative">
-              <span class="text-lg text-right w-10 font-bold absolute -top-1 -left-11">{{ item.score }}</span>
+              <span class="text-xl text-right w-10 font-bold absolute -top-3 -left-11">{{ item.score }}</span>
               <span class="text-lg font-bold">/</span>
-              <span class="text-lg text-left w-10 font-bold absolute -bottom-1 -right-11">{{ item.total }}</span>
+              <span class="text-xl text-left w-10 font-bold absolute -bottom-3 -right-11">{{ item.total }}</span>
             </div>
           </div>   -->
         </div>
