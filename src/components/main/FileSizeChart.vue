@@ -6,11 +6,11 @@
         <canvas ref="myChart"></canvas>
       </div>
       <div class="mt-4">
-        <ul class="space-y-1.5">
-          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center mb-3 px-2.5">
+        <ul class="space-y-2">
+          <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center mb-2 px-3">
             <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />
             <span class="flex-1 text-base capitalize">{{ convertSaasName(data.saas) }}</span>
-            <span v-if="data.dailyDifference" class="flex items-center text-green-700 text-xs text-center font-bold w-13 mr-2 py-0.5 rounded-xl">
+            <span v-if="data.dailyDifference" class="flex items-center text-green-700 text-xs text-center font-bold w-13 mr-2">
               <v-icon :size=14 class="mr-1">mdi-arrow-up-bold</v-icon>
               {{ getfileSize(data.dailyDifference).replace(/(\d+)\.\d+(\s\w+)/, '$1$2') }}
             </span>
