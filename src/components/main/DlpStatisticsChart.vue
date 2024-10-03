@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-4 mb-5 bg-white border rounded-lg shadow-sm">
+  <div class="flex flex-col p-4 bg-white border rounded-lg shadow-sm">
     <h2 class="text-xl font-bold mb-4">DLP 정책 현황</h2>
     <div class="my-2">
       <div class="my-0 mx-auto w-full h-60">
