@@ -28,14 +28,14 @@ const transperatePii = {
   'identify': '주민등록번호',
   'passport': '여권번호',
   'drive': '운전면허번호',
-  'foregin': '외국인등록번호'
+  'foreigner': '외국인등록번호'
 }
 
 const piiColors = {
   'identify': 'rgb(49 46 129)',
   'passport': 'rgb(79 70 229)',
   'drive': 'rgb(129 140 248)', 
-  'foregin': 'rgb(165 180 252)'
+  'foreigner': 'rgb(165 180 252)'
 }
 
 onMounted(() => {

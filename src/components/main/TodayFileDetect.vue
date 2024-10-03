@@ -113,7 +113,7 @@ const props = defineProps({
   required: true
 })
 
-const tableData = ref(props.todayFileDetect.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)))
+const tableData = ref(props.todayFileDetect.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)).slice(0, 10))
 // const tableData = ref([
 //             {
 //                 "saas": "slack",
