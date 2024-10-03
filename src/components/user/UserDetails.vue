@@ -118,7 +118,7 @@ const totalData = ref([])
 const selectPages = ref(1) // 1이라는 페이지로 셋팅
 const totalPage = ref(0) // totalData의 개수에 따라 페이지네이션을 그려지는 리스트를 뜻합니다.
 const totalCount = ref(null)
-const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
+const limit = ref(15) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
   totalData.value = sortedDate.value

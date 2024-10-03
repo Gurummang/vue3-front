@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
     <div class="mb-2">
-      <h2 class="text-xl font-bold mb-4">파일 분석율</h2>
+      <h2 class="text-xl font-bold mb-4">파일 검사 완료 지표</h2>
     </div>
     <div class="flex flex-col space-y-5 items-center">
       <div v-for="(item, index) in chartData" :key="index" class="flex items-center">
