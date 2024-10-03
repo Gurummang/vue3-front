@@ -137,7 +137,9 @@ const elements = computed(() => {
         email: item.email,
         eventTs: item.eventTs,
         uploadChannel: item.uploadChannel,
-        similarity : item.similarity
+        similarity : item.similarity,
+        dlp : item.dlp,
+        threat : item.threat
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
@@ -186,7 +188,9 @@ const elements = computed(() => {
         email: item.email,
         eventTs: item.eventTs,
         uploadChannel: item.uploadChannel,
-        similarity : item.similarity
+        similarity : item.similarity,
+        dlp : item.dlp,
+        threat : item.threat
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,
@@ -234,7 +238,9 @@ const elements = computed(() => {
         email: item.email,
         eventTs: item.eventTs,
         uploadChannel: item.uploadChannel,
-        similarity : item.similarity
+        similarity : item.similarity,
+        dlp : item.dlp,
+        threat : item.threat
       },
       targetPosition: Position.Left,
       sourcePosition: Position.Right,

@@ -16,13 +16,13 @@
           <p class="font-semibold text-gray-600">파일 삭제</p>
         </div>
       </div>
-      <div class="flex items-center">
-        <!-- 파일 악성 유무 -->
-        <!-- <v-icon :size="25" class="text-green-700">mdi-cloud-check</v-icon> -->
-      </div>
-      <div v-if="data.originNode" class="flex item-center">
-        <span class="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-cyan-600 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-cyan-700"></span>
+      <div class="flex items-center space-x-2">
+        <v-icon v-if="data.dlp" :size="25" class="text-amber-600">mdi-alert-rhombus</v-icon>
+        <v-icon v-if="data.threat" :size="25" class="text-rose-600">mdi-alert-rhombus</v-icon>
+        <div v-if="data.originNode" class="flex item-center pl-2">
+          <span class="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-cyan-600 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-4 w-4 bg-cyan-700"></span>
+        </div>
       </div>
     </div>
     <div class="pl-2 py-1 leading-6 ">
