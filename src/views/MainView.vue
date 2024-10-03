@@ -19,7 +19,10 @@
           <FileHistoryInfo :fileHistoryInfo="fileHistoryInfo" class="col-span-2"></FileHistoryInfo>
           <FileHistoryLine :fileHistoryLine="fileHistoryLine" class="col-span-3"></FileHistoryLine>
         </div>
-
+        <div class="grid grid-cols-2 gap-5">
+          <DlpStatisticsChart :dlpStatistics="dlpStatistics"></DlpStatisticsChart>
+          <DlpPiisChart :dlpPiis="dlpStatistics"></DlpPiisChart>
+        </div>
         <!-- <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
         <p>{{ dlpStatistics }}</p>
@@ -51,6 +54,8 @@ import TodayFileDetect from '@/components/main/TodayFileDetect.vue'
 import FileAnalysisRate from '@/components/main/FileAnalysisRate.vue'
 import FileHistoryInfo from '@/components/main/FileHistoryInfo.vue'
 import FileHistoryLine from '@/components/main/FileHistoryLine.vue'
+import DlpStatisticsChart from '@/components/main/DlpStatisticsChart.vue'
+import DlpPiisChart from '@/components/main/DlpPiisChart.vue'
 
 let loading = ref(true)
 let isApiOk = ref(false)
