@@ -12,16 +12,16 @@
           <FileCountChart :saasFileCount="saasFileCount"></FileCountChart>
         </div>
         <div class="grid grid-cols-3 gap-5">
-          <TodayFileDetect :todayFileDetect="todayFileDetect" class="col-span-2"></TodayFileDetect>
           <FileAnalysisRate :fileAnalysisRate="fileAnalysisRate"></FileAnalysisRate>
+          <TodayFileDetect :todayFileDetect="todayFileDetect" class="col-span-2"></TodayFileDetect>
         </div>
         <div class="grid grid-cols-5 gap-5">
           <FileHistoryInfo :fileHistoryInfo="fileHistoryInfo" class="col-span-2"></FileHistoryInfo>
           <FileHistoryLine :fileHistoryLine="fileHistoryLine" class="col-span-3"></FileHistoryLine>
         </div>
-        <div class="grid grid-cols-2 gap-5">
-          <DlpStatisticsChart :dlpStatistics="dlpStatistics"></DlpStatisticsChart>
-          <DlpPiisChart :dlpPiis="dlpStatistics"></DlpPiisChart>
+        <div class="grid grid-cols-5 gap-5">
+          <DlpPiisChart :dlpPiis="dlpPiis" class="col-span-2"></DlpPiisChart>
+          <DlpStatisticsChart :dlpStatistics="dlpStatistics" class="col-span-3"></DlpStatisticsChart>
         </div>
         <!-- <p>{{ fileHistoryInfo }}</p>
         <p>{{ fileHistoryLine }}</p>
