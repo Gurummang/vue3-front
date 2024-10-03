@@ -11,8 +11,8 @@
         <!-- <button class="relative p-2 text-gray-400 hover:text-gray-500">
           <v-icon size="25">mdi-bell</v-icon>
         </button> -->
-        <button class="p-2 text-gray-400 hover:text-gray-500" @click="handleSettingsClick">
-          <v-icon size="25">mdi-cog</v-icon> <!-- Settings Icon -->
+        <button class="flex items-center p-2 text-sm text-gray-400 hover:text-gray-700" @click="handleSettingsClick">
+          <v-icon size="23" class="mr-1">mdi-logout-variant</v-icon> 로그아웃
         </button>
         <!-- <button class="w-10 h-10 overflow-hidden rounded-full">
           <img src="/api/placeholder/40/40" alt="User avatar" class="object-cover w-full h-full" />
@@ -30,11 +30,9 @@ const router = useRouter()
 const route = useRoute()
 
 const handleSettingsClick = async () => {
-  // 2. 쿠키 제거
-  // router.push('/login')
   const result = await gasbLogoutApi()
   if(result) {
-    return
+    router.push('/')
   }
 }
 </script>
