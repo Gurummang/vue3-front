@@ -14,10 +14,10 @@
         <p class="pl-2 text-xs truncate">{{ connect.email }}</p>
       </div>
     </button>
-    <button class="flex flex-col items-center justify-center bg-white shadow-sm rounded-lg p-4" @click="router.push('/register/saas')">
-      <v-icon :size="36" class="text-orange mb-2">mdi-plus-circle-outline</v-icon>
-      <p class="text-sm font-semibold">새로운</p>
-      <p class="text-sm font-semibold">SaaS 등록하기</p>
+    <button class="group flex flex-col items-center justify-center bg-white shadow-sm rounded-lg p-4 text-sm text-black font-semibold transition duration-200 hover:bg-orange-300 hover:border-orange-200 hover:text-white" @click="router.push('/register/saas')">
+      <v-icon :size="36" class="text-orange transition-colors duration-200 group-hover:text-white mb-2">mdi-plus-circle-outline</v-icon>새로운<br>SaaS 등록하기
+      <!-- <p class="text-sm font-semibold">새로운</p>
+      <p class="text-sm font-semibold">SaaS 등록하기</p> -->
     </button>
   </div>
 </template>
