@@ -226,11 +226,22 @@
                           </div>
 
                           <div class="border-t border-gray-200">
+                            <div class="w-full flex">
+                              <div class="w-1/3 p-2 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">권장 조치 사항</div>
+                              <div class="w-2/3 py-2 bg-white text-xs flex flex-col justify-center">
+                                <div v-for="(comment, idx) in details.dlpReport.comments" :key="idx" class="flex-col p-2 h-1/3 bg-white text-xs mb-1">
+                                  <span class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ comment }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <div class="border-t border-gray-200">
                             <span class="inline-block w-1/3 p-2 h-1/3 leading-[4rem] bg-gray-100 border-x border-gray-200 text-sm text-center">권장 조치사항</span>
-                            <span v-for="(comment, idx) in details.dlpReport.comments" :key="idx" class="inline-block w-2/3 p-2 h-1/3 bg-white text-xs">
+                            <span v-for="(comment, idx) in details.dlpReport.comments" :key="idx" class="flex-col w-2/3 p-2 h-1/3 bg-white text-xs">
                               <span class="bg-gray-200 text-gray-900 text-xs font-medium me-1 px-1.5 py-0.5 rounded">{{ comment }}</span>
                             </span>
-                          </div>
+                          </div> -->
 
                         </div>
                         <div class="w-1/2 border-t border-l border-gray-200">
