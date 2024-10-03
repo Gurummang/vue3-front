@@ -10,8 +10,11 @@
           <li v-for="(data, idx) in chartData" :key="idx" class="flex items-center mb-3 px-2.5">
             <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(data.saas))" :alt="data.saas" />
             <span class="flex-1 text-base capitalize">{{ convertSaasName(data.saas) }}</span>
-            <span class="text-green-700 text-xs text-center w-9 mr-2 py-0.5 rounded-xl">{{ data.dailyDifference ? '+ ' + data.dailyDifference + ' 개': '' }}</span>
-            <span class="bg-orange-300 text-white text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ data.upload }} 개</span>
+            <span v-if="data.dailyDifference" class="flex items-center text-green-700 text-xs text-center font-bold w-12 mr-1 py-0.5 rounded-xl">
+              <v-icon :size=14 class="mr-1">mdi-arrow-up-bold</v-icon>
+              {{ data.dailyDifference + ' 개' }}
+            </span>
+            <span class="bg-orange-400 text-white text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ data.upload }} 개</span>
           </li>
         </ul>
       </div>
