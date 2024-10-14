@@ -430,6 +430,10 @@ let checkedIndex = ref([])
 let checkedVtInfo = computed(() => [
   checkedIndex.value.id
 ])
+let checkedFileDlpInfo = computed(() => [{
+  mime: checkedIndex.value.gscan.step1.mimeType,
+  sign: checkedIndex.value.gscan.step1.signature
+}])
 let checkedDeleteInfo = computed(() => [{
   id: checkedIndex.value.id,
   saas: checkedIndex.value.saas,
@@ -480,6 +484,10 @@ const isVirusTotalReportOpen = (index) => {
 // Modal Function
 const openVirustotalModal = () => {
   if (checkedVtInfo.value.length) {
+    if (checkedFileDlpInfo.value[0].mime === 'application/pdf' || checkedFileDlpInfo.value[0].sign === 'pdf') {
+      alert('PDF 문서는 VirusTotal 검사를 진행할 수 없습니다.')
+      return
+    }
     isVirustotalModalOpen.value = true
   } else {
     alert('검사할 파일을 선택해주세요.')
