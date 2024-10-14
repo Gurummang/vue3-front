@@ -7,22 +7,21 @@
         </button>
       </div>
       <div class="px-4">
-        <!-- <div class="flex justify-center p-3">
-          <img src="../../../public/assets/virustotal.png" alt="VirusTotal 이미지" class="size-1/2">
-        </div> -->
         <div class="mb-2 space-y-2 text-center">
           <label for="saasType" class="block pb-2 text-2xl font-semibold text-red-600"> 
             <v-icon size="40" class="text-red-600">mdi-weather-cloudy-alert</v-icon>
             문서 파일 불가
           </label>
-          <p class="text-base pb-3">{{ "test.pdf "}}파일은 문서형 파일로 <br/><strong class="text-blue-600">VirusTotal 검사</strong> 를 진행할 수 없습니다.</p>
-          <p class="text-xs"><strong>문서형 파일 종류</strong> : word, excel, ppt, pdf, hwp, txt, csv 등</p>
-          <p class="text-xs text-red-600 font-semibold">구름망 CASB는 문서형 파일을 외부 유출 방지 있습니다.</p>
+          
+          <p class="flex text-base justify-center"><div class="font-semibold max-w-64 truncate">{{ fileName }}</div>&nbsp파일은</p>
+          <!-- <p class="text-base pb-5">문서파일로 <strong class="text-blue-600">VirusTotal 검사</strong>를 할 수 없습니다.</p> -->
+          <p class="text-base pb-5">문서파일로 VirusTotal 검사를 할 수 없습니다.</p>
+          <p class="text-xs"><strong>문서 파일 종류</strong> : word, excel, ppt, pdf, hwp, txt, csv 등</p>
+          <p class="text-xs text-orange-700 font-semibold pb-3">
+            <v-icon size="16">mdi-alert-circle-outline</v-icon>
+            구름망 CASB는 문서 파일의 외부 유출을 방지합니다.
+          </p>
         </div>
-      </div>
-      <div class="flex justify-center p-3 space-x-2">
-        <!-- <button  @click="$emit('close')" class="w-1/2 border border-blue-600 px-3 py-2 align-text-bottom text-sm font-semibold text-blue-600 hover:bg-blue-800 hover:text-white active:bg-blue-800">아니오</button>
-        <button @click="uploadVirustotalScan" class="w-1/2 bg-blue-600 border border-blue-600 px-3 py-2 align-text-bottom text-sm font-semibold text-white hover:bg-blue-800 active:bg-blue-800">예</button> -->
       </div>
     </div>
   </div>
@@ -43,14 +42,13 @@ import { fileVtUploadApi } from '@/apis/file.js'
 const props = defineProps({
   checkedIndex: {
     type: Object,
-    required: true
+    // required: true
   }
 });
 
-let emit = defineEmits(['close']);
+let fileName = ref(props.checkedIndex[0].file_name)
 
-// let fileCount = ref(Object.keys(props.checkedIndex).length);
-// 리스트 값
+let emit = defineEmits(['close']);
 
 let isErrorModalOpen = ref(false);
 let errorCode = ref(null);
