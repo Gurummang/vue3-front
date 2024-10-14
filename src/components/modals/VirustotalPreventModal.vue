@@ -7,9 +7,16 @@
         </button>
       </div>
       <div class="px-4">
+        <!-- <div class="flex justify-center p-3">
+          <img src="../../../public/assets/virustotal.png" alt="VirusTotal 이미지" class="size-1/2">
+        </div> -->
         <div class="mb-2 space-y-2 text-center">
-          <label for="saasType" class="block pb-2 text-2xl font-semibold text-gray-700"> VirusTotal 검사 불가</label>
-          <p class="text-base pb-3">선택한 <strong>{{ fileCount }}</strong>개의 파일을 VirusTotal 로<br/>파일 검사를 진행하겠습니까?</p>
+          <label for="saasType" class="block pb-2 text-2xl font-semibold text-red-600"> 
+            <v-icon size="40" class="text-red-600">mdi-weather-cloudy-alert</v-icon>
+            문서 파일 불가
+          </label>
+          <p class="text-base pb-3">{{ "test.pdf "}}파일은 문서형 파일로 <br/><strong class="text-blue-600">VirusTotal 검사</strong> 를 진행할 수 없습니다.</p>
+          <p class="text-xs"><strong>문서형 파일 종류</strong> : word, excel, ppt, pdf, hwp, txt, csv 등</p>
           <p class="text-xs text-red-600 font-semibold">구름망 CASB는 문서형 파일을 외부 유출 방지 있습니다.</p>
         </div>
       </div>
