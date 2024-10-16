@@ -15,9 +15,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Chart, LineController, LineElement,PointElement, LinearScale, Title,CategoryScale,RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart, LineController, LineElement,PointElement, LinearScale, Title,CategoryScale,RadialLinearScale, ArcElement, Tooltip, Legend, Filler } from 'chart.js';
 
-Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, RadialLinearScale, ArcElement, Tooltip, Legend);
+Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, RadialLinearScale, ArcElement, Tooltip, Legend, Filler );
 
 const props = defineProps({
   historyTrends: {
@@ -40,9 +40,10 @@ onMounted(() => {
       datasets: [{
         label: '업로드',
         data: chartData.map(row => row.uploadCount),
-        fill: false,
+        fill: true,
         borderColor: '#FF9A00',
-        backgroundColor: '#FF9A00',
+        backgroundColor: 'rgba(255, 154, 0, 0.0)',
+        hoverBackgroundColor: 'rgba(255, 154, 0, 0.3)',
         borderDash: [4, 3],
         hoverBorderDash: [0, 0],
         pointRadius: 0,
@@ -54,10 +55,11 @@ onMounted(() => {
       {
         label: '수정',
         data: chartData.map(row => row.modifyCount),
-        fill: false,
+        fill: true,
         borderColor: 'rgb(251, 191, 36)',
         hoverBorderColor: 'rgb(251, 191, 36)',
-        backgroundColor: 'rgb(251, 191, 36)',
+        backgroundColor: 'rgba(251, 191, 36, 0.0)',
+        hoverBackgroundColor: 'rgba(251, 191, 36, 0.3)',
         borderDash: [4, 3],
         hoverBorderDash: [0, 0],
         pointRadius: 0,
@@ -69,10 +71,11 @@ onMounted(() => {
       {
         label: '삭제',
         data: chartData.map(row => row.deletedCount),
-        fill: false,
+        fill: true,
         borderColor: 'rgb(200, 200, 200)',
         hoverBorderColor: 'rgb(148, 163, 184)',
-        backgroundColor: 'rgb(148, 163, 184)',
+        backgroundColor: 'rgba(148, 163, 184, 0.0)',
+        hoverBackgroundColor: 'rgba(148, 163, 184, 0.3)',
         borderDash: [4, 3],
         hoverBorderDash: [0, 0],
         pointRadius: 0,
