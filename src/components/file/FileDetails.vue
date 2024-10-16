@@ -349,6 +349,11 @@
   :checkedIndex="checkedVtInfo"
   @close="closeVirustotalModal"
 ></virustotal-modal>
+<virustotal-prevent-modal
+  v-if="isVirustotalPreventModalOpen"
+  :checkedIndex="checkedFileDlpInfo"
+  @close="closeVirustotalPreventModal"
+></virustotal-prevent-modal>
 <file-delete-modal
   v-if="isFileDeleteModalOpen"
   :checkedIndex="checkedDeleteInfo"
@@ -363,9 +368,11 @@ import { useRouter } from 'vue-router'
 import DlpChart from '@/components/file/DlpChart.vue'
 import VirustotalChart from '@/components/file/VirustotalChart.vue'
 import VirustotalModal from '@/components/modals/VirustotalModal.vue'
+import VirustotalPreventModal from '@/components/modals/VirustotalPreventModal.vue'
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
+import { isDlpFile } from '@/utils/validation.js'
 
 const props = defineProps({
   fileDetails: Object,
@@ -431,8 +438,9 @@ let checkedVtInfo = computed(() => [
   checkedIndex.value.id
 ])
 let checkedFileDlpInfo = computed(() => [{
-  mime: checkedIndex.value.gscan.step1.mimeType,
-  sign: checkedIndex.value.gscan.step1.signature
+  file_name: checkedIndex.value.name,
+  mime: checkedIndex.value.gscan.step1.mimeType || '',
+  sign: checkedIndex.value.gscan.step1.signature || '',
 }])
 let checkedDeleteInfo = computed(() => [{
   id: checkedIndex.value.id,
@@ -446,6 +454,7 @@ const clearCheckedIndex = () => {
 }
 
 const isVirustotalModalOpen = ref(false)
+const isVirustotalPreventModalOpen = ref(false)
 const isFileDeleteModalOpen = ref(false)
 
 // Accordion Function
@@ -484,8 +493,8 @@ const isVirusTotalReportOpen = (index) => {
 // Modal Function
 const openVirustotalModal = () => {
   if (checkedVtInfo.value.length) {
-    if (checkedFileDlpInfo.value[0].mime === 'application/pdf' || checkedFileDlpInfo.value[0].sign === 'pdf') {
-      alert('PDF 문서는 VirusTotal 검사를 진행할 수 없습니다.')
+    if (isDlpFile(checkedFileDlpInfo.value[0])) {
+      isVirustotalPreventModalOpen.value = true
       return
     }
     isVirustotalModalOpen.value = true
@@ -494,9 +503,13 @@ const openVirustotalModal = () => {
   }
 }
 
+const closeVirustotalPreventModal = () => {
+  isVirustotalPreventModalOpen.value = false
+}
+
 const closeVirustotalModal = () => {
   isVirustotalModalOpen.value = false
-  clearCheckedIndex()
+  // clearCheckedIndex()
 }
 
 const openFileDeleteModal = () => {
