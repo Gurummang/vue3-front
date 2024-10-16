@@ -46,7 +46,7 @@ import { fileVtUploadApi } from '@/apis/file.js'
 const props = defineProps({
   checkedIndex: {
     type: Object,
-    // required: true
+    required: true
   }
 });
 
