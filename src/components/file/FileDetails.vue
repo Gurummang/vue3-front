@@ -441,6 +441,7 @@ let checkedFileDlpInfo = computed(() => [{
   file_name: checkedIndex.value.name,
   mime: checkedIndex.value.gscan.step1.mimeType || '',
   sign: checkedIndex.value.gscan.step1.signature || '',
+  ext: checkedIndex.value.gscan.step1.extension || '',
 }])
 let checkedDeleteInfo = computed(() => [{
   id: checkedIndex.value.id,

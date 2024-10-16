@@ -28,7 +28,18 @@ export const isDlpFile = (file) => {
     'txt',
     'hwp'
   ];
-
+  const prohibitedExts = [
+    'pdf',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+    'csv',
+    'ppt',
+    'pptx',
+    'txt',
+    'hwp'
+  ]
   // MIME 타입이나 확장자 중 하나라도 일치하면
-  return prohibitedMimes.includes(file.mime) || prohibitedSignatures.includes(file.sign);
+  return prohibitedMimes.includes(file.mime) || prohibitedSignatures.includes(file.sign) || prohibitedExts.includes(file.ext);
 }
