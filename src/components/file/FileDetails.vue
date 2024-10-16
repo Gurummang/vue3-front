@@ -372,6 +372,7 @@ import VirustotalPreventModal from '@/components/modals/VirustotalPreventModal.v
 import FileDeleteModal from '@/components/modals/FileDeleteModal.vue'
 import ThePagination from '@/components/ThePagination.vue'
 import { getSaasImg, removeWordDate, getfileSize, convertSaasName } from '@/utils/utils.js'
+import { isDlpFile } from '@/utils/validation.js'
 
 const props = defineProps({
   fileDetails: Object,
@@ -492,7 +493,7 @@ const isVirusTotalReportOpen = (index) => {
 // Modal Function
 const openVirustotalModal = () => {
   if (checkedVtInfo.value.length) {
-    if (checkedFileDlpInfo.value[0].mime === 'application/pdf' || checkedFileDlpInfo.value[0].sign === 'pdf') {
+    if (isDlpFile(checkedFileDlpInfo.value[0])) {
       isVirustotalPreventModalOpen.value = true
       return
     }
