@@ -13,7 +13,11 @@
             문서 파일 불가
           </label>
           
-          <p class="flex text-base justify-center"><div class="font-semibold max-w-64 truncate">{{ fileName }}</div>&nbsp파일은</p>
+          <p class="flex text-base justify-center">
+            <div class="font-semibold max-w-64 truncate">{{ splitFileExt(fileName).name }}</div>
+            <div class="font-semibold">{{ splitFileExt(fileName).ext }}</div>
+            &nbsp파일은
+          </p>
           <!-- <p class="text-base pb-5">문서파일로 <strong class="text-blue-600">VirusTotal 검사</strong>를 할 수 없습니다.</p> -->
           <p class="text-base pb-5">문서파일로 VirusTotal 검사를 할 수 없습니다.</p>
           <p class="text-xs"><strong>문서 파일 종류</strong> : word, excel, ppt, pdf, hwp, txt, csv 등</p>
@@ -59,6 +63,21 @@ const openErrorModal = () => {
 
 const closeErrorModal = () => {
   isErrorModalOpen.value = false;
+}
+
+const splitFileExt = (fileName) => {
+  const lastDotIndex = fileName.lastIndexOf('.');
+  if (lastDotIndex === -1) {
+    return {
+      nameWithoutExt: fileName,
+      extension: ''
+    };
+  }
+  
+  return {
+    name: fileName.slice(0, lastDotIndex),
+    ext: fileName.slice(lastDotIndex)
+  };
 }
 
 </script>
