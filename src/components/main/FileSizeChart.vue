@@ -14,7 +14,7 @@
               <v-icon :size=14 class="mr-1">mdi-arrow-up-bold</v-icon>
               {{ getfileSize(data.dailyDifference).replace(/(\d+)\.\d+(\s\w+)/, '$1$2') }}
             </span>
-            <span class="bg-orange-400 text-white text-sm text-center font-medium w-20 py-0.5 px-2 rounded-xl">{{ data.size ? getfileSize(data.size) : '0 Bytes' }}</span>
+            <span class="bg-orange-400 text-white text-sm text-center font-medium w-[5.5rem] py-0.5 px-2 rounded-xl">{{ data.size ? getfileSize(data.size) : '0 Bytes' }}</span>
           </li>
         </ul>
       </div>

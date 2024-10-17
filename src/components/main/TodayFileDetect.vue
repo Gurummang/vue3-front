@@ -61,10 +61,10 @@
                   <span v-if="details.vt === -1">
                     <v-icon :size="22" class="text-gray-300">mdi-minus-circle-outline</v-icon>
                   </span>
-                  <span v-else-if="details.suspicious === 0">
+                  <span v-else-if="details.vt === 0">
                     <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                   </span>
-                  <span v-else-if="details.suspicious === 1">
+                  <span v-else-if="details.vt === 1">
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
                   <span v-else>
