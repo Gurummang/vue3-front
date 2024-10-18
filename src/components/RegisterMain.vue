@@ -73,7 +73,7 @@
               <th class="px-3 py-3 w-[10%] text-left text-sm font-bold font-medium text-white tracking-wider">연동날짜</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="saasData.length" class="bg-white divide-y divide-gray-200">
             <tr v-for="(saas, index) in saasData" :key="index">
               <td class="px-3 py-2 whitespace-nowrap text-center">
                 <input 
@@ -108,6 +108,16 @@
               <td class="px-3 py-2 whitespace-nowrap text-xs max-w-1 truncate">{{ saas.alias }}</td>
               <td class="px-3 py-2 whitespace-nowrap text-xs max-w-1 truncate">{{ saas.webhookUrl }}</td>
               <td class="px-3 py-2 whitespace-nowrap text-xs">{{ getDate(saas.registerDate) }}</td>
+            </tr>
+          </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="7" class="text-center py-16 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-28 object-cover rounded-full mb-3">
+                  <p class="text-gray-500 text-lg">SaaS 연동이 없습니다.</p>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
