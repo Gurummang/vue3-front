@@ -77,7 +77,7 @@
               <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.totalUpload }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.sensitive }}</td>
               <td class="px-6 py-2 whitespace-nowrap text-xs text-center">{{ detail.malware }}</td>
-              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.lastDate) }}</td>
+              <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.lastDate) !== '-999999999-01-01 00:00:00' ? removeWordDate(detail.lastDate): '활동 날짜 없음' }}</td>
             </tr>
           </tbody>
         </table>
