@@ -74,8 +74,16 @@ const config = {
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: false
+        },
+      },
       y: {
         beginAtZero: true,
+        grid: {
+          display: true
+        },
         ticks: {
           stepSize: 10,
           callback: function(value) {

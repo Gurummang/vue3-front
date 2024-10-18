@@ -67,10 +67,15 @@ const config = {
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
       y: {
         beginAtZero: true,
         grid: {
-          color: 'transparent',
+          display: true,
         },
         ticks: {
           stepSize: 10,

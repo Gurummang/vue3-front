@@ -90,7 +90,7 @@ onMounted(() => {
         x: {
           stacked: true,
           grid: {
-            display: false
+            // display: false
           },
           ticks: {
             callback: function(value) {
