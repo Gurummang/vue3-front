@@ -445,15 +445,23 @@ const getData = () => {
         break
       case 'virustotal':
         compareResult = (() => {
-          const aThreat = a.vtReport?.threatLabel === 'none' ? 0 : 1;
-          const bThreat = b.vtReport?.threatLabel === 'none' ? 0 : 1;
-          
-          if (aThreat !== bThreat) {
-            return bThreat - aThreat;
-          }
-          
+        // 1. 'none'이 아닌 항목이 먼저, 'none'인 항목 그다음
+        const aThreat = a.vtReport?.threatLabel === 'none' ? 0 : (a.fileStatus?.vtStatus === -1 ? 1 : -1);
+        const bThreat = b.vtReport?.threatLabel === 'none' ? 0 : (b.fileStatus?.vtStatus === -1 ? 1 : -1);;
+        
+        // 'none'이 아닌 항목이 우선
+        if (aThreat !== bThreat) {
+          return bThreat - aThreat;
+        }
+
+        // 2. vtStatus가 0인 값, 그 다음에 -1인 값
+        if (a.fileStatus?.vtStatus === -1 || b.fileStatus?.vtStatus === -1) {
           return (a.fileStatus?.vtStatus || 0) - (b.fileStatus?.vtStatus || 0);
-        })()
+        }
+
+        // 기본적인 상태 정렬
+        return (a.fileStatus?.vtStatus || 0) - (b.fileStatus?.vtStatus || 0);
+      })()
         break
       default:
         compareResult = 0
@@ -462,7 +470,7 @@ const getData = () => {
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
   .filter(item => item.name.toLowerCase().includes(searchFilter.value.toLowerCase()))
-  
+
   // Pagination
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
