@@ -6,30 +6,34 @@
       <div class="flex pb-2">
         <div class="flex ml-auto space-x-2">
           <select
+            v-model="sortBy"
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
           >
-            <option value="week">SaaS</option>
-            <option value="month">사용자</option>
-            <option value="year">계정</option>
-            <option value="year">업로드 수</option>
-            <option value="year">DLP파일</option>
-            <option value="year">악성파일</option>
-            <option value="year" selected>마지막 활동 날짜</option>
+            <option value="saas">SaaS</option>
+            <option value="user">사용자</option>
+            <option value="account">계정</option>
+            <option value="totalUpload">업로드 수</option>
+            <option value="sensitive">DLP파일</option>
+            <option value="malware">악성파일</option>
+            <option value="lastDate" selected>마지막 활동 날짜</option>
           </select>
           <select
+          v-model="sortOrder"
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
           >
-            <option value="week">오름차순</option>
-            <option value="month" selected>내림차순</option>
+            <option value="asc">오름차순</option>
+            <option value="desc" selected>내림차순</option>
           </select>
 
           <div class="relative max-w-sm">
             <input
               class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
+              v-model="searchFilter"
               placeholder="검색"
             />
             <button
+              @click="getData"
               class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             >
               <svg
@@ -65,7 +69,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(detail, index) in totalData" :key="index" class="hover:bg-gray-100">
+            <tr v-for="(detail, index) in sortedData" :key="index" class="hover:bg-gray-100">
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
                   <img class="w-5 h-5 mr-2" :src="getSaasImg(convertSaasName(detail.saas))" :alt="detail.saas" />
@@ -102,15 +106,20 @@ const props = defineProps({
   }
 })
 
-const sortedDate = ref(props.userDetails.sort((a, b) => {
-  if (a.lastDate === "-999999999-01-01T00:00:00") return 1;
-  if (b.lastDate === "-999999999-01-01T00:00:00") return -1;
-  return new Date(b.lastDate) - new Date(a.lastDate)})
-)
 
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)
+
+const sortBy = ref('lastDate')
+const sortOrder = ref('desc')
+const sortedData = ref([])
+const searchFilter = ref('')
+
+// const sortedDate = ref(props.userDetails.sort((a, b) => {
+  
+//   return new Date(b.lastDate) - new Date(a.lastDate)})
+// )
 
 // 페이지 네비게이션
 const items = ref([])
@@ -121,11 +130,47 @@ const totalCount = ref(null)
 const limit = ref(15) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = sortedDate.value
-  totalCount.value = totalData !== undefined ? totalData.value.length : 0
+  sortedData.value = [...props.userDetails].sort((a, b) => {
+    let compareResult
+
+    switch (sortBy.value) {
+      case 'lastDate':
+        if (a.lastDate === "-999999999-01-01T00:00:00") return 1
+        if (b.lastDate === "-999999999-01-01T00:00:00") return -1
+        compareResult = new Date(a.lastDate) - new Date(b.lastDate)
+        break
+      case 'saas':
+        compareResult = a.saas.localeCompare(b.saas)
+        break
+      case 'user':
+        compareResult = a.user.localeCompare(b.user)
+        break
+      case 'account':
+        compareResult = a.account.localeCompare(b.account)
+        break
+      case 'totalUpload':
+        compareResult = a.totalUpload - b.totalUpload
+        break
+      case 'sensitive':
+        compareResult = a.sensitive - b.sensitive
+        break
+      case 'malware':
+        compareResult = a.malware - b.malware
+        break
+      default:
+        compareResult = 0
+    }
+    
+    return sortOrder.value === 'asc' ? compareResult : -compareResult
+  })
+  .filter(item => item.user.toLowerCase().includes(searchFilter.value.toLowerCase()))
+
+
+  // totalData.value = sortedData.value
+  totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
-  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+  sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
 }
 
 const disassemble = (index, data, size) => {
