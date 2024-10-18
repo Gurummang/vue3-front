@@ -57,7 +57,7 @@
               <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
-          <tbody v-if="sortedData.length" class="bg-white divide-y divide-gray-200">
+          <tbody v-if="props.policyDetails.length" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
