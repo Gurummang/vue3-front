@@ -183,7 +183,7 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  sortedData.value = [...props.userDetails].sort((a, b) => {
+  sortedData.value = [...props.emailDetails.data].sort((a, b) => {
     let compareResult
 
     switch (sortBy.value) {
