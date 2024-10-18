@@ -16,29 +16,33 @@
         </div>
         <div class="flex ml-auto space-x-2">
           <select
+            v-model="sortBy"
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
           >
-            <option value="week">SaaS</option>
-            <option value="month">활동 종류</option>
-            <option value="year">파일명</option>
-            <option value="year" selected>히스토리 시각</option>
-            <option value="year">최초시각</option>
-            <option value="year">사용자</option>
+            <option value="saas">SaaS</option>
+            <option value="activity">활동 종류</option>
+            <option value="name">파일명</option>
+            <option value="eventTs" selected>히스토리 시각</option>
+            <option value="uploadTs">최초시각</option>
+            <option value="user">사용자</option>
           </select>
           <select
+            v-model="sortOrder"
             class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none"
           >
-            <option value="week">오름차순</option>
-            <option value="month" selected>내림차순</option>
+            <option value="asc">오름차순</option>
+            <option value="desc" selected>내림차순</option>
           </select>
 
           <div class="relative max-w-sm">
             <input
+              v-model="searchFilter"
               class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               placeholder="검색"
             />
             <button
+              @click="getData"
               class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             >
               <svg
@@ -73,7 +77,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(detail, index) in totalData" :key="index">
+            <tr v-for="(detail, index) in sortedData" :key="index">
               <td class="pl-6 pr-1 py-2 whitespace-nowrap">
                 <input
                   type="radio"
@@ -150,6 +154,11 @@ const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)
 
+const sortBy = ref('eventTs')
+const sortOrder = ref('desc')
+const sortedData = ref([])
+const searchFilter = ref('')
+
 // 페이지 네비게이션
 const items = ref([])
 const totalData = ref([])
@@ -159,11 +168,40 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = sortedEventTs.value
-  totalCount.value = totalData !== undefined ? totalData.value.length : 0
+  sortedData.value = [...props.historyDetails.fileHistoryDto].sort((a, b) => {
+    let compareResult
+
+    switch (sortBy.value) {
+      case 'eventTs':
+        compareResult = new Date(a.eventTs) - new Date(b.eventTs)
+        break
+      case 'saas':
+        compareResult = a.saas.localeCompare(b.saas)
+        break
+      case 'activity':
+        compareResult = a.eventType.localeCompare(b.eventType)
+        break
+      case 'name':
+        compareResult = a.fileName.localeCompare(b.fileName)
+        break
+      case 'uploadTs':
+        compareResult = new Date(a.uploadTs) - new Date(b.uploadTs)
+        break
+      case 'user':
+        compareResult = a.email.localeCompare(b.email)
+        break
+      default:
+        compareResult = 0
+    }
+    
+    return sortOrder.value === 'asc' ? compareResult : -compareResult
+  })
+  .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()))
+
+  totalCount.value = sortedData !== undefined ? sortedData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
-  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+  sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
 }
 
 const disassemble = (index, data, size) => {
@@ -175,7 +213,7 @@ const disassemble = (index, data, size) => {
   return res[index]
 }
 
-totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+// totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
 
 onMounted(() => {
   getData()

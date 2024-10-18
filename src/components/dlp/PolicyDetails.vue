@@ -21,21 +21,20 @@
           </div>
           <div class="flex ml-auto space-x-2">
             
-            <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+            <select v-model="sortBy" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
               <option value="policyName" selected>정책명</option>
               <option value="saas">SaaS</option>
-              <option value="year">식별종류</option>
               <option value="description">정책설명</option>
               <option value="content">권장 조치사항</option>
             </select>
-            <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-              <option value="week">오름차순</option>
-              <option value="month" selected>내림차순</option>
+            <select v-model="sortOrder" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+              <option value="asc">오름차순</option>
+              <option value="desc" selected>내림차순</option>
             </select>
 
             <div class="relative max-w-sm">
-              <input class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
-              <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+              <input v-model="searchFilter" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
+              <button @click="getData" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
               <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
               </svg>
@@ -59,7 +58,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <template v-for="(details, index) in totalData" :key="index" >
+            <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <input 
@@ -127,6 +126,11 @@ const policys = ref(props.policyDetails)
 let checkedIndex = ref([])
 const isDlpDeleteModalOpen = ref(false)
 
+const sortBy = ref('policyName')
+const sortOrder = ref('desc')
+const sortedData = ref([])
+const searchFilter = ref('')
+
 // 페이지 네비게이션
 const items = ref([])
 const totalData = ref([])
@@ -136,11 +140,34 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = policys.value
-  totalCount.value = totalData !== undefined ? totalData.value.length : 0
+  sortedData.value = [...props.policyDetails].sort((a, b) => {
+    let compareResult
+
+    switch (sortBy.value) {
+      case 'policyName':
+        compareResult = a.policyName.localeCompare(b.policyName)
+        break
+      case 'saas':
+        compareResult = a.saas.localeCompare(b.saas)
+        break
+      case 'description':
+        compareResult = a.description.localeCompare(b.description)
+        break
+      case 'content':
+        compareResult = a.content.localeCompare(b.content)
+        break
+      default:
+        compareResult = 0
+    }
+    
+    return sortOrder.value === 'asc' ? compareResult : -compareResult
+  })
+  .filter(item => item.policyName.toLowerCase().includes(searchFilter.value.toLowerCase()))
+
+  totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
-  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+  sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
 }
 
 const disassemble = (index, data, size) => {
@@ -151,8 +178,6 @@ const disassemble = (index, data, size) => {
   }
   return res[index]
 }
-
-totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
 
 onMounted(() => {
   getData()

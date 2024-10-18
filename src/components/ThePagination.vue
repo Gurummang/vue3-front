@@ -43,6 +43,8 @@
       </svg>
     </a>
   </div>
+  <!-- {{ totalPage }} -->
+  <!-- {{ pages }} -->
 </template>
 
 <script setup>
@@ -66,11 +68,18 @@ const pages = computed(() => {
     newArr.push(i)
   }
   const length = newArr.length
-  const divide = Math.floor(length / 10) + (Math.floor(length % 10) > 0 ? 1 : 0)
+  // const divide = Math.floor(length / 10) + (Math.floor(length % 10) > 0 ? 1 : 0)
+  // const res = []
+
+  // for (let i = 0; i <= divide; i++) {
+  //   res.push(newArr.slice(0, 10))
+  // }
+  // return res
+  const divide = Math.ceil(length / 10) // 전체 페이지를 10개씩 나눔
   const res = []
 
-  for (let i = 0; i <= divide; i++) {
-    res.push(newArr.slice(0, 10))
+  for (let i = 0; i < divide; i++) {
+    res.push(newArr.slice(i * 10, (i + 1) * 10)) // 10개씩 슬라이스하여 추가
   }
   return res
 })
