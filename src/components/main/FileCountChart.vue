@@ -69,6 +69,9 @@ const config = {
     scales: {
       y: {
         beginAtZero: true,
+        grid: {
+          color: 'transparent',
+        },
         ticks: {
           stepSize: 10,
           callback: function(value) {
