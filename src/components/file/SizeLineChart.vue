@@ -85,6 +85,7 @@ onMounted(() => {
           },
           ticks: {
             stepSize: 2,
+            maxTicksLimit: 10, 
             callback: function(value, index, values) {
               return value + ' MB';
             }

@@ -65,7 +65,8 @@ onMounted(() => {
             text: '개수'
           },
           ticks: {
-            stepSize: 1
+            stepSize: 1,
+            maxTicksLimit: 10, 
           }
         },
         x: {
