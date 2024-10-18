@@ -73,8 +73,20 @@ onMounted(() => {
         }
       },
       scales: {
+        x: {
+          title: {
+            display: false,
+            text: '달'
+          },
+          grid: {
+            color: 'transparent',
+          },
+        },
         y: {
           beginAtZero: true,
+          // grid: {
+          //   color: 'transparent',
+          // },
           title: {
             display: false,
             text: '' 
@@ -83,12 +95,6 @@ onMounted(() => {
             stepSize: 10
           }
         },
-        x: {
-          title: {
-            display: false,
-            text: '달'
-          },
-        }
       }
     }
   });
