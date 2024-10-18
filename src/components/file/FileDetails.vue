@@ -89,6 +89,9 @@
                     <span v-else-if="details.fileStatus.dlpStatus === 0">
                       <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                     </span>
+                    <span v-else-if="details.fileStatus.dlpStatus === 99">
+                      <v-icon :size="22" class="text-gray-800">mdi-minus-circle-outline</v-icon>
+                    </span>
                     <span v-else-if="details.fileStatus.dlpStatus === 1 && !details.dlpReport.totalPolicies">
                       <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                     </span>
@@ -131,7 +134,7 @@
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
                     <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
-                    <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
+                    <span class="text-sm capitalize"> {{ convertSaasName(details.saas) }}</span>
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate">{{ details.user }}</td>
