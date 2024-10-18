@@ -116,11 +116,6 @@ const sortOrder = ref('desc')
 const sortedData = ref([])
 const searchFilter = ref('')
 
-// const sortedDate = ref(props.userDetails.sort((a, b) => {
-  
-//   return new Date(b.lastDate) - new Date(a.lastDate)})
-// )
-
 // 페이지 네비게이션
 const items = ref([])
 const totalData = ref([])
