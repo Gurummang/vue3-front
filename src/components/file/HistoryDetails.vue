@@ -2,7 +2,7 @@
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
       <h2 class="text-xl font-bold mb-4">
-        파일 히스토리 - {{ props.historyDetails.totalEvent }}건
+        파일 히스토리 - {{ totalCount }}건
       </h2>
 
       <div class="flex pb-2">
@@ -148,8 +148,7 @@ const props = defineProps({
   }
 })
 
-const sortedEventTs = ref(props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)));
-
+// const sortedEventTs = ref(props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)));
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)
