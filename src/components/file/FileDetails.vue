@@ -480,6 +480,9 @@ const getData = () => {
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
   sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
+
+  // 파일 삭제가 존재하므로, 함수로 냅둬서 진행
+  clearCheckedIndex()
 }
 
 const disassemble = (index, data, size) => {
@@ -503,31 +506,35 @@ const reset = (pageIdx) => {
 watch(selectPages, () => {
   getData()
   clearCheckedIndex()
-  accordionStatus.value = {}
-  gscanStatus.value = {}
-  dlpReportStatus.value = {}
-  virusTotalReportStatus.value = {}
 })
 
 let checkedIndex = ref([])
-let checkedVtInfo = computed(() => [
-  checkedIndex.value.id
-])
-let checkedFileDlpInfo = computed(() => [{
-  file_name: checkedIndex.value.name,
-  mime: checkedIndex.value.gscan.step1.mimeType || '',
-  sign: checkedIndex.value.gscan.step1.signature || '',
-  ext: checkedIndex.value.gscan.step1.extension || '',
-}])
-let checkedDeleteInfo = computed(() => [{
-  id: checkedIndex.value.id,
-  saas: checkedIndex.value.saas,
-  file_name: checkedIndex.value.name,
-}])
+let checkedVtInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [checkedIndex.value.id]
+)
+let checkedFileDlpInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [{
+    file_name: checkedIndex.value.name,
+    mime: checkedIndex.value.gscan?.step1?.mimeType || '',
+    sign: checkedIndex.value.gscan?.step1?.signature || '',
+    ext: checkedIndex.value.gscan?.step1?.extension || '',
+  }]
+)
+let checkedDeleteInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [{
+    id: checkedIndex.value.id,
+    saas: checkedIndex.value.saas,
+    file_name: checkedIndex.value.name,
+  }]
+)
 
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
+  accordionStatus.value = {}
+  gscanStatus.value = {}
+  dlpReportStatus.value = {}
+  virusTotalReportStatus.value = {}
 }
 
 const isVirustotalModalOpen = ref(false)
