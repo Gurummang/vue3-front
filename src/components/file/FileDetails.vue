@@ -134,7 +134,7 @@
                 <td class="px-2 py-2 whitespace-nowrap">
                   <div class="flex items-center">
                     <img class="size-5 rounded-full mr-2" :src="getSaasImg(convertSaasName(details.saas))" :alt="details.saas" />
-                    <span class="text-sm"> {{ convertSaasName(details.saas) }}</span>
+                    <span class="text-sm capitalize"> {{ convertSaasName(details.saas) }}</span>
                   </div>
                 </td>
                 <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate">{{ details.user }}</td>
