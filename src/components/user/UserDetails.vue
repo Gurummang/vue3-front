@@ -159,7 +159,10 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.user.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.user.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.account.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
 
   // totalData.value = sortedData.value

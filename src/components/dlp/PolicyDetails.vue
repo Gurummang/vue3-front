@@ -162,7 +162,11 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.policyName.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.policyName.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.description.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.content.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value =

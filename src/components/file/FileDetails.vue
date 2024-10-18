@@ -2,7 +2,9 @@
   <div>
     <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">파일 검사</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">파일 검사
+          
+        </h2>
         <div class="flex">
           <div class="space-x-2">
             <button
@@ -469,7 +471,10 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.name.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.name.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.user.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
   // Pagination
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0

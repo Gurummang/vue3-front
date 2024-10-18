@@ -196,7 +196,10 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) || 
+                  item.email.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
   totalCount.value = sortedData !== undefined ? sortedData.value.length : 0
   totalPage.value =
