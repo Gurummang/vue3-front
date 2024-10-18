@@ -85,7 +85,13 @@ const elements = computed(() => {
     ...data.data.googleDrive,
     ...data.data.o365
   ]
-  .sort((a, b) => new Date(a.eventTs) - new Date(b.eventTs))
+  .sort((a, b) => {
+    const dateComparison = new Date(a.eventTs) - new Date(b.eventTs);
+    if (dateComparison === 0) {
+      return a.eventId > b.eventId ? 1 : -1;
+    }
+    return dateComparison
+  })
 
   const allSimilarities = [...new Set(allData.map(item => item.similarity))].sort((a, b) => b - a)
   const allSimilarityRanks = Object.fromEntries(allSimilarities.map((sim, index) => [sim, index + 1]))
