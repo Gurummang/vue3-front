@@ -54,11 +54,22 @@ const config = {
       x: {
         beginAtZero: true,
         ticks: {
-          stepSize: 1,
+          stepSize: function(context) {
+            const max = context.chart.scales.x.max;
+            if (max <= 10) return 1;
+            if (max <= 100) return 10;
+            if (max <= 1000) return 100;
+            return Math.pow(10, Math.floor(Math.log10(max) - 1));
+          },
           callback: function(value) {
             return value + ' 개';
           }
         }
+      },
+      y: {
+        grid: {
+          display: false
+        },
       }
     }
   },
