@@ -167,7 +167,6 @@ const isUnconnectModalOpen = ref(false);
 const selectedSaas = ref(null);
 
 const saasData = ref(props.responseData);
-saasData.value = []
 
 const router = useRouter();
 
