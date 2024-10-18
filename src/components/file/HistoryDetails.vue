@@ -37,6 +37,7 @@
           <div class="relative max-w-sm">
             <input
               v-model="searchFilter"
+              @keyup.enter="getData"
               class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               placeholder="검색"
