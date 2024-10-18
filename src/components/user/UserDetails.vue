@@ -30,6 +30,7 @@
               class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               v-model="searchFilter"
+              @keyup.enter="getData"
               placeholder="검색"
             />
             <button
@@ -158,7 +159,10 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.user.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.user.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.account.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
 
   // totalData.value = sortedData.value

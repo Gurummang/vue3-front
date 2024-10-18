@@ -17,6 +17,7 @@
         />
       </svg>
     </a>
+      <!-- @click="movePage(index + 1)" -->
     <a
       @click="movePage(index + 1)"
       v-for="index in pages[step]"
@@ -43,8 +44,10 @@
       </svg>
     </a>
   </div>
-  <!-- {{ totalPage }} -->
-  <!-- {{ pages }} -->
+  <!-- {{ '최대 페이지 : ' + totalPage }} <br>
+  {{ pages }} <br>
+  {{ '현재 스텝 : ' + step }} <br>
+  {{ '현제 페이지 수 : ' + page }} -->
 </template>
 
 <script setup>
@@ -93,18 +96,38 @@ const movePage = (pageIdx) => {
 }
 
 const moveToPrev = () => {
-  if (page.value <= 1) {
-    return
-  } else page.value--
+  // if (page.value <= 1) {
+  //   return
+  // } else page.value--
 
-  emit('send-event', page.value)
+  // emit('send-event', page.value)
+
+  if (page.value > 1) {
+    page.value--
+
+    if (page.value <= (step.value) * 10) {
+      step.value--
+    }
+
+    emit('send-event', page.value)
+  }
 }
 
 const moveToNext = () => {
-  if (page.value <= props.totalPage - 1) page.value++
-  else return
+  // if (page.value <= props.totalPage - 1) page.value++
+  // else return
 
-  emit('send-event', page.value)
+  // emit('send-event', page.value)
+
+  if (page.value < props.totalPage) {
+    page.value++
+
+    if (page.value > (step.value + 1) * 10) {
+      step.value++
+    }
+
+    emit('send-event', page.value)
+  }
 }
 </script>
 

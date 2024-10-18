@@ -2,7 +2,7 @@
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
       <h2 class="text-xl font-bold mb-4">
-        파일 히스토리 - {{ props.historyDetails.totalEvent }}건
+        파일 히스토리 - {{ totalCount }}건
       </h2>
 
       <div class="flex pb-2">
@@ -37,6 +37,7 @@
           <div class="relative max-w-sm">
             <input
               v-model="searchFilter"
+              @keyup.enter="getData"
               class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               placeholder="검색"
@@ -148,8 +149,7 @@ const props = defineProps({
   }
 })
 
-const sortedEventTs = ref(props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)));
-
+// const sortedEventTs = ref(props.historyDetails.fileHistoryDto.sort((a, b) => new Date(b.eventTs) - new Date(a.eventTs)));
 const selectedHistory = ref(null)
 const isHistoryVisualizationModalOpen = ref(false)
 const visualizationInfo = ref(null)
@@ -196,7 +196,10 @@ const getData = () => {
     
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
-  .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) || 
+                  item.email.toLowerCase().includes(searchFilter.value.toLowerCase())
+  )
 
   totalCount.value = sortedData !== undefined ? sortedData.value.length : 0
   totalPage.value =
