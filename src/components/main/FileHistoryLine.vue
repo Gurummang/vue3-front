@@ -92,7 +92,8 @@ onMounted(() => {
             text: '' 
           },
           ticks: {
-            stepSize: 10
+            stepSize: 10,
+            maxTicksLimit: 6,
           }
         },
       }
