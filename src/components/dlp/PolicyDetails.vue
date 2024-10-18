@@ -178,6 +178,7 @@ const getData = () => {
                   item.content.toLowerCase().includes(searchFilter.value.toLowerCase())
   )
 
+  sortedData.value = []
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
