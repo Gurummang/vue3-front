@@ -73,6 +73,9 @@ onMounted(() => {
             display: true,
             text: '날짜'
           },
+          grid: {
+            display: false
+          },
           ticks: {
             // stepSize: 1,
             font: { size: 10 },

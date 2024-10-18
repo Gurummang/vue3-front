@@ -80,6 +80,9 @@ onMounted(() => {
             display: true,
             text: '크기 (MB)'
           },
+          grid: {
+            display: true
+          },
           ticks: {
             stepSize: 2,
             callback: function(value, index, values) {
@@ -91,6 +94,9 @@ onMounted(() => {
           title: {
             display: true,
             text: '날짜'
+          },
+          grid: {
+            display: false
           },
           ticks: {
             font: { size: 10 },
