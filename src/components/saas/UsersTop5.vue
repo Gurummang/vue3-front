@@ -5,14 +5,19 @@
       <table class="w-full table-fixed bg-white">
         <thead class="bg-indigo-900">
           <tr>
-            <th class="w-1/3 px-4 py-3 text-left text-sm font-bold text-white tracking-wider">사용자</th>
-            <th class="w-1/6 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">민감 파일</th>
-            <th class="w-1/6 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">악성 파일</th>
-            <th class="w-1/3 px-4 py-3 text-center text-sm font-bold text-white tracking-wider">마지막 업로드 시각</th>
+            <th class="w-[7%] px-4 py-3 text-left text-sm font-bold text-white tracking-wider">순위</th>
+            <th class="w-[20%] px-4 py-3 text-left text-sm font-bold text-white tracking-wider">사용자</th>
+            <th class="w-[20%] px-4 py-3 text-center text-sm font-bold text-white tracking-wider">민감 파일</th>
+            <th class="w-[20%] px-4 py-3 text-center text-sm font-bold text-white tracking-wider">악성 파일</th>
+            <th class="w-[37%] px-4 py-3 text-center text-sm font-bold text-white tracking-wider">마지막 업로드 시각</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody v-if="users.length" class="bg-white divide-y divide-gray-200">
           <tr v-for="(user, index) in users" :key="index" class="hover:bg-gray-100">
+            <td class="px-4 py-3">
+              <!-- <v-icon size="25" :class="'text-indigo-900'">mdi-numeric-{{ index + 1 }}-box</v-icon> -->
+              <v-icon size="25" :style="'color: #0000' + `${99 - (10 * index)}` + ';'">mdi-numeric-{{ index + 1 }}-box</v-icon>
+            </td>
             <td class="px-4 py-3">
               <div class="w-full text-sm truncate">{{ user.userName }}</div>
             </td>
@@ -27,6 +32,16 @@
             </td>
           </tr>
         </tbody>
+        <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="5" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">위험 사용자가 한명도 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
       </table>
     </div>
   </div>
@@ -41,23 +56,40 @@ const props = defineProps({
     required: true
   }
 });
+
 const users = ref(props.usersTop5);
-
-// setTimeout(() => {
-//   users.value = [
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 5, maliciousFilesCount: 7, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: '통신이 되는지 함수 불러오는지 확인.txt', sensitiveFilesCount: 4, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: '2024-07 일부러 글자를 길게 합니다.txt', sensitiveFilesCount: 3, maliciousFilesCount: 5, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 2, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 1, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 5, maliciousFilesCount: 7, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: '통신이 되는지 함수 불러오는지 확인.txt', sensitiveFilesCount: 4, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: '2024-07 일부러 글자를 길게 합니다.txt', sensitiveFilesCount: 3, maliciousFilesCount: 5, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 2, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//       { userName: 'aaaaa.txt', sensitiveFilesCount: 1, maliciousFilesCount: 2, lastUploadedTimestamp: '2024-00-00 00:00:00' },
-//     ];
-// }, 5000);
-
+// const users = ref([
+//     {
+//         "userName": "yubin",
+//         "sensitiveFilesCount": 0,
+//         "maliciousFilesCount": 88,
+//         "lastUploadedTimestamp": "2024-10-18T18:16:29"
+//     },
+//     {
+//         "userName": "HaHayy",
+//         "sensitiveFilesCount": 3,
+//         "maliciousFilesCount": 5,
+//         "lastUploadedTimestamp": "2024-10-18T18:19:29"
+//     },
+//     {
+//         "userName": "yubin",
+//         "sensitiveFilesCount": 0,
+//         "maliciousFilesCount": 88,
+//         "lastUploadedTimestamp": "2024-10-18T18:16:29"
+//     },
+//     {
+//         "userName": "HaHayy",
+//         "sensitiveFilesCount": 3,
+//         "maliciousFilesCount": 5,
+//         "lastUploadedTimestamp": "2024-10-18T18:19:29"
+//     },
+//     {
+//         "userName": "HaHayy",
+//         "sensitiveFilesCount": 3,
+//         "maliciousFilesCount": 5,
+//         "lastUploadedTimestamp": "2024-10-18T18:19:29"
+//     }
+// ]);
 </script>
 
 <style scoped>

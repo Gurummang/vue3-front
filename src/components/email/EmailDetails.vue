@@ -67,7 +67,7 @@
               <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">VirusTotal</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData.length" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
@@ -123,11 +123,21 @@
             </template>
               <!-- Accordion row -->
           </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="7" class="text-center py-16 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-28 object-cover rounded-full mb-3">
+                  <p class="text-gray-500 text-lg">아직 이메일 알림을 생성하지 않았습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
+    <the-pagination v-if="sortedData.length" :totalPage="totalPage" @send-event="reset"></the-pagination>
   </div>
 
 <EmailCreatModal
