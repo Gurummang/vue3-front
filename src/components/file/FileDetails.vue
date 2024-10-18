@@ -89,6 +89,9 @@
                     <span v-else-if="details.fileStatus.dlpStatus === 0">
                       <v-icon :size="22" class="text-amber-400">mdi-dots-horizontal-circle-outline</v-icon>
                     </span>
+                    <span v-else-if="details.fileStatus.dlpStatus === 99">
+                      <v-icon :size="22" class="text-gray-800">mdi-minus-circle-outline</v-icon>
+                    </span>
                     <span v-else-if="details.fileStatus.dlpStatus === 1 && !details.dlpReport.totalPolicies">
                       <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                     </span>
