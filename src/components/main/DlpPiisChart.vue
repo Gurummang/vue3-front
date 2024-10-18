@@ -86,6 +86,7 @@ const config = {
         },
         ticks: {
           stepSize: 10,
+          maxTicksLimit: 8,
           callback: function(value) {
             return value + ' 개';
           }

@@ -93,6 +93,7 @@ onMounted(() => {
             // display: false
           },
           ticks: {
+            maxTicksLimit: 8, 
             callback: function(value) {
               return value + '개';
             }
