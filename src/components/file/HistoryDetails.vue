@@ -198,7 +198,6 @@ const getData = () => {
   })
   .filter(item => item.fileName.toLowerCase().includes(searchFilter.value.toLowerCase()))
 
-  console.log(sortedData)
   totalCount.value = sortedData !== undefined ? sortedData.value.length : 0
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
