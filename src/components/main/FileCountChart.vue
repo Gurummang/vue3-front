@@ -14,7 +14,7 @@
               <v-icon :size=14 class="mr-1">mdi-arrow-up-bold</v-icon>
               {{ data.dailyDifference + ' 개' }}
             </span>
-            <span class="bg-orange-400 text-white text-sm text-center w-14 py-0.5 px-2 rounded-xl">{{ data.upload }} 개</span>
+            <span class="bg-orange-400 text-white text-sm text-center w-16 py-0.5 px-2 rounded-xl">{{ data.upload }} 개</span>
           </li>
         </ul>
       </div>
@@ -67,8 +67,16 @@ const config = {
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
       y: {
         beginAtZero: true,
+        grid: {
+          display: true,
+        },
         ticks: {
           stepSize: 10,
           callback: function(value) {

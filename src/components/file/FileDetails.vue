@@ -26,23 +26,23 @@
           </div>
           <div class="flex ml-auto space-x-2">
             
-            <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-              <option value="week">DLP</option>
-              <option value="month">악성 탐지</option>
-              <option value="year">VirusTotal</option>
-              <option value="year">파일명</option>
-              <option value="year">SaaS</option>
-              <option value="year">사용자</option>
-              <option value="year" selected>생성날짜</option>
+            <select v-model="sortBy" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+              <option value="dlp">DLP</option>
+              <option value="gscan">악성 탐지</option>
+              <option value="virustotal">VirusTotal</option>
+              <option value="name">파일명</option>
+              <option value="saas">SaaS</option>
+              <option value="user">사용자</option>
+              <option value="date" selected>생성날짜</option>
             </select>
-            <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
-              <option value="week">오름차순</option>
-              <option value="month" selected>내림차순</option>
+            <select  v-model="sortOrder" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
+              <option value="asc">오름차순</option>
+              <option value="desc" selected>내림차순</option>
             </select>
 
             <div class="relative max-w-sm">
-              <input class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
-              <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+              <input v-model="searchFilter" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
+              <button @click="getData" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
               <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
               </svg>
@@ -70,7 +70,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <template v-for="(details, index) in totalData" :key="index" >
+            <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
                   <input 
@@ -384,7 +384,12 @@ const props = defineProps({
 
 const router = useRouter()
 
-const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
+// const sortedDate = ref(props.fileDetails.data.files.sort((a, b) => new Date(b.date) - new Date(a.date)))
+
+const sortBy = ref('date')
+const sortOrder = ref('desc')
+const sortedData = ref([])
+const searchFilter = ref('')
 
 const accordionStatus = ref({})
 const gscanStatus = ref({})
@@ -400,11 +405,68 @@ const totalCount = ref(null)
 const limit = ref(20) // 한 페이지에 보여줄 아이템 개수
 
 const getData = () => {
-  totalData.value = sortedDate.value
-  totalCount.value = totalData !== undefined ? totalData.value.length : 0
-  totalPage.value =
-    Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
-  totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
+  sortedData.value = [...props.fileDetails.data.files].sort((a, b) => {
+    let compareResult
+
+    switch (sortBy.value) {
+      case 'date':
+        compareResult = new Date(a.date) - new Date(b.date)
+        break
+      case 'name':
+        compareResult = a.name.localeCompare(b.name)
+        break
+      case 'saas':
+        compareResult = a.saas.localeCompare(b.saas)
+        break
+      case 'user':
+        compareResult = a.user.localeCompare(b.user)
+        break
+      case 'dlp':
+        compareResult = (() => {
+          const aThreat = !a.dlpReport?.totalPolicies ? 1 : 0;
+          const bThreat = !b.dlpReport?.totalPolicies ? 1 : 0;
+
+          if(aThreat !== bThreat) {
+            return bThreat - aThreat;
+          }
+          return (a.fileStatus?.dlpStatus || 0) - (b.fileStatus?.dlpStatus || 0)
+        })()
+        break
+      case 'gscan':
+        compareResult = (() => {
+          const aThreat = a.gscan?.step1.correct && !a.gscan.step2?.detect ? 1 : 0;
+          const bThreat = b.gscan?.step1.correct && !b.gscan.step2?.detect ? 1 : 0;
+
+          if(aThreat !== bThreat) {
+            return bThreat - aThreat;
+          }
+          return (a.fileStatus?.gscanStatus || 0) - (b.fileStatus?.gscanStatus || 0)
+        })()
+        break
+      case 'virustotal':
+        compareResult = (() => {
+          const aThreat = a.vtReport?.threatLabel === 'none' ? 0 : 1;
+          const bThreat = b.vtReport?.threatLabel === 'none' ? 0 : 1;
+          
+          if (aThreat !== bThreat) {
+            return bThreat - aThreat;
+          }
+          
+          return (a.fileStatus?.vtStatus || 0) - (b.fileStatus?.vtStatus || 0);
+        })()
+        break
+      default:
+        compareResult = 0
+    }
+    
+    return sortOrder.value === 'asc' ? compareResult : -compareResult
+  })
+  .filter(item => item.name.toLowerCase().includes(searchFilter.value.toLowerCase()))
+  
+  // Pagination
+  totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
+  totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
+  sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
 }
 
 const disassemble = (index, data, size) => {
@@ -415,8 +477,6 @@ const disassemble = (index, data, size) => {
   }
   return res[index]
 }
-
-totalData.value = disassemble(selectPages.value - 1, totalData.value, limit.value)
 
 onMounted(() => {
   getData()

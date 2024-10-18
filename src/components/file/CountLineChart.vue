@@ -65,13 +65,17 @@ onMounted(() => {
             text: '개수'
           },
           ticks: {
-            stepSize: 1
+            stepSize: 1,
+            maxTicksLimit: 10, 
           }
         },
         x: {
           title: {
             display: true,
             text: '날짜'
+          },
+          grid: {
+            display: false
           },
           ticks: {
             // stepSize: 1,

@@ -36,7 +36,7 @@
               'bg-orange text-white border-orange-900': isSelected(chip.id),
               'bg-gray-100 text-black border-gray-400': !isSelected(chip.id)
             }"
-            @click="toggleChip(chip)"
+            @click="singleToggleChip(chip)"
           >
             <img class="w-5 h-5 mr-2" :src="getSaasImg(convertSaasName(chip.name))" :alt="chip.name" /> {{ chip.alias }}
           </div>
@@ -132,8 +132,17 @@ const isSelected = (id) => {
   return selectedChips.value.some(chip => chip.id === id);
 };
 
-// 칩 선택/해제 토글
-const toggleChip = (chip) => {
+// 칩 선택/해제 토글(단일)
+const singleToggleChip = (chip) => {
+  if (isSelected(chip.id)) {
+    selectedChips.value = [];
+  } else {
+    selectedChips.value = [chip];
+  }
+};
+
+// 칩 선택/해제 토글(다중)
+const multipleToggleChip = (chip) => {
   if (isSelected(chip.id)) {
     selectedChips.value = selectedChips.value.filter(c => c.id !== chip.id);
   } else {
