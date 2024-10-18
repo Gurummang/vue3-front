@@ -37,6 +37,9 @@
                   <span v-else-if="details.dlp === 1">
                     <v-icon :size="22" class="text-emerald-600">mdi-check-circle-outline</v-icon>
                   </span>
+                  <span v-else-if="details.dlp === 99">
+                      <v-icon :size="22" class="text-gray-800">mdi-minus-circle-outline</v-icon>
+                    </span>
                   <span v-else>
                     <v-icon :size="22" class="text-rose-600">mdi-alert-circle-outline</v-icon>
                   </span>
