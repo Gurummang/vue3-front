@@ -14,7 +14,10 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="(file, index) in files" :key="index" class="hover:bg-gray-100">
             <td class="px-3 py-1">
-              <div class="w-full text-xs truncate">{{ file.fileName }}</div>
+              <div class="flex items-center">
+                <img class="flex-shrink-0 size-4 rounded-full mr-2" :src="getSaasImg(convertSaasName(props.saas))" :alt="props.saas" />
+                <span class="w-full text-xs truncate">{{ file.fileName }}</span>
+              </div>
             </td>
             <td class="px-2 py-1">
               <div class="w-full text-xs truncate">{{ file.uploadedBy }}</div>
@@ -35,10 +38,15 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import '@mdi/font/css/materialdesignicons.css'; // Ensure you have the MDI icons installed
+import { getSaasImg, removeWordDate, convertSaasName } from '@/utils/utils.js'
 
 const props = defineProps({
   fileRecent: {
     type: Object,
+    required: true
+  },
+  saas: {
+    type: String,
     required: true
   }
 });

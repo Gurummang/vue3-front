@@ -71,7 +71,7 @@
               <th class="px-2 py-3 w-[15%] text-center text-sm font-bold font-medium text-white tracking-wider">생성 날짜</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
@@ -342,6 +342,17 @@
             </template>
               <!-- Accordion row -->
           </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="9" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">파일에 관한 정보가 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
@@ -480,6 +491,9 @@ const getData = () => {
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
   totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
   sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
+
+  // 파일 삭제가 존재하므로, 함수로 냅둬서 진행
+  clearCheckedIndex()
 }
 
 const disassemble = (index, data, size) => {
@@ -503,31 +517,35 @@ const reset = (pageIdx) => {
 watch(selectPages, () => {
   getData()
   clearCheckedIndex()
-  accordionStatus.value = {}
-  gscanStatus.value = {}
-  dlpReportStatus.value = {}
-  virusTotalReportStatus.value = {}
 })
 
 let checkedIndex = ref([])
-let checkedVtInfo = computed(() => [
-  checkedIndex.value.id
-])
-let checkedFileDlpInfo = computed(() => [{
-  file_name: checkedIndex.value.name,
-  mime: checkedIndex.value.gscan.step1.mimeType || '',
-  sign: checkedIndex.value.gscan.step1.signature || '',
-  ext: checkedIndex.value.gscan.step1.extension || '',
-}])
-let checkedDeleteInfo = computed(() => [{
-  id: checkedIndex.value.id,
-  saas: checkedIndex.value.saas,
-  file_name: checkedIndex.value.name,
-}])
+let checkedVtInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [checkedIndex.value.id]
+)
+let checkedFileDlpInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [{
+    file_name: checkedIndex.value.name,
+    mime: checkedIndex.value.gscan?.step1?.mimeType || '',
+    sign: checkedIndex.value.gscan?.step1?.signature || '',
+    ext: checkedIndex.value.gscan?.step1?.extension || '',
+  }]
+)
+let checkedDeleteInfo = computed(() => 
+  checkedIndex.value.length === 0 ? [] : [{
+    id: checkedIndex.value.id,
+    saas: checkedIndex.value.saas,
+    file_name: checkedIndex.value.name,
+  }]
+)
 
 
 const clearCheckedIndex = () => {
   checkedIndex.value = []
+  accordionStatus.value = {}
+  gscanStatus.value = {}
+  dlpReportStatus.value = {}
+  virusTotalReportStatus.value = {}
 }
 
 const isVirustotalModalOpen = ref(false)

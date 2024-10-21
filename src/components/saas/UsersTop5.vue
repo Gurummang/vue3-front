@@ -33,15 +33,15 @@
           </tr>
         </tbody>
         <tbody v-else class="bg-white h-full">
-            <tr class="h-full">
-              <td colspan="5" class="text-center py-7 h-full">
-                <div class="flex flex-col items-center justify-center h-full">
-                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
-                  <p class="text-gray-500 text-base">위험 사용자가 한명도 없습니다.</p>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tr class="h-full">
+            <td colspan="5" class="text-center py-7 h-full">
+              <div class="flex flex-col items-center justify-center h-full">
+                <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                <p class="text-gray-500 text-base">위험 사용자가 한명도 없습니다.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

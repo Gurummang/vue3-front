@@ -205,6 +205,9 @@ const getData = () => {
   totalPage.value =
     Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1
   sortedData.value = disassemble(selectPages.value - 1, sortedData.value, limit.value)
+
+  // 검색한 후에 선택 히스토리 선택 항목 지우기
+  selectedHistory.value = null
 }
 
 const disassemble = (index, data, size) => {
@@ -248,7 +251,6 @@ const openHistoryVisualizationModal = () => {
 
 const closeHistoryVisualizationModal = () => {
   isHistoryVisualizationModalOpen.value = false
-  // clearCheckedIndex();
 }
 </script>
 
