@@ -10,7 +10,7 @@
       <saas-statistics :fileStatistics="fileStatistics"></saas-statistics>
       <div class="grid grid-cols-2 gap-5 mb-5">
         <file-ratio-chart :fileSize="fileSize"></file-ratio-chart>
-        <recent-upload-list :fileRecent="fileRecent"></recent-upload-list>
+        <recent-upload-list :fileRecent="fileRecent" :saas="saas"></recent-upload-list>
       </div>
       <users-top-5 :usersTop5="usersTop5"></users-top-5>
     </main>
