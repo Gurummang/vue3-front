@@ -177,11 +177,12 @@
                           <p><strong>파일 확장자</strong> : {{ details.gscan.step1.extension }}</p>
                         </span>
                         <span class="flex items-center justify-center w-[12.5%] p-2 bg-gray-100 border-x border-gray-200 text-sm text-center">YARA 탐지</span>
-                        <span class="inline-block w-[37.5%] p-2 bg-white text-xs self-stretch">
+                        <span class="w-[37.5%] p-2 bg-white text-xs self-stretch">
                           <p><strong>탐지 결과</strong> : {{ details.gscan.step2.detect ? '탐지' : '미탐지'}}</p>
-                          <p v-if="details.gscan.step2.detect" class="mt-2"><strong>YARA 결과</strong> : <span class="bg-red-200 text-red-800 text-xs me-2 px-2 py-0.5 rounded-full">{{ details.gscan.step2.yara }}</span></p> 
-                          <p v-else class="mt-2"><strong>YARA 결과</strong> : <span class="bg-green-200 text-green-800 text-xs me-2 px-2 py-0.5 rounded-full">{{ "none" }}</span></p> 
-                          <!-- {{ "미완성" }} -->
+                          <p v-if="details.gscan.step2.detect" class="flex flex-wrap gap-y-1.5 mt-2"><strong>YARA 결과</strong> : 
+                            <span v-for="(detectRule, i) in details.gscan.step2.yara" :key="i" class="bg-red-200 text-red-800 text-xs mx-0.5 px-2 py-0.5 rounded-full capitalize">{{ detectRule.replace(/\_/g,' ') }}</span>
+                          </p> 
+                          <p v-else class="mt-2"><strong>YARA 결과</strong> : <span class="bg-green-200 text-green-800 text-xs mx-0.5 px-2 py-0.5 rounded-full capitalize">{{ "none" }}</span></p> 
                         </span>
                       </div>
                     </div>
