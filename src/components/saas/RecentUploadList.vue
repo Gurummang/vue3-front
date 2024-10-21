@@ -18,7 +18,6 @@
                 <img class="flex-shrink-0 size-4 rounded-full mr-2" :src="getSaasImg(convertSaasName(props.saas))" :alt="props.saas" />
                 <span class="w-full text-xs truncate">{{ file.fileName }}</span>
               </div>
-              <!-- <div class="w-full text-xs truncate">{{ file.fileName }}</div> -->
             </td>
             <td class="px-2 py-1">
               <div class="w-full text-xs truncate">{{ file.uploadedBy }}</div>
@@ -48,7 +47,7 @@ const props = defineProps({
   },
   saas: {
     type: String,
-    // required: true
+    required: true
   }
 });
 
