@@ -2,14 +2,13 @@
   <div>
     <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">DLP 정책 목록</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">DLP 정책 목록 - {{ totalCount }}개</h2>
         <div class="flex">
           <div class="space-x-2">
             <button
               class="inline-block border border-orange px-3 py-2 align-text-bottom text-sm font-semibold text-orange hover:bg-orange hover:text-white hover:border-orange active:bg-orange"
               @click="router.push('/dlp/add')"
             >
-              <!-- @click="openVirustotalModal" -->
               <v-icon :size="20">mdi-magnify-plus-outline</v-icon> DLP 정책 생성
             </button>
             <button
@@ -23,9 +22,9 @@
             
             <select v-model="sortBy" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
               <option value="policyName" selected>정책명</option>
-              <option value="saas">SaaS</option>
+              <option value="alias">SaaS</option>
               <option value="description">정책설명</option>
-              <option value="content">권장 조치사항</option>
+              <option value="comment">권장 조치사항</option>
             </select>
             <select v-model="sortOrder" class="block w-sm text-sm font-medium transition duration-75 border border-gray-300 rounded-md shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" >
               <option value="asc">오름차순</option>
@@ -33,7 +32,7 @@
             </select>
 
             <div class="relative max-w-sm">
-              <input v-model="searchFilter" @keyup.enter="getData" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
+              <input v-model="searchFilter" @keyup.enter="getData" class="w-4/5 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
               <button @click="getData" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
               <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
@@ -57,7 +56,7 @@
               <th class="px-2 py-3 w-[25%] text-left text-sm font-bold font-medium text-white tracking-wider">권장 조치사항</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
@@ -103,6 +102,17 @@
               </td>
             </tr>
           </tbody> -->
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="6" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">DLP 정책이 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
@@ -158,13 +168,13 @@ const getData = () => {
         compareResult = a.policyName.localeCompare(b.policyName)
         break
       case 'saas':
-        compareResult = a.saas.localeCompare(b.saas)
+        compareResult = a.alias.localeCompare(b.alias)
         break
       case 'description':
         compareResult = a.description.localeCompare(b.description)
         break
-      case 'content':
-        compareResult = a.content.localeCompare(b.content)
+      case 'comment':
+        compareResult = a.comment.localeCompare(b.comment)
         break
       default:
         compareResult = 0
@@ -173,9 +183,9 @@ const getData = () => {
     return sortOrder.value === 'asc' ? compareResult : -compareResult
   })
   .filter(item => item.policyName.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
-                  item.saas.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+                  item.alias.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
                   item.description.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
-                  item.content.toLowerCase().includes(searchFilter.value.toLowerCase())
+                  item.comment.toLowerCase().includes(searchFilter.value.toLowerCase())
   )
 
   totalCount.value = sortedData.value !== undefined ? sortedData.value.length : 0
