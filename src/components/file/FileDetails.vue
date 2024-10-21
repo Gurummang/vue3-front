@@ -71,7 +71,7 @@
               <th class="px-2 py-3 w-[15%] text-center text-sm font-bold font-medium text-white tracking-wider">생성 날짜</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100 cursor-pointer" @click="toggleAccordion(index)">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
@@ -342,6 +342,17 @@
             </template>
               <!-- Accordion row -->
           </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="9" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">파일에 관한 정보가 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
