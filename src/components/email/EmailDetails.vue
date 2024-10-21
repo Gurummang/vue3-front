@@ -2,7 +2,7 @@
   <div>
     <div class="bg-white shadow-sm rounded-lg p-4 mb-5">
       <div class="mb-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">이메일알림 목록</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">이메일알림 목록 - {{ totalCount }}개</h2>
         <div class="flex">
           <div class="space-x-2">
             <button
@@ -42,8 +42,8 @@
             </select>
 
             <div class="relative max-w-sm">
-              <input v-model="searchFilter" @keyup.enter="getData" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
-              <button @click="getData" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+              <input v-model="searchFilter" @keyup.enter="() => { getData(); selectPages = 1; }" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="검색">
+              <button @click="() => { getData(); selectPages = 1; }" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
               <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.795 13.408l5.204 5.204a1 1 0 01-1.414 1.414l-5.204-5.204a7.5 7.5 0 111.414-1.414zM8.5 14A5.5 5.5 0 103 8.5 5.506 5.506 0 008.5 14z" />
               </svg>
@@ -67,7 +67,7 @@
               <th class="px-2 py-3 w-[7%] text-left text-sm font-bold font-medium text-white tracking-wider text-center">VirusTotal</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <template v-for="(details, index) in sortedData" :key="index" >
               <tr class="hover:bg-gray-100">
                 <td class="px-2 py-2 text-center whitespace-nowrap">
@@ -123,21 +123,22 @@
             </template>
               <!-- Accordion row -->
           </tbody>
-          <!-- <tbody v-else class="bg-white h-full">
+          <tbody v-else class="bg-white h-full">
             <tr class="h-full">
-              <td colspan="7" class="text-center py-16 h-full">
+              <td colspan="7" class="text-center py-7 h-full">
                 <div class="flex flex-col items-center justify-center h-full">
-                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-28 object-cover rounded-full mb-3">
-                  <p class="text-gray-500 text-lg">아직 이메일 알림을 생성하지 않았습니다.</p>
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">이메일 알림이 없습니다.</p>
                 </div>
               </td>
             </tr>
-          </tbody> -->
+          </tbody>
+
         </table>
       </div>
     </div>
 
-    <the-pagination :totalPage="totalPage" @send-event="reset"></the-pagination>
+    <the-pagination :totalPage="totalPage" @send-event="reset" :selectPages="selectPages"></the-pagination>
   </div>
 
 <EmailCreatModal
