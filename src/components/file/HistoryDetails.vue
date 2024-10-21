@@ -37,13 +37,13 @@
           <div class="relative max-w-sm">
             <input
               v-model="searchFilter"
-              @keyup.enter="getData"
-              class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              @keyup.enter="() => { getData(); selectPages = 1; }"
+              class="w-4/5 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               placeholder="검색"
             />
             <button
-              @click="getData"
+              @click="() => { getData(); selectPages = 1; }"
               class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             >
               <svg
@@ -77,7 +77,7 @@
               <th class="px-2 py-3 w=[15%] text-left text-sm font-bold font-medium text-white tracking-wider">사용자</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <tr v-for="(detail, index) in sortedData" :key="index">
               <td class="pl-6 pr-1 py-2 whitespace-nowrap">
                 <input
@@ -121,6 +121,17 @@
               <td class="px-2 py-2 whitespace-nowrap text-xs max-w-1 truncate" :title="detail.email">{{ detail.email }}</td>
             </tr>
           </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="8" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">히스토리에 관한 정보가 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
         </table>
       </div>
     </div>

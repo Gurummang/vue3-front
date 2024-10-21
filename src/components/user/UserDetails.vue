@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-4 bg-white border rounded-lg shadow-sm my-5">
-      <h2 class="text-xl font-bold mb-4">사용자 정보</h2>
+      <h2 class="text-xl font-bold mb-4">사용자 정보 - {{ totalCount }}명</h2>
 
       <div class="flex pb-2">
         <div class="flex ml-auto space-x-2">
@@ -27,14 +27,14 @@
 
           <div class="relative max-w-sm">
             <input
-              class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              class="w-4/5 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               type="search"
               v-model="searchFilter"
-              @keyup.enter="getData"
+              @keyup.enter="() => { getData(); selectPages = 1; }"
               placeholder="검색"
             />
             <button
-              @click="getData"
+              @click="() => { getData(); selectPages = 1; }"
               class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             >
               <svg
@@ -69,7 +69,7 @@
               <th class="px-6 py-3 text-left text-sm font-bold font-medium text-white tracking-wider">마지막 활동 날짜</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="sortedData" class="bg-white divide-y divide-gray-200">
             <tr v-for="(detail, index) in sortedData" :key="index" class="hover:bg-gray-100">
               <td class="px-6 py-2 whitespace-nowrap align-middle">
                 <div class="flex items-center">
@@ -85,6 +85,17 @@
               <td class="px-6 py-2 whitespace-nowrap text-xs">{{ removeWordDate(detail.lastDate) !== '-999999999-01-01 00:00:00' ? removeWordDate(detail.lastDate): '활동 날짜 없음' }}</td>
             </tr>
           </tbody>
+          <tbody v-else class="bg-white h-full">
+            <tr class="h-full">
+              <td colspan="7" class="text-center py-7 h-full">
+                <div class="flex flex-col items-center justify-center h-full">
+                  <img src="@/assets/grummang_mascot_small.png" alt="구름망 캐릭터" class="size-20 object-cover rounded-full mb-5">
+                  <p class="text-gray-500 text-base">유저에 관한 정보가 없습니다.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
