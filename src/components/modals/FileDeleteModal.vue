@@ -10,7 +10,13 @@
         <div class="mb-2 space-y-2 text-center">
           <label for="saasType" class="block pb-2 text-2xl font-semibold text-red-600"> 
             <v-icon :size="30">mdi-delete-outline</v-icon> 파일삭제 </label>
-          <p class="text-base pb-3">SaaS에 저장된 <strong>{{ fileCount }}</strong>개의 파일을 <br/>정말 삭제하겠습니까?</p>
+          
+          <!-- <strong class="capitalize">[{{ fileSaas }}]</strong>  -->
+          <p class="flex text-base justify-center">
+            <strong class="truncate max-w-[80%]">{{ fileName }}</strong>
+            &nbsp파일을
+          </p>
+          <p>정말 삭제하겠습니까?</p>
           <p class="text-xs text-red-600 font-semibold">파일을 삭제하면은 더 이상 복구할 수 없습니다.</p>
         </div>
       </div>
@@ -20,7 +26,6 @@
       </div>
     </div>
   </div>
-
   <saas-error-modal
     v-if="isErrorModalOpen"
     :errorCode="errorCode"
@@ -32,6 +37,7 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import axios from 'axios';
+import { getSaasImg, convertSaasName } from '@/utils/utils.js'
 import saasErrorModal from '@/components/modals/SaasErrorModal.vue'
 import { validateEmail } from '@/utils/validation.js'
 import { fileDeleteApi } from '@/apis/file.js'
@@ -45,7 +51,9 @@ const props = defineProps({
 
 let emit = defineEmits(['close']);
 
-let fileCount = ref(Object.keys(props.checkedIndex).length);;
+let fileCount = ref(Object.keys(props.checkedIndex).length);
+let fileSaas = ref(convertSaasName(props.checkedIndex[0].saas))
+let fileName = ref(props.checkedIndex[0].file_name);
 // 리스트 값
 
 let isErrorModalOpen = ref(false);

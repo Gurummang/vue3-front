@@ -288,8 +288,9 @@ const syncOAuth2 = () => {
     const responseType = import.meta.env.VITE_GOOGLEDRIVE_RESPONSETYPE;
     const redirectUri = import.meta.env.VITE_GOOGLEDRIVE_REDIRECTURL;
     const scope = import.meta.env.VITE_GOOGLEDRIVE_SCOPE;
-    
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+    // const prompt= consent
+
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&prompt=consent`;
     // window.location.href = authUrl;
     // 새 탭에서 인증 페이지 열기
     const authWindow = window.open(authUrl, '_blank');
