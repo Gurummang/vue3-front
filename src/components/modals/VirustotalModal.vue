@@ -12,7 +12,11 @@
       <div class="px-4">
         <div class="mb-2 space-y-2 text-center">
           <label for="saasType" class="block pb-2 text-2xl font-semibold text-gray-700"> VirusTotal 파일 검사 </label>
-          <p class="text-base pb-3">선택한 <strong>{{ fileCount }}</strong>개의 파일을 VirusTotal 로<br/>파일 검사를 진행하겠습니까?</p>
+          <p class="flex text-base justify-center">
+            <strong class="truncate max-w-[80%]">{{ fileName }}</strong>
+            &nbsp파일을
+          </p>
+          <p>VirusTotal 검사를 진행하겠습니까?</p>
           <p class="text-xs text-red-600 font-semibold">VirusTotal로 검사할 시에, 파일이 외부로 유출될 수 있습니다.</p>
         </div>
       </div>
@@ -46,6 +50,7 @@ const props = defineProps({
 let emit = defineEmits(['close']);
 
 let fileCount = ref(Object.keys(props.checkedIndex).length);
+let fileName = ref(props.checkedIndex[0].file_name)
 // 리스트 값
 
 let isErrorModalOpen = ref(false);
@@ -61,7 +66,7 @@ const closeErrorModal = () => {
 
 const uploadVirustotalScan = () => {
   let data = {
-    "fileIds": Object.values(props.checkedIndex)
+    "fileIds": Object.values(props.checkedIndex[0].id)
   }
   fileVtUploadApi(data).then((response) => {
     if(response.status != 'success') {
