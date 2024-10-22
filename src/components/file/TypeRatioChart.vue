@@ -7,9 +7,11 @@
       </div>
       <div class="w-1/2 pl-4 flex items-center">
         <ul class="list-none p-0 w-full">
-          <li v-for="item in sortedData" :key="item.type" class="mb-2 pl-10 flex items-center">
+          <li v-for="(item, idx) in sortedData" :key="idx" class=" flex mb-3 pl-10 items-center">
             <div class="flex items-center flex-grow">
-              <span class="w-4 h-4 rounded-full mr-2" :style="{ backgroundColor: getColor(item.type) }"></span>
+              <!-- <v-icon size="20" class="mr-1.5" :style="{ color: getColor(item.type) }">mdi-numeric-{{ idx + 1 }}-circle</v-icon> -->
+              <span class="w-4 h-4 rounded-full mr-2" :style="{ backgroundColor: getColor(item.type) }">
+              </span>
               <span class="text-sm">{{ item.type }}</span>
             </div>
             <span class="bg-indigo-900 rounded-full px-3 py-1 w-14 text-xs font-base text-white text-center ml-2 whitespace-nowrap">
@@ -54,7 +56,7 @@ const leastCommonType = computed(() => sortedData.value[sortedData.value.length 
 const calculatePercentage = (count) => ((count / totalCount.value) * 100).toFixed(1);
 
 const getColor = (type) => {
-  const index = props.data.findIndex(item => item.type === type);
+  const index = sortedData.value.findIndex(item => item.type === type);
   return colors[index % colors.length];
 };
 
