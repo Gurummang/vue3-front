@@ -601,6 +601,10 @@ const openVirustotalModal = () => {
       isVirustotalPreventModalOpen.value = true
       return
     }
+    if (checkedIndex.value.fileStatus.vtStatus !== -1) {
+      alert('이미 VirusTotal 검사를 했습니다.')
+      return
+    }
     isVirustotalModalOpen.value = true
   } else {
     alert('검사할 파일을 선택해주세요.')
