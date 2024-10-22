@@ -527,7 +527,10 @@ watch(selectPages, () => {
 
 let checkedIndex = ref([])
 let checkedVtInfo = computed(() => 
-  checkedIndex.value.length === 0 ? [] : [checkedIndex.value.id]
+  checkedIndex.value.length === 0 ? [] : [{
+    file_name: checkedIndex.value.name,
+    id : [checkedIndex.value.id]
+  }]
 )
 let checkedFileDlpInfo = computed(() => 
   checkedIndex.value.length === 0 ? [] : [{
